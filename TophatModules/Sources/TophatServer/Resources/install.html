@@ -1,0 +1,166 @@
+<html>
+	<head>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+				-webkit-font-smoothing: antialiased;
+				font-synthesis: none;
+			}
+
+			html,
+			body {
+				background: #fff;
+				color: #1d1d1f;
+				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+					Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+					"Segoe UI Symbol";
+			}
+
+			@media (prefers-color-scheme: dark) {
+				html,
+				body {
+					background: #000;
+					color: #cecece;
+				}
+			}
+
+			html,
+			body,
+			.wrapper {
+				width: 100%;
+				height: 100%;
+			}
+
+			.wrapper {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+			}
+
+			h1 {
+				font-size: 56px;
+				line-height: 1.16;
+				font-weight: 700;
+				letter-spacing: -0.005em;
+				margin-bottom: 40px;
+			}
+
+			h2 {
+				font-size: 32px;
+				line-height: 1.16;
+				font-weight: 600;
+				letter-spacing: 0.128px;
+
+				background-image: linear-gradient(180deg, #ffe993, #eb831c);
+				background-position: 50% 0;
+				background-clip: text;
+				-webkit-background-clip: text;
+				color: transparent;
+				margin: 6px 0;
+			}
+
+			p {
+				font-size: 19px;
+				line-height: 1.16;
+				font-weight: 600;
+				letter-spacing: 0.012em;
+				color: #86868b;
+				margin: 6px 0;
+			}
+			
+			.actions {
+				margin-top: 70px;
+			}
+			
+			.actions > :not(:last-child) {
+				margin-right: 6px;
+			}
+			
+			.button {
+				padding: 10px 20px;
+				text-decoration: none;
+				border-radius: 980px;
+				font-weight: 400;
+				background: #f1f1f1;
+				color: #000;
+			}
+			
+			.button:hover {
+				background: #ededed;
+			}
+			
+			.button:active {
+				background: #dedede;
+			}
+			
+			@media (prefers-color-scheme: dark) {
+				.button {
+					background: #232323;
+					color: #fff;
+				}
+				
+				.button:hover {
+					background: #292929;
+				}
+				
+				.button:active {
+					background: #1e1e1e;
+				}
+			}
+
+			.cta {
+				color: #fff;
+				background: #0071e3;
+			}
+
+			.cta:hover {
+				background: #147ce5;
+			}
+
+			.cta:active {
+				background: #0068d1;
+			}
+
+			#tophat {
+				margin-right: 10px;
+			}
+
+			.spin {
+				display: inline-block;
+				animation-name: spin;
+				animation-timing-function: linear;
+				animation-iteration-count: infinite;
+				animation-duration: 3s;
+				transform-style: preserve-3d;
+			}
+
+			@keyframes spin {
+				from {
+					transform: rotateY(0deg);
+				}
+				to {
+					transform: rotateY(-360deg);
+				}
+			}
+		</style>
+
+		<title>Tophat</title>
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<h1><span id="tophat" class="spin">&#x1F3A9;</span> Tophat</h1>
+
+			<h2>Installing Application</h2>
+			<p>You may now close this window.</p>
+
+			<div class="actions">
+				<a class="button cta" href="javascript: history.go(-1)">&#8592; Go Back</a>
+				<a class="button" href="javascript: location.reload()">&#8635; Retry</a>
+			</div>
+		</div>
+	</body>
+</html>
