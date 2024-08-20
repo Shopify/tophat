@@ -48,7 +48,7 @@ struct DeviceItem: View {
 		} icon: {
 			ToggleableRowIcon(selected: selected) {
 				if device.runtime.platform == .android {
-					Image("android.fill")
+                    Image(.androidFill)
 						.resizable()
 						.scaledToFit()
 						.frame(maxWidth: 14)

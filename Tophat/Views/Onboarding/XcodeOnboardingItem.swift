@@ -17,7 +17,7 @@ struct XcodeOnboardingItem: View {
 			title: "Xcode",
 			description: "Tophat uses Xcode to manage devices and install apps."
 		) {
-			Image("Xcode")
+            Image(.xcode)
 				.resizable()
 				.interpolation(.high)
 		} infoPopoverContent: {
