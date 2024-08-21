@@ -9,14 +9,14 @@
 import SwiftUI
 
 enum SettingsTab: Int {
-	case general = 0
-	case apps = 1
-	case devices = 2
-	case locations = 3
+	case general
+	case apps
+	case devices
+	case locations
 }
 
 struct SettingsView: View {
-	@AppStorage("SettingsSelectedTabIndex") var selectedTab: SettingsTab = .general
+	@AppStorage("SettingsSelectedTabIndex") private var selectedTab: SettingsTab = .general
 
 	var body: some View {
 		TabView(selection: $selectedTab) {

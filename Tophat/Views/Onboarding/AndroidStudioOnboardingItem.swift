@@ -16,7 +16,7 @@ struct AndroidStudioOnboardingItem: View {
 			title: "Android Studio",
 			description: "Tophat uses Android Studio to manage devices and install apps."
 		) {
-			Image("AndroidStudio")
+			Image(.androidStudio)
 				.resizable()
 				.interpolation(.high)
 				.padding(2)

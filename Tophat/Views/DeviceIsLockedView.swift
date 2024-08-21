@@ -15,7 +15,7 @@ struct DeviceIsLockedView: View {
 
 	var body: some View {
 		VStack(alignment: .center, spacing: 16) {
-			Image("SettingsAppIcon")
+			Image(.settingsAppIcon)
 				.resizable()
 				.interpolation(.high)
 				.scaledToFit()

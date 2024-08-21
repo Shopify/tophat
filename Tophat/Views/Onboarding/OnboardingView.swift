@@ -14,7 +14,7 @@ struct OnboardingView: View {
 	var body: some View {
 		VStack(alignment: .center, spacing: 36) {
 			VStack(spacing: 8) {
-				Image("SettingsAppIcon")
+				Image(.settingsAppIcon)
 					.resizable()
 					.scaledToFit()
 					.frame(width: 128, height: 128)

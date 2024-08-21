@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct QuickLaunchEmptyState: View {
-	@AppStorage("SettingsSelectedTabIndex") var selectedTab: SettingsTab = .general
+	@AppStorage("SettingsSelectedTabIndex") private var selectedTab: SettingsTab = .general
 
 	var body: some View {
 		VStack(alignment: .center, spacing: 4) {
