@@ -17,7 +17,7 @@ struct QuickLaunchAppView: View {
 				image
 					.pinnedApplicationImageStyle()
 			} placeholder: {
-                Image(.appIconPlaceholder)
+				Image(.appIconPlaceholder)
 					.pinnedApplicationImageStyle()
 			}
 

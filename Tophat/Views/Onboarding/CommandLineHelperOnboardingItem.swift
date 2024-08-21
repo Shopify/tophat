@@ -16,7 +16,7 @@ struct CommandLineHelperOnboardingItem: View {
 			title: "Command Line Helper",
 			description: "The `tophatctl` command allows you to control Tophat from the command line."
 		) {
-            Image(.terminal)
+			Image(.terminal)
 				.resizable()
 		} content: {
 			if symbolicLinkManager.isInstalled {

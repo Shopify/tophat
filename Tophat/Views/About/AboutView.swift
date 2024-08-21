@@ -13,7 +13,7 @@ struct AboutView: View {
 
 	var body: some View {
 		HStack(alignment: .center, spacing: 36) {
-            Image(.settingsAppIcon)
+			Image(.settingsAppIcon)
 				.resizable()
 				.scaledToFit()
 				.frame(width: 128, height: 128)

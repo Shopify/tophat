@@ -16,7 +16,7 @@ struct ScreenCopyOnboardingItem: View {
 			title: "scrcpy",
 			description: "Tophat uses scrcpy to mirror the displays of Android devices."
 		) {
-            Image(.scrcpy)
+			Image(.scrcpy)
 				.resizable()
 				.interpolation(.high)
 				.padding(3)

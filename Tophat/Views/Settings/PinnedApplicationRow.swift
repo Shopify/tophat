@@ -20,7 +20,7 @@ struct PinnedApplicationRow: View {
 				image
 					.pinnedApplicationImageStyle()
 			} placeholder: {
-                Image(.appIconPlaceholder)
+				Image(.appIconPlaceholder)
 					.pinnedApplicationImageStyle()
 			}
 			VStack(alignment: .leading, spacing: 3) {

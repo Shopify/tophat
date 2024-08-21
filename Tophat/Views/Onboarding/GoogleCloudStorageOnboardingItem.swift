@@ -16,7 +16,7 @@ struct GoogleCloudStorageOnboardingItem: View {
 			title: "Google Cloud SDK",
 			description: "Tophat uses the Google Cloud SDK to download apps."
 		) {
-            Image(.googleCloudSDK)
+			Image(.googleCloudSDK)
 				.resizable()
 				.interpolation(.high)
 				.padding(5)
