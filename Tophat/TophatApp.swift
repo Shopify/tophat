@@ -264,6 +264,10 @@ extension AppDelegate: InstallCoordinatorDelegate {
 			deliverImmediately: true
 		)
 	}
+
+	func installCoordinator(didPromptToAllowUntrustedHost host: String) async -> HostTrustResult {
+		await TrustedHostAlert().requestTrust(for: host)
+	}
 }
 
 // MARK: - NotificationHandlerDelegate

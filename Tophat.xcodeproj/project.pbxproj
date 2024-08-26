@@ -40,6 +40,8 @@
 		804ECB7C2975C15300DE78F4 /* DevicePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804ECB7B2975C15300DE78F4 /* DevicePicker.swift */; };
 		804ECB7E2975C18300DE78F4 /* DeviceMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804ECB7D2975C18300DE78F4 /* DeviceMenu.swift */; };
 		804ECB802975C68400DE78F4 /* VisibleWhenButtonHoveredViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804ECB7F2975C68400DE78F4 /* VisibleWhenButtonHoveredViewModifier.swift */; };
+		804F37F92C7CE46F0005A869 /* HostTrustResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804F37F82C7CE46F0005A869 /* HostTrustResult.swift */; };
+		804F37FD2C7CEFB00005A869 /* TrustedHostAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804F37FC2C7CEFB00005A869 /* TrustedHostAlert.swift */; };
 		804FF6592914239800147652 /* Collection+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FF6582914239800147652 /* Collection+Filter.swift */; };
 		804FFE1829C3BEA5002B64AA /* BadgedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FFE1729C3BEA5002B64AA /* BadgedURL.swift */; };
 		80518F4F2984600900FB8803 /* Apps+Add.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80518F4D29845FB100FB8803 /* Apps+Add.swift */; };
@@ -265,6 +267,8 @@
 		804ECB7B2975C15300DE78F4 /* DevicePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePicker.swift; sourceTree = "<group>"; };
 		804ECB7D2975C18300DE78F4 /* DeviceMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenu.swift; sourceTree = "<group>"; };
 		804ECB7F2975C68400DE78F4 /* VisibleWhenButtonHoveredViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibleWhenButtonHoveredViewModifier.swift; sourceTree = "<group>"; };
+		804F37F82C7CE46F0005A869 /* HostTrustResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostTrustResult.swift; sourceTree = "<group>"; };
+		804F37FC2C7CEFB00005A869 /* TrustedHostAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustedHostAlert.swift; sourceTree = "<group>"; };
 		804FF6582914239800147652 /* Collection+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Filter.swift"; sourceTree = "<group>"; };
 		804FFE1729C3BEA5002B64AA /* BadgedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedURL.swift; sourceTree = "<group>"; };
 		80518F4D29845FB100FB8803 /* Apps+Add.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Apps+Add.swift"; sourceTree = "<group>"; };
@@ -720,6 +724,7 @@
 				809BD03D290CA40900FD4043 /* DeviceSelectionManager.swift */,
 				80A66D6A2981BC9900ECBCB6 /* ErrorNotifier.swift */,
 				80564B5529834203002DC136 /* FileTypes.swift */,
+				804F37F82C7CE46F0005A869 /* HostTrustResult.swift */,
 				80FF03EE29087473008509E0 /* InstallCoordinator.swift */,
 				80564B4F298340D1002DC136 /* InstallCoordinatorDelegate.swift */,
 				809C8570297B056F004CE6A2 /* LaunchAppAction.swift */,
@@ -732,6 +737,7 @@
 				80A66D692981BC9900ECBCB6 /* PrepareDeviceAction.swift */,
 				80CBACFE2989B8B100F778DD /* ShowOnboardingWindowAction.swift */,
 				80518F562984804C00FB8803 /* TophatCtlSymbolicLinkManager.swift */,
+				804F37FC2C7CEFB00005A869 /* TrustedHostAlert.swift */,
 				8020A6DD297F301700FEA490 /* URLHandler.swift */,
 				80A66D732981BD2200ECBCB6 /* UtilityPathPreferences.swift */,
 			);
@@ -958,6 +964,7 @@
 				80EB5D49296F5AAF0011DE5F /* InstallApplicationTask.swift in Sources */,
 				8006E7E32943C95D0089805E /* MenuItemButtonStyle.swift in Sources */,
 				8006E7E92943C9B80089805E /* ToggleableRow.swift in Sources */,
+				804F37FD2C7CEFB00005A869 /* TrustedHostAlert.swift in Sources */,
 				80CBACF229898FFE00F778DD /* AboutView.swift in Sources */,
 				80629BF52939818C0077960E /* AppsTab.swift in Sources */,
 				80D71F262984CF100006E1BF /* OnboardingItemLayout.swift in Sources */,
@@ -970,6 +977,7 @@
 				8029B6A72AC239FE00BD1D30 /* DeviceIsLockedViewModifier.swift in Sources */,
 				80D71F242984CEF40006E1BF /* OnboardingItemStatusIcon.swift in Sources */,
 				8090E25F29677489003106B9 /* MainProgressView.swift in Sources */,
+				804F37F92C7CE46F0005A869 /* HostTrustResult.swift in Sources */,
 				80629BFC293981B10077960E /* CodableAppStorage.swift in Sources */,
 				8026714B2947C770001A804D /* QuickLaunchPanel.swift in Sources */,
 				8090E263296774C1003106B9 /* StatusView.swift in Sources */,
