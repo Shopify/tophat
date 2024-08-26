@@ -13,7 +13,6 @@ import Combine
 final class URLHandler {
 	let onLaunchArtifactSet = PassthroughSubject<(ArtifactSet, Platform, [String]), Never>()
 	let onLaunchArtifactURL = PassthroughSubject<(URL, [String]), Never>()
-	let onLaunchArtifactProviderURL = PassthroughSubject<(URL, [String]), Never>()
 
 	func handle(urls: [URL]) throws {
 		for url in urls {
@@ -66,7 +65,7 @@ final class URLHandler {
 		if let platform = Platform(from: url.lastPathComponent) {
 			try handle(installURL: url, platform: platform, queryItems: queryItems)
 		} else {
-			try handle(installURL: url, queryItems: queryItems)
+			throw URLHandlerError.malformedURL(url)
 		}
 	}
 
@@ -86,17 +85,6 @@ final class URLHandler {
 		let artifactSet = ArtifactSet(artifacts: artifacts)
 
 		onLaunchArtifactSet.send((artifactSet, platform, launchArguments(from: queryItems)))
-	}
-
-	private func handle(installURL url: URL, queryItems: [URLQueryItem]) throws {
-		guard
-			let api = queryItems.value(name: "api"),
-			let apiURL = URL(string: api)
-		else {
-			throw URLHandlerError.malformedURL(url)
-		}
-
-		onLaunchArtifactProviderURL.send((apiURL, launchArguments(from: queryItems)))
 	}
 
 	private func launchArguments(from queryItems: [URLQueryItem]) -> [String] {

@@ -205,17 +205,6 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 			}
 		}
 		.store(in: &cancellables)
-
-		Publishers.MergeMany(
-			self.urlHandler.onLaunchArtifactProviderURL,
-			self.notificationHandler.onLaunchArtifactProviderURL
-		)
-		.sink { [weak self] (artifactProviderURL, launchArguments) in
-			Task.detached(priority: .userInitiated) { [weak self] in
-				await self?.launchApp(artifactProviderURL: artifactProviderURL, context: LaunchContext(arguments: launchArguments))
-			}
-		}
-		.store(in: &cancellables)
 	}
 
 	private func handle(urls: [URL]) {

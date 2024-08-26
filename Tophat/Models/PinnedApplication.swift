@@ -14,7 +14,6 @@ struct PinnedApplication: Identifiable, Codable {
 	let name: String
 	let platform: Platform
 	let artifacts: [Artifact]
-	let artifactProviderURL: URL?
 	var icon: ApplicationIcon? = nil
 
 	/// Creates a new pinned application.
@@ -27,12 +26,11 @@ struct PinnedApplication: Identifiable, Codable {
 	///   - name: The name of the pinned application.
 	///   - platform: The platform of the pinned application.
 	///   - artifacts: The set of artifacts at which this pinned application can be found.
-	init(id: String? = nil, name: String, platform: Platform, artifacts: [Artifact] = [], artifactProviderURL: URL? = nil) {
+	init(id: String? = nil, name: String, platform: Platform, artifacts: [Artifact] = []) {
 		self.id = id ?? UUID().uuidString
 		self.name = name
 		self.platform = platform
 		self.artifacts = artifacts
-		self.artifactProviderURL = artifactProviderURL
 	}
 }
 

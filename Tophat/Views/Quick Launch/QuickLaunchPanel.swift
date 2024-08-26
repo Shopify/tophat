@@ -44,12 +44,8 @@ struct QuickLaunchPanel: View {
 		let launchContext = LaunchContext(appName: app.name, pinnedApplicationId: app.id)
 
 		Task.detached(priority: .userInitiated) {
-			if let artifactProviderURL = app.artifactProviderURL {
-				await launchApp?(artifactProviderURL: artifactProviderURL, context: launchContext)
-			} else {
-				let artifactSet = ArtifactSet(artifacts: app.artifacts)
-				await launchApp?(artifactSet: artifactSet, on: app.platform, context: launchContext)
-			}
+			let artifactSet = ArtifactSet(artifacts: app.artifacts)
+			await launchApp?(artifactSet: artifactSet, on: app.platform, context: launchContext)
 		}
 	}
 }

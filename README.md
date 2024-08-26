@@ -61,12 +61,6 @@ Or, for universal builds that work on all device types, use the `universal` quer
 http://localhost:29070/install/<ios|android>?universal=https://url/to/virtual
 ```
 
-For builds that are available using a Tophat API (see [_API Endpoints_](#api-endpoints)):
-
-```
-http://localhost:29070/install?api=https://url/to/endpoint
-```
-
 You can also specify arguments to pass to the application on launch using the `launchArguments` query string. For example:
 
 ```
@@ -97,23 +91,6 @@ For more details on how to use `tophatctl`, run the following command after inst
 ```sh
 tophatctl --help
 ```
-
-### API Endpoints
-
-For more advanced integrations, Tophat supports requesting artifacts using REST. To support Tophat, a web service must expose an endpoint that returns a response in the following format:
-
-```json
-{
-  "name": "<App Name>",
-  "platform": "<ios|android>",
-  "virtual": "<URL>",
-  "physical": "<URL>"
-}
-```
-
-The endpoint must support basic HTTP authentication with username `TOPHAT_APP_TOKEN` and any token as the password. The token must be stored as plain text in a local `~/.tophatrc` file with no newlines and no spaces. Tophat reads this value and automatically specifies it as part of the `Authorization` header when making the request.
-
-Client side configuration for API-based application retrieval is supported _via_ the Settings window or `tophatctl`.
 
 ### File Associations
 

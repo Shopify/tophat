@@ -37,24 +37,17 @@ extension Apps {
 		@Option(help: "The URL of the the artifact built for any device type.")
 		var universal: URL?
 
-		@Option(help: "The URL of the API endpoint that provides the locations to builds for any device type.")
-		var api: URL?
-
 		func run() throws {
 			if !NSRunningApplication.isTophatRunning {
 				print("Warning: Tophat must be running for this command to succeed, but it is not running.")
 			}
 
-			if virtual == nil, physical == nil, universal == nil, api == nil {
-				throw ValidationError("You must specify at least one of --virtual, --physical, --universal, or --api.")
+			if virtual == nil, physical == nil, universal == nil {
+				throw ValidationError("You must specify at least one of --virtual, --physical, or --universal.")
 			}
 
 			if universal != nil, virtual != nil || physical != nil {
-				throw ValidationError("You must specify one of --universal, --api, or a combination of --virtual and --physical.")
-			}
-
-			if api != nil, universal != nil || virtual != nil || physical != nil {
-				throw ValidationError("You must specify one of --universal, --api, or a combination of --virtual and --physical.")
+				throw ValidationError("You must specify one of --universal, or a combination of --virtual and --physical.")
 			}
 
 			let payload = TophatAddPinnedApplicationNotification.Payload(
@@ -63,8 +56,7 @@ extension Apps {
 				platform: platform,
 				virtualURL: virtual,
 				physicalURL: physical,
-				universalURL: universal,
-				artifactProviderURL: api
+				universalURL: universal
 			)
 
 			let notification = TophatAddPinnedApplicationNotification(payload: payload)
