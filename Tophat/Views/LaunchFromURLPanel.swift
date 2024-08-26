@@ -14,47 +14,36 @@ struct LaunchFromURLPanel: View {
 	@Environment(\.launchApp) private var launchApp
 
 	@State private var text = ""
-	@AppStorage("LaunchFromURLIsAPI") private var isAPI = false
 
 	var body: some View {
 		VStack(spacing: 12) {
-			TextField("URL", text: $text, prompt: Text(isAPI ? "Endpoint URL" : "Artifact URL"))
+			TextField("URL", text: $text, prompt: Text("Artifact URL"))
 				.textFieldStyle(.plain)
 				.font(.title)
 				.foregroundColor(colorScheme == .dark ? .white : .primary)
 
-			HStack(alignment: .firstTextBaseline, spacing: 14) {
+			HStack(alignment: .firstTextBaseline) {
 				Spacer()
 
-				Toggle("API", isOn: $isAPI)
-					.toggleStyle(.checkbox)
-
-				HStack(alignment: .firstTextBaseline) {
-					Button("Cancel") {
-						customWindowPresentation?.dismiss()
-						text = ""
-					}
-
-					Button("Launch") {
-						if let url = URL(string: text) {
-							text = ""
-
-							Task.detached(priority: .userInitiated) {
-								if isAPI {
-									await launchApp?(artifactProviderURL: url)
-								} else {
-									await launchApp?(artifactURL: url)
-								}
-							}
-						}
-
-						customWindowPresentation?.dismiss()
-					}
-					.keyboardShortcut(.defaultAction)
-					.disabled(!text.isValidURL)
+				Button("Cancel") {
+					customWindowPresentation?.dismiss()
+					text = ""
 				}
-			}
 
+				Button("Launch") {
+					if let url = URL(string: text) {
+						text = ""
+
+						Task.detached(priority: .userInitiated) {
+							await launchApp?(artifactURL: url)
+						}
+					}
+
+					customWindowPresentation?.dismiss()
+				}
+				.keyboardShortcut(.defaultAction)
+				.disabled(!text.isValidURL)
+			}
 		}
 		.frame(width: 600)
 		.padding()

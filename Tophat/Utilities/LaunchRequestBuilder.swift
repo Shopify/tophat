@@ -38,13 +38,6 @@ final class LaunchRequestBuilder {
 		return LaunchRequest(launchable: artifact, device: device)
 	}
 
-	func createRequest(for artifactProviderResponse: ArtifactProviderResponse) throws -> LaunchRequest {
-		return try createRequest(
-			for: ArtifactSet(artifactProviderResponse: artifactProviderResponse),
-			platform: artifactProviderResponse.platform
-		)
-	}
-
 	func createRequest(for application: Application) throws -> LaunchRequest {
 		let platform = application.platform
 		let targets = application.targets
@@ -74,20 +67,4 @@ final class LaunchRequestBuilder {
 enum LaunchRequestBuilderError: Error {
 	case failedToFindCompatibleDevice(platform: Platform, availableTargets: Set<DeviceType>)
 	case failedToFindCompatibleArtifact(device: Device, availableTargets: Set<DeviceType>)
-}
-
-private extension ArtifactSet {
-	init(artifactProviderResponse response: ArtifactProviderResponse) {
-		var artifacts: [Artifact] = []
-
-		if let virtualURL = response.virtual {
-			artifacts.append(.init(url: virtualURL, targets: [.virtual]))
-		}
-
-		if let physicalURL = response.physical {
-			artifacts.append(.init(url: physicalURL, targets: [.physical]))
-		}
-
-		self.init(artifacts: artifacts)
-	}
 }

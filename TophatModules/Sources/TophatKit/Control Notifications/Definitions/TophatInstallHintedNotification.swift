@@ -13,12 +13,10 @@ public struct TophatInstallGenericNotification: TophatInterProcessNotification {
 
 	public struct Payload: Codable {
 		public let url: URL
-		public let isAPI: Bool
 		public let launchArguments: [String]
 
-		public init(url: URL, isAPI: Bool, launchArguments: [String]) {
+		public init(url: URL, launchArguments: [String]) {
 			self.url = url
-			self.isAPI = isAPI
 			self.launchArguments = launchArguments
 		}
 	}

@@ -51,39 +51,6 @@ final class InstallCoordinator {
 		}
 	}
 
-	/// Downloads, installs, and launches an artifact from an artifact provider endpoint.
-	///
-	/// If an appropriate device is found for the artifact set in advance, the device is booted in parallel
-	/// with the download process to improve completion time.
-	///
-	/// - Parameters:
-	///   - artifactProviderURL: The URL of the API that returns artifacts.
-	///   - context: Additional metadata for the operation.
-	func launch(artifactProviderURL: URL, context: LaunchContext? = nil) async throws {
-		await preflightInstallation(context: context)
-
-		let response: ArtifactProviderResponse
-
-		do {
-			response = try await ArtifactProvider(url: artifactProviderURL).fetchArtifacts()
-		} catch let error {
-			notifyError(error: error)
-			throw error
-		}
-
-		do {
-			let launchRequest = try launchRequestBuilder.createRequest(for: response)
-			try await launch(
-				artifactURL: launchRequest.launchable.url,
-				device: launchRequest.device,
-				context: context ?? LaunchContext(appName: response.name)
-			)
-		} catch let error {
-			notifyError(error: error, platform: response.platform)
-			throw error
-		}
-	}
-
 	/// Downloads, installs, and launches an artifact from a local or remote URL.
 	///
 	/// The device to boot is not known ahead of time—it will be booted after the application is downloaded

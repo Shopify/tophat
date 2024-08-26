@@ -19,7 +19,6 @@ public struct TophatAddPinnedApplicationNotification: TophatInterProcessNotifica
 		public let virtualURL: URL?
 		public let physicalURL: URL?
 		public let universalURL: URL?
-		public let artifactProviderURL: URL?
 
 		public init(
 			id: String? = nil,
@@ -27,8 +26,7 @@ public struct TophatAddPinnedApplicationNotification: TophatInterProcessNotifica
 			platform: Platform,
 			virtualURL: URL?,
 			physicalURL: URL?,
-			universalURL: URL?,
-			artifactProviderURL: URL?
+			universalURL: URL?
 		) {
 			self.id = id
 			self.name = name
@@ -36,7 +34,6 @@ public struct TophatAddPinnedApplicationNotification: TophatInterProcessNotifica
 			self.virtualURL = virtualURL
 			self.physicalURL = physicalURL
 			self.universalURL = universalURL
-			self.artifactProviderURL = artifactProviderURL
 		}
 	}
 

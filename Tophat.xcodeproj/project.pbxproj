@@ -52,9 +52,6 @@
 		80564B5229834137002DC136 /* TaskStatusReporterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80564B5129834137002DC136 /* TaskStatusReporterDelegate.swift */; };
 		80564B542983414D002DC136 /* AlertOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80564B532983414D002DC136 /* AlertOptions.swift */; };
 		80564B5629834203002DC136 /* FileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80564B5529834203002DC136 /* FileTypes.swift */; };
-		805B0EDE29C3A3DE00F051BE /* ArtifactProviderResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B0EDD29C3A3DE00F051BE /* ArtifactProviderResponse.swift */; };
-		805B0EE029C3A41100F051BE /* ArtifactProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B0EDF29C3A41100F051BE /* ArtifactProvider.swift */; };
-		805B0EE229C3B02800F051BE /* ArtifactProviderError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B0EE129C3B02800F051BE /* ArtifactProviderError+LocalizedError.swift */; };
 		805FC43229E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FC43129E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift */; };
 		80629BF12939818C0077960E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BE92939818C0077960E /* SettingsView.swift */; };
 		80629BF22939818C0077960E /* PinnedApplicationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BEC2939818C0077960E /* PinnedApplicationRow.swift */; };
@@ -277,9 +274,6 @@
 		80564B5129834137002DC136 /* TaskStatusReporterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatusReporterDelegate.swift; sourceTree = "<group>"; };
 		80564B532983414D002DC136 /* AlertOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertOptions.swift; sourceTree = "<group>"; };
 		80564B5529834203002DC136 /* FileTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTypes.swift; sourceTree = "<group>"; };
-		805B0EDD29C3A3DE00F051BE /* ArtifactProviderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactProviderResponse.swift; sourceTree = "<group>"; };
-		805B0EDF29C3A41100F051BE /* ArtifactProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactProvider.swift; sourceTree = "<group>"; };
-		805B0EE129C3B02800F051BE /* ArtifactProviderError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtifactProviderError+LocalizedError.swift"; sourceTree = "<group>"; };
 		805FC43129E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtifactDownloaderError+LocalizedError.swift"; sourceTree = "<group>"; };
 		80629BE92939818C0077960E /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		80629BEC2939818C0077960E /* PinnedApplicationRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinnedApplicationRow.swift; sourceTree = "<group>"; };
@@ -469,7 +463,6 @@
 				80301625292C17560016F25E /* AppleApplication.swift */,
 				8030162B292C1B490016F25E /* ApplicationError.swift */,
 				8029A080298AF1E90002C579 /* ApplicationIcon.swift */,
-				805B0EDD29C3A3DE00F051BE /* ArtifactProviderResponse.swift */,
 				80EB5D56297096FB0011DE5F /* InstallStatusMetadata.swift */,
 				80EB5D50296F68CD0011DE5F /* LaunchContext.swift */,
 				80318D1D2927EC54002A5FD9 /* LaunchRequest.swift */,
@@ -494,7 +487,6 @@
 				80EB5D4C296F64F50011DE5F /* ApplicationError+LocalizedError.swift */,
 				80EB5D52296F6A380011DE5F /* Array+JoinedWithSpaces.swift */,
 				805FC43129E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift */,
-				805B0EE129C3B02800F051BE /* ArtifactProviderError+LocalizedError.swift */,
 				802671462947C33C001A804D /* Bundle+Extensions.swift */,
 				804FF6582914239800147652 /* Collection+Filter.swift */,
 				80EB5D4A296F64D70011DE5F /* DeviceError+LocalizedError.swift */,
@@ -713,7 +705,6 @@
 				8090E2552967741F003106B9 /* Status Reporting */,
 				80EB5D43296F59000011DE5F /* Tasks */,
 				80FF03F029089975008509E0 /* ArtifactDownloader.swift */,
-				805B0EDF29C3A41100F051BE /* ArtifactProvider.swift */,
 				8030161F292874B70016F25E /* ArtifactUnpacker.swift */,
 				80629BFB293981B10077960E /* CodableAppStorage.swift */,
 				809BD034290C3A5200FD4043 /* DeviceManager.swift */,
@@ -940,7 +931,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				80629BF12939818C0077960E /* SettingsView.swift in Sources */,
-				805B0EE229C3B02800F051BE /* ArtifactProviderError+LocalizedError.swift in Sources */,
 				809C8573297B0625004CE6A2 /* LaunchFromLocationMenuItem.swift in Sources */,
 				80F74E2A2909FAC80040F026 /* MainMenu.swift in Sources */,
 				80A66D742981BD2200ECBCB6 /* UtilityPathPreferences.swift in Sources */,
@@ -1025,7 +1015,6 @@
 				80629BF42939818C0077960E /* AddPinnedApplicationSheet.swift in Sources */,
 				804ECB7C2975C15300DE78F4 /* DevicePicker.swift in Sources */,
 				805FC43229E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift in Sources */,
-				805B0EE029C3A41100F051BE /* ArtifactProvider.swift in Sources */,
 				80629C22293A8D270077960E /* ProvisioningProfile.swift in Sources */,
 				80D71F1C2984CE720006E1BF /* XcodeOnboardingItem.swift in Sources */,
 				802671452947C297001A804D /* MenuHeader.swift in Sources */,
@@ -1044,7 +1033,6 @@
 				80301620292874B70016F25E /* ArtifactUnpacker.swift in Sources */,
 				80EB5D4F296F658E0011DE5F /* LaunchRequestBuilderError+LocalizedError.swift in Sources */,
 				80A66D6D2981BC9900ECBCB6 /* ErrorNotifier.swift in Sources */,
-				805B0EDE29C3A3DE00F051BE /* ArtifactProviderResponse.swift in Sources */,
 				80FF03EF29087473008509E0 /* InstallCoordinator.swift in Sources */,
 				B6AA44DD296F78670017321C /* GeneralTab.swift in Sources */,
 				80D71F202984CE9F0006E1BF /* GoogleCloudStorageOnboardingItem.swift in Sources */,

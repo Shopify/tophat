@@ -21,7 +21,6 @@ final class NotificationHandler {
 
 	let onLaunchArtifactSet = PassthroughSubject<(ArtifactSet, Platform, [String]), Never>()
 	let onLaunchArtifactURL = PassthroughSubject<(URL, [String]), Never>()
-	let onLaunchArtifactProviderURL = PassthroughSubject<(URL, [String]), Never>()
 
 	private let notifier = TophatInterProcessNotifier()
 	private var cancellables: Set<AnyCancellable> = []
@@ -40,11 +39,7 @@ final class NotificationHandler {
 		notifier
 			.publisher(for: TophatInstallGenericNotification.self)
 			.sink { [weak self] payload in
-				if payload.isAPI {
-					self?.onLaunchArtifactProviderURL.send((payload.url, payload.launchArguments))
-				} else {
-					self?.onLaunchArtifactURL.send((payload.url, payload.launchArguments))
-				}
+				self?.onLaunchArtifactURL.send((payload.url, payload.launchArguments))
 			}
 			.store(in: &cancellables)
 
@@ -55,8 +50,7 @@ final class NotificationHandler {
 					id: payload.id,
 					name: payload.name,
 					platform: payload.platform,
-					artifacts: payload.artifacts,
-					artifactProviderURL: payload.artifactProviderURL
+					artifacts: payload.artifacts
 				)
 
 				self?.delegate?.notificationHandler(didReceiveRequestToAddPinnedApplication: pinnedApplication)

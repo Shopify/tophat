@@ -24,14 +24,6 @@ struct LaunchAppAction {
 		}
 	}
 
-	func callAsFunction(artifactProviderURL: URL, context: LaunchContext? = nil) async {
-		do {
-			try await installCoordinator.launch(artifactProviderURL: artifactProviderURL, context: context)
-		} catch {
-			ErrorNotifier().notify(error: error)
-		}
-	}
-
 	func callAsFunction(artifactSet: ArtifactSet, on platform: Platform, context: LaunchContext? = nil) async {
 		do {
 			try await installCoordinator.launch(artifactSet: artifactSet, on: platform, context: context)

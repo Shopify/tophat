@@ -20,16 +20,12 @@ struct Install: ParsableCommand {
 	@Argument(help: "The URL or local path of the artifact.")
 	var url: URL
 
-	@Flag(help: "Whether the provided URL is an API endpoint that returns artifact information.")
-	var api = false
-
 	@Option(parsing: .upToNextOption, help: "Arguments to pass to the application on launch.")
 	var launchArguments: [String] = []
 
 	func run() throws {
 		let payload = TophatInstallGenericNotification.Payload(
 			url: url,
-			isAPI: api,
 			launchArguments: launchArguments
 		)
 

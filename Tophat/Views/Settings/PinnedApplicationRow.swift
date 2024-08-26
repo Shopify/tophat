@@ -27,10 +27,6 @@ struct PinnedApplicationRow: View {
 				Text("\(application.name) (\(application.platform.description))")
 					.fontWeight(.medium)
 
-				if let artifactProviderURL = application.artifactProviderURL {
-					BadgedURL(badges: ["API"], url: artifactProviderURL)
-				}
-
 				ForEach(application.artifacts, id: \.url) { artifact in
 					BadgedURL(badges: formatted(targets: artifact.targets), url: artifact.url)
 				}
