@@ -71,6 +71,10 @@ final class InstallCoordinator {
 	}
 
 	private func launch(artifactURL: URL, device: Device?, context: LaunchContext? = nil) async throws {
+		guard await validateHostTrust(artifactURL: artifactURL) == .allow else {
+			return
+		}
+
 		let fetchArtifact = FetchArtifactTask(taskStatusReporter: taskStatusReporter, pinnedApplicationState: pinnedApplicationState, context: context)
 		let prepareDevice = PrepareDeviceTask(taskStatusReporter: taskStatusReporter)
 
@@ -117,6 +121,18 @@ final class InstallCoordinator {
 	private func preflightInstallation(context: LaunchContext?) async {
 		taskStatusReporter.notify(message: "Preparing to install \(context?.appName ?? "application")…")
 		await deviceManager.loadDevices()
+	}
+
+	private func validateHostTrust(artifactURL: URL) async -> HostTrustResult {
+		if artifactURL.isFileURL {
+			return .allow
+		}
+
+		guard let host = artifactURL.host() else {
+			return .block
+		}
+
+		return await delegate?.installCoordinator(didPromptToAllowUntrustedHost: host) ?? .block
 	}
 
 	private func notifyError(error: Error, platform: Platform? = nil) {
