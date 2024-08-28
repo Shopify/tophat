@@ -1,0 +1,121 @@
+name: Update Appcast
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update_appcast:
+    name: Update Appcast
+    runs-on: macos-14
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Select Xcode Version
+        run: sudo xcode-select -switch /Applications/Xcode_15.4.app
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - name: Install Dependencies
+        run: |
+          xcodebuild -resolvePackageDependencies -clonedSourcePackagesDirPath ${{ runner.temp }}
+
+          echo "Adding Sparkle binary path to PATH..."
+          echo "${{ runner.temp }}/artifacts/sparkle/Sparkle/bin" >> $GITHUB_PATH
+
+      - name: Prepare Environment
+        env:
+          RELEASE_JSON: ${{ toJSON(github.event.release) }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const path = require('path');
+
+            console.log('Finding release asset...');
+            const release = JSON.parse(process.env.RELEASE_JSON);
+            const asset = release.assets.find(({name}) => /Tophat-.*.zip/.test(name));
+
+            const releasesPath = path.join('${{ runner.temp }}', 'releases');
+
+            console.log('Exporting workflow variables...');
+            core.exportVariable('asset_name', asset.name);
+            core.exportVariable('asset_url', asset.browser_download_url);
+            core.exportVariable('releases_path', releasesPath);
+            core.exportVariable('downloaded_asset_path', path.join(releasesPath, asset.name));
+            core.exportVariable('release_notes_path', path.join(releasesPath, `${path.parse(asset.name).name}.html`));
+
+      - name: Download Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download ${{ github.event.release.tag_name }} --pattern ${{ env.asset_name }} --output ${{ env.downloaded_asset_path }}
+
+      - name: Generate Release Notes
+        uses: actions/github-script@v7
+        env:
+          RELEASE_NOTES_PATH: ${{ env.release_notes_path }}
+          MARKDOWN_TEXT: ${{ github.event.release.body }}
+        with:
+          script: |
+            const fs = require('fs');
+
+            const result = await github.rest.markdown.render({
+              text: process.env.MARKDOWN_TEXT
+            });
+
+            const htmlWithoutLineBreaks = result.data.replace(/(\r\n|\n|\r)/gm, '');
+
+            fs.writeFileSync(process.env.RELEASE_NOTES_PATH, htmlWithoutLineBreaks);
+
+      - name: Update Appcast XML File
+        run: |
+          echo -n "${{ secrets.SPARKLE_SIGNING_SECRET }}" | generate_appcast \
+            --ed-key-file - \
+            --link "${{ github.event.repository.html_url }}" \
+            --download-url-prefix "${{ github.event.repository.html_url }}/releases/download/${{ github.event.release.tag_name }}/" \
+            -o appcast.xml \
+            --embed-release-notes \
+            ${{ env.releases_path }}
+
+      - name: Commit and Push Updated Appcast
+        run: |
+          BRANCH_NAME="update-appcast/${{ github.event.release.tag_name }}"
+
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b $BRANCH_NAME
+          git add appcast.xml
+          git commit -am 'Update Appcast'
+          git push --set-upstream origin $BRANCH_NAME
+
+          echo "branch_name=$BRANCH_NAME" >> $GITHUB_ENV
+
+      - name: Create Pull Request
+        uses: actions/github-script@v7
+        env:
+          HEAD_BRANCH: ${{ env.branch_name }}
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+        with:
+          script: |
+            const { repo, owner } = context.repo;
+
+            console.log('Creating pull request...');
+            const result = await github.rest.pulls.create({
+              title: 'Update Appcast for ${{ github.event.release.tag_name }} release',
+              owner,
+              repo,
+              head: process.env.HEAD_BRANCH,
+              base: process.env.BASE_BRANCH,
+              body: 'This auto-generated PR updates the Appcast for the ${{ github.event.release.tag_name }} release.'
+            });
+
+            console.log('Adding label...');
+            await github.rest.issues.addLabels({
+              owner,
+              repo,
+              issue_number: result.data.number,
+              labels: ['appcast']
+            });
