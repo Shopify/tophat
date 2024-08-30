@@ -23,4 +23,4 @@ jobs:
         run: sudo xcode-select -switch /Applications/Xcode_15.4.app
 
       - name: Run Tests
-        run: set -o pipefail && xcodebuild test -project Tophat.xcodeproj -scheme TophatTests -destination 'platform=macOS,arch=x86_64' | xcbeautify
+        run: set -o pipefail && xcodebuild test -project Tophat.xcodeproj -scheme TophatTests -destination 'platform=macOS,arch=arm64' CODE_SIGNING_ALLOWED=NO | xcbeautify
