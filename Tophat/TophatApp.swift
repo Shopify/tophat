@@ -12,6 +12,7 @@ import Logging
 import LoggingOSLog
 import ServiceManagement
 import UserNotifications
+import Sparkle
 import TophatServer
 import AndroidDeviceKit
 import AppleDeviceKit
@@ -40,6 +41,7 @@ struct TophatApp: App {
 	var body: some Scene {
 		Settings {
 			SettingsView()
+				.environment(appDelegate.updateController)
 				.environmentObject(appDelegate.deviceManager)
 				.environmentObject(appDelegate.pinnedApplicationState)
 				.environmentObject(appDelegate.utilityPathPreferences)
@@ -56,6 +58,12 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 
 	private var menuBarExtra: FluidMenuBarExtra?
 
+	private let sparkleUpdaterController = SPUStandardUpdaterController(
+		startingUpdater: true,
+		updaterDelegate: nil,
+		userDriverDelegate: nil
+	)
+
 	private let server = TophatServer()
 	private let urlHandler = URLHandler()
 	private let notificationHandler = NotificationHandler()
@@ -65,6 +73,8 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	let utilityPathPreferences: UtilityPathPreferences
 	let symbolicLinkManager = TophatCtlSymbolicLinkManager()
 	let launchAtLoginController = LaunchAtLoginController()
+
+	let updateController: UpdateController
 
 	private let deviceSelectionManager: DeviceSelectionManager
 	private let taskStatusReporter: TaskStatusReporter
@@ -97,6 +107,9 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 		)
 
 		self.utilityPathPreferences = UtilityPathPreferences()
+
+		self.updateController = UpdateController(updater: sparkleUpdaterController.updater)
+
 		self.launchApp = LaunchAppAction(installCoordinator: installCoordinator)
 		self.prepareDevice = PrepareDeviceAction(taskStatusReporter: taskStatusReporter)
 		self.mirrorDeviceDisplay = MirrorDeviceDisplayAction(taskStatusReporter: taskStatusReporter)
@@ -151,6 +164,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 				.environmentObject(self.deviceSelectionManager)
 				.environmentObject(self.taskStatusReporter)
 				.environmentObject(self.pinnedApplicationState)
+				.environment(self.updateController)
 				.environment(\.launchApp, self.launchApp)
 				.environment(\.prepareDevice, self.prepareDevice)
 				.environment(\.mirrorDeviceDisplay, self.mirrorDeviceDisplay)

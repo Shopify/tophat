@@ -128,6 +128,8 @@
 		80D71F2A2985C4EE0006E1BF /* ScreenCopyOnboardingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F292985C4EE0006E1BF /* ScreenCopyOnboardingItem.swift */; };
 		80D71F2C2985C69B0006E1BF /* OnboardingPopoverContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F2B2985C69B0006E1BF /* OnboardingPopoverContent.swift */; };
 		80D71F2E2985D11A0006E1BF /* CustomizeLocationsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F2D2985D11A0006E1BF /* CustomizeLocationsButton.swift */; };
+		80DC0FD82C82225600E5C9EE /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 80DC0FD72C82225600E5C9EE /* Sparkle */; };
+		80DC0FDA2C822E7F00E5C9EE /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DC0FD92C822E7F00E5C9EE /* UpdateController.swift */; };
 		80EB5D45296F59100011DE5F /* FetchArtifactTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D44296F59100011DE5F /* FetchArtifactTask.swift */; };
 		80EB5D47296F59270011DE5F /* PrepareDeviceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D46296F59270011DE5F /* PrepareDeviceTask.swift */; };
 		80EB5D49296F5AAF0011DE5F /* InstallApplicationTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D48296F5AAF0011DE5F /* InstallApplicationTask.swift */; };
@@ -347,6 +349,7 @@
 		80D71F2B2985C69B0006E1BF /* OnboardingPopoverContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPopoverContent.swift; sourceTree = "<group>"; };
 		80D71F2D2985D11A0006E1BF /* CustomizeLocationsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeLocationsButton.swift; sourceTree = "<group>"; };
 		80DC0FD52C82202600E5C9EE /* TophatCtl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TophatCtl.entitlements; sourceTree = "<group>"; };
+		80DC0FD92C822E7F00E5C9EE /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		80EB5D44296F59100011DE5F /* FetchArtifactTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchArtifactTask.swift; sourceTree = "<group>"; };
 		80EB5D46296F59270011DE5F /* PrepareDeviceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareDeviceTask.swift; sourceTree = "<group>"; };
 		80EB5D48296F5AAF0011DE5F /* InstallApplicationTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallApplicationTask.swift; sourceTree = "<group>"; };
@@ -385,6 +388,7 @@
 				8090E268296775BE003106B9 /* Collections in Frameworks */,
 				80C18345290232D1008D3B80 /* TophatFoundation in Frameworks */,
 				80346F042BEBD527002F54BC /* AsyncAlgorithms in Frameworks */,
+				80DC0FD82C82225600E5C9EE /* Sparkle in Frameworks */,
 				7F4532AF251A6C4700F2CFC8 /* LoggingOSLog in Frameworks */,
 				809BD04729106F5E00FD4043 /* GoogleStorageKit in Frameworks */,
 				80D2799829005DD000F03649 /* TophatServer in Frameworks */,
@@ -731,6 +735,7 @@
 				80CBACFE2989B8B100F778DD /* ShowOnboardingWindowAction.swift */,
 				80518F562984804C00FB8803 /* TophatCtlSymbolicLinkManager.swift */,
 				804F37FC2C7CEFB00005A869 /* TrustedHostAlert.swift */,
+				80DC0FD92C822E7F00E5C9EE /* UpdateController.swift */,
 				8020A6DD297F301700FEA490 /* URLHandler.swift */,
 				80A66D732981BD2200ECBCB6 /* UtilityPathPreferences.swift */,
 			);
@@ -772,6 +777,7 @@
 				B6AA44CE296DF8EF0017321C /* ZIPFoundation */,
 				80ED3E8E298421B400A734B7 /* TophatKit */,
 				80346F032BEBD527002F54BC /* AsyncAlgorithms */,
+				80DC0FD72C82225600E5C9EE /* Sparkle */,
 			);
 			productName = Tophat;
 			productReference = 7F35024F24A5060500EE76EA /* Tophat.app */;
@@ -858,6 +864,7 @@
 				B6AA44CD296DF8EF0017321C /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				807D7B1429835795007942B4 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 				80346F022BEBD527002F54BC /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
+				80DC0FD62C82225600E5C9EE /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 7F35025024A5060500EE76EA /* Products */;
 			projectDirPath = "";
@@ -986,6 +993,7 @@
 				80EB5D5D2970A25D0011DE5F /* UpdateIconTask.swift in Sources */,
 				80518F632984A64F00FB8803 /* OnboardingWindow.swift in Sources */,
 				80EB5D55297095890011DE5F /* TaskStatusMetadata.swift in Sources */,
+				80DC0FDA2C822E7F00E5C9EE /* UpdateController.swift in Sources */,
 				80D71F2E2985D11A0006E1BF /* CustomizeLocationsButton.swift in Sources */,
 				80629BFA293981A80077960E /* PinnedApplication.swift in Sources */,
 				80EB5D57297096FB0011DE5F /* InstallStatusMetadata.swift in Sources */,
@@ -1464,6 +1472,14 @@
 				version = 1.0.4;
 			};
 		};
+		80DC0FD62C82225600E5C9EE /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.4;
+			};
+		};
 		B6AA44CD296DF8EF0017321C /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
@@ -1529,6 +1545,11 @@
 		80D2799729005DD000F03649 /* TophatServer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TophatServer;
+		};
+		80DC0FD72C82225600E5C9EE /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80DC0FD62C82225600E5C9EE /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		80ED3E8E298421B400A734B7 /* TophatKit */ = {
 			isa = XCSwiftPackageProductDependency;
