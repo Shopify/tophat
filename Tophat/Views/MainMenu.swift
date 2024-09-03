@@ -64,20 +64,9 @@ struct MainMenu: View {
 
 			VStack(alignment: .leading, spacing: 0) {
 				Group {
-					if #available(macOS 14.0, *) {
-						#if compiler(>=5.9)
-						SettingsLink {
-							Text("Settings…")
-								.foregroundColor(.primary)
-						}
-						#endif
-					} else {
-						Button {
-							NSApp.showSettingsWindow()
-						} label: {
-							Text("Settings…")
-								.foregroundColor(.primary)
-						}
+					SettingsLink {
+						Text("Settings…")
+							.foregroundColor(.primary)
 					}
 				}
 				.buttonStyle(MenuItemButtonStyle())

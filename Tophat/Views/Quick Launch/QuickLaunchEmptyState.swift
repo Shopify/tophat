@@ -24,23 +24,14 @@ struct QuickLaunchEmptyState: View {
 			Spacer(minLength: 4)
 
 			Group {
-				if #available(macOS 14.0, *) {
-					#if compiler(>=5.9)
-					SettingsLink {
-						Text("Get Started")
-					}
-					.buttonStyle(
-						SettingsLinkAdditionalActionButtonStyle {
-							selectedTab = .apps
-						}
-					)
-					#endif
-				} else {
-					Button("Get Started") {
-						selectedTab = .apps
-						NSApp.showSettingsWindow()
-					}
+				SettingsLink {
+					Text("Get Started")
 				}
+				.buttonStyle(
+					SettingsLinkAdditionalActionButtonStyle {
+						selectedTab = .apps
+					}
+				)
 			}
 			.buttonStyle(InlineButtonStyle())
 		}

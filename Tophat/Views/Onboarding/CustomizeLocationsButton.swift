@@ -13,23 +13,14 @@ struct CustomizeLocationsButton: View {
 
 	var body: some View {
 		Group {
-			if #available(macOS 14.0, *) {
-				#if compiler(>=5.9)
-				SettingsLink {
-					Text("Customize Locations")
-				}
-				.buttonStyle(
-					SettingsLinkAdditionalActionButtonStyle {
-						selectedTab = .locations
-					}
-				)
-				#endif
-			} else {
-				Button("Customize Locations") {
-					selectedTab = .locations
-					NSApp.showSettingsWindow()
-				}
+			SettingsLink {
+				Text("Customize Locations")
 			}
+			.buttonStyle(
+				SettingsLinkAdditionalActionButtonStyle {
+					selectedTab = .locations
+				}
+			)
 		}
 		.buttonStyle(.link)
 	}
