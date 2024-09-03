@@ -346,6 +346,7 @@
 		80D71F292985C4EE0006E1BF /* ScreenCopyOnboardingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCopyOnboardingItem.swift; sourceTree = "<group>"; };
 		80D71F2B2985C69B0006E1BF /* OnboardingPopoverContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPopoverContent.swift; sourceTree = "<group>"; };
 		80D71F2D2985D11A0006E1BF /* CustomizeLocationsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeLocationsButton.swift; sourceTree = "<group>"; };
+		80DC0FD52C82202600E5C9EE /* TophatCtl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TophatCtl.entitlements; sourceTree = "<group>"; };
 		80EB5D44296F59100011DE5F /* FetchArtifactTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchArtifactTask.swift; sourceTree = "<group>"; };
 		80EB5D46296F59270011DE5F /* PrepareDeviceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareDeviceTask.swift; sourceTree = "<group>"; };
 		80EB5D48296F5AAF0011DE5F /* InstallApplicationTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallApplicationTask.swift; sourceTree = "<group>"; };
@@ -574,6 +575,7 @@
 			children = (
 				807D7B112983576C007942B4 /* Commands */,
 				80ED3E5B29835A8900A734B7 /* Extensions */,
+				80DC0FD52C82202600E5C9EE /* TophatCtl.entitlements */,
 				807D7B102983576C007942B4 /* TophatCtl.swift */,
 			);
 			path = TophatCtl;
@@ -1236,6 +1238,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Tophat/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -1265,6 +1268,7 @@
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Tophat/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
@@ -1334,10 +1338,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = TophatCtl/TophatCtl.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.tophatctl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1350,11 +1356,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = TophatCtl/TophatCtl.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.tophatctl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
