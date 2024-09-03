@@ -25,7 +25,6 @@ struct CommandLineHelperOnboardingItem: View {
 				Button("Install…") {
 					Task {
 						await symbolicLinkManager.install()
-						NSApp.activate(ignoringOtherApps: true)
 					}
 				}
 			}

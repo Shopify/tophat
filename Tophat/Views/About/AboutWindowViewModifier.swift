@@ -42,7 +42,6 @@ private struct AboutWindowViewModifier<WindowContent: View>: ViewModifier {
 	}
 
 	private func present() {
-		NSApp.activate(ignoringOtherApps: true)
 		window?.center()
 		window?.makeKeyAndOrderFront(nil)
 	}

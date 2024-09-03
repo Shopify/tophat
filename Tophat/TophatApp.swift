@@ -41,6 +41,7 @@ struct TophatApp: App {
 	var body: some Scene {
 		Settings {
 			SettingsView()
+				.showDockIconWhenOpen()
 				.environment(appDelegate.updateController)
 				.environmentObject(appDelegate.deviceManager)
 				.environmentObject(appDelegate.pinnedApplicationState)
@@ -48,6 +49,7 @@ struct TophatApp: App {
 				.environmentObject(appDelegate.launchAtLoginController)
 				.environmentObject(appDelegate.symbolicLinkManager)
 		}
+		.commandsRemoved()
 	}
 }
 
@@ -198,6 +200,27 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 
 	private func configureEventSubscriptions() {
+		Task { @MainActor in
+			// Companion to the showDockIconWhenOpen() modifier to hide the dock icon when all
+			// modified windows are closed.
+			for await _ in NotificationCenter.default.notifications(named: NSWindow.willCloseNotification).compactMap({ _ in }) {
+				guard NSApp.activationPolicy() != .accessory else {
+					continue
+				}
+
+				let visibleWindows = NSApp.windows.filter { window in
+					// _NSOrderOutAnimationProxyWindow appears momentarily while a window is ordering out.
+					window.isVisible && !window.className.contains("NSOrderOutAnimationProxyWindow")
+				}
+
+				// The application is considered "inactive" when only the NSStatusBarWindow, and the window
+				// that is about to be closed are visible.
+				if visibleWindows.count < 2 {
+					NSApp.setActivationPolicy(.accessory)
+				}
+			}
+		}
+
 		Publishers.MergeMany(
 			self.urlHandler.onLaunchArtifactURL,
 			self.notificationHandler.onLaunchArtifactURL

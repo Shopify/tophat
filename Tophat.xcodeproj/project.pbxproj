@@ -64,6 +64,7 @@
 		80629BFA293981A80077960E /* PinnedApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BF9293981A80077960E /* PinnedApplication.swift */; };
 		80629BFC293981B10077960E /* CodableAppStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BFB293981B10077960E /* CodableAppStorage.swift */; };
 		80629C22293A8D270077960E /* ProvisioningProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629C21293A8D270077960E /* ProvisioningProfile.swift */; };
+		8079E3562C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079E3552C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift */; };
 		807D7B0F29835762007942B4 /* TophatFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 807D7B0E29835762007942B4 /* TophatFoundation */; };
 		807D7B132983576C007942B4 /* TophatCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807D7B102983576C007942B4 /* TophatCtl.swift */; };
 		807D7B1629835795007942B4 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 807D7B1529835795007942B4 /* ArgumentParser */; };
@@ -72,7 +73,6 @@
 		8090E201294FA29E003106B9 /* FluidMenuBarExtra in Frameworks */ = {isa = PBXBuildFile; productRef = 8090E200294FA29E003106B9 /* FluidMenuBarExtra */; };
 		8090E2032950C1CC003106B9 /* CollapsibleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090E2022950C1CC003106B9 /* CollapsibleSection.swift */; };
 		8090E2132950E01E003106B9 /* DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090E2122950E01E003106B9 /* DeviceList.swift */; };
-		8090E250296772F7003106B9 /* View+OnTrackingHover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090E24F296772F7003106B9 /* View+OnTrackingHover.swift */; };
 		8090E25A2967741F003106B9 /* TaskProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090E2562967741F003106B9 /* TaskProgress.swift */; };
 		8090E25B2967741F003106B9 /* TaskState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090E2572967741F003106B9 /* TaskState.swift */; };
 		8090E25C2967741F003106B9 /* TaskStatusReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090E2582967741F003106B9 /* TaskStatusReporter.swift */; };
@@ -257,13 +257,13 @@
 		80629BF9293981A80077960E /* PinnedApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinnedApplication.swift; sourceTree = "<group>"; };
 		80629BFB293981B10077960E /* CodableAppStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodableAppStorage.swift; sourceTree = "<group>"; };
 		80629C21293A8D270077960E /* ProvisioningProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvisioningProfile.swift; sourceTree = "<group>"; };
+		8079E3552C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShowDockIconWhenOpen.swift"; sourceTree = "<group>"; };
 		807D7B0729835756007942B4 /* tophatctl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tophatctl; sourceTree = BUILT_PRODUCTS_DIR; };
 		807D7B102983576C007942B4 /* TophatCtl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TophatCtl.swift; sourceTree = "<group>"; };
 		807D7B122983576C007942B4 /* FastInstall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastInstall.swift; sourceTree = "<group>"; };
 		8086AE3628F9E8680069217E /* TophatModules */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TophatModules; sourceTree = "<group>"; };
 		8090E2022950C1CC003106B9 /* CollapsibleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSection.swift; sourceTree = "<group>"; };
 		8090E2122950E01E003106B9 /* DeviceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceList.swift; sourceTree = "<group>"; };
-		8090E24F296772F7003106B9 /* View+OnTrackingHover.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+OnTrackingHover.swift"; sourceTree = "<group>"; };
 		8090E2562967741F003106B9 /* TaskProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskProgress.swift; sourceTree = "<group>"; };
 		8090E2572967741F003106B9 /* TaskState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskState.swift; sourceTree = "<group>"; };
 		8090E2582967741F003106B9 /* TaskStatusReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskStatusReporter.swift; sourceTree = "<group>"; };
@@ -459,7 +459,7 @@
 				80EB5D4E296F658E0011DE5F /* LaunchRequestBuilderError+LocalizedError.swift */,
 				80B7BAD629762D8900267C3C /* NSApplication+ShowSettingsWindow.swift */,
 				80629BF72939819F0077960E /* String+IsValidURL.swift */,
-				8090E24F296772F7003106B9 /* View+OnTrackingHover.swift */,
+				8079E3552C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -920,7 +920,6 @@
 				80A91A162981BA2D00D8A8B9 /* LaunchFromURLPanel.swift in Sources */,
 				8090E2032950C1CC003106B9 /* CollapsibleSection.swift in Sources */,
 				80EB5D5F2970A7940011DE5F /* PinnedApplicationState.swift in Sources */,
-				8090E250296772F7003106B9 /* View+OnTrackingHover.swift in Sources */,
 				80EB5D5D2970A25D0011DE5F /* UpdateIconTask.swift in Sources */,
 				80518F632984A64F00FB8803 /* OnboardingWindow.swift in Sources */,
 				80EB5D55297095890011DE5F /* TaskStatusMetadata.swift in Sources */,
@@ -981,6 +980,7 @@
 				809C8575297B0FA9004CE6A2 /* ShowingAdvancedOptionsViewModifier.swift in Sources */,
 				80301620292874B70016F25E /* ArtifactUnpacker.swift in Sources */,
 				80EB5D4F296F658E0011DE5F /* LaunchRequestBuilderError+LocalizedError.swift in Sources */,
+				8079E3562C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift in Sources */,
 				80A66D6D2981BC9900ECBCB6 /* ErrorNotifier.swift in Sources */,
 				80FF03EF29087473008509E0 /* InstallCoordinator.swift in Sources */,
 				B6AA44DD296F78670017321C /* GeneralTab.swift in Sources */,

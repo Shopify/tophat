@@ -34,17 +34,13 @@ struct CollapsibleSection<Content: View>: View {
 						.rotationEffect(expanded ? .degrees(90) : .zero)
 				}
 			}
-			.buttonStyle(MenuItemButtonStyle())
+			.buttonStyle(.menuItem(blinks: true))
 
-			HStack {
-				if expanded {
-					content()
-						.opacity(expanded ? 1 : 0)
-						.transition(.move(edge: .top))
-				}
+			if expanded {
+				content()
+					.transition(.asymmetric(insertion: .identity, removal: .opacity))
 			}
-			.frame(maxWidth: .infinity, alignment: .leading)
-			.clipped()
 		}
+		.clipped()
 	}
 }

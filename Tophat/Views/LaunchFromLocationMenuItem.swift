@@ -18,7 +18,7 @@ struct LaunchFromLocationMenuItem: View {
 
 	var body: some View {
 		Button(label, action: didPerformPrimaryAction)
-			.buttonStyle(MenuItemButtonStyle())
+			.buttonStyle(.menuItem(activatesApplication: true, blinks: true))
 			.floatingPanel(isPresented: $launchFromURLPanelPresented) {
 				LaunchFromURLPanel()
 					// Panels are created in a new SwiftUI context (NSHostingView) so we need to forward
@@ -42,8 +42,6 @@ struct LaunchFromLocationMenuItem: View {
 		panel.canChooseDirectories = false
 		panel.prompt = "Launch"
 		panel.allowedContentTypes = ArtifactFileFormat.contentTypes
-
-		NSApp.activate(ignoringOtherApps: true)
 
 		guard panel.runModal() == .OK, let url = panel.url else {
 			return
