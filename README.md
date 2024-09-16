@@ -102,7 +102,13 @@ Tophat also adds file associations to `*.ipa`, `*.apk`, and `*.zip` files so you
 
 ## Getting Started
 
-The easiest way to run Tophat safely is to build it from source by opening `Tophat.xcodeproj` using Xcode. Alternatively, you can download a pre-built (but unsigned) binary of the latest release from the [releases](https://github.com/Shopify/tophat/releases) page.
+A signed universal binary of Tophat can be downloaded from the latest GitHub release. Click the button below to jump to it, download the `.zip` file, and move Tophat to your Applications folder:
+
+[![Latest GitHub Release](https://img.shields.io/github/v/release/Shopify/tophat?color=black&label=download%20latest&logo=github&sort=semver&style=for-the-badge)](https://github.com/Shopify/tophat/releases/latest)
+
+A full list of releases is available [here](https://github.com/Shopify/tophat/releases).
+
+Tophat will automatically check for updates and let you know if a new one is available. Youʼll be prompted to enable automatic update checks the second time you launch Tophat. Automatic updates can also be configured from Tophatʼs Settings window.
 
 Tophat requires a few developer tools to be set up. On first launch, Tophat will guide you through making sure everything you need is ready to go.
 
