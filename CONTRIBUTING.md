@@ -69,6 +69,5 @@ To build Tophat, you will need at least Xcode 15.0 and macOS 14.0.
 
 To create a release build of Tophat, use the following steps:
 
-1. Go to the `ios-deploy` project in Xcode and set the `Skip Install` build setting to `Yes` for the `ios-deploy` target. Do not commit this change.
 1. Create an archive using Product → Archive.
 1. Select the archive that was created, click Distribute App, then Copy App.

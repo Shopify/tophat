@@ -43,23 +43,7 @@ public struct AppleDevices: DeviceProvider {
 
 	private static var physicalDevices: [ConnectedDevice] {
 		get async {
-			return await withTaskGroup(of: [ConnectedDevice].self) { group in
-				group.addTask {
-					(try? DeviceCtl.listAvailableDevices())?.filter(\.isCoreDeviceOnly) ?? []
-				}
-
-				group.addTask {
-					await iOSDeploy.listAvailableDevices().filter(\.isMobileDeviceOnly)
-				}
-
-				var devices: [ConnectedDevice] = []
-
-				for await deviceSubset in group {
-					devices.append(contentsOf: deviceSubset)
-				}
-
-				return devices
-			}
+			(try? DeviceCtl.listAvailableDevices()) ?? []
 		}
 	}
 }
