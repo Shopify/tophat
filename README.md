@@ -114,7 +114,6 @@ Tophat requires macOS 14 or later.
 
 - Xcode 15 or newer is required.
 - All simulator versions are supported, but physical devices must be running iOS 17 or later.
-- Support for physical devices running iOS 16 and earlier is available but will be deprecated in September 2024.
 
 ### Android Development
 

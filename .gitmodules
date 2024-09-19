@@ -1,3 +1,0 @@
-[submodule "Vendor/ios-deploy"]
-	path = Vendor/ios-deploy
-	url = https://github.com/lfroms/ios-deploy

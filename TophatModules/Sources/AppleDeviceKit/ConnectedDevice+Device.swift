@@ -41,23 +41,13 @@ extension ConnectedDevice: Device {
 
 	var isLocked: Bool {
 		get async throws {
-			if isMobileDeviceOnly {
-				// There is no way of checking with the old stack.
-				return false
-			} else {
-				return try await DeviceCtl.isLocked(udid: id)
-			}
+			try await DeviceCtl.isLocked(udid: id)
 		}
 	}
 
 	func install(application: Application) throws {
 		do {
-			if isMobileDeviceOnly {
-				try iOSDeploy.install(udid: id, bundleUrl: application.url, noWifi: connection == .direct)
-			} else {
-				try DeviceCtl.install(udid: id, bundleUrl: application.url)
-
-			}
+			try DeviceCtl.install(udid: id, bundleUrl: application.url)
 		} catch {
 			throw DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: type)
 		}
@@ -65,11 +55,7 @@ extension ConnectedDevice: Device {
 
 	func launch(application: Application, arguments: [String]? = nil) throws {
 		do {
-			if isMobileDeviceOnly {
-				try iOSDeploy.launch(udid: id, bundleId: application.bundleIdentifier, noWifi: connection == .direct)
-			} else {
-				try DeviceCtl.launch(udid: id, bundleId: application.bundleIdentifier, arguments: arguments ?? [])
-			}
+			try DeviceCtl.launch(udid: id, bundleId: application.bundleIdentifier, arguments: arguments ?? [])
 		} catch {
 			let bundleIdentifier = try application.bundleIdentifier
 			throw DeviceError.failedToLaunchApp(

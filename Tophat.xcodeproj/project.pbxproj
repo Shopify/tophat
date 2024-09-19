@@ -34,7 +34,6 @@
 		8030162C292C1B490016F25E /* ApplicationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8030162B292C1B490016F25E /* ApplicationError.swift */; };
 		80318D1C2927EC4D002A5FD9 /* LaunchRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80318D1B2927EC4D002A5FD9 /* LaunchRequestBuilder.swift */; };
 		80318D1E2927EC54002A5FD9 /* LaunchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80318D1D2927EC54002A5FD9 /* LaunchRequest.swift */; };
-		80318D2C2928123F002A5FD9 /* ios-deploy in Copy ios-deploy */ = {isa = PBXBuildFile; fileRef = 80318D2629281216002A5FD9 /* ios-deploy */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		80346F042BEBD527002F54BC /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 80346F032BEBD527002F54BC /* AsyncAlgorithms */; };
 		803B874B290055C70062F070 /* AndroidDeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 803B874A290055C70062F070 /* AndroidDeviceKit */; };
 		804ECB7C2975C15300DE78F4 /* DevicePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804ECB7B2975C15300DE78F4 /* DevicePicker.swift */; };
@@ -166,27 +165,6 @@
 			remoteGlobalIDString = 7F35024E24A5060500EE76EA;
 			remoteInfo = Tophat;
 		};
-		80318D2529281216002A5FD9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 80318D2029281216002A5FD9 /* ios-deploy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7E70898E1B587BF3004D23AA;
-			remoteInfo = "ios-deploy";
-		};
-		80318D2729281216002A5FD9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 80318D2029281216002A5FD9 /* ios-deploy.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 7E8E3A831C45D4CE0017F6C1;
-			remoteInfo = "ios-deploy-tests";
-		};
-		80318D2929281221002A5FD9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 80318D2029281216002A5FD9 /* ios-deploy.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 7E70898D1B587BF3004D23AA;
-			remoteInfo = "ios-deploy";
-		};
 		807D7B17298357A7007942B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7F35024724A5060500EE76EA /* Project object */;
@@ -197,17 +175,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		80318D2B29281226002A5FD9 /* Copy ios-deploy */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
-			files = (
-				80318D2C2928123F002A5FD9 /* ios-deploy in Copy ios-deploy */,
-			);
-			name = "Copy ios-deploy";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		807D7B0529835756007942B4 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -260,7 +227,6 @@
 		8030162B292C1B490016F25E /* ApplicationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationError.swift; sourceTree = "<group>"; };
 		80318D1B2927EC4D002A5FD9 /* LaunchRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchRequestBuilder.swift; sourceTree = "<group>"; };
 		80318D1D2927EC54002A5FD9 /* LaunchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchRequest.swift; sourceTree = "<group>"; };
-		80318D2029281216002A5FD9 /* ios-deploy.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "ios-deploy.xcodeproj"; path = "Vendor/ios-deploy/ios-deploy.xcodeproj"; sourceTree = "<group>"; };
 		804ECB7B2975C15300DE78F4 /* DevicePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePicker.swift; sourceTree = "<group>"; };
 		804ECB7D2975C18300DE78F4 /* DeviceMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenu.swift; sourceTree = "<group>"; };
 		804ECB7F2975C68400DE78F4 /* VisibleWhenButtonHoveredViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibleWhenButtonHoveredViewModifier.swift; sourceTree = "<group>"; };
@@ -420,7 +386,6 @@
 				7F35026724A5060700EE76EA /* TophatTests */,
 				807D7B0829835756007942B4 /* TophatCtl */,
 				8086AE3628F9E8680069217E /* TophatModules */,
-				80318D2029281216002A5FD9 /* ios-deploy.xcodeproj */,
 				7F35025024A5060500EE76EA /* Products */,
 				8086AE3728F9F01F0069217E /* Frameworks */,
 			);
@@ -474,15 +439,6 @@
 				80629C21293A8D270077960E /* ProvisioningProfile.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		80318D2129281216002A5FD9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				80318D2629281216002A5FD9 /* ios-deploy */,
-				80318D2829281216002A5FD9 /* ios-deploy-tests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		804FF6572914237D00147652 /* Extensions */ = {
@@ -746,14 +702,12 @@
 				7F35024B24A5060500EE76EA /* Sources */,
 				7F35024C24A5060500EE76EA /* Frameworks */,
 				807D7B19298357AE007942B4 /* Copy tophatctl */,
-				80318D2B29281226002A5FD9 /* Copy ios-deploy */,
 				7F35024D24A5060500EE76EA /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				807D7B18298357A7007942B4 /* PBXTargetDependency */,
-				80318D2A29281221002A5FD9 /* PBXTargetDependency */,
 			);
 			name = Tophat;
 			packageProductDependencies = (
@@ -859,12 +813,6 @@
 			);
 			productRefGroup = 7F35025024A5060500EE76EA /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 80318D2129281216002A5FD9 /* Products */;
-					ProjectRef = 80318D2029281216002A5FD9 /* ios-deploy.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				7F35024E24A5060500EE76EA /* Tophat */,
@@ -873,23 +821,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		80318D2629281216002A5FD9 /* ios-deploy */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = "ios-deploy";
-			remoteRef = 80318D2529281216002A5FD9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		80318D2829281216002A5FD9 /* ios-deploy-tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "ios-deploy-tests.xctest";
-			remoteRef = 80318D2729281216002A5FD9 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		7F35024D24A5060500EE76EA /* Resources */ = {
@@ -1090,11 +1021,6 @@
 			isa = PBXTargetDependency;
 			target = 7F35024E24A5060500EE76EA /* Tophat */;
 			targetProxy = 7F35026524A5060600EE76EA /* PBXContainerItemProxy */;
-		};
-		80318D2A29281221002A5FD9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ios-deploy";
-			targetProxy = 80318D2929281221002A5FD9 /* PBXContainerItemProxy */;
 		};
 		807D7B18298357A7007942B4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
