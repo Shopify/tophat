@@ -56,6 +56,9 @@ extension Simulator: Device {
 
 	func install(application: Application) throws {
 		do {
+			// Failure to terminate is permitted as the application may not be running.
+			try? SimCtl.terminate(udid: id, bundleIdentifier: application.bundleIdentifier)
+
 			try SimCtl.install(udid: id, bundleUrl: application.url)
 		} catch {
 			throw DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: .virtual)
