@@ -27,6 +27,7 @@ enum SimCtlCommand {
 	case boot(device: String)
 	case install(device: String, bundleUrl: URL)
 	case launch(device: String, bundleIdentifier: String, arguments: [String])
+	case terminate(device: String, bundleIdentifier: String)
 }
 
 extension SimCtlCommand: ShellCommand {
@@ -47,6 +48,9 @@ extension SimCtlCommand: ShellCommand {
 
 			case .launch(let device, let bundleIdentifier, let arguments):
 				return ["simctl", "launch", device, bundleIdentifier] + arguments
+
+			case .terminate(let device, let bundleIdentifier):
+				return ["simctl", "terminate", device, bundleIdentifier]
 		}
 	}
 }

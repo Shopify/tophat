@@ -37,6 +37,10 @@ final class SimCtl {
 	static func launch(udid: String, bundleIdentifier: String, arguments: [String]) throws {
 		try run(command: .simCtl(.launch(device: udid, bundleIdentifier: bundleIdentifier, arguments: arguments)), log: log)
 	}
+
+	static func terminate(udid: String, bundleIdentifier: String) throws {
+		try run(command: .simCtl(.terminate(device: udid, bundleIdentifier: bundleIdentifier)), log: log)
+	}
 }
 
 private extension Simulator {
