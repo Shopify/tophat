@@ -1,0 +1,16 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Tophat</title>
+        <item>
+            <title>1.11.0</title>
+            <pubDate>Mon, 23 Sep 2024 16:11:26 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>30</sparkle:version>
+            <sparkle:shortVersionString>1.11.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>This update contains improvements and bug fixes:</p><ul><li>Tophat can now check for updates and install them automatically.</li><li>Fixed an issue where applications would not launch correctly on iOS 18 simulators.</li><li>Fixed an issue that caused the Settings window to open in the background.</li></ul>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v1.11.0/Tophat-1.11.0.zip" length="6035570" type="application/octet-stream" sparkle:edSignature="y3yYiKqDbHpX7rvRTlFCUOtuIH33B+JlsUWZ2NsW9h+ODexM2BHVZkosYMVSgtGZdlYcdi1SIs79dJ0qCubjAg=="/>
+        </item>
+    </channel>
+</rss>
