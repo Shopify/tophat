@@ -8,21 +8,72 @@
 
 import SwiftUI
 
-struct MenuItemButtonStyle: ButtonStyle {
+struct MenuItemButtonStyle: PrimitiveButtonStyle {
+	private let blinkDuration = 0.18
+
+	@State private var animationTrigger = 0
+
+	var activatesApplication = false
+	var blinks = false
+
+	func makeBody(configuration: Configuration) -> some View {
+		Button {
+			let trigger = configuration.trigger
+
+			Task { @MainActor in
+				if blinks {
+					animationTrigger += 1
+					try? await Task.sleep(for: .seconds(blinkDuration + 0.01), tolerance: .zero)
+				}
+
+				if activatesApplication {
+					NSRunningApplication.current.activate()
+				}
+
+				trigger()
+			}
+		} label: {
+			configuration.label
+		}
+		.buttonStyle(MenuItemButtonStyleInternal(animationTrigger: animationTrigger, blinkDuration: blinkDuration))
+	}
+}
+
+private struct MenuItemButtonStyleInternal: ButtonStyle {
 	@State private var hovering = false
+
+	var animationTrigger: Int
+	var blinkDuration: TimeInterval
 
 	func makeBody(configuration: Configuration) -> some View {
 		configuration.label
 			.padding(.vertical, Theme.Size.menuPaddingVertical)
 			.padding(.horizontal, Theme.Size.menuPaddingHorizontal)
 			.frame(maxWidth: .infinity, alignment: .leading)
-			.background(.quaternary.opacity(hovering ? 1 : 0))
-			.cornerRadius(4)
-			.onTrackingHover { hovering in
+			.background {
+				RoundedRectangle(cornerRadius: 4)
+					.fill(.quaternary)
+					.phaseAnimator([hovering ? 1 : 0, 0, 1], trigger: animationTrigger) { view, phase  in
+						view.opacity(phase)
+					} animation: { _ in
+						Animation(BlinkAnimation(duration: blinkDuration / 3))
+					}
+			}
+			.onHover { hovering in
 				self.hovering = hovering
 			}
 			.environment(\.buttonPressed, configuration.isPressed)
 			.environment(\.buttonHovered, hovering)
+	}
+}
+
+extension PrimitiveButtonStyle where Self == MenuItemButtonStyle {
+	static var menuItem: Self {
+		menuItem(activatesApplication: false, blinks: false)
+	}
+
+	static func menuItem(activatesApplication: Bool = false, blinks: Bool = false) -> Self {
+		MenuItemButtonStyle(activatesApplication: activatesApplication, blinks: blinks)
 	}
 }
 
@@ -43,5 +94,19 @@ extension EnvironmentValues {
 	var buttonHovered: Bool {
 		get { self[ButtonHoveredKey.self] }
 		set { self[ButtonHoveredKey.self] = newValue }
+	}
+}
+
+private struct BlinkAnimation: CustomAnimation {
+	var duration: TimeInterval
+
+	func animate<V>(value: V, time: TimeInterval, context: inout AnimationContext<V>) -> V? where V: VectorArithmetic {
+		if time > duration {
+			return nil
+		}
+
+		let progress = time / duration
+
+		return value.scaled(by: progress == 1 ? 1 : 0)
 	}
 }

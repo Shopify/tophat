@@ -47,14 +47,14 @@ struct MainMenu: View {
 					} label: {
 						Text("About Tophat")
 					}
-					.buttonStyle(MenuItemButtonStyle())
+					.buttonStyle(.menuItem(activatesApplication: true, blinks: true))
 
 					Button {
 						showOnboardingWindow?()
 					} label: {
 						Text("Show Welcome Window")
 					}
-					.buttonStyle(MenuItemButtonStyle())
+					.buttonStyle(.menuItem(activatesApplication: true, blinks: true))
 				}
 			}
 
@@ -62,31 +62,31 @@ struct MainMenu: View {
 				.padding(.horizontal, Theme.Size.menuPaddingHorizontal)
 
 			VStack(alignment: .leading, spacing: 0) {
-				Group {
-					SettingsLink {
-						Text("Settings…")
-					}
-
-					Button {
-						updateController.checkForUpdates()
-					} label: {
-						Text("Check for Updates…")
-					}
+				SettingsLink {
+					Text("Settings…")
 				}
-				.buttonStyle(MenuItemButtonStyle())
+				.buttonStyle(.menuItem(activatesApplication: true, blinks: true))
+
+				Button {
+					updateController.checkForUpdates()
+				} label: {
+					Text("Check for Updates…")
+				}
+				.buttonStyle(.menuItem(activatesApplication: true, blinks: true))
 
 				Button {
 					NSApplication.shared.terminate(nil)
 				} label: {
 					Text("Quit Tophat")
 				}
-				.buttonStyle(MenuItemButtonStyle())
+				.buttonStyle(.menuItem(activatesApplication: true, blinks: true))
 			}
 		}
 		.padding(Theme.Size.menuMargin)
 		.frame(width: 336)
 		.aboutWindow(isPresented: $aboutWindowPresented) {
 			AboutView()
+				.showDockIconWhenOpen()
 		}
 		.modifier(DeviceIsLockedViewModifier())
 	}

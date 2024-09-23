@@ -26,6 +26,6 @@ struct ToggleableRow<Content: View, IconContent: View>: View {
 				content()
 			}
 		}
-		.buttonStyle(MenuItemButtonStyle())
+		.buttonStyle(.menuItem)
 	}
 }

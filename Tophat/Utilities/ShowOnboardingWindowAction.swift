@@ -24,6 +24,7 @@ final class ShowOnboardingWindowAction {
 		if onboardingWindow == nil {
 			onboardingWindow = OnboardingWindow {
 				OnboardingView()
+					.showDockIconWhenOpen()
 					.environmentObject(self.symbolicLinkManager)
 					.environmentObject(self.utilityPathPreferences)
 			}
@@ -31,7 +32,7 @@ final class ShowOnboardingWindowAction {
 
 		onboardingWindow?.center()
 		onboardingWindow?.makeKeyAndOrderFront(nil)
-		NSApp.activate(ignoringOtherApps: true)
+		NSRunningApplication.current.activate()
 	}
 }
 

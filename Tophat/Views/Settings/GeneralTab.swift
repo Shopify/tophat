@@ -94,7 +94,5 @@ struct GeneralTab: View {
 		} else {
 			await symbolicLinkManager.install()
 		}
-
-		NSApp.activate(ignoringOtherApps: true)
 	}
 }
