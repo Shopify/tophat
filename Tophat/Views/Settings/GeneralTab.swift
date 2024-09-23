@@ -9,10 +9,13 @@
 import SwiftUI
 
 struct GeneralTab: View {
+	@Environment(UpdateController.self) private var updateController
 	@EnvironmentObject private var launchAtLoginController: LaunchAtLoginController
 	@EnvironmentObject private var symbolicLinkManager: TophatCtlSymbolicLinkManager
 
 	var body: some View {
+		@Bindable var updateController = updateController
+
 		Form {
 			Section {
 				Toggle(isOn: $launchAtLoginController.isEnabled) {
@@ -23,7 +26,6 @@ struct GeneralTab: View {
 			}
 
 			Section {
-
 				HStack {
 					Text("Command Line Helper")
 
@@ -44,6 +46,35 @@ struct GeneralTab: View {
 				Text("When installed, you can use the `tophatctl` command to interact with and configure Tophat from the command line.")
 					.font(.subheadline)
 					.foregroundColor(.secondary)
+			}
+
+			Section {
+				Toggle(isOn: $updateController.isAutomaticUpdateCheckEnabled) {
+					Text("Automatically Check for Updates")
+					Text("When enabled, Tophat will periodically check for new updates.")
+				}
+				.controlSize(.large)
+
+				Toggle(isOn: $updateController.isAutomaticUpdateDownloadEnabled) {
+					Text("Automatically Download Updates")
+				}
+				.controlSize(.mini)
+				.disabled(!updateController.isAutomaticUpdateCheckEnabled)
+
+				HStack(spacing: 12) {
+					Spacer()
+
+					if updateController.isCheckingForUpdates {
+						ProgressView()
+							.progressViewStyle(.circular)
+							.controlSize(.small)
+					}
+
+					Button("Check for Updates…") {
+						updateController.checkForUpdates()
+					}
+					.disabled(!updateController.canCheckForUpdates || updateController.isCheckingForUpdates)
+				}
 			}
 		}
 		.formStyle(.grouped)

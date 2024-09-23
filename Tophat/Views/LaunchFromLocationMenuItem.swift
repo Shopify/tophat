@@ -17,17 +17,14 @@ struct LaunchFromLocationMenuItem: View {
 	@State private var launchFromURLPanelPresented = false
 
 	var body: some View {
-		Button(action: didPerformPrimaryAction) {
-			Text(label)
-				.foregroundColor(.primary)
-		}
-		.buttonStyle(MenuItemButtonStyle())
-		.floatingPanel(isPresented: $launchFromURLPanelPresented) {
-			LaunchFromURLPanel()
-				// Panels are created in a new SwiftUI context (NSHostingView) so we need to forward
-				// whatever environment we need.
-				.environment(\.launchApp, launchApp)
-		}
+		Button(label, action: didPerformPrimaryAction)
+			.buttonStyle(MenuItemButtonStyle())
+			.floatingPanel(isPresented: $launchFromURLPanelPresented) {
+				LaunchFromURLPanel()
+					// Panels are created in a new SwiftUI context (NSHostingView) so we need to forward
+					// whatever environment we need.
+					.environment(\.launchApp, launchApp)
+			}
 	}
 
 	private var label: String {

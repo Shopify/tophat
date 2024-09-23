@@ -127,5 +127,9 @@
 			</dict>
 		</dict>
 	</array>
+	<key>SUPublicEDKey</key>
+	<string>7Z1AENH6jaCUbrhIyKMf9uAJU8mRDkMYoUVNZQcfMuE=</string>
+	<key>SUFeedURL</key>
+	<string>https://raw.githubusercontent.com/Shopify/tophat/main/appcast.xml</string>
 </dict>
 </plist>

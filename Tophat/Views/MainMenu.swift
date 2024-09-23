@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct MainMenu: View {
+	@Environment(UpdateController.self) private var updateController
 	@Environment(\.showingAdvancedOptions) private var showingAdvancedOptions
 	@Environment(\.showOnboardingWindow) private var showOnboardingWindow
 	@AppStorage("ShowQuickLaunch") private var showQuickLaunch = true
@@ -45,7 +46,6 @@ struct MainMenu: View {
 						aboutWindowPresented = true
 					} label: {
 						Text("About Tophat")
-							.foregroundColor(.primary)
 					}
 					.buttonStyle(MenuItemButtonStyle())
 
@@ -53,7 +53,6 @@ struct MainMenu: View {
 						showOnboardingWindow?()
 					} label: {
 						Text("Show Welcome Window")
-							.foregroundColor(.primary)
 					}
 					.buttonStyle(MenuItemButtonStyle())
 				}
@@ -64,20 +63,14 @@ struct MainMenu: View {
 
 			VStack(alignment: .leading, spacing: 0) {
 				Group {
-					if #available(macOS 14.0, *) {
-						#if compiler(>=5.9)
-						SettingsLink {
-							Text("Settings…")
-								.foregroundColor(.primary)
-						}
-						#endif
-					} else {
-						Button {
-							NSApp.showSettingsWindow()
-						} label: {
-							Text("Settings…")
-								.foregroundColor(.primary)
-						}
+					SettingsLink {
+						Text("Settings…")
+					}
+
+					Button {
+						updateController.checkForUpdates()
+					} label: {
+						Text("Check for Updates…")
 					}
 				}
 				.buttonStyle(MenuItemButtonStyle())
@@ -86,7 +79,6 @@ struct MainMenu: View {
 					NSApplication.shared.terminate(nil)
 				} label: {
 					Text("Quit Tophat")
-						.foregroundColor(.primary)
 				}
 				.buttonStyle(MenuItemButtonStyle())
 			}

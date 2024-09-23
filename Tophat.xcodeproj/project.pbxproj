@@ -127,6 +127,8 @@
 		80D71F2A2985C4EE0006E1BF /* ScreenCopyOnboardingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F292985C4EE0006E1BF /* ScreenCopyOnboardingItem.swift */; };
 		80D71F2C2985C69B0006E1BF /* OnboardingPopoverContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F2B2985C69B0006E1BF /* OnboardingPopoverContent.swift */; };
 		80D71F2E2985D11A0006E1BF /* CustomizeLocationsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F2D2985D11A0006E1BF /* CustomizeLocationsButton.swift */; };
+		80DC0FD82C82225600E5C9EE /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 80DC0FD72C82225600E5C9EE /* Sparkle */; };
+		80DC0FDA2C822E7F00E5C9EE /* UpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DC0FD92C822E7F00E5C9EE /* UpdateController.swift */; };
 		80EB5D45296F59100011DE5F /* FetchArtifactTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D44296F59100011DE5F /* FetchArtifactTask.swift */; };
 		80EB5D47296F59270011DE5F /* PrepareDeviceTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D46296F59270011DE5F /* PrepareDeviceTask.swift */; };
 		80EB5D49296F5AAF0011DE5F /* InstallApplicationTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D48296F5AAF0011DE5F /* InstallApplicationTask.swift */; };
@@ -312,6 +314,8 @@
 		80D71F292985C4EE0006E1BF /* ScreenCopyOnboardingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCopyOnboardingItem.swift; sourceTree = "<group>"; };
 		80D71F2B2985C69B0006E1BF /* OnboardingPopoverContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPopoverContent.swift; sourceTree = "<group>"; };
 		80D71F2D2985D11A0006E1BF /* CustomizeLocationsButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeLocationsButton.swift; sourceTree = "<group>"; };
+		80DC0FD52C82202600E5C9EE /* TophatCtl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TophatCtl.entitlements; sourceTree = "<group>"; };
+		80DC0FD92C822E7F00E5C9EE /* UpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateController.swift; sourceTree = "<group>"; };
 		80EB5D44296F59100011DE5F /* FetchArtifactTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchArtifactTask.swift; sourceTree = "<group>"; };
 		80EB5D46296F59270011DE5F /* PrepareDeviceTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareDeviceTask.swift; sourceTree = "<group>"; };
 		80EB5D48296F5AAF0011DE5F /* InstallApplicationTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallApplicationTask.swift; sourceTree = "<group>"; };
@@ -350,6 +354,7 @@
 				8090E268296775BE003106B9 /* Collections in Frameworks */,
 				80C18345290232D1008D3B80 /* TophatFoundation in Frameworks */,
 				80346F042BEBD527002F54BC /* AsyncAlgorithms in Frameworks */,
+				80DC0FD82C82225600E5C9EE /* Sparkle in Frameworks */,
 				7F4532AF251A6C4700F2CFC8 /* LoggingOSLog in Frameworks */,
 				809BD04729106F5E00FD4043 /* GoogleStorageKit in Frameworks */,
 				80D2799829005DD000F03649 /* TophatServer in Frameworks */,
@@ -530,6 +535,7 @@
 			children = (
 				807D7B112983576C007942B4 /* Commands */,
 				80ED3E5B29835A8900A734B7 /* Extensions */,
+				80DC0FD52C82202600E5C9EE /* TophatCtl.entitlements */,
 				807D7B102983576C007942B4 /* TophatCtl.swift */,
 			);
 			path = TophatCtl;
@@ -685,6 +691,7 @@
 				80CBACFE2989B8B100F778DD /* ShowOnboardingWindowAction.swift */,
 				80518F562984804C00FB8803 /* TophatCtlSymbolicLinkManager.swift */,
 				804F37FC2C7CEFB00005A869 /* TrustedHostAlert.swift */,
+				80DC0FD92C822E7F00E5C9EE /* UpdateController.swift */,
 				8020A6DD297F301700FEA490 /* URLHandler.swift */,
 				80A66D732981BD2200ECBCB6 /* UtilityPathPreferences.swift */,
 			);
@@ -724,6 +731,7 @@
 				B6AA44CE296DF8EF0017321C /* ZIPFoundation */,
 				80ED3E8E298421B400A734B7 /* TophatKit */,
 				80346F032BEBD527002F54BC /* AsyncAlgorithms */,
+				80DC0FD72C82225600E5C9EE /* Sparkle */,
 			);
 			productName = Tophat;
 			productReference = 7F35024F24A5060500EE76EA /* Tophat.app */;
@@ -777,7 +785,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1540;
 				ORGANIZATIONNAME = Shopify;
 				TargetAttributes = {
 					7F35024E24A5060500EE76EA = {
@@ -810,6 +818,7 @@
 				B6AA44CD296DF8EF0017321C /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				807D7B1429835795007942B4 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 				80346F022BEBD527002F54BC /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
+				80DC0FD62C82225600E5C9EE /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = 7F35025024A5060500EE76EA /* Products */;
 			projectDirPath = "";
@@ -915,6 +924,7 @@
 				80EB5D5D2970A25D0011DE5F /* UpdateIconTask.swift in Sources */,
 				80518F632984A64F00FB8803 /* OnboardingWindow.swift in Sources */,
 				80EB5D55297095890011DE5F /* TaskStatusMetadata.swift in Sources */,
+				80DC0FDA2C822E7F00E5C9EE /* UpdateController.swift in Sources */,
 				80D71F2E2985D11A0006E1BF /* CustomizeLocationsButton.swift in Sources */,
 				80629BFA293981A80077960E /* PinnedApplication.swift in Sources */,
 				80EB5D57297096FB0011DE5F /* InstallStatusMetadata.swift in Sources */,
@@ -1083,7 +1093,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1140,7 +1150,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -1155,18 +1165,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_ENTITLEMENTS = Tophat/Tophat.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 29;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Tophat/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1180,21 +1193,27 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_ENTITLEMENTS = Tophat/Tophat.entitlements;
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 29;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Tophat/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = Tophat;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1204,16 +1223,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = A7XGC83MZE;
 				INFOPLIST_FILE = TophatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.TophatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1226,16 +1246,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = A7XGC83MZE;
 				INFOPLIST_FILE = TophatTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.TophatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1247,9 +1268,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = TophatCtl/TophatCtl.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				DEVELOPMENT_TEAM = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.tophatctl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1261,11 +1285,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_ENTITLEMENTS = TophatCtl/TophatCtl.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				DEAD_CODE_STRIPPING = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.tophatctl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1369,6 +1398,14 @@
 				version = 1.0.4;
 			};
 		};
+		80DC0FD62C82225600E5C9EE /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.4;
+			};
+		};
 		B6AA44CD296DF8EF0017321C /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
@@ -1434,6 +1471,11 @@
 		80D2799729005DD000F03649 /* TophatServer */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TophatServer;
+		};
+		80DC0FD72C82225600E5C9EE /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 80DC0FD62C82225600E5C9EE /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 		80ED3E8E298421B400A734B7 /* TophatKit */ = {
 			isa = XCSwiftPackageProductDependency;
