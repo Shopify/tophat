@@ -46,11 +46,18 @@ final class ArtifactDownloader: NSObject {
 		do {
 			defer { progressObservation = nil }
 
-			let (localURL, _) = try await URLSession.shared.download(from: url, delegate: self)
+			let (localURL, response) = try await URLSession.shared.download(from: url, delegate: self)
+			let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
+			if statusCode != 200 {
+				let body = (try? String(contentsOf: localURL)) ?? "<no response>"
+				throw ArtifactDownloaderError.failedToDownloadArtifact("Received status code \(statusCode). Response: \(body)")
+			}
+			
 			try FileManager.default.moveItem(at: localURL, to: destinationURL)
-
+		} catch let error as ArtifactDownloaderError {
+			throw error
 		} catch {
-			throw ArtifactDownloaderError.failedToDownloadArtifact
+			throw ArtifactDownloaderError.failedToDownloadArtifact(error.localizedDescription)
 		}
 	}
 
@@ -84,5 +91,5 @@ extension ArtifactDownloader: URLSessionTaskDelegate {
 
 enum ArtifactDownloaderError: Error {
 	case failedToCreateDownloadsDirectory
-	case failedToDownloadArtifact
+	case failedToDownloadArtifact(String)
 }

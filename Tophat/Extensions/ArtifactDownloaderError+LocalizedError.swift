@@ -20,8 +20,8 @@ extension ArtifactDownloaderError: LocalizedError {
 
 	var failureReason: String? {
 		switch self {
-			case .failedToDownloadArtifact:
-				return "An unexpected error occurred while downloading the artifact."
+			case .failedToDownloadArtifact(let reason):
+				return reason
 			default:
 				return nil
 		}
