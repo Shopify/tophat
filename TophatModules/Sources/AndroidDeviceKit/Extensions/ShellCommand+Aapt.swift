@@ -16,7 +16,7 @@ extension ShellCommand where Self == AaptCommand {
 }
 
 enum AaptCommand {
-	case name(apkUrl: URL)
+	case dumpBadging(apkUrl: URL)
 }
 
 extension AaptCommand: ShellCommand {
@@ -38,7 +38,7 @@ extension AaptCommand: ShellCommand {
 
 	var arguments: [String] {
 		switch self {
-			case .name(let apkUrl):
+			case .dumpBadging(let apkUrl):
 				return ["dump", "badging", apkUrl.path(percentEncoded: false).wrappedInQuotationMarks()]
 		}
 	}
