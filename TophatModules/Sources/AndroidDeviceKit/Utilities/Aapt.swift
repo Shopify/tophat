@@ -24,7 +24,7 @@ public struct Aapt {
 	private static let packageNameRegex = Regex {
 		"package: name='"
 		Capture {
-			OneOrMore(CharacterClass(.anyNonNewline))
+			OneOrMore(.anyNonNewline.subtracting(.whitespace), .reluctant)
 		}
 		"'"
 	}
