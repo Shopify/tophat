@@ -36,6 +36,7 @@ public struct Aapt {
 				return String(match.1)
 			}
 		} catch {
+			// Empty catch to avoid leaking the error
 		}
 		throw AaptError()
 	}
