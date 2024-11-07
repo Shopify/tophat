@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>1.11.1</title>
+            <pubDate>Thu, 07 Nov 2024 17:06:08 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>31</sparkle:version>
+            <sparkle:shortVersionString>1.11.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>This update fixes an issue where certain Android apps could not be launched by Tophat.</p>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v1.11.1/Tophat-1.11.1.zip" length="6036052" type="application/octet-stream" sparkle:edSignature="4Ryu25cNF9xpvS41pzBw1crkytI5Mmv08gIfngmRMkWfKum6D+VR6IJ0SeNHFRuWdTnZyuu1eEFInvAMukeYDw=="/>
+        </item>
+        <item>
             <title>1.11.0</title>
             <pubDate>Mon, 23 Sep 2024 16:11:26 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
