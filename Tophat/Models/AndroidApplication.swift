@@ -43,7 +43,7 @@ struct AndroidApplication: Application {
 
 	var bundleIdentifier: String {
 		get throws {
-			guard let packageName = try? ApkAnalyzer.readPackageName(apkUrl: url) else {
+			guard let packageName = try? Aapt.readPackageName(apkUrl: url) else {
 				throw ApplicationError.failedToReadBundleIdentifier
 			}
 

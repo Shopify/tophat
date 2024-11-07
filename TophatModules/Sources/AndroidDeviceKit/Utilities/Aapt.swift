@@ -21,9 +21,29 @@ public struct Aapt {
 		"'"
 	}
 
+	private static let packageNameRegex = Regex {
+		"package: name='"
+		Capture {
+			OneOrMore(.anyNonNewline.subtracting(.whitespace), .reluctant)
+		}
+		"'"
+	}
+
+	public static func readPackageName(apkUrl: URL) throws -> String {
+		do {
+			let output = try run(command: .aapt(.dumpBadging(apkUrl: apkUrl)), log: log)
+			if let match = output.firstMatch(of: packageNameRegex) {
+				return String(match.1)
+			}
+		} catch {
+			// Empty catch to avoid leaking the error
+		}
+		throw AaptError()
+	}
+
 	public static func readAppName(apkUrl: URL) throws -> String? {
 		do {
-			let output = try run(command: .aapt(.name(apkUrl: apkUrl)), log: log)
+			let output = try run(command: .aapt(.dumpBadging(apkUrl: apkUrl)), log: log)
 			if let match = output.firstMatch(of: appNameRegex) {
 				return String(match.1)
 			}

@@ -12,14 +12,6 @@ import ShellKit
 class ApkAnalyzerError: Error {}
 
 public struct ApkAnalyzer {
-	public static func readPackageName(apkUrl: URL) throws -> String {
-		do {
-			return try run(command: .apkAnalyzer(.manifest(apkUrl: apkUrl)), log: log)
-		} catch {
-			throw ApkAnalyzerError()
-		}
-	}
-
 	public static func getIconPath(apkUrl: URL) throws -> String {
 		do {
 			return try run(command: .apkAnalyzer(.icon(apkUrl: apkUrl)), log: log)

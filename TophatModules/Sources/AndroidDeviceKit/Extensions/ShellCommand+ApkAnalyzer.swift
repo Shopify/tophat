@@ -16,7 +16,6 @@ extension ShellCommand where Self == ApkAnalyzerCommand {
 }
 
 enum ApkAnalyzerCommand {
-	case manifest(apkUrl: URL)
 	case icon(apkUrl: URL)
 }
 
@@ -39,8 +38,6 @@ extension ApkAnalyzerCommand: ShellCommand {
 
 	var arguments: [String] {
 		switch self {
-			case .manifest(let apkUrl):
-				return ["manifest", "application-id", apkUrl.path(percentEncoded: false).wrappedInQuotationMarks()]
 			case .icon(let apkUrl):
 				return ["resources", "value", "--config", "xxhdpi", "--name", "ic_launcher", "--type", "mipmap", apkUrl.path(percentEncoded: false).wrappedInQuotationMarks()]
 		}
