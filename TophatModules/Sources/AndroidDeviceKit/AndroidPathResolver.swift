@@ -86,22 +86,22 @@ public struct AndroidPathResolver {
 	}
 
 	static func buildTool(named name: String) -> URL? {
-		let buildToolReleases = [
-			"33.0.0",
-			"29.0.3",
-			"29.0.2",
-			"29.0.0",
-			"latest"
-		]
-
-		let availableRelease = buildToolReleases.first { version in
-			sdkRoot.appending(paths: ["build-tools", version, name]).isReachable()
+		let buildToolsDir = sdkRoot.appending(path: "build-tools")
+		
+		guard let contents = try? FileManager.default.contentsOfDirectory(
+			at: buildToolsDir,
+			includingPropertiesForKeys: [.isDirectoryKey],
+			options: .skipsHiddenFiles
+		) else {
+			return nil;
 		}
-
-		guard let availableRelease = availableRelease else {
-			return nil
-		}
-
-		return sdkRoot.appending(paths: ["build-tools", availableRelease, name])
+		
+		let toolPaths = contents
+			.filter { (try? $0.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) ?? false }
+			.map { $0.appending(path: name) }
+			.filter { $0.isReachable() }
+			.sorted { $0.path > $1.path }
+			
+		return toolPaths.first
 	}
 }
