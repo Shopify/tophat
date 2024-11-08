@@ -87,21 +87,21 @@ public struct AndroidPathResolver {
 
 	static func buildTool(named name: String) -> URL? {
 		let buildToolsDir = sdkRoot.appending(path: "build-tools")
-		
+
 		guard let contents = try? FileManager.default.contentsOfDirectory(
 			at: buildToolsDir,
 			includingPropertiesForKeys: [.isDirectoryKey],
 			options: .skipsHiddenFiles
 		) else {
-			return nil;
+			return nil
 		}
-		
+
 		let toolPaths = contents
 			.filter { (try? $0.resourceValues(forKeys: [.isDirectoryKey]).isDirectory) ?? false }
 			.map { $0.appending(path: name) }
 			.filter { $0.isReachable() }
 			.sorted { $0.path > $1.path }
-			
+
 		return toolPaths.first
 	}
 }
