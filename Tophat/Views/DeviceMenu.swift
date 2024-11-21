@@ -18,7 +18,7 @@ struct DeviceMenu: View {
 
 	var body: some View {
 		Menu {
-			if device.type == .virtual {
+			if device.type == .simulator {
 				Button(device.state == .ready ? "Running" : "Start") {
 					Task {
 						await prepareDevice?(device: device)
@@ -55,7 +55,7 @@ struct DeviceMenu: View {
 
 			Divider()
 
-			if device.type == .virtual {
+			if device.type == .simulator {
 				Button("Reveal Device Window") {
 					Task.detached {
 						try? device.focus()

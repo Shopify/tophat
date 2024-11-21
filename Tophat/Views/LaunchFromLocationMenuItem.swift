@@ -47,7 +47,7 @@ struct LaunchFromLocationMenuItem: View {
 			return
 		}
 
-		Task.detached {
+		Task {
 			await launchApp?(artifactURL: url)
 		}
 	}

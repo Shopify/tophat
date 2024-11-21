@@ -12,8 +12,7 @@ import TophatFoundation
 struct PinnedApplication: Identifiable, Codable {
 	let id: String
 	let name: String
-	let platform: Platform
-	let artifacts: [Artifact]
+	let recipes: [InstallRecipe]
 	var icon: ApplicationIcon? = nil
 
 	/// Creates a new pinned application.
@@ -25,12 +24,15 @@ struct PinnedApplication: Identifiable, Codable {
 	///   - id: The identifier of the pinned application, if used for updating purposes.
 	///   - name: The name of the pinned application.
 	///   - platform: The platform of the pinned application.
-	///   - artifacts: The set of artifacts at which this pinned application can be found.
-	init(id: String? = nil, name: String, platform: Platform, artifacts: [Artifact] = []) {
+	///   - recipes: The set of recipes at which this pinned application can be found.
+	init(id: String? = nil, name: String, recipes: [InstallRecipe] = []) {
 		self.id = id ?? UUID().uuidString
 		self.name = name
-		self.platform = platform
-		self.artifacts = artifacts
+		self.recipes = recipes
+	}
+
+	var platform: Platform {
+		recipes.first?.platformHint ?? .unknown
 	}
 }
 

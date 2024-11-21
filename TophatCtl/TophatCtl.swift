@@ -15,7 +15,6 @@ struct TophatCtl: ParsableCommand {
 		abstract: "A utility for interacting with Tophat from command line applications.",
 		subcommands: [
 			Install.self,
-			FastInstall.self,
 			Apps.self
 		]
 	)

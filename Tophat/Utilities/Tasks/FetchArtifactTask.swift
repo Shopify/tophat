@@ -9,6 +9,12 @@
 import Foundation
 import TophatFoundation
 
+extension FetchArtifactTask: ArtifactDownloading {
+	func download(source: RemoteArtifactSource) async throws -> any Application {
+		try await callAsFunction(from: .remote(source: source)).application
+	}
+}
+
 struct FetchArtifactTask {
 	struct Result {
 		let application: Application
@@ -16,19 +22,23 @@ struct FetchArtifactTask {
 
 	let taskStatusReporter: TaskStatusReporter
 	let pinnedApplicationState: PinnedApplicationState
+	let buildDownloader: ArtifactDownloader
 	let context: LaunchContext?
 
-	private let status: TaskStatus
-
-	init(taskStatusReporter: TaskStatusReporter, pinnedApplicationState: PinnedApplicationState, context: LaunchContext?) {
+	init(
+		taskStatusReporter: TaskStatusReporter,
+		pinnedApplicationState: PinnedApplicationState,
+		artifactDownloader: ArtifactDownloader,
+		context: LaunchContext?
+	) {
 		self.taskStatusReporter = taskStatusReporter
 		self.pinnedApplicationState = pinnedApplicationState
+		self.buildDownloader = artifactDownloader
 		self.context = context
-
-		self.status = TaskStatus(displayName: "Downloading \(context?.appName ?? "App")", initialState: .preparing)
 	}
 
-	func callAsFunction(at url: URL) async throws -> Result {
+	func callAsFunction(from location: ArtifactLocation) async throws -> Result {
+		let status = TaskStatus(displayName: "Downloading \(context?.appName ?? "App")", initialState: .running(message: "Downloading", progress: .indeterminate))
 		await taskStatusReporter.add(status: status)
 
 		defer {
@@ -37,18 +47,14 @@ struct FetchArtifactTask {
 			}
 		}
 
-		log.info("Downloading artifact from \(url.absoluteString)")
-		await status.update(state: .running(message: "Downloading"))
-		taskStatusReporter.notify(message: "Downloading \(context?.appName ?? "application")…")
-		let downloadedArtifactUrl = try await downloadArtifact(at: url)
-		log.info("Artifact downloaded to \(downloadedArtifactUrl.path(percentEncoded: false))")
+		let application = switch location {
+			case .remote(let source):
+				try await buildDownloader.download(from: source).application
+			case .local(let application):
+				application
+		}
 
-		log.info("Unpacking artifact at \(downloadedArtifactUrl.path(percentEncoded: false))")
-		await status.update(state: .running(message: "Unpacking"))
-		let application = try ArtifactUnpacker().unpack(artifactURL: downloadedArtifactUrl)
-		log.info("Artifact unpacked to \(application.url.path(percentEncoded: false))")
-
-		Task.detached {
+		Task {
 			let updateIcon = UpdateIconTask(
 				taskStatusReporter: taskStatusReporter,
 				pinnedApplicationState: pinnedApplicationState,
@@ -59,20 +65,5 @@ struct FetchArtifactTask {
 		}
 
 		return Result(application: application)
-	}
-
-	private func downloadArtifact(at url: URL) async throws -> URL {
-		let artifactDownloader = ArtifactDownloader()
-
-		let task = Task {
-			for await progress in artifactDownloader.progressUpdates {
-				await status.update(state: .running(message: "Downloading", progress: progress))
-			}
-		}
-
-		let downloadedArtifactURL = try await artifactDownloader.download(artifactUrl: url)
-		task.cancel()
-
-		return downloadedArtifactURL
 	}
 }

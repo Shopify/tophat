@@ -56,9 +56,9 @@ struct AppleApplication: Application {
 		platformNames.forEach { platformName in
 			switch platformName {
 				case "iPhoneOS":
-					set.insert(.physical)
+					set.insert(.device)
 				case "iPhoneSimulator":
-					set.insert(.virtual)
+					set.insert(.simulator)
 				default:
 					break
 			}
@@ -83,12 +83,16 @@ struct AppleApplication: Application {
 	}
 
 	func validateEligibility(for device: Device) throws {
+		guard platform == device.runtime.platform else {
+			throw ApplicationError.incompatibleDeviceType
+		}
+
 		if !targets.contains(device.type) {
 			throw ApplicationError.incompatibleDeviceType
 		}
 
-		if device.type == .virtual {
-			// Remaining checks are not needed for virtual devices.
+		if device.type == .simulator {
+			// Remaining checks are not needed for simulator devices.
 			return
 		}
 

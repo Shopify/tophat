@@ -8,8 +8,8 @@
 
 /// The type of a device.
 public enum DeviceType: String, Codable, CaseIterable {
-	case virtual
-	case physical
+	case simulator
+	case device
 }
 
 // MARK: - CustomStringConvertible
@@ -17,10 +17,10 @@ public enum DeviceType: String, Codable, CaseIterable {
 extension DeviceType: CustomStringConvertible {
 	public var description: String {
 		switch self {
-			case .virtual:
-				return "virtual"
-			case .physical:
-				return "physical"
+			case .simulator:
+				return "Simulator"
+			case .device:
+				return "Device"
 		}
 	}
 }

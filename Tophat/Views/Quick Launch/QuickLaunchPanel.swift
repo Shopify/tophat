@@ -23,9 +23,9 @@ struct QuickLaunchPanel: View {
 						.frame(minWidth: 0, maxWidth: .infinity)
 				} else {
 					LazyVGrid(columns: columns, alignment: .leading, spacing: 14) {
-						ForEach(Array(pinnedApplicationState.pinnedApplications.enumerated()), id: \.element.id) { index, app in
+						ForEach(pinnedApplicationState.pinnedApplications) { app in
 							Button {
-								didSelect(app: app, index: index)
+								didSelect(app: app)
 							} label: {
 								QuickLaunchAppView(app: app)
 							}
@@ -40,12 +40,11 @@ struct QuickLaunchPanel: View {
 		}
 	}
 
-	private func didSelect(app: PinnedApplication, index: Int) {
+	private func didSelect(app: PinnedApplication) {
 		let launchContext = LaunchContext(appName: app.name, pinnedApplicationId: app.id)
 
-		Task.detached(priority: .userInitiated) {
-			let artifactSet = ArtifactSet(artifacts: app.artifacts)
-			await launchApp?(artifactSet: artifactSet, on: app.platform, context: launchContext)
+		Task {
+			await launchApp?(recipes: app.recipes, context: launchContext)
 		}
 	}
 }

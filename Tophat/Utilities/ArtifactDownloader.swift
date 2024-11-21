@@ -2,87 +2,92 @@
 //  ArtifactDownloader.swift
 //  Tophat
 //
-//  Created by Lukas Romsicki on 2022-10-25.
-//  Copyright © 2022 Shopify. All rights reserved.
+//  Created by Lukas Romsicki on 2024-11-05.
+//  Copyright © 2024 Shopify. All rights reserved.
 //
 
 import Foundation
-import GoogleStorageKit
-import AsyncAlgorithms
+import TophatFoundation
+import Logging
 
-final class ArtifactDownloader: NSObject {
-	private let downloadsDirectory = FileManager.default.temporaryDirectory.appending(paths: ["com.shopify.tophat", "downloads"])
+struct ArtifactResource: Identifiable {
+	let id: UUID
+	let url: URL
+	let application: Application
+}
 
-	let progressUpdates = AsyncChannel<TaskProgress>()
+final class ArtifactDownloader {
+	private let artifactsURL: URL = .temporaryDirectory
+		.appending(path: Bundle.main.bundleIdentifier!)
+		.appending(path: "Artifacts")
 
-	fileprivate var progressObservation: NSKeyValueObservation?
+	private let artifactRetrievalCoordinator: ArtifactRetrievalCoordinating
 
-	/// Downloads and extracts an artifact and returns the build.
-	/// - Parameter artifact: The artifact to download.
-	/// - Returns: The downloaded build derived from the artifact.
-	func download(artifactUrl: URL) async throws -> URL {
-		let temporaryDirectory = try createTemporaryDirectory()
-		let destinationURL = temporaryDirectory.appending(path: artifactUrl.lastPathComponent)
-
-		if artifactUrl.isFileURL {
-			try FileManager.default.copyItem(at: artifactUrl, to: destinationURL)
-		} else if artifactUrl.isGoogleStorageURL {
-			for try await progress in try GoogleStorage.download(artifactURL: artifactUrl, to: destinationURL) {
-				let progress: TaskProgress = .determinate(
-					totalUnitCount: progress.totalUnitCount,
-					pendingUnitCount: progress.pendingUnitCount
-				)
-
-				await progressUpdates.send(progress)
-			}
-		} else {
-			try await downloadFile(url: artifactUrl, to: destinationURL)
-		}
-
-		return destinationURL
+	init(artifactRetrievalCoordinator: ArtifactRetrievalCoordinating) {
+		self.artifactRetrievalCoordinator = artifactRetrievalCoordinator
 	}
 
-	private func downloadFile(url: URL, to destinationURL: URL) async throws {
+	func download(from source: RemoteArtifactSource) async throws -> ArtifactResource {
 		do {
-			defer { progressObservation = nil }
-
-			let (localURL, _) = try await URLSession.shared.download(from: url, delegate: self)
-			try FileManager.default.moveItem(at: localURL, to: destinationURL)
-
+			return try await _download(from: source)
 		} catch {
 			throw ArtifactDownloaderError.failedToDownloadArtifact
 		}
 	}
 
-	private func createTemporaryDirectory() throws -> URL {
-		let temporaryDirectory = downloadsDirectory.appending(path: UUID().uuidString)
+	private func _download(from source: RemoteArtifactSource) async throws -> ArtifactResource {
+		let resourceID = UUID()
+		let artifactDirectoryURL = artifactsURL.appending(path: resourceID.uuidString)
 
-		do {
-			try FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
-		} catch {
-			throw ArtifactDownloaderError.failedToCreateDownloadsDirectory
+		try FileManager.default.createDirectory(at: artifactDirectoryURL, withIntermediateDirectories: true)
+
+		let artifactURL: URL
+
+		switch source {
+			case .artifactProvider(let metadata):
+				log.info("Downloading artifact from artifact provider", metadata: metadata.loggerMetadata)
+				let localURL = try await artifactRetrievalCoordinator.retrieve(metadata: metadata)
+				log.info("The artifact provider has made the artifact available at \(localURL)")
+
+				let fileName = localURL.lastPathComponent
+				let destinationURL = artifactDirectoryURL.appending(component: fileName)
+
+				log.info("Copying downloaded artifact to \(destinationURL)")
+				try FileManager.default.copyItem(at: localURL, to: destinationURL)
+
+				log.info("Notifying artifact provider with identifier \(metadata.id) to clean up temporary files")
+				try await artifactRetrievalCoordinator.cleanUp(artifactProviderID: metadata.id, localURL: localURL)
+
+				artifactURL = destinationURL
+
+			case .file(let fileURL):
+				let fileName = fileURL.lastPathComponent
+				let destinationURL = artifactDirectoryURL.appending(component: fileName)
+
+				log.info("Copying artifact on local filesystem to \(destinationURL)")
+				try FileManager.default.copyItem(at: fileURL, to: destinationURL)
+
+				artifactURL = destinationURL
 		}
 
-		return temporaryDirectory
+		log.info("Unpacking artifact at \(artifactURL)")
+		let application = try ArtifactUnpacker().unpack(artifactURL: artifactURL)
+
+		log.info("Artifact unpacked to \(application.url)")
+
+		return ArtifactResource(id: resourceID, url: artifactURL, application: application)
 	}
 }
 
-extension ArtifactDownloader: URLSessionTaskDelegate {
-	func urlSession(_ session: URLSession, didCreateTask task: URLSessionTask) {
-		progressObservation = task.progress.observe(\.fractionCompleted) { progress, observedChange in
-			let progress: TaskProgress = .determinate(
-				totalUnitCount: 1,
-				pendingUnitCount: progress.fractionCompleted
-			)
-
-			Task { [weak self] in
-				await self?.progressUpdates.send(progress)
-			}
-		}
+private extension ArtifactProviderMetadata {
+	var loggerMetadata: Logger.Metadata {
+		[
+			"id": .string(id),
+			"parameters": .dictionary(parameters.mapValues { .string($0) })
+		]
 	}
 }
 
 enum ArtifactDownloaderError: Error {
-	case failedToCreateDownloadsDirectory
 	case failedToDownloadArtifact
 }

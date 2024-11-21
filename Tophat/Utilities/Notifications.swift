@@ -17,7 +17,7 @@ enum Notifications {
 	}
 
 	static func notify(message: String) {
-		Task(priority: .high) {
+		Task(priority: .high) { @MainActor in
 			let content = UNMutableNotificationContent()
 			content.title = "Tophat"
 			content.body = message

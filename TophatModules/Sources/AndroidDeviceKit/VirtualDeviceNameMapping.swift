@@ -24,12 +24,12 @@ extension Collection where Element == ConnectedDevice {
 	///
 	/// This is an expensive operation as `adb` needs to be called once for each connected device. The
 	/// result of this function should be cached as early as possible so that these values are only resolved
-	/// once. Only virtual devices are queried, physical devices are ignored and are not returned.
-	/// - Returns: A collection of containers including the connected device and its associated virtual
+	/// once. Only simulator devices are queried, physical devices are ignored and are not returned.
+	/// - Returns: A collection of containers including the connected device and its associated simulator
 	/// device name.
 	func mappedToVirtualDeviceNames() async -> [VirtualDeviceNameMapping] {
 		return await withTaskGroup(of: VirtualDeviceNameMapping.self, returning: [VirtualDeviceNameMapping].self) { group in
-			filter(type: .virtual).forEach { connectedVirtualDevice in
+			filter(type: .simulator).forEach { connectedVirtualDevice in
 				group.addTask {
 					return VirtualDeviceNameMapping(
 						connectedDevice: connectedVirtualDevice,

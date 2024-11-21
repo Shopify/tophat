@@ -23,7 +23,7 @@ extension ConnectedDevice: Device {
 	}
 
 	var type: DeviceType {
-		.physical
+		.device
 	}
 
 	var connection: Connection {

@@ -64,13 +64,13 @@ struct DeviceList: View {
 
 	private var primaryDevices: [Device] {
 		supportedDevices.filter { device in
-			device.type == .physical || pinnedDeviceIdentifiers.contains(device.id)
+			device.type == .device || pinnedDeviceIdentifiers.contains(device.id)
 		}
 	}
 
 	private var secondaryDevices: [Device] {
 		supportedDevices.filter { device in
-			device.type == .virtual && !pinnedDeviceIdentifiers.contains(device.id)
+			device.type == .simulator && !pinnedDeviceIdentifiers.contains(device.id)
 		}
 	}
 }

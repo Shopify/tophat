@@ -8,13 +8,11 @@
 
 import SwiftUI
 import AndroidDeviceKit
-import GoogleStorageKit
 
 final class UtilityPathPreferences: ObservableObject {
 	@AppStorage("AndroidSDKPath") var preferredAndroidSDKPath: String?
 	@AppStorage("JavaHomePath") var preferredJavaHomePath: String?
 	@AppStorage("ScrcpyPath") var preferredScrcpyPath: String?
-	@AppStorage("GSUtilPath") var preferredGSUtilPath: String?
 
 	var resolvedAndroidSDKLocation: URL? {
 		AndroidPathResolver.sdkRoot
@@ -26,10 +24,6 @@ final class UtilityPathPreferences: ObservableObject {
 
 	var resolvedScrcpyLocation: URL? {
 		AndroidPathResolver.scrcpy
-	}
-
-	var resolvedGSUtilLocation: URL? {
-		GoogleStoragePathResolver.gsUtilPath
 	}
 
 	@MainActor
@@ -58,14 +52,5 @@ extension UtilityPathPreferences: AndroidPathResolverDelegate {
 			return nil
 		}
 		return URL(fileURLWithPath: preferredScrcpyPath)
-	}
-}
-
-extension UtilityPathPreferences: GoogleStoragePathResolverDelegate {
-	func pathToGSUtil() -> URL? {
-		guard let preferredGSUtilPath = preferredGSUtilPath else {
-			return nil
-		}
-		return URL(filePath: preferredGSUtilPath)
 	}
 }

@@ -9,48 +9,71 @@
 import Foundation
 import Combine
 import TophatFoundation
-import TophatKit
+import TophatUtilities
 
 protocol NotificationHandlerDelegate: AnyObject {
 	func notificationHandler(didReceiveRequestToAddPinnedApplication pinnedApplication: PinnedApplication)
 	func notificationHandler(didReceiveRequestToRemovePinnedApplicationWithIdentifier pinnedApplicationIdentifier: PinnedApplication.ID)
+	func notificationHandler(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe])
+	func notificationHandler(didOpenURL url: URL, launchArguments: [String])
 }
 
 final class NotificationHandler {
 	weak var delegate: NotificationHandlerDelegate?
-
-	let onLaunchArtifactSet = PassthroughSubject<(ArtifactSet, Platform, [String]), Never>()
-	let onLaunchArtifactURL = PassthroughSubject<(URL, [String]), Never>()
 
 	private let notifier = TophatInterProcessNotifier()
 	private var cancellables: Set<AnyCancellable> = []
 
 	init() {
 		notifier
-			.publisher(for: TophatInstallHintedNotification.self)
-			.map { payload in
-				(ArtifactSet(artifacts: payload.artifacts), payload.platform, payload.launchArguments)
-			}
-			.sink { [weak self] result in
-				self?.onLaunchArtifactSet.send(result)
+			.publisher(for: TophatInstallURLNotification.self)
+			.sink { [weak self] payload in
+				self?.delegate?.notificationHandler(didOpenURL: payload.url, launchArguments: payload.launchArguments)
 			}
 			.store(in: &cancellables)
 
 		notifier
-			.publisher(for: TophatInstallGenericNotification.self)
+			.publisher(for: TophatInstallConfigurationNotification.self)
 			.sink { [weak self] payload in
-				self?.onLaunchArtifactURL.send((payload.url, payload.launchArguments))
+				let recipes = payload.installRecipes.map { recipe in
+					let artifactProviderMetadata = ArtifactProviderMetadata(
+						id: recipe.artifactProviderID,
+						parameters: recipe.artifactProviderParameters
+					)
+
+					return InstallRecipe(
+						source: .artifactProvider(metadata: artifactProviderMetadata),
+						launchArguments: recipe.launchArguments,
+						platformHint: recipe.platformHint,
+						destinationHint: recipe.destinationHint
+					)
+				}
+
+				self?.delegate?.notificationHandler(didReceiveRequestToLaunchApplicationWithRecipes: recipes)
 			}
 			.store(in: &cancellables)
 
 		notifier
 			.publisher(for: TophatAddPinnedApplicationNotification.self)
 			.sink { [weak self] payload in
+				let configuration = payload.configuration
+
 				let pinnedApplication = PinnedApplication(
-					id: payload.id,
-					name: payload.name,
-					platform: payload.platform,
-					artifacts: payload.artifacts
+					id: configuration.id,
+					name: configuration.name,
+					recipes: configuration.sources.map { source in
+						let artifactProviderMetadata = ArtifactProviderMetadata(
+							id: source.artifactProviderID,
+							parameters: source.artifactProviderParameters
+						)
+
+						return InstallRecipe(
+							source: .artifactProvider(metadata: artifactProviderMetadata),
+							launchArguments: source.launchArguments,
+							platformHint: source.platformHint,
+							destinationHint: source.destinationHint
+						)
+					}
 				)
 
 				self?.delegate?.notificationHandler(didReceiveRequestToAddPinnedApplication: pinnedApplication)
@@ -64,34 +87,4 @@ final class NotificationHandler {
 			}
 			.store(in: &cancellables)
 	}
-}
-
-private extension TophatInstallHintedNotification.Payload {
-	var artifacts: [Artifact] {
-		convertToArtifacts(virtualURL: virtualURL, physicalURL: physicalURL, universalURL: universalURL)
-	}
-}
-
-private extension TophatAddPinnedApplicationNotification.Payload {
-	var artifacts: [Artifact] {
-		convertToArtifacts(virtualURL: virtualURL, physicalURL: physicalURL, universalURL: universalURL)
-	}
-}
-
-private func convertToArtifacts(virtualURL: URL?, physicalURL: URL?, universalURL: URL?) -> [Artifact] {
-	var artifacts: [Artifact] = []
-
-	if let virtualURL = virtualURL {
-		artifacts.append(.init(url: virtualURL, targets: [.virtual]))
-	}
-
-	if let physicalURL = physicalURL {
-		artifacts.append(.init(url: physicalURL, targets: [.physical]))
-	}
-
-	if let universalURL = universalURL {
-		artifacts.append(.init(url: universalURL, targets: [.virtual, .physical]))
-	}
-
-	return artifacts
 }
