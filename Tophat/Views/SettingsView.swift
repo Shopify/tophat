@@ -13,6 +13,7 @@ enum SettingsTab: Int {
 	case apps
 	case devices
 	case locations
+	case extensions
 }
 
 struct SettingsView: View {
@@ -43,10 +44,16 @@ struct SettingsView: View {
 					Label("Locations", systemImage: "externaldrive")
 				}
 				.tag(SettingsTab.locations)
-		}
 
+			ExtensionsTab()
+				.tabItem {
+					Label("Extensions", systemImage: "puzzlepiece.extension")
+				}
+				.tag(SettingsTab.extensions)
+		}
 		.frame(width: 600)
 		.frame(maxHeight: 500)
+		.scrollContentBackground(.hidden)
 		.fixedSize()
 	}
 }

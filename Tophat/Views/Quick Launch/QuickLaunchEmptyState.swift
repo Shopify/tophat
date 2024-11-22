@@ -29,6 +29,7 @@ struct QuickLaunchEmptyState: View {
 				}
 				.buttonStyle(
 					SettingsLinkAdditionalActionButtonStyle {
+						NSRunningApplication.current.activate()
 						selectedTab = .apps
 					}
 				)

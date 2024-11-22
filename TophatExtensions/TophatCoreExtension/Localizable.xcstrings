@@ -1,0 +1,33 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Basic HTTP" : {
+
+    },
+    "Built-in Tophat functionality" : {
+
+    },
+    "Core Features" : {
+
+    },
+    "File Name" : {
+
+    },
+    "Place scripts in the ~/Library/Application Scripts/%@ folder." : {
+
+    },
+    "Script" : {
+
+    },
+    "Shell Script" : {
+
+    },
+    "The file name of the script to run." : {
+
+    },
+    "URL" : {
+
+    }
+  },
+  "version" : "1.0"
+}

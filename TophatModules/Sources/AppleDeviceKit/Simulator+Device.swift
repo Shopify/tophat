@@ -21,7 +21,7 @@ extension Simulator: Device {
 	}
 
 	var type: DeviceType {
-		.virtual
+		.simulator
 	}
 
 	var connection: Connection {
@@ -61,7 +61,7 @@ extension Simulator: Device {
 
 			try SimCtl.install(udid: id, bundleUrl: application.url)
 		} catch {
-			throw DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: .virtual)
+			throw DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: .simulator)
 		}
 	}
 
@@ -71,7 +71,7 @@ extension Simulator: Device {
 		do {
 			try SimCtl.launch(udid: id, bundleIdentifier: bundleIdentifier, arguments: arguments ?? [])
 		} catch {
-			throw DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .unexpected, deviceType: .virtual)
+			throw DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .unexpected, deviceType: .simulator)
 		}
 	}
 

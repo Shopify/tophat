@@ -14,36 +14,30 @@ import SwiftUI
 final class DeviceSelectionManager: ObservableObject {
 	private unowned let deviceManager: DeviceManager
 
-	// Setting a default value as Picker does not handle optionals reliably.
-	@AppStorage("SelectedAppleDevice") var selectedAppleDeviceIdentifier: String = ""
-	@AppStorage("SelectedAndroidDevice") var selectedAndroidDeviceIdentifier: String = ""
+	@CodableAppStorage("SelectedDeviceIdentifiers") var selectedDeviceIdentifiers: [String] = []
 
 	init(deviceManager: DeviceManager) {
 		self.deviceManager = deviceManager
 
 		// Configure default devices if none were initially selected.
-		if selectedAppleDeviceIdentifier.isEmpty,
-		   let firstAppleDevice = devices.filter(by: .iOS).first {
-			selectedAppleDeviceIdentifier = firstAppleDevice.id
+		if selectedDeviceIdentifiers.isEmpty {
+			for platform in Platform.allCases {
+				if let firstPlatformDevice = devices.filter(by: platform).first {
+					selectedDeviceIdentifiers.append(firstPlatformDevice.id)
+				}
+			}
 		}
-
-		if selectedAndroidDeviceIdentifier.isEmpty,
-		   let firstAndroidDevice = devices.filter(by: .android).first {
-			selectedAndroidDeviceIdentifier = firstAndroidDevice.id
-		}
-	}
-
-	var selectedAppleDevice: Device? {
-		devices.first { $0.id == selectedAppleDeviceIdentifier }
-	}
-
-	var selectedAndroidDevice: Device? {
-		devices.first { $0.id == selectedAndroidDeviceIdentifier }
 	}
 
 	/// A collection of all currently selected devices.
 	var selectedDevices: [Device] {
-		[selectedAppleDevice, selectedAndroidDevice].compactMap { $0 }
+		get {
+			devices.filter { selectedDeviceIdentifiers.contains($0.id) }
+		}
+		set {
+			selectedDeviceIdentifiers = newValue.map { $0.id }
+			objectWillChange.send()
+		}
 	}
 
 	private var devices: [Device] {

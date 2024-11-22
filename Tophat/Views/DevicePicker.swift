@@ -32,13 +32,10 @@ struct DevicePicker: View {
 	}
 
 	private func didSelect(device: Device) {
-		switch device.runtime.platform {
-			case .iOS:
-				deviceSelectionManager.selectedAppleDeviceIdentifier = device.id
-			case .android:
-				deviceSelectionManager.selectedAndroidDeviceIdentifier = device.id
-			default:
-				break
+		if !deviceSelectionManager.selectedDevices.contains(where: { $0.id == device.id }) {
+			deviceSelectionManager.selectedDevices.append(device)
+		} else {
+			deviceSelectionManager.selectedDevices.removeAll { $0.id == device.id }
 		}
 	}
 

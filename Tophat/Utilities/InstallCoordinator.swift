@@ -10,133 +10,139 @@ import Foundation
 import TophatFoundation
 
 final class InstallCoordinator {
-	weak var delegate: InstallCoordinatorDelegate?
-
 	private unowned let deviceManager: DeviceManager
 	private unowned let pinnedApplicationState: PinnedApplicationState
 	private unowned let taskStatusReporter: TaskStatusReporter
-	private let launchRequestBuilder: LaunchRequestBuilder
+	private let deviceSelectionManager: DeviceSelectionManager
+
+	private let artifactDownloader: ArtifactDownloader
 
 	init(
 		deviceManager: DeviceManager,
 		deviceSelectionManager: DeviceSelectionManager,
 		pinnedApplicationState: PinnedApplicationState,
-		taskStatusReporter: TaskStatusReporter
+		taskStatusReporter: TaskStatusReporter,
+		extensionHost: ExtensionHost
 	) {
 		self.deviceManager = deviceManager
 		self.pinnedApplicationState = pinnedApplicationState
-		self.launchRequestBuilder = LaunchRequestBuilder(deviceSelectionManager: deviceSelectionManager)
+		self.deviceSelectionManager = deviceSelectionManager
 		self.taskStatusReporter = taskStatusReporter
+
+		self.artifactDownloader = ArtifactDownloader(artifactRetrievalCoordinator: ArtifactRetrievalCoordinator(appExtensionIdentityResolver: extensionHost))
 	}
 
-	/// Downloads, installs, and launches an artifact set on a device matching a given platform.
-	///
-	/// If an appropriate device is found for the artifact set in advance, the device is booted in parallel
+	/// Downloads, installs, and launches applications on selected devices.
+	///  
+	/// If an appropriate device is found for a recipe in advance, the device is booted in parallel
 	/// with the download process to improve completion time.
-	///
+	///  
 	/// - Parameters:
-	///   - artifactSet: The artifact set to launch.
-	///   - platform: The platform to launch on.
+	///   - recipes: A collection of recipes for retrieving builds.
 	///   - context: Additional metadata for the operation.
-	func launch(artifactSet: ArtifactSet, on platform: Platform, context: LaunchContext? = nil) async throws {
+	func install(recipes: [InstallRecipe], context: LaunchContext? = nil) async throws {
 		await preflightInstallation(context: context)
 
-		do {
-			let launchRequest = try launchRequestBuilder.createRequest(for: artifactSet, platform: platform)
-			try await launch(artifactURL: launchRequest.launchable.url, device: launchRequest.device, context: context)
+		let fetchArtifact = FetchArtifactTask(
+			taskStatusReporter: taskStatusReporter,
+			pinnedApplicationState: pinnedApplicationState,
+			artifactDownloader: artifactDownloader,
+			context: context
+		)
 
-		} catch let error {
-			notifyError(error: error, platform: platform)
-			throw error
+		let machine = InstallationTicketMachine(deviceSelector: deviceSelectionManager, artifactDownloader: fetchArtifact)
+
+		try await withThrowingTaskGroup(of: Void.self) { group in
+			for try await ticket in machine.process(recipes: recipes) {
+				group.addTask { [weak self] in
+					try await self?.install(ticket: ticket, context: context)
+				}
+			}
+
+			try await group.waitForAll()
 		}
 	}
 
 	/// Downloads, installs, and launches an artifact from a local or remote URL.
 	///
-	/// The device to boot is not known ahead of time—it will be booted after the application is downloaded
-	/// and unpacked. To improve user experience, prefer ``launch(artifactSet:on:context:)``
+	/// The device to boot is not known ahead of time—it will be booted after the build is downloaded
+	/// and unpacked. To improve user experience, prefer ``launch(recipes:context:)``
 	/// where possible so that devices are prepared ahead of time.
 	///
 	/// - Parameters:
 	///   - artifactURL: The URL of the artifact to launch.
 	///   - context: Additional metadata for the operation.
-	func launch(artifactURL: URL, context: LaunchContext? = nil) async throws {
-		do {
-			try await launch(artifactURL: artifactURL, device: nil, context: context)
+	func launch(artifactURL: URL, launchArguments: [String] = [], context: LaunchContext? = nil) async throws {
+		await preflightInstallation(context: context)
 
-		} catch let error {
-			notifyError(error: error)
-			throw error
+		let fetchArtifact = FetchArtifactTask(
+			taskStatusReporter: taskStatusReporter,
+			pinnedApplicationState: pinnedApplicationState,
+			artifactDownloader: artifactDownloader,
+			context: context
+		)
+
+		let machine = InstallationTicketMachine(deviceSelector: deviceSelectionManager, artifactDownloader: fetchArtifact)
+
+		let source: RemoteArtifactSource = if artifactURL.isFileURL {
+			.file(url: artifactURL)
+		} else {
+			.artifactProvider(
+				metadata: ArtifactProviderMetadata(
+					id: "http",
+					parameters: ["url": artifactURL.absoluteString]
+				)
+			)
+		}
+
+		let recipe = InstallRecipe(
+			source: source,
+			launchArguments: launchArguments
+		)
+
+		for try await ticket in machine.process(recipes: [recipe]) {
+			try await install(ticket: ticket)
 		}
 	}
 
-	private func launch(artifactURL: URL, device: Device?, context: LaunchContext? = nil) async throws {
-		guard await validateHostTrust(artifactURL: artifactURL) == .allow else {
-			return
-		}
+	private func install(ticket: InstallationTicketMachine.Ticket, context: LaunchContext? = nil) async throws {
+		let fetchArtifact = FetchArtifactTask(
+			taskStatusReporter: taskStatusReporter,
+			pinnedApplicationState: pinnedApplicationState,
+			artifactDownloader: artifactDownloader,
+			context: context
+		)
 
-		let fetchArtifact = FetchArtifactTask(taskStatusReporter: taskStatusReporter, pinnedApplicationState: pinnedApplicationState, context: context)
 		let prepareDevice = PrepareDeviceTask(taskStatusReporter: taskStatusReporter)
 
-		async let futureFetchArtifactResult = fetchArtifact(at: artifactURL)
+		async let futureFetchArtifactResult = fetchArtifact(from: ticket.artifactLocation)
+		async let futurePrepareDeviceResult = prepareDevice(device: ticket.device)
 
-		if let device = device {
-			// We've been told what device we need in advance, so boot it in parallel to save time.
-			async let futurePrepareDeviceResult = prepareDevice(device: device)
+		let (fetchArtifactResult, prepareDeviceResult) = await (
+			try futureFetchArtifactResult,
+			try futurePrepareDeviceResult
+		)
 
-			let (fetchArtifactResult, prepareDeviceResult) = await (
-				try futureFetchArtifactResult,
-				try futurePrepareDeviceResult
-			)
+		if !prepareDeviceResult.deviceWasColdBooted {
+			// If the device wasn't cold booted, bring it to the foreground later in the process.
+			log.info("Bringing device to foreground")
 
-			if !prepareDeviceResult.deviceWasColdBooted {
-				// If the device wasn't cold booted, bring it to the foreground later in the process.
-				log.info("Bringing device to foreground")
-
-				// This is a non-critical feature, it is allowed to fail in case the
-				// user hasn't accepted permissions.
-				try? device.focus()
-			}
-
-			try await install(application: fetchArtifactResult.application, on: device, context: context)
-
-		} else {
-			// We don't know what device we will need. Determine the device based on the downloaded application.
-			await preflightInstallation(context: context)
-			let application = try await futureFetchArtifactResult.application
-			let device = try launchRequestBuilder.createRequest(for: application).device
-
-			try await prepareDevice(device: device)
-			try await install(application: application, on: device, context: context)
+			// This is a non-critical feature, it is allowed to fail in case the
+			// user hasn't accepted permissions.
+			try? ticket.device.focus()
 		}
-	}
 
-	private func install(application: Application, on device: Device, context: LaunchContext? = nil) async throws {
 		let installApplication = InstallApplicationTask(taskStatusReporter: taskStatusReporter, context: context)
-		try await installApplication(application: application, device: device)
 
-		delegate?.installCoordinator(didSuccessfullyInstallAppForPlatform: application.platform)
+		try await installApplication(
+			application: fetchArtifactResult.application,
+			device: ticket.device,
+			launchArguments: ticket.launchArguments
+		)
 	}
 
 	private func preflightInstallation(context: LaunchContext?) async {
 		taskStatusReporter.notify(message: "Preparing to install \(context?.appName ?? "application")…")
 		await deviceManager.loadDevices()
-	}
-
-	private func validateHostTrust(artifactURL: URL) async -> HostTrustResult {
-		if artifactURL.isFileURL {
-			return .allow
-		}
-
-		guard let host = artifactURL.host() else {
-			return .block
-		}
-
-		return await delegate?.installCoordinator(didPromptToAllowUntrustedHost: host) ?? .block
-	}
-
-	private func notifyError(error: Error, platform: Platform? = nil) {
-		log.error("An error occurred while installing the application: \(error.localizedDescription)")
-		delegate?.installCoordinator(didFailToInstallAppForPlatform: platform)
 	}
 }

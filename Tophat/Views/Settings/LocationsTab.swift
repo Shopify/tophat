@@ -22,10 +22,6 @@ struct LocationsTab: View {
 			Section {
 				ScreenCopyPicker()
 			}
-
-			Section {
-				GoogleStorageUtilPicker()
-			}
 		}
 		.formStyle(.grouped)
 	}

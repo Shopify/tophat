@@ -20,7 +20,7 @@ struct AndroidApplication: Application {
 
 	var icon: URL? {
 		guard let path = try? ApkAnalyzer.getIconPath(apkUrl: url),
-			  let archive = Archive(url: url, accessMode: .read),
+			  let archive = try? Archive(url: url, accessMode: .read, pathEncoding: nil),
 			  let entry = archive[path]
 		else {
 			return nil
@@ -34,7 +34,7 @@ struct AndroidApplication: Application {
 
 	var targets: Set<DeviceType> {
 		// Android applications run anywhere.
-		[.virtual, .physical]
+		[.simulator, .device]
 	}
 
 	var platform: Platform {
@@ -52,6 +52,10 @@ struct AndroidApplication: Application {
 	}
 
 	func validateEligibility(for device: Device) throws {
+		guard platform == device.runtime.platform else {
+			throw ApplicationError.incompatibleDeviceType
+		}
+
 		// Android applications can be installed on any Android device.
 	}
 }

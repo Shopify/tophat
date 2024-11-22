@@ -30,8 +30,8 @@ public struct AndroidDevices: DeviceProvider {
 			}
 
 			// We only care about physical connected devices because adb and avdmanager overlap.
-			// avdmanager takes care of returning all virtual devices.
-			let physicalDevices = connectedDevices.filter(type: .physical)
+			// avdmanager takes care of returning all simulator devices.
+			let physicalDevices = connectedDevices.filter(type: .device)
 
 			return physicalDevices + proxyVirtualDevices
 		}

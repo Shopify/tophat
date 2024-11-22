@@ -23,10 +23,6 @@ struct OnboardingTaskList: View {
 			}
 
 			Section {
-				GoogleCloudStorageOnboardingItem(utilityPathPreferences: utilityPathPreferences)
-			}
-
-			Section {
 				ScreenCopyOnboardingItem(utilityPathPreferences: utilityPathPreferences)
 			}
 

@@ -33,7 +33,7 @@ extension DeviceError: LocalizedError {
 				return "The device could not be started due to an unexpected error."
 			case .deviceNotAvailable:
 				return "The device is not available."
-			case .failedToInstallApp(_, deviceType: .physical):
+			case .failedToInstallApp(_, deviceType: .device):
 				return "The application could not be installed."
 			case .failedToInstallApp:
 				return "The application could not be installed due to an unexpected error."
@@ -52,11 +52,11 @@ extension DeviceError: LocalizedError {
 		switch self {
 			case .deviceNotAvailable:
 				return "Ensure that it is connected and try again."
-			case .failedToInstallApp(_, deviceType: .physical), .deviceUnlockTimedOut:
+			case .failedToInstallApp(_, deviceType: .device), .deviceUnlockTimedOut:
 				return "Make sure that the device is connected and unlocked and try again."
 			case .failedToLaunchApp(_, .requiresManualProfileTrust, _):
 				return "Go to Settings → General → VPN & Device Management to trust the developer."
-			case .failedToLaunchApp(_, _, deviceType: .physical):
+			case .failedToLaunchApp(_, _, deviceType: .device):
 				return "Make sure that the device is connected and unlocked and try again."
 			default:
 				return nil

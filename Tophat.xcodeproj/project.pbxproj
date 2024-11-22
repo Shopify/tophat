@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -12,6 +12,8 @@
 		7F35026924A5060700EE76EA /* TophatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F35026824A5060700EE76EA /* TophatTests.swift */; };
 		7F4532AD251A6C4700F2CFC8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA71E0924C95CAC001C9574 /* Logging */; };
 		7F4532AF251A6C4700F2CFC8 /* LoggingOSLog in Frameworks */ = {isa = PBXBuildFile; productRef = 7F8EC94425086F3B00D4D42B /* LoggingOSLog */; };
+		8005282F2CB718C200226174 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8005282E2CB718C200226174 /* TophatKit */; };
+		800528312CB718C700226174 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 800528302CB718C700226174 /* TophatKit */; };
 		8006E7E12943C9190089805E /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8006E7E02943C9190089805E /* Theme.swift */; };
 		8006E7E32943C95D0089805E /* MenuItemButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8006E7E22943C95D0089805E /* MenuItemButtonStyle.swift */; };
 		8006E7E52943C9970089805E /* SectionHeadingTextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8006E7E42943C9970089805E /* SectionHeadingTextStyle.swift */; };
@@ -19,7 +21,7 @@
 		8006E7E92943C9B80089805E /* ToggleableRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8006E7E82943C9B80089805E /* ToggleableRow.swift */; };
 		8006E7ED2943CA250089805E /* Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8006E7EC2943CA250089805E /* Panel.swift */; };
 		8006E7F02943D3090089805E /* VisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8006E7EF2943D3090089805E /* VisualEffects */; };
-		8020A6DE297F301700FEA490 /* URLHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020A6DD297F301700FEA490 /* URLHandler.swift */; };
+		8020A6DE297F301700FEA490 /* URLReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8020A6DD297F301700FEA490 /* URLReader.swift */; };
 		8025A5B429845EB5007B1BA0 /* Apps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8025A5B329845EB5007B1BA0 /* Apps.swift */; };
 		802671452947C297001A804D /* MenuHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802671442947C297001A804D /* MenuHeader.swift */; };
 		802671472947C33C001A804D /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802671462947C33C001A804D /* Bundle+Extensions.swift */; };
@@ -32,28 +34,33 @@
 		80301626292C17560016F25E /* AppleApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80301625292C17560016F25E /* AppleApplication.swift */; };
 		80301628292C17700016F25E /* AndroidApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80301627292C17700016F25E /* AndroidApplication.swift */; };
 		8030162C292C1B490016F25E /* ApplicationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8030162B292C1B490016F25E /* ApplicationError.swift */; };
-		80318D1C2927EC4D002A5FD9 /* LaunchRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80318D1B2927EC4D002A5FD9 /* LaunchRequestBuilder.swift */; };
-		80318D1E2927EC54002A5FD9 /* LaunchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80318D1D2927EC54002A5FD9 /* LaunchRequest.swift */; };
+		80343E472CA39A1D00642D54 /* ExtensionsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80343E462CA39A1A00642D54 /* ExtensionsTab.swift */; };
 		80346F042BEBD527002F54BC /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 80346F032BEBD527002F54BC /* AsyncAlgorithms */; };
 		803B874B290055C70062F070 /* AndroidDeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 803B874A290055C70062F070 /* AndroidDeviceKit */; };
+		80462F8F2CEFA780002F6E8F /* InfoButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80462F8E2CEFA77E002F6E8F /* InfoButton.swift */; };
+		80462F912CEFA7F2002F6E8F /* ParameterTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80462F902CEFA7EF002F6E8F /* ParameterTextField.swift */; };
+		80462F942CEFEF1A002F6E8F /* TophatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80462F932CEFEF17002F6E8F /* TophatExtension.swift */; };
+		80462F972CEFEF73002F6E8F /* ExtensionHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80462F962CEFEF70002F6E8F /* ExtensionHost.swift */; };
+		80462F992CEFF04F002F6E8F /* AppExtensionIdentity+WithXPCSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80462F982CEFF04A002F6E8F /* AppExtensionIdentity+WithXPCSession.swift */; };
 		804ECB7C2975C15300DE78F4 /* DevicePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804ECB7B2975C15300DE78F4 /* DevicePicker.swift */; };
 		804ECB7E2975C18300DE78F4 /* DeviceMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804ECB7D2975C18300DE78F4 /* DeviceMenu.swift */; };
 		804ECB802975C68400DE78F4 /* VisibleWhenButtonHoveredViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804ECB7F2975C68400DE78F4 /* VisibleWhenButtonHoveredViewModifier.swift */; };
 		804F37F92C7CE46F0005A869 /* HostTrustResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804F37F82C7CE46F0005A869 /* HostTrustResult.swift */; };
 		804F37FD2C7CEFB00005A869 /* TrustedHostAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804F37FC2C7CEFB00005A869 /* TrustedHostAlert.swift */; };
 		804FF6592914239800147652 /* Collection+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FF6582914239800147652 /* Collection+Filter.swift */; };
-		804FFE1829C3BEA5002B64AA /* BadgedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 804FFE1729C3BEA5002B64AA /* BadgedURL.swift */; };
 		80518F4F2984600900FB8803 /* Apps+Add.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80518F4D29845FB100FB8803 /* Apps+Add.swift */; };
 		80518F512984681200FB8803 /* Apps+Remove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80518F502984681200FB8803 /* Apps+Remove.swift */; };
 		80518F5329846E4300FB8803 /* NSRunningApplication+IsTophatRunning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80518F5229846E4300FB8803 /* NSRunningApplication+IsTophatRunning.swift */; };
 		80518F572984804C00FB8803 /* TophatCtlSymbolicLinkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80518F562984804C00FB8803 /* TophatCtlSymbolicLinkManager.swift */; };
 		80518F632984A64F00FB8803 /* OnboardingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80518F622984A64F00FB8803 /* OnboardingWindow.swift */; };
 		80518F682984A6BF00FB8803 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80518F672984A6BF00FB8803 /* OnboardingView.swift */; };
-		80564B50298340D1002DC136 /* InstallCoordinatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80564B4F298340D1002DC136 /* InstallCoordinatorDelegate.swift */; };
+		805543CC2CB715EB004E1D18 /* TophatUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 805543CB2CB715EB004E1D18 /* TophatUtilities */; };
+		805543CE2CB715F1004E1D18 /* TophatUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 805543CD2CB715F1004E1D18 /* TophatUtilities */; };
 		80564B5229834137002DC136 /* TaskStatusReporterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80564B5129834137002DC136 /* TaskStatusReporterDelegate.swift */; };
 		80564B542983414D002DC136 /* AlertOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80564B532983414D002DC136 /* AlertOptions.swift */; };
 		80564B5629834203002DC136 /* FileTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80564B5529834203002DC136 /* FileTypes.swift */; };
-		805FC43229E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FC43129E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift */; };
+		8058B48C2CA630620075D38D /* URLReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8058B48B2CA630620075D38D /* URLReaderTests.swift */; };
+		805FC43229E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FC43129E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift */; };
 		80629BF12939818C0077960E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BE92939818C0077960E /* SettingsView.swift */; };
 		80629BF22939818C0077960E /* PinnedApplicationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BEC2939818C0077960E /* PinnedApplicationRow.swift */; };
 		80629BF32939818C0077960E /* List+GradientButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BED2939818C0077960E /* List+GradientButtons.swift */; };
@@ -64,12 +71,12 @@
 		80629BFA293981A80077960E /* PinnedApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BF9293981A80077960E /* PinnedApplication.swift */; };
 		80629BFC293981B10077960E /* CodableAppStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BFB293981B10077960E /* CodableAppStorage.swift */; };
 		80629C22293A8D270077960E /* ProvisioningProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629C21293A8D270077960E /* ProvisioningProfile.swift */; };
+		80691D282CDA9AE9006572CD /* ArtifactDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80691D272CDA9ADE006572CD /* ArtifactDownloader.swift */; };
 		8079E3562C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8079E3552C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift */; };
 		807D7B0F29835762007942B4 /* TophatFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 807D7B0E29835762007942B4 /* TophatFoundation */; };
 		807D7B132983576C007942B4 /* TophatCtl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807D7B102983576C007942B4 /* TophatCtl.swift */; };
 		807D7B1629835795007942B4 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 807D7B1529835795007942B4 /* ArgumentParser */; };
 		807D7B1A298357C6007942B4 /* tophatctl in Copy tophatctl */ = {isa = PBXBuildFile; fileRef = 807D7B0729835756007942B4 /* tophatctl */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		807D7B1B298357D4007942B4 /* FastInstall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 807D7B122983576C007942B4 /* FastInstall.swift */; };
 		8090E201294FA29E003106B9 /* FluidMenuBarExtra in Frameworks */ = {isa = PBXBuildFile; productRef = 8090E200294FA29E003106B9 /* FluidMenuBarExtra */; };
 		8090E2032950C1CC003106B9 /* CollapsibleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090E2022950C1CC003106B9 /* CollapsibleSection.swift */; };
 		8090E2132950E01E003106B9 /* DeviceList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090E2122950E01E003106B9 /* DeviceList.swift */; };
@@ -85,7 +92,6 @@
 		809874AC294BB37A00EC541E /* DevicesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809874AB294BB37A00EC541E /* DevicesTab.swift */; };
 		809BD035290C3A5200FD4043 /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809BD034290C3A5200FD4043 /* DeviceManager.swift */; };
 		809BD03E290CA40900FD4043 /* DeviceSelectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809BD03D290CA40900FD4043 /* DeviceSelectionManager.swift */; };
-		809BD04729106F5E00FD4043 /* GoogleStorageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 809BD04629106F5E00FD4043 /* GoogleStorageKit */; };
 		809C8571297B056F004CE6A2 /* LaunchAppAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809C8570297B056F004CE6A2 /* LaunchAppAction.swift */; };
 		809C8573297B0625004CE6A2 /* LaunchFromLocationMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809C8572297B0625004CE6A2 /* LaunchFromLocationMenuItem.swift */; };
 		809C8575297B0FA9004CE6A2 /* ShowingAdvancedOptionsViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809C8574297B0FA9004CE6A2 /* ShowingAdvancedOptionsViewModifier.swift */; };
@@ -93,12 +99,14 @@
 		80A66D6D2981BC9900ECBCB6 /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A66D6A2981BC9900ECBCB6 /* ErrorNotifier.swift */; };
 		80A66D6E2981BC9900ECBCB6 /* MirrorDeviceDisplayAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A66D6B2981BC9900ECBCB6 /* MirrorDeviceDisplayAction.swift */; };
 		80A66D742981BD2200ECBCB6 /* UtilityPathPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A66D732981BD2200ECBCB6 /* UtilityPathPreferences.swift */; };
-		80A66D762981BD3A00ECBCB6 /* GoogleStorageUtilPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A66D752981BD3A00ECBCB6 /* GoogleStorageUtilPicker.swift */; };
 		80A91A0D2981B9F900D8A8B9 /* ShowingAlternateItemsViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A91A0C2981B9F900D8A8B9 /* ShowingAlternateItemsViewModifier.swift */; };
 		80A91A122981BA1300D8A8B9 /* CustomWindowPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A91A0F2981BA1300D8A8B9 /* CustomWindowPresentation.swift */; };
 		80A91A132981BA1300D8A8B9 /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A91A102981BA1300D8A8B9 /* FloatingPanel.swift */; };
 		80A91A142981BA1300D8A8B9 /* FloatingPanelViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A91A112981BA1300D8A8B9 /* FloatingPanelViewModifier.swift */; };
 		80A91A162981BA2D00D8A8B9 /* LaunchFromURLPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A91A152981BA2D00D8A8B9 /* LaunchFromURLPanel.swift */; };
+		80B48DE72C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint in Resources */ = {isa = PBXBuildFile; fileRef = 80B48DE62C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint */; };
+		80B48DE92C8BCBC400897317 /* com.shopify.Tophat.extension.appextensionpoint in CopyFiles */ = {isa = PBXBuildFile; fileRef = 80B48DE62C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint */; };
+		80B48E132C8BD1D500897317 /* ArtifactRetrievalCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B48E122C8BD1D500897317 /* ArtifactRetrievalCoordinator.swift */; };
 		80B536052AB5407700EEB2EF /* SettingsLinkAdditionalActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B536042AB5407700EEB2EF /* SettingsLinkAdditionalActionButtonStyle.swift */; };
 		80B7BAD329762C0800267C3C /* InlineButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7BAD229762C0800267C3C /* InlineButtonStyle.swift */; };
 		80B7BAD529762CBB00267C3C /* QuickLaunchEmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B7BAD429762CBB00267C3C /* QuickLaunchEmptyState.swift */; };
@@ -117,9 +125,10 @@
 		80CBACF72989921800F778DD /* AboutWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CBACF029898F9A00F778DD /* AboutWindow.swift */; };
 		80CBACFF2989B8B100F778DD /* ShowOnboardingWindowAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CBACFE2989B8B100F778DD /* ShowOnboardingWindowAction.swift */; };
 		80D2799829005DD000F03649 /* TophatServer in Frameworks */ = {isa = PBXBuildFile; productRef = 80D2799729005DD000F03649 /* TophatServer */; };
+		80D648442CAE254300135729 /* InstallationTicketMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D648432CAE254000135729 /* InstallationTicketMachine.swift */; };
+		80D648552CB0E20C00135729 /* TophatCoreExtension.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = 80D6484D2CB0E20C00135729 /* TophatCoreExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		80D71F1C2984CE720006E1BF /* XcodeOnboardingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F1B2984CE720006E1BF /* XcodeOnboardingItem.swift */; };
 		80D71F1E2984CE850006E1BF /* AndroidStudioOnboardingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F1D2984CE850006E1BF /* AndroidStudioOnboardingItem.swift */; };
-		80D71F202984CE9F0006E1BF /* GoogleCloudStorageOnboardingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F1F2984CE9F0006E1BF /* GoogleCloudStorageOnboardingItem.swift */; };
 		80D71F222984CEBD0006E1BF /* CommandLineHelperOnboardingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F212984CEBD0006E1BF /* CommandLineHelperOnboardingItem.swift */; };
 		80D71F242984CEF40006E1BF /* OnboardingItemStatusIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F232984CEF40006E1BF /* OnboardingItemStatusIcon.swift */; };
 		80D71F262984CF100006E1BF /* OnboardingItemLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D71F252984CF100006E1BF /* OnboardingItemLayout.swift */; };
@@ -134,7 +143,7 @@
 		80EB5D49296F5AAF0011DE5F /* InstallApplicationTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D48296F5AAF0011DE5F /* InstallApplicationTask.swift */; };
 		80EB5D4B296F64D70011DE5F /* DeviceError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D4A296F64D70011DE5F /* DeviceError+LocalizedError.swift */; };
 		80EB5D4D296F64F50011DE5F /* ApplicationError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D4C296F64F50011DE5F /* ApplicationError+LocalizedError.swift */; };
-		80EB5D4F296F658E0011DE5F /* LaunchRequestBuilderError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D4E296F658E0011DE5F /* LaunchRequestBuilderError+LocalizedError.swift */; };
+		80EB5D4F296F658E0011DE5F /* InstallationTicketMachineError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D4E296F658E0011DE5F /* InstallationTicketMachineError+LocalizedError.swift */; };
 		80EB5D51296F68CD0011DE5F /* LaunchContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D50296F68CD0011DE5F /* LaunchContext.swift */; };
 		80EB5D53296F6A380011DE5F /* Array+JoinedWithSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D52296F6A380011DE5F /* Array+JoinedWithSpaces.swift */; };
 		80EB5D55297095890011DE5F /* TaskStatusMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D54297095890011DE5F /* TaskStatusMetadata.swift */; };
@@ -142,8 +151,6 @@
 		80EB5D5D2970A25D0011DE5F /* UpdateIconTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D5C2970A25D0011DE5F /* UpdateIconTask.swift */; };
 		80EB5D5F2970A7940011DE5F /* PinnedApplicationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D5E2970A7940011DE5F /* PinnedApplicationState.swift */; };
 		80ED3E5E29835AAF00A734B7 /* URL+ExpressibleByArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED3E5C29835A9900A734B7 /* URL+ExpressibleByArgument.swift */; };
-		80ED3E8F298421B400A734B7 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 80ED3E8E298421B400A734B7 /* TophatKit */; };
-		80ED3E91298421B900A734B7 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 80ED3E90298421B900A734B7 /* TophatKit */; };
 		80ED55462971CB3200B3AEBA /* MirrorDeviceDisplayTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED55452971CB3200B3AEBA /* MirrorDeviceDisplayTask.swift */; };
 		80F380432984226800A9350F /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F380422984226800A9350F /* NotificationHandler.swift */; };
 		80F3804829843A9200A9350F /* Platform+ExpressibleByArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F3804629843A9000A9350F /* Platform+ExpressibleByArgument.swift */; };
@@ -154,7 +161,6 @@
 		80FAC08A2AB29665004A8DB8 /* DeviceError+StyledAlertError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FAC0892AB29665004A8DB8 /* DeviceError+StyledAlertError.swift */; };
 		80FDFDB52947D4D9000606AC /* DeviceItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FDFDB42947D4D9000606AC /* DeviceItem.swift */; };
 		80FF03EF29087473008509E0 /* InstallCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF03EE29087473008509E0 /* InstallCoordinator.swift */; };
-		80FF03F129089975008509E0 /* ArtifactDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FF03F029089975008509E0 /* ArtifactDownloader.swift */; };
 		B6AA44CF296DF8EF0017321C /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = B6AA44CE296DF8EF0017321C /* ZIPFoundation */; };
 		B6AA44DD296F78670017321C /* GeneralTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AA44DC296F78670017321C /* GeneralTab.swift */; };
 /* End PBXBuildFile section */
@@ -173,6 +179,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 807D7B0629835756007942B4;
 			remoteInfo = tophatctl;
+		};
+		80D648532CB0E20C00135729 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F35024724A5060500EE76EA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 80D6484C2CB0E20C00135729;
+			remoteInfo = TophatBaseExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -197,6 +210,27 @@
 			name = "Copy tophatctl";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		80B48DE82C8BCBBE00897317 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				80D648552CB0E20C00135729 /* TophatCoreExtension.appex in CopyFiles */,
+				80B48DE92C8BCBC400897317 /* com.shopify.Tophat.extension.appextensionpoint in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80B48E0A2C8BCC5C00897317 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -208,13 +242,14 @@
 		7F35026424A5060600EE76EA /* TophatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TophatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F35026824A5060700EE76EA /* TophatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TophatTests.swift; sourceTree = "<group>"; };
 		7F35026A24A5060700EE76EA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8005282D2CB7185E00226174 /* TophatKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TophatKit; sourceTree = "<group>"; };
 		8006E7E02943C9190089805E /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		8006E7E22943C95D0089805E /* MenuItemButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemButtonStyle.swift; sourceTree = "<group>"; };
 		8006E7E42943C9970089805E /* SectionHeadingTextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeadingTextStyle.swift; sourceTree = "<group>"; };
 		8006E7E62943C9AA0089805E /* ToggleableRowIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleableRowIcon.swift; sourceTree = "<group>"; };
 		8006E7E82943C9B80089805E /* ToggleableRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleableRow.swift; sourceTree = "<group>"; };
 		8006E7EC2943CA250089805E /* Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panel.swift; sourceTree = "<group>"; };
-		8020A6DD297F301700FEA490 /* URLHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLHandler.swift; sourceTree = "<group>"; };
+		8020A6DD297F301700FEA490 /* URLReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLReader.swift; sourceTree = "<group>"; };
 		8025A5B329845EB5007B1BA0 /* Apps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apps.swift; sourceTree = "<group>"; };
 		802671442947C297001A804D /* MenuHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeader.swift; sourceTree = "<group>"; };
 		802671462947C33C001A804D /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
@@ -227,26 +262,29 @@
 		80301625292C17560016F25E /* AppleApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleApplication.swift; sourceTree = "<group>"; };
 		80301627292C17700016F25E /* AndroidApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndroidApplication.swift; sourceTree = "<group>"; };
 		8030162B292C1B490016F25E /* ApplicationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationError.swift; sourceTree = "<group>"; };
-		80318D1B2927EC4D002A5FD9 /* LaunchRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchRequestBuilder.swift; sourceTree = "<group>"; };
-		80318D1D2927EC54002A5FD9 /* LaunchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchRequest.swift; sourceTree = "<group>"; };
+		80343E462CA39A1A00642D54 /* ExtensionsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionsTab.swift; sourceTree = "<group>"; };
+		80462F8E2CEFA77E002F6E8F /* InfoButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoButton.swift; sourceTree = "<group>"; };
+		80462F902CEFA7EF002F6E8F /* ParameterTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterTextField.swift; sourceTree = "<group>"; };
+		80462F932CEFEF17002F6E8F /* TophatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TophatExtension.swift; sourceTree = "<group>"; };
+		80462F962CEFEF70002F6E8F /* ExtensionHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionHost.swift; sourceTree = "<group>"; };
+		80462F982CEFF04A002F6E8F /* AppExtensionIdentity+WithXPCSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppExtensionIdentity+WithXPCSession.swift"; sourceTree = "<group>"; };
 		804ECB7B2975C15300DE78F4 /* DevicePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicePicker.swift; sourceTree = "<group>"; };
 		804ECB7D2975C18300DE78F4 /* DeviceMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenu.swift; sourceTree = "<group>"; };
 		804ECB7F2975C68400DE78F4 /* VisibleWhenButtonHoveredViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibleWhenButtonHoveredViewModifier.swift; sourceTree = "<group>"; };
 		804F37F82C7CE46F0005A869 /* HostTrustResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostTrustResult.swift; sourceTree = "<group>"; };
 		804F37FC2C7CEFB00005A869 /* TrustedHostAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustedHostAlert.swift; sourceTree = "<group>"; };
 		804FF6582914239800147652 /* Collection+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+Filter.swift"; sourceTree = "<group>"; };
-		804FFE1729C3BEA5002B64AA /* BadgedURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedURL.swift; sourceTree = "<group>"; };
 		80518F4D29845FB100FB8803 /* Apps+Add.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Apps+Add.swift"; sourceTree = "<group>"; };
 		80518F502984681200FB8803 /* Apps+Remove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Apps+Remove.swift"; sourceTree = "<group>"; };
 		80518F5229846E4300FB8803 /* NSRunningApplication+IsTophatRunning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSRunningApplication+IsTophatRunning.swift"; sourceTree = "<group>"; };
 		80518F562984804C00FB8803 /* TophatCtlSymbolicLinkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TophatCtlSymbolicLinkManager.swift; sourceTree = "<group>"; };
 		80518F622984A64F00FB8803 /* OnboardingWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingWindow.swift; sourceTree = "<group>"; };
 		80518F672984A6BF00FB8803 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		80564B4F298340D1002DC136 /* InstallCoordinatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallCoordinatorDelegate.swift; sourceTree = "<group>"; };
 		80564B5129834137002DC136 /* TaskStatusReporterDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatusReporterDelegate.swift; sourceTree = "<group>"; };
 		80564B532983414D002DC136 /* AlertOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertOptions.swift; sourceTree = "<group>"; };
 		80564B5529834203002DC136 /* FileTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTypes.swift; sourceTree = "<group>"; };
-		805FC43129E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtifactDownloaderError+LocalizedError.swift"; sourceTree = "<group>"; };
+		8058B48B2CA630620075D38D /* URLReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLReaderTests.swift; sourceTree = "<group>"; };
+		805FC43129E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildDownloaderError+LocalizedError.swift"; sourceTree = "<group>"; };
 		80629BE92939818C0077960E /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		80629BEC2939818C0077960E /* PinnedApplicationRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinnedApplicationRow.swift; sourceTree = "<group>"; };
 		80629BED2939818C0077960E /* List+GradientButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "List+GradientButtons.swift"; sourceTree = "<group>"; };
@@ -257,10 +295,10 @@
 		80629BF9293981A80077960E /* PinnedApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinnedApplication.swift; sourceTree = "<group>"; };
 		80629BFB293981B10077960E /* CodableAppStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodableAppStorage.swift; sourceTree = "<group>"; };
 		80629C21293A8D270077960E /* ProvisioningProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvisioningProfile.swift; sourceTree = "<group>"; };
+		80691D272CDA9ADE006572CD /* ArtifactDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactDownloader.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		8079E3552C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ShowDockIconWhenOpen.swift"; sourceTree = "<group>"; };
 		807D7B0729835756007942B4 /* tophatctl */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tophatctl; sourceTree = BUILT_PRODUCTS_DIR; };
 		807D7B102983576C007942B4 /* TophatCtl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TophatCtl.swift; sourceTree = "<group>"; };
-		807D7B122983576C007942B4 /* FastInstall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastInstall.swift; sourceTree = "<group>"; };
 		8086AE3628F9E8680069217E /* TophatModules */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TophatModules; sourceTree = "<group>"; };
 		8090E2022950C1CC003106B9 /* CollapsibleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSection.swift; sourceTree = "<group>"; };
 		8090E2122950E01E003106B9 /* DeviceList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceList.swift; sourceTree = "<group>"; };
@@ -282,12 +320,13 @@
 		80A66D6A2981BC9900ECBCB6 /* ErrorNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorNotifier.swift; sourceTree = "<group>"; };
 		80A66D6B2981BC9900ECBCB6 /* MirrorDeviceDisplayAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MirrorDeviceDisplayAction.swift; sourceTree = "<group>"; };
 		80A66D732981BD2200ECBCB6 /* UtilityPathPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilityPathPreferences.swift; sourceTree = "<group>"; };
-		80A66D752981BD3A00ECBCB6 /* GoogleStorageUtilPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleStorageUtilPicker.swift; sourceTree = "<group>"; };
 		80A91A0C2981B9F900D8A8B9 /* ShowingAlternateItemsViewModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowingAlternateItemsViewModifier.swift; sourceTree = "<group>"; };
 		80A91A0F2981BA1300D8A8B9 /* CustomWindowPresentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomWindowPresentation.swift; sourceTree = "<group>"; };
 		80A91A102981BA1300D8A8B9 /* FloatingPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
 		80A91A112981BA1300D8A8B9 /* FloatingPanelViewModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPanelViewModifier.swift; sourceTree = "<group>"; };
 		80A91A152981BA2D00D8A8B9 /* LaunchFromURLPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchFromURLPanel.swift; sourceTree = "<group>"; };
+		80B48DE62C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = com.shopify.Tophat.extension.appextensionpoint; sourceTree = "<group>"; };
+		80B48E122C8BD1D500897317 /* ArtifactRetrievalCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactRetrievalCoordinator.swift; sourceTree = "<group>"; };
 		80B536042AB5407700EEB2EF /* SettingsLinkAdditionalActionButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsLinkAdditionalActionButtonStyle.swift; sourceTree = "<group>"; };
 		80B7BAD229762C0800267C3C /* InlineButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineButtonStyle.swift; sourceTree = "<group>"; };
 		80B7BAD429762CBB00267C3C /* QuickLaunchEmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLaunchEmptyState.swift; sourceTree = "<group>"; };
@@ -304,9 +343,10 @@
 		80CBACF129898FFE00F778DD /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		80CBACF5298991CE00F778DD /* AboutWindowViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutWindowViewModifier.swift; sourceTree = "<group>"; };
 		80CBACFE2989B8B100F778DD /* ShowOnboardingWindowAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOnboardingWindowAction.swift; sourceTree = "<group>"; };
+		80D648432CAE254000135729 /* InstallationTicketMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationTicketMachine.swift; sourceTree = "<group>"; };
+		80D6484D2CB0E20C00135729 /* TophatCoreExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = TophatCoreExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		80D71F1B2984CE720006E1BF /* XcodeOnboardingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeOnboardingItem.swift; sourceTree = "<group>"; };
 		80D71F1D2984CE850006E1BF /* AndroidStudioOnboardingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AndroidStudioOnboardingItem.swift; sourceTree = "<group>"; };
-		80D71F1F2984CE9F0006E1BF /* GoogleCloudStorageOnboardingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCloudStorageOnboardingItem.swift; sourceTree = "<group>"; };
 		80D71F212984CEBD0006E1BF /* CommandLineHelperOnboardingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineHelperOnboardingItem.swift; sourceTree = "<group>"; };
 		80D71F232984CEF40006E1BF /* OnboardingItemStatusIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingItemStatusIcon.swift; sourceTree = "<group>"; };
 		80D71F252984CF100006E1BF /* OnboardingItemLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingItemLayout.swift; sourceTree = "<group>"; };
@@ -321,7 +361,7 @@
 		80EB5D48296F5AAF0011DE5F /* InstallApplicationTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallApplicationTask.swift; sourceTree = "<group>"; };
 		80EB5D4A296F64D70011DE5F /* DeviceError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeviceError+LocalizedError.swift"; sourceTree = "<group>"; };
 		80EB5D4C296F64F50011DE5F /* ApplicationError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ApplicationError+LocalizedError.swift"; sourceTree = "<group>"; };
-		80EB5D4E296F658E0011DE5F /* LaunchRequestBuilderError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LaunchRequestBuilderError+LocalizedError.swift"; sourceTree = "<group>"; };
+		80EB5D4E296F658E0011DE5F /* InstallationTicketMachineError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InstallationTicketMachineError+LocalizedError.swift"; sourceTree = "<group>"; };
 		80EB5D50296F68CD0011DE5F /* LaunchContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchContext.swift; sourceTree = "<group>"; };
 		80EB5D52296F6A380011DE5F /* Array+JoinedWithSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+JoinedWithSpaces.swift"; sourceTree = "<group>"; };
 		80EB5D54297095890011DE5F /* TaskStatusMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatusMetadata.swift; sourceTree = "<group>"; };
@@ -337,10 +377,26 @@
 		80F74E292909FAC80040F026 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		80FAC0892AB29665004A8DB8 /* DeviceError+StyledAlertError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeviceError+StyledAlertError.swift"; sourceTree = "<group>"; };
 		80FDFDB42947D4D9000606AC /* DeviceItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceItem.swift; sourceTree = "<group>"; };
-		80FF03EE29087473008509E0 /* InstallCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallCoordinator.swift; sourceTree = "<group>"; };
-		80FF03F029089975008509E0 /* ArtifactDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactDownloader.swift; sourceTree = "<group>"; };
+		80FF03EE29087473008509E0 /* InstallCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallCoordinator.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		B6AA44DC296F78670017321C /* GeneralTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralTab.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		80D6485F2CB0E22200135729 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"TophatCoreExtension/Build Providers/HTTPArtifactProvider.swift",
+				"TophatCoreExtension/Build Providers/ShellScriptArtifactProvider.swift",
+				TophatCoreExtension/Localizable.xcstrings,
+				TophatCoreExtension/TophatCoreExtension.swift,
+			);
+			target = 80D6484C2CB0E20C00135729 /* TophatCoreExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		80D648482CB0E1C200135729 /* TophatExtensions */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (80D6485F2CB0E22200135729 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TophatExtensions; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		7F35024C24A5060500EE76EA /* Frameworks */ = {
@@ -352,13 +408,13 @@
 				8006E7F02943D3090089805E /* VisualEffects in Frameworks */,
 				7F4532AD251A6C4700F2CFC8 /* Logging in Frameworks */,
 				8090E268296775BE003106B9 /* Collections in Frameworks */,
+				805543CC2CB715EB004E1D18 /* TophatUtilities in Frameworks */,
 				80C18345290232D1008D3B80 /* TophatFoundation in Frameworks */,
 				80346F042BEBD527002F54BC /* AsyncAlgorithms in Frameworks */,
 				80DC0FD82C82225600E5C9EE /* Sparkle in Frameworks */,
+				8005282F2CB718C200226174 /* TophatKit in Frameworks */,
 				7F4532AF251A6C4700F2CFC8 /* LoggingOSLog in Frameworks */,
-				809BD04729106F5E00FD4043 /* GoogleStorageKit in Frameworks */,
 				80D2799829005DD000F03649 /* TophatServer in Frameworks */,
-				80ED3E8F298421B400A734B7 /* TophatKit in Frameworks */,
 				803B874B290055C70062F070 /* AndroidDeviceKit in Frameworks */,
 				8090E201294FA29E003106B9 /* FluidMenuBarExtra in Frameworks */,
 			);
@@ -375,9 +431,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				80ED3E91298421B900A734B7 /* TophatKit in Frameworks */,
 				807D7B1629835795007942B4 /* ArgumentParser in Frameworks */,
 				807D7B0F29835762007942B4 /* TophatFoundation in Frameworks */,
+				805543CE2CB715F1004E1D18 /* TophatUtilities in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80D6484A2CB0E20C00135729 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				800528312CB718C700226174 /* TophatKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +455,8 @@
 				7F35026724A5060700EE76EA /* TophatTests */,
 				807D7B0829835756007942B4 /* TophatCtl */,
 				8086AE3628F9E8680069217E /* TophatModules */,
+				8005282D2CB7185E00226174 /* TophatKit */,
+				80D648482CB0E1C200135729 /* TophatExtensions */,
 				7F35025024A5060500EE76EA /* Products */,
 				8086AE3728F9F01F0069217E /* Frameworks */,
 			);
@@ -402,6 +468,7 @@
 				7F35024F24A5060500EE76EA /* Tophat.app */,
 				7F35026424A5060600EE76EA /* TophatTests.xctest */,
 				807D7B0729835756007942B4 /* tophatctl */,
+				80D6484D2CB0E20C00135729 /* TophatCoreExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -416,6 +483,7 @@
 				7F35025624A5060600EE76EA /* Assets.xcassets */,
 				7F35025E24A5060600EE76EA /* Info.plist */,
 				7F35025F24A5060600EE76EA /* Tophat.entitlements */,
+				80B48DE62C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint */,
 				80F74E262909FA1B0040F026 /* TophatApp.swift */,
 			);
 			path = Tophat;
@@ -424,6 +492,7 @@
 		7F35026724A5060700EE76EA /* TophatTests */ = {
 			isa = PBXGroup;
 			children = (
+				8058B48A2CA6304C0075D38D /* Utilities */,
 				7F35026824A5060700EE76EA /* TophatTests.swift */,
 				7F35026A24A5060700EE76EA /* Info.plist */,
 			);
@@ -439,11 +508,21 @@
 				8029A080298AF1E90002C579 /* ApplicationIcon.swift */,
 				80EB5D56297096FB0011DE5F /* InstallStatusMetadata.swift */,
 				80EB5D50296F68CD0011DE5F /* LaunchContext.swift */,
-				80318D1D2927EC54002A5FD9 /* LaunchRequest.swift */,
 				80629BF9293981A80077960E /* PinnedApplication.swift */,
 				80629C21293A8D270077960E /* ProvisioningProfile.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		80462F952CEFEF3C002F6E8F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				80462F982CEFF04A002F6E8F /* AppExtensionIdentity+WithXPCSession.swift */,
+				80B48E122C8BD1D500897317 /* ArtifactRetrievalCoordinator.swift */,
+				80462F962CEFEF70002F6E8F /* ExtensionHost.swift */,
+				80462F932CEFEF17002F6E8F /* TophatExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		804FF6572914237D00147652 /* Extensions */ = {
@@ -451,12 +530,12 @@
 			children = (
 				80EB5D4C296F64F50011DE5F /* ApplicationError+LocalizedError.swift */,
 				80EB5D52296F6A380011DE5F /* Array+JoinedWithSpaces.swift */,
-				805FC43129E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift */,
+				805FC43129E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift */,
 				802671462947C33C001A804D /* Bundle+Extensions.swift */,
 				804FF6582914239800147652 /* Collection+Filter.swift */,
 				80EB5D4A296F64D70011DE5F /* DeviceError+LocalizedError.swift */,
 				80FAC0892AB29665004A8DB8 /* DeviceError+StyledAlertError.swift */,
-				80EB5D4E296F658E0011DE5F /* LaunchRequestBuilderError+LocalizedError.swift */,
+				80EB5D4E296F658E0011DE5F /* InstallationTicketMachineError+LocalizedError.swift */,
 				80B7BAD629762D8900267C3C /* NSApplication+ShowSettingsWindow.swift */,
 				80629BF72939819F0077960E /* String+IsValidURL.swift */,
 				8079E3552C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift */,
@@ -479,7 +558,6 @@
 				80D71F1D2984CE850006E1BF /* AndroidStudioOnboardingItem.swift */,
 				80D71F212984CEBD0006E1BF /* CommandLineHelperOnboardingItem.swift */,
 				80D71F2D2985D11A0006E1BF /* CustomizeLocationsButton.swift */,
-				80D71F1F2984CE9F0006E1BF /* GoogleCloudStorageOnboardingItem.swift */,
 				80D71F252984CF100006E1BF /* OnboardingItemLayout.swift */,
 				80D71F232984CEF40006E1BF /* OnboardingItemStatusIcon.swift */,
 				80D71F2B2985C69B0006E1BF /* OnboardingPopoverContent.swift */,
@@ -492,15 +570,26 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		8058B48A2CA6304C0075D38D /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8058B48B2CA630620075D38D /* URLReaderTests.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		80629BEB2939818C0077960E /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				80B7BAE229773AFA00267C3C /* Locations */,
 				80629BEE2939818C0077960E /* AddPinnedApplicationSheet.swift */,
 				80629BEF2939818C0077960E /* AppsTab.swift */,
 				809874AB294BB37A00EC541E /* DevicesTab.swift */,
+				80343E462CA39A1A00642D54 /* ExtensionsTab.swift */,
 				B6AA44DC296F78670017321C /* GeneralTab.swift */,
+				80462F8E2CEFA77E002F6E8F /* InfoButton.swift */,
+				80B7BAE229773AFA00267C3C /* Locations */,
 				80B7BAE029770C5800267C3C /* LocationsTab.swift */,
+				80462F902CEFA7EF002F6E8F /* ParameterTextField.swift */,
 				80629BEC2939818C0077960E /* PinnedApplicationRow.swift */,
 			);
 			path = Settings;
@@ -509,7 +598,6 @@
 		80629BFF293989600077960E /* Generic */ = {
 			isa = PBXGroup;
 			children = (
-				804FFE1729C3BEA5002B64AA /* BadgedURL.swift */,
 				8090E2022950C1CC003106B9 /* CollapsibleSection.swift */,
 				80629BF02939818C0077960E /* GradientButton.swift */,
 				80B7BAD229762C0800267C3C /* InlineButtonStyle.swift */,
@@ -546,7 +634,6 @@
 			children = (
 				80518F4C29845F9E00FB8803 /* Apps */,
 				8025A5B329845EB5007B1BA0 /* Apps.swift */,
-				807D7B122983576C007942B4 /* FastInstall.swift */,
 				80F3804429843A8100A9350F /* Install.swift */,
 			);
 			path = Commands;
@@ -587,7 +674,6 @@
 			isa = PBXGroup;
 			children = (
 				80B7BAE729773E5100267C3C /* AndroidSDKPicker.swift */,
-				80A66D752981BD3A00ECBCB6 /* GoogleStorageUtilPicker.swift */,
 				80B7BAE329773B0C00267C3C /* JavaHomePicker.swift */,
 				80B7BAE529773C3D00267C3C /* LocationDetectModePicker.swift */,
 				80B7BAEB297744B500267C3C /* LocationPicker.swift */,
@@ -668,9 +754,10 @@
 		80FF03ED29087440008509E0 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				80462F952CEFEF3C002F6E8F /* Extensions */,
 				8090E2552967741F003106B9 /* Status Reporting */,
 				80EB5D43296F59000011DE5F /* Tasks */,
-				80FF03F029089975008509E0 /* ArtifactDownloader.swift */,
+				80691D272CDA9ADE006572CD /* ArtifactDownloader.swift */,
 				8030161F292874B70016F25E /* ArtifactUnpacker.swift */,
 				80629BFB293981B10077960E /* CodableAppStorage.swift */,
 				809BD034290C3A5200FD4043 /* DeviceManager.swift */,
@@ -679,10 +766,9 @@
 				80564B5529834203002DC136 /* FileTypes.swift */,
 				804F37F82C7CE46F0005A869 /* HostTrustResult.swift */,
 				80FF03EE29087473008509E0 /* InstallCoordinator.swift */,
-				80564B4F298340D1002DC136 /* InstallCoordinatorDelegate.swift */,
+				80D648432CAE254000135729 /* InstallationTicketMachine.swift */,
 				809C8570297B056F004CE6A2 /* LaunchAppAction.swift */,
 				80CBACED298988B700F778DD /* LaunchAtLoginController.swift */,
-				80318D1B2927EC4D002A5FD9 /* LaunchRequestBuilder.swift */,
 				80A66D6B2981BC9900ECBCB6 /* MirrorDeviceDisplayAction.swift */,
 				80F380422984226800A9350F /* NotificationHandler.swift */,
 				6038B795B47D50A397AF03DB /* Notifications.swift */,
@@ -692,7 +778,7 @@
 				80518F562984804C00FB8803 /* TophatCtlSymbolicLinkManager.swift */,
 				804F37FC2C7CEFB00005A869 /* TrustedHostAlert.swift */,
 				80DC0FD92C822E7F00E5C9EE /* UpdateController.swift */,
-				8020A6DD297F301700FEA490 /* URLHandler.swift */,
+				8020A6DD297F301700FEA490 /* URLReader.swift */,
 				80A66D732981BD2200ECBCB6 /* UtilityPathPreferences.swift */,
 			);
 			path = Utilities;
@@ -705,16 +791,19 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7F35027824A5060700EE76EA /* Build configuration list for PBXNativeTarget "Tophat" */;
 			buildPhases = (
+				80B48DE82C8BCBBE00897317 /* CopyFiles */,
 				809429C128FA01F900605490 /* SwiftLint */,
 				7F35024B24A5060500EE76EA /* Sources */,
 				7F35024C24A5060500EE76EA /* Frameworks */,
 				807D7B19298357AE007942B4 /* Copy tophatctl */,
 				7F35024D24A5060500EE76EA /* Resources */,
+				80B48E0A2C8BCC5C00897317 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				807D7B18298357A7007942B4 /* PBXTargetDependency */,
+				80D648542CB0E20C00135729 /* PBXTargetDependency */,
 			);
 			name = Tophat;
 			packageProductDependencies = (
@@ -724,14 +813,14 @@
 				80D2799729005DD000F03649 /* TophatServer */,
 				80C18344290232D1008D3B80 /* TophatFoundation */,
 				80F74E242909E8EA0040F026 /* AppleDeviceKit */,
-				809BD04629106F5E00FD4043 /* GoogleStorageKit */,
 				8006E7EF2943D3090089805E /* VisualEffects */,
 				8090E200294FA29E003106B9 /* FluidMenuBarExtra */,
 				8090E267296775BE003106B9 /* Collections */,
 				B6AA44CE296DF8EF0017321C /* ZIPFoundation */,
-				80ED3E8E298421B400A734B7 /* TophatKit */,
 				80346F032BEBD527002F54BC /* AsyncAlgorithms */,
 				80DC0FD72C82225600E5C9EE /* Sparkle */,
+				805543CB2CB715EB004E1D18 /* TophatUtilities */,
+				8005282E2CB718C200226174 /* TophatKit */,
 			);
 			productName = Tophat;
 			productReference = 7F35024F24A5060500EE76EA /* Tophat.app */;
@@ -771,11 +860,31 @@
 			packageProductDependencies = (
 				807D7B0E29835762007942B4 /* TophatFoundation */,
 				807D7B1529835795007942B4 /* ArgumentParser */,
-				80ED3E90298421B900A734B7 /* TophatKit */,
+				805543CD2CB715F1004E1D18 /* TophatUtilities */,
 			);
 			productName = tophatctl;
 			productReference = 807D7B0729835756007942B4 /* tophatctl */;
 			productType = "com.apple.product-type.tool";
+		};
+		80D6484C2CB0E20C00135729 /* TophatCoreExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 80D648572CB0E20C00135729 /* Build configuration list for PBXNativeTarget "TophatCoreExtension" */;
+			buildPhases = (
+				80D648492CB0E20C00135729 /* Sources */,
+				80D6484A2CB0E20C00135729 /* Frameworks */,
+				80D6484B2CB0E20C00135729 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TophatCoreExtension;
+			packageProductDependencies = (
+				800528302CB718C700226174 /* TophatKit */,
+			);
+			productName = TophatBaseExtension;
+			productReference = 80D6484D2CB0E20C00135729 /* TophatCoreExtension.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -784,7 +893,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1540;
 				ORGANIZATIONNAME = Shopify;
 				TargetAttributes = {
@@ -797,6 +906,9 @@
 					};
 					807D7B0629835756007942B4 = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					80D6484C2CB0E20C00135729 = {
+						CreatedOnToolsVersion = 16.0;
 					};
 				};
 			};
@@ -827,6 +939,7 @@
 				7F35024E24A5060500EE76EA /* Tophat */,
 				7F35026324A5060600EE76EA /* TophatTests */,
 				807D7B0629835756007942B4 /* tophatctl */,
+				80D6484C2CB0E20C00135729 /* TophatCoreExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -837,10 +950,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F35025724A5060600EE76EA /* Assets.xcassets in Resources */,
+				80B48DE72C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		7F35026224A5060600EE76EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80D6484B2CB0E20C00135729 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -885,7 +1006,8 @@
 				80629BF82939819F0077960E /* String+IsValidURL.swift in Sources */,
 				809874AC294BB37A00EC541E /* DevicesTab.swift in Sources */,
 				80B7BAE129770C5800267C3C /* LocationsTab.swift in Sources */,
-				80FF03F129089975008509E0 /* ArtifactDownloader.swift in Sources */,
+				80462F972CEFEF73002F6E8F /* ExtensionHost.swift in Sources */,
+				80462F942CEFEF1A002F6E8F /* TophatExtension.swift in Sources */,
 				804ECB7E2975C18300DE78F4 /* DeviceMenu.swift in Sources */,
 				80CBACFF2989B8B100F778DD /* ShowOnboardingWindowAction.swift in Sources */,
 				80F74E272909FA1B0040F026 /* TophatApp.swift in Sources */,
@@ -894,6 +1016,7 @@
 				80EB5D49296F5AAF0011DE5F /* InstallApplicationTask.swift in Sources */,
 				8006E7E32943C95D0089805E /* MenuItemButtonStyle.swift in Sources */,
 				8006E7E92943C9B80089805E /* ToggleableRow.swift in Sources */,
+				80D648442CAE254300135729 /* InstallationTicketMachine.swift in Sources */,
 				804F37FD2C7CEFB00005A869 /* TrustedHostAlert.swift in Sources */,
 				80CBACF229898FFE00F778DD /* AboutView.swift in Sources */,
 				80629BF52939818C0077960E /* AppsTab.swift in Sources */,
@@ -902,9 +1025,9 @@
 				80CBACEE298988B700F778DD /* LaunchAtLoginController.swift in Sources */,
 				8090E2612967749F003106B9 /* TophatProgressViewStyle.swift in Sources */,
 				80B7BAD329762C0800267C3C /* InlineButtonStyle.swift in Sources */,
-				80A66D762981BD3A00ECBCB6 /* GoogleStorageUtilPicker.swift in Sources */,
 				80EB5D47296F59270011DE5F /* PrepareDeviceTask.swift in Sources */,
 				8029B6A72AC239FE00BD1D30 /* DeviceIsLockedViewModifier.swift in Sources */,
+				80343E472CA39A1D00642D54 /* ExtensionsTab.swift in Sources */,
 				80D71F242984CEF40006E1BF /* OnboardingItemStatusIcon.swift in Sources */,
 				8090E25F29677489003106B9 /* MainProgressView.swift in Sources */,
 				804F37F92C7CE46F0005A869 /* HostTrustResult.swift in Sources */,
@@ -916,7 +1039,6 @@
 				809BD03E290CA40900FD4043 /* DeviceSelectionManager.swift in Sources */,
 				80D71F282984CF240006E1BF /* OnboardingTaskList.swift in Sources */,
 				80A91A0D2981B9F900D8A8B9 /* ShowingAlternateItemsViewModifier.swift in Sources */,
-				80318D1E2927EC54002A5FD9 /* LaunchRequest.swift in Sources */,
 				80A91A162981BA2D00D8A8B9 /* LaunchFromURLPanel.swift in Sources */,
 				8090E2032950C1CC003106B9 /* CollapsibleSection.swift in Sources */,
 				80EB5D5F2970A7940011DE5F /* PinnedApplicationState.swift in Sources */,
@@ -927,7 +1049,7 @@
 				80D71F2E2985D11A0006E1BF /* CustomizeLocationsButton.swift in Sources */,
 				80629BFA293981A80077960E /* PinnedApplication.swift in Sources */,
 				80EB5D57297096FB0011DE5F /* InstallStatusMetadata.swift in Sources */,
-				8020A6DE297F301700FEA490 /* URLHandler.swift in Sources */,
+				8020A6DE297F301700FEA490 /* URLReader.swift in Sources */,
 				80B7BAEC297744B500267C3C /* LocationPicker.swift in Sources */,
 				6038BC5B50B9DB89F651A6EA /* Notifications.swift in Sources */,
 				809BD035290C3A5200FD4043 /* DeviceManager.swift in Sources */,
@@ -940,7 +1062,6 @@
 				80ED55462971CB3200B3AEBA /* MirrorDeviceDisplayTask.swift in Sources */,
 				80EB5D53296F6A380011DE5F /* Array+JoinedWithSpaces.swift in Sources */,
 				80B536052AB5407700EEB2EF /* SettingsLinkAdditionalActionButtonStyle.swift in Sources */,
-				804FFE1829C3BEA5002B64AA /* BadgedURL.swift in Sources */,
 				80564B542983414D002DC136 /* AlertOptions.swift in Sources */,
 				80D71F2A2985C4EE0006E1BF /* ScreenCopyOnboardingItem.swift in Sources */,
 				8090E25A2967741F003106B9 /* TaskProgress.swift in Sources */,
@@ -952,17 +1073,21 @@
 				80B7BAEA29773EA600267C3C /* ScreenCopyPicker.swift in Sources */,
 				80B7BAD729762D8900267C3C /* NSApplication+ShowSettingsWindow.swift in Sources */,
 				8006E7E12943C9190089805E /* Theme.swift in Sources */,
+				80B48E132C8BD1D500897317 /* ArtifactRetrievalCoordinator.swift in Sources */,
 				8030162C292C1B490016F25E /* ApplicationError.swift in Sources */,
 				80A91A122981BA1300D8A8B9 /* CustomWindowPresentation.swift in Sources */,
+				80462F912CEFA7F2002F6E8F /* ParameterTextField.swift in Sources */,
 				8006E7E72943C9AA0089805E /* ToggleableRowIcon.swift in Sources */,
 				8006E7ED2943CA250089805E /* Panel.swift in Sources */,
 				80564B5629834203002DC136 /* FileTypes.swift in Sources */,
 				80EB5D4B296F64D70011DE5F /* DeviceError+LocalizedError.swift in Sources */,
 				80564B5229834137002DC136 /* TaskStatusReporterDelegate.swift in Sources */,
 				8090E25D2967741F003106B9 /* TaskStatus.swift in Sources */,
+				80691D282CDA9AE9006572CD /* ArtifactDownloader.swift in Sources */,
 				80629BF42939818C0077960E /* AddPinnedApplicationSheet.swift in Sources */,
 				804ECB7C2975C15300DE78F4 /* DevicePicker.swift in Sources */,
-				805FC43229E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift in Sources */,
+				805FC43229E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift in Sources */,
+				80462F992CEFF04F002F6E8F /* AppExtensionIdentity+WithXPCSession.swift in Sources */,
 				80629C22293A8D270077960E /* ProvisioningProfile.swift in Sources */,
 				80D71F1C2984CE720006E1BF /* XcodeOnboardingItem.swift in Sources */,
 				802671452947C297001A804D /* MenuHeader.swift in Sources */,
@@ -972,31 +1097,29 @@
 				80CBACF6298991CE00F778DD /* AboutWindowViewModifier.swift in Sources */,
 				80A66D6E2981BC9900ECBCB6 /* MirrorDeviceDisplayAction.swift in Sources */,
 				80B7BAE629773C3D00267C3C /* LocationDetectModePicker.swift in Sources */,
-				80318D1C2927EC4D002A5FD9 /* LaunchRequestBuilder.swift in Sources */,
 				80D71F222984CEBD0006E1BF /* CommandLineHelperOnboardingItem.swift in Sources */,
 				80629BF32939818C0077960E /* List+GradientButtons.swift in Sources */,
 				8006E7E52943C9970089805E /* SectionHeadingTextStyle.swift in Sources */,
 				80B7BAE829773E5100267C3C /* AndroidSDKPicker.swift in Sources */,
 				809C8575297B0FA9004CE6A2 /* ShowingAdvancedOptionsViewModifier.swift in Sources */,
 				80301620292874B70016F25E /* ArtifactUnpacker.swift in Sources */,
-				80EB5D4F296F658E0011DE5F /* LaunchRequestBuilderError+LocalizedError.swift in Sources */,
+				80EB5D4F296F658E0011DE5F /* InstallationTicketMachineError+LocalizedError.swift in Sources */,
 				8079E3562C850FE0000CB5B3 /* View+ShowDockIconWhenOpen.swift in Sources */,
 				80A66D6D2981BC9900ECBCB6 /* ErrorNotifier.swift in Sources */,
 				80FF03EF29087473008509E0 /* InstallCoordinator.swift in Sources */,
 				B6AA44DD296F78670017321C /* GeneralTab.swift in Sources */,
-				80D71F202984CE9F0006E1BF /* GoogleCloudStorageOnboardingItem.swift in Sources */,
 				8029A081298AF1E90002C579 /* ApplicationIcon.swift in Sources */,
 				80EB5D4D296F64F50011DE5F /* ApplicationError+LocalizedError.swift in Sources */,
 				80629BF62939818C0077960E /* GradientButton.swift in Sources */,
 				80F380432984226800A9350F /* NotificationHandler.swift in Sources */,
 				80D71F1E2984CE850006E1BF /* AndroidStudioOnboardingItem.swift in Sources */,
+				80462F8F2CEFA780002F6E8F /* InfoButton.swift in Sources */,
 				80301626292C17560016F25E /* AppleApplication.swift in Sources */,
 				802671492947C72C001A804D /* QuickLaunchAppView.swift in Sources */,
 				80EB5D45296F59100011DE5F /* FetchArtifactTask.swift in Sources */,
 				8090E25C2967741F003106B9 /* TaskStatusReporter.swift in Sources */,
 				804FF6592914239800147652 /* Collection+Filter.swift in Sources */,
 				802671472947C33C001A804D /* Bundle+Extensions.swift in Sources */,
-				80564B50298340D1002DC136 /* InstallCoordinatorDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,6 +1127,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8058B48C2CA630620075D38D /* URLReaderTests.swift in Sources */,
 				7F35026924A5060700EE76EA /* TophatTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1018,9 +1142,15 @@
 				80F3804929843A9F00A9350F /* Install.swift in Sources */,
 				807D7B132983576C007942B4 /* TophatCtl.swift in Sources */,
 				8025A5B429845EB5007B1BA0 /* Apps.swift in Sources */,
-				807D7B1B298357D4007942B4 /* FastInstall.swift in Sources */,
 				80518F4F2984600900FB8803 /* Apps+Add.swift in Sources */,
 				80F3804829843A9200A9350F /* Platform+ExpressibleByArgument.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80D648492CB0E20C00135729 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1036,6 +1166,11 @@
 			isa = PBXTargetDependency;
 			target = 807D7B0629835756007942B4 /* tophatctl */;
 			targetProxy = 807D7B17298357A7007942B4 /* PBXContainerItemProxy */;
+		};
+		80D648542CB0E20C00135729 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 80D6484C2CB0E20C00135729 /* TophatCoreExtension */;
+			targetProxy = 80D648532CB0E20C00135729 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1099,6 +1234,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1155,6 +1291,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
@@ -1162,6 +1299,7 @@
 		7F35027924A5060700EE76EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_ENTITLEMENTS = Tophat/Tophat.entitlements;
@@ -1190,6 +1328,7 @@
 		7F35027A24A5060700EE76EA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_ENTITLEMENTS = Tophat/Tophat.entitlements;
@@ -1300,6 +1439,73 @@
 			};
 			name = Release;
 		};
+		80D648582CB0E20C00135729 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatCoreExtension/TophatCoreExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TophatExtensions/TophatCoreExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tophat Core";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Shopify. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatCoreExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		80D648592CB0E20C00135729 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatCoreExtension/TophatCoreExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = A7XGC83MZE;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TophatExtensions/TophatCoreExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Tophat Core";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Shopify. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatCoreExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1335,6 +1541,15 @@
 			buildConfigurations = (
 				807D7B0C29835756007942B4 /* Debug */,
 				807D7B0D29835756007942B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		80D648572CB0E20C00135729 /* Build configuration list for PBXNativeTarget "TophatCoreExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				80D648582CB0E20C00135729 /* Debug */,
+				80D648592CB0E20C00135729 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1427,6 +1642,14 @@
 			package = 7FA71E0824C95CAC001C9574 /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
 		};
+		8005282E2CB718C200226174 /* TophatKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TophatKit;
+		};
+		800528302CB718C700226174 /* TophatKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TophatKit;
+		};
 		8006E7EF2943D3090089805E /* VisualEffects */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 8006E7EE2943D3090089805E /* XCRemoteSwiftPackageReference "VisualEffects" */;
@@ -1440,6 +1663,14 @@
 		803B874A290055C70062F070 /* AndroidDeviceKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AndroidDeviceKit;
+		};
+		805543CB2CB715EB004E1D18 /* TophatUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TophatUtilities;
+		};
+		805543CD2CB715F1004E1D18 /* TophatUtilities */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TophatUtilities;
 		};
 		807D7B0E29835762007942B4 /* TophatFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1460,10 +1691,6 @@
 			package = 8090E266296775BE003106B9 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = Collections;
 		};
-		809BD04629106F5E00FD4043 /* GoogleStorageKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = GoogleStorageKit;
-		};
 		80C18344290232D1008D3B80 /* TophatFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TophatFoundation;
@@ -1476,14 +1703,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 80DC0FD62C82225600E5C9EE /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
-		};
-		80ED3E8E298421B400A734B7 /* TophatKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TophatKit;
-		};
-		80ED3E90298421B900A734B7 /* TophatKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TophatKit;
 		};
 		80F74E242909E8EA0040F026 /* AppleDeviceKit */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -9,11 +9,9 @@
 struct LaunchContext {
 	let appName: String?
 	let pinnedApplicationId: PinnedApplication.ID?
-	let arguments: [String]?
 
-	init(appName: String? = nil, pinnedApplicationId: PinnedApplication.ID? = nil, arguments: [String]? = nil) {
+	init(appName: String? = nil, pinnedApplicationId: PinnedApplication.ID? = nil) {
 		self.appName = appName
 		self.pinnedApplicationId = pinnedApplicationId
-		self.arguments = arguments
 	}
 }

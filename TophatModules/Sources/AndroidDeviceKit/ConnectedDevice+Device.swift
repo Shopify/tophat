@@ -26,10 +26,10 @@ extension ConnectedDevice: Device {
 	var type: DeviceType {
 		guard let product = product else {
 			// In case the product name is not available, fall back to checking the serial.
-			return serial.contains("emulator") ? .virtual : .physical
+			return serial.contains("emulator") ? .simulator : .device
 		}
 
-		return product.contains("sdk_gphone") ? .virtual : .physical
+		return product.contains("sdk_gphone") ? .simulator : .device
 	}
 
 	var connection: Connection {

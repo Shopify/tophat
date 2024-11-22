@@ -16,17 +16,17 @@ struct LaunchAppAction {
 		self.installCoordinator = installCoordinator
 	}
 
-	func callAsFunction(artifactURL: URL, context: LaunchContext? = nil) async {
+	func callAsFunction(artifactURL: URL, launchArguments: [String] = [], context: LaunchContext? = nil) async {
 		do {
-			try await installCoordinator.launch(artifactURL: artifactURL, context: context)
+			try await installCoordinator.launch(artifactURL: artifactURL, launchArguments: launchArguments, context: context)
 		} catch {
 			ErrorNotifier().notify(error: error)
 		}
 	}
 
-	func callAsFunction(artifactSet: ArtifactSet, on platform: Platform, context: LaunchContext? = nil) async {
+	func callAsFunction(recipes: [InstallRecipe], context: LaunchContext? = nil) async {
 		do {
-			try await installCoordinator.launch(artifactSet: artifactSet, on: platform, context: context)
+			try await installCoordinator.install(recipes: recipes, context: context)
 		} catch {
 			ErrorNotifier().notify(error: error)
 		}

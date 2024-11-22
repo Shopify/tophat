@@ -9,7 +9,7 @@
 import Foundation
 import TophatFoundation
 
-/// A container class that can track the connected device associated with a virtual device
+/// A container class that can track the connected device associated with a simulator device
 /// on the fly.
 final class ProxyVirtualDevice {
 	private let virtualDevice: VirtualDevice
@@ -29,7 +29,7 @@ final class ProxyVirtualDevice {
 
 extension ProxyVirtualDevice: Device {
 	var id: String {
-		// Because ADB serials aren't always available, we'll always reference virtual devices by name to have a stable value.
+		// Because ADB serials aren't always available, we'll always reference simulator devices by name to have a stable value.
 		virtualDevice.name
 	}
 
@@ -43,7 +43,7 @@ extension ProxyVirtualDevice: Device {
 	}
 
 	var type: DeviceType {
-		.virtual
+		.simulator
 	}
 
 	var connection: Connection {

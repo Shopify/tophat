@@ -10,10 +10,9 @@ let package = Package(
 	products: [
 		.library(name: "AndroidDeviceKit", targets: ["AndroidDeviceKit"]),
 		.library(name: "AppleDeviceKit", targets: ["AppleDeviceKit"]),
-		.library(name: "GoogleStorageKit", targets: ["GoogleStorageKit"]),
 		.library(name: "ShellKit", targets: ["ShellKit"]),
 		.library(name: "TophatFoundation", targets: ["TophatFoundation"]),
-		.library(name: "TophatKit", targets: ["TophatKit"]),
+		.library(name: "TophatUtilities", targets: ["TophatUtilities"]),
 		.library(name: "TophatServer", targets: ["TophatServer"])
 	],
 	dependencies: [
@@ -38,13 +37,6 @@ let package = Package(
 			]
 		),
 		.target(
-			name: "GoogleStorageKit",
-			dependencies: [
-				.product(name: "Logging", package: "swift-log"),
-				.target(name: "ShellKit")
-			]
-		),
-		.target(
 			name: "ShellKit",
 			dependencies: [
 				.product(name: "Logging", package: "swift-log")
@@ -52,7 +44,7 @@ let package = Package(
 		),
 		.target(name: "TophatFoundation"),
 		.target(
-			name: "TophatKit",
+			name: "TophatUtilities",
 			dependencies: [
 				.target(name: "TophatFoundation")
 			]
