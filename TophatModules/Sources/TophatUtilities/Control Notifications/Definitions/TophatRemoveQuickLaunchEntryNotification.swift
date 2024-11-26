@@ -1,5 +1,5 @@
 //
-//  TophatRemovePinnedApplicationNotification.swift
+//  TophatRemoveQuickLaunchEntryNotification.swift
 //  TophatUtilities
 //
 //  Created by Lukas Romsicki on 2023-01-27.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-public struct TophatRemovePinnedApplicationNotification: TophatInterProcessNotification {
-	public static let name = "TophatRemovePinnedApplication"
+public struct TophatRemoveQuickLaunchEntryNotification: TophatInterProcessNotification {
+	public static let name = "TophatRemoveQuickLaunchEntry"
 
 	public struct Payload: Codable {
 		public let id: String

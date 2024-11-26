@@ -59,6 +59,7 @@ public struct ArtifactProviderParameterSpecification: Codable {
 	public let description: LocalizedStringResource?
 	public let prompt: LocalizedStringResource?
 	public let help: LocalizedStringResource?
+	public let isOptional: Bool
 
 	init(parameter: some AnyArtifactProviderParameter) {
 		self.key = parameter.key
@@ -66,5 +67,6 @@ public struct ArtifactProviderParameterSpecification: Codable {
 		self.description = parameter.description
 		self.prompt = parameter.prompt
 		self.help = parameter.help
+		self.isOptional = parameter.isOptional
 	}
 }

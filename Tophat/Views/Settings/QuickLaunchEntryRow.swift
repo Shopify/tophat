@@ -1,5 +1,5 @@
 //
-//  PinnedApplicationRow.swift
+//  QuickLaunchEntryRow.swift
 //  Tophat
 //
 //  Created by Lukas Romsicki on 2022-11-30.
@@ -10,47 +10,40 @@ import SwiftUI
 import TophatFoundation
 @_spi(TophatKitInternal) import TophatKit
 
-struct PinnedApplicationRow: View {
-	@Environment(ExtensionHost.self) private var extensionHost
+struct QuickLaunchEntryRow: View {
 	@Environment(\.isEnabled) private var isEnabled
 
-	let application: PinnedApplication
+	let entry: QuickLaunchEntry
 
 	var body: some View {
 		HStack(spacing: 10) {
-			AsyncImage(url: application.icon?.url) { image in
+			AsyncImage(url: entry.iconURL) { image in
 				image
-					.pinnedApplicationImageStyle()
+					.quickLaunchEntryImageStyle()
 			} placeholder: {
 				Image(.appIconPlaceholder)
-					.pinnedApplicationImageStyle()
+					.quickLaunchEntryImageStyle()
 			}
 			VStack(alignment: .leading, spacing: 3) {
-				Text(application.name)
+				Text(entry.name)
 					.fontWeight(.medium)
 
 				HStack {
-					BadgedText(text: "\(application.platform.description)")
-
-					if case .artifactProvider(let metadata) = application.recipes.first?.source, let artifactProvider = artifactProviders.first(where: { $0.id == metadata.id }) {
-						BadgedText(text: artifactProvider.title)
+					ForEach(Array(entry.platforms), id: \.self) { platform in
+						BadgedText(text: Text(String(describing: platform)))
 					}
 				}
 			}
 		}
 		.opacity(isEnabled ? 1 : 0.5)
 	}
-
-	private var artifactProviders: [ArtifactProviderSpecification] {
-		extensionHost.availableExtensions.flatMap(\.specification.artifactProviders)
-	}
 }
 
-private struct BadgedText: View {
-	var text: LocalizedStringResource
+struct BadgedText: View {
+	var text: Text
 
 	var body: some View {
-		Text(text)
+		text
 			.font(.caption)
 			.foregroundColor(.secondary)
 			.padding(.vertical, 1)
@@ -61,7 +54,7 @@ private struct BadgedText: View {
 }
 
 private extension Image {
-	func pinnedApplicationImageStyle() -> some View {
+	func quickLaunchEntryImageStyle() -> some View {
 		self
 			.resizable()
 			.scaledToFit()

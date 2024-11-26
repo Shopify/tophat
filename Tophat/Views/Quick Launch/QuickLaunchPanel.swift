@@ -7,27 +7,30 @@
 //
 
 import SwiftUI
+import SwiftData
 import TophatFoundation
 
 struct QuickLaunchPanel: View {
 	@Environment(\.launchApp) private var launchApp
-	@EnvironmentObject private var pinnedApplicationState: PinnedApplicationState
+
+	@Query(sort: \QuickLaunchEntry.order)
+	var entries: [QuickLaunchEntry]
 
 	private let columns = Array(repeating: GridItem(.fixed(44), spacing: 14), count: 5)
 
 	var body: some View {
 		Panel {
 			Group {
-				if pinnedApplicationState.pinnedApplications.isEmpty {
+				if entries.isEmpty {
 					QuickLaunchEmptyState()
 						.frame(minWidth: 0, maxWidth: .infinity)
 				} else {
 					LazyVGrid(columns: columns, alignment: .leading, spacing: 14) {
-						ForEach(pinnedApplicationState.pinnedApplications) { app in
+						ForEach(entries) { entry in
 							Button {
-								didSelect(app: app)
+								didSelect(entry: entry)
 							} label: {
-								QuickLaunchAppView(app: app)
+								QuickLaunchEntryView(entry: entry)
 							}
 							.buttonStyle(.plain)
 						}
@@ -40,11 +43,24 @@ struct QuickLaunchPanel: View {
 		}
 	}
 
-	private func didSelect(app: PinnedApplication) {
-		let launchContext = LaunchContext(appName: app.name, pinnedApplicationId: app.id)
+	private func didSelect(entry: QuickLaunchEntry) {
+		let launchContext = LaunchContext(appName: entry.name, quickLaunchEntryID: entry.id)
+		let recipes = entry.sources.map { source in
+			InstallRecipe(
+				source: .artifactProvider(
+					metadata: ArtifactProviderMetadata(
+						id: source.artifactProviderID,
+						parameters: source.artifactProviderParameters
+					)
+				),
+				launchArguments: source.launchArguments,
+				platformHint: source.platformHint,
+				destinationHint: source.destinationHint
+			)
+		}
 
 		Task {
-			await launchApp?(recipes: app.recipes, context: launchContext)
+			await launchApp?(recipes: recipes, context: launchContext)
 		}
 	}
 }

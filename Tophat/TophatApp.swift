@@ -18,6 +18,7 @@ import AndroidDeviceKit
 import AppleDeviceKit
 import FluidMenuBarExtra
 import TophatFoundation
+import SwiftData
 
 let log = Logger(label: Bundle.main.bundleIdentifier!)
 
@@ -43,11 +44,11 @@ struct TophatApp: App {
 				.environment(appDelegate.updateController)
 				.environment(appDelegate.extensionHost)
 				.environmentObject(appDelegate.deviceManager)
-				.environmentObject(appDelegate.pinnedApplicationState)
 				.environmentObject(appDelegate.utilityPathPreferences)
 				.environmentObject(appDelegate.launchAtLoginController)
 				.environmentObject(appDelegate.symbolicLinkManager)
 		}
+		.modelContainer(appDelegate.modelContainer)
 	}
 }
 
@@ -55,6 +56,8 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	// Hope nobody is running a Jedi Academy server...
 	@AppStorage("ListenPort") private var listenPort: Int = 29070
 	@AppStorage("HasCompletedFirstLaunch") private var hasCompletedFirstLaunch = false
+
+	let modelContainer = try! ModelContainer(for: QuickLaunchEntry.self)
 
 	private var menuBarExtra: FluidMenuBarExtra?
 
@@ -69,7 +72,6 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	private let notificationHandler = NotificationHandler()
 
 	let deviceManager: DeviceManager
-	let pinnedApplicationState: PinnedApplicationState
 	let utilityPathPreferences: UtilityPathPreferences
 	let symbolicLinkManager = TophatCtlSymbolicLinkManager()
 	let launchAtLoginController = LaunchAtLoginController()
@@ -99,12 +101,10 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 
 		self.deviceSelectionManager = DeviceSelectionManager(deviceManager: deviceManager)
 		self.taskStatusReporter = TaskStatusReporter()
-		self.pinnedApplicationState = PinnedApplicationState()
 
 		self.installCoordinator = InstallCoordinator(
 			deviceManager: deviceManager,
 			deviceSelectionManager: deviceSelectionManager,
-			pinnedApplicationState: pinnedApplicationState,
 			taskStatusReporter: taskStatusReporter,
 			extensionHost: extensionHost
 		)
@@ -164,12 +164,12 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 				.environmentObject(self.deviceManager)
 				.environmentObject(self.deviceSelectionManager)
 				.environmentObject(self.taskStatusReporter)
-				.environmentObject(self.pinnedApplicationState)
 				.environment(self.updateController)
 				.environment(\.launchApp, self.launchApp)
 				.environment(\.prepareDevice, self.prepareDevice)
 				.environment(\.mirrorDeviceDisplay, self.mirrorDeviceDisplay)
 				.environment(\.showOnboardingWindow, self.showOnboardingWindow)
+				.modelContainer(self.modelContainer)
 		}
 
 		performFirstLaunchTasks()
@@ -262,21 +262,47 @@ extension AppDelegate: TophatServerDelegate {
 // MARK: - NotificationHandlerDelegate
 
 extension AppDelegate: NotificationHandlerDelegate {
-	func notificationHandler(didReceiveRequestToAddPinnedApplication pinnedApplication: PinnedApplication) {
-		if let existingIndex = pinnedApplicationState.pinnedApplications.firstIndex(where: { $0.id == pinnedApplication.id }) {
-			let existingItem = pinnedApplicationState.pinnedApplications[existingIndex]
+	func notificationHandler(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry) {
+		let context = ModelContext(modelContainer)
 
-			var newPinnedApplication = pinnedApplication
-			newPinnedApplication.icon = existingItem.icon
-			pinnedApplicationState.pinnedApplications[existingIndex] = newPinnedApplication
+		let existingID = quickLaunchEntry.id
+		let existingEntryFetchDescriptor = FetchDescriptor<QuickLaunchEntry>(
+			predicate: #Predicate { $0.id == existingID }
+		)
 
-		} else {
-			pinnedApplicationState.pinnedApplications.append(pinnedApplication)
+		do {
+			if let existingEntry = try context.fetch(existingEntryFetchDescriptor).first {
+				existingEntry.name = quickLaunchEntry.name
+				existingEntry.sources = quickLaunchEntry.sources
+			} else {
+				var fetchDescriptor = FetchDescriptor<QuickLaunchEntry>(
+					sortBy: [SortDescriptor(\.order, order: .reverse)]
+				)
+				fetchDescriptor.fetchLimit = 1
+
+				let existingEntries = try? context.fetch(fetchDescriptor)
+				let lastOrder = existingEntries?.first?.order ?? 0
+				quickLaunchEntry.order = lastOrder + 1
+
+				context.insert(quickLaunchEntry)
+			}
+
+		} catch {
+			log.error("Failed to update Quick Launch entry!")
 		}
 	}
 
-	func notificationHandler(didReceiveRequestToRemovePinnedApplicationWithIdentifier pinnedApplicationIdentifier: PinnedApplication.ID) {
-		pinnedApplicationState.pinnedApplications.removeAll { $0.id == pinnedApplicationIdentifier }
+	func notificationHandler(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) {
+		let context = ModelContext(modelContainer)
+
+		do {
+			try context.delete(
+				model: QuickLaunchEntry.self,
+				where: #Predicate { $0.id == quickLaunchEntryIdentifier }
+			)
+		} catch {
+			log.error("Failed to delete Quick Launch entry.")
+		}
 	}
 
 	func notificationHandler(didOpenURL url: URL, launchArguments: [String]) {

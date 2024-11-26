@@ -7,13 +7,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AppsTab: View {
+	@Environment(\.modelContext) private var modelContext
+
 	@AppStorage("ShowQuickLaunch") private var showQuickLaunch = true
-	@EnvironmentObject private var pinnedApplicationState: PinnedApplicationState
-	@State private var selection: String?
-	@State private var editingApplication: PinnedApplication? = nil
-	@State private var addPinnedApplicationSheetVisible = false
+
+	@State private var selectedEntry: QuickLaunchEntry?
+	@State private var editingEntry: QuickLaunchEntry?
+	@State private var isAddingNewEntry = false
+
+	@Query(sort: \QuickLaunchEntry.order)
+	var entries: [QuickLaunchEntry]
 
 	var body: some View {
 		Form {
@@ -31,49 +37,62 @@ struct AppsTab: View {
 			}
 
 			Section {
-				List(selection: $selection) {
-					ForEach(pinnedApplicationState.pinnedApplications) { application in
-						PinnedApplicationRow(application: application)
+				List(selection: $selectedEntry) {
+					ForEach(entries) { entry in
+						QuickLaunchEntryRow(entry: entry)
+							.tag(entry)
 							.listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
 					}
-					.onMove(perform: move)
+					.onMove { indexSet, offset in
+						var mutableEntries = entries
+
+						mutableEntries.move(fromOffsets: indexSet, toOffset: offset)
+
+						for (index, entry) in mutableEntries.enumerated() {
+							entry.order = index
+						}
+
+						try? self.modelContext.save()
+					}
+					.onDelete { indexSet in
+						for index in indexSet {
+							let entry = entries[index]
+							modelContext.delete(entry)
+						}
+					}
 				}
 				.listGradientButtons {
 					GradientButton(style: .plus) {
-						addPinnedApplicationSheetVisible = true
+						isAddingNewEntry = true
 					}
-
 				} minusButton: {
 					GradientButton(style: .minus) {
-						pinnedApplicationState.pinnedApplications.removeAll { $0.id == selection }
-						selection = nil
+						if let selectedEntry {
+							modelContext.delete(selectedEntry)
+							self.selectedEntry = nil
+						}
 					}
-					.disabled(selection == nil)
+					.disabled(selectedEntry == nil)
 				}
-				.contextMenu(forSelectionType: String.self) { selectionSet in
+				.contextMenu(forSelectionType: QuickLaunchEntry.self) { selectionSet in
 					Button("Edit…") {
-						editingApplication = pinnedApplicationState.pinnedApplications.first { $0.id == selectionSet.first }
+						editingEntry = entries.first { $0 == selectionSet.first }
 					}
 				} primaryAction: { selectionSet in
-					editingApplication = pinnedApplicationState.pinnedApplications.first { $0.id == selectionSet.first }
+					editingEntry = entries.first { $0 == selectionSet.first }
 				}
-
 			}
 			.disabled(!showQuickLaunch)
 		}
 		.formStyle(.grouped)
 		.onTapGesture(count: 1) {
-			selection = nil
+			selectedEntry = nil
 		}
-		.sheet(isPresented: $addPinnedApplicationSheetVisible) {
-			AddPinnedApplicationSheet()
+		.sheet(item: $editingEntry) { entry in
+			QuickLaunchEntrySheet(entry: entry)
 		}
-		.sheet(item: $editingApplication) { app in
-			AddPinnedApplicationSheet(applicationToEdit: app)
+		.sheet(isPresented: $isAddingNewEntry) {
+			QuickLaunchEntrySheet()
 		}
-	}
-
-	private func move(from source: IndexSet, to destination: Int) {
-		pinnedApplicationState.pinnedApplications.move(fromOffsets: source, toOffset: destination)
 	}
 }

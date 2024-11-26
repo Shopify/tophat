@@ -1,5 +1,5 @@
 //
-//  TophatAddPinnedApplicationNotification.swift
+//  TophatAddQuickLaunchEntryNotification.swift
 //  TophatUtilities
 //
 //  Created by Lukas Romsicki on 2023-01-27.
@@ -9,8 +9,8 @@
 import Foundation
 import TophatFoundation
 
-public struct TophatAddPinnedApplicationNotification: TophatInterProcessNotification {
-	public static let name = "TophatAddPinnedApplication"
+public struct TophatAddQuickLaunchEntryNotification: TophatInterProcessNotification {
+	public static let name = "TophatAddQuickLaunchEntry"
 
 	public struct Payload: Codable {
 		public let configuration: UserSpecifiedQuickLaunchEntryConfiguration
