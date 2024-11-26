@@ -8,10 +8,10 @@
 
 import Foundation
 import TophatFoundation
+import SwiftData
 
 final class InstallCoordinator {
 	private unowned let deviceManager: DeviceManager
-	private unowned let pinnedApplicationState: PinnedApplicationState
 	private unowned let taskStatusReporter: TaskStatusReporter
 	private let deviceSelectionManager: DeviceSelectionManager
 
@@ -20,12 +20,10 @@ final class InstallCoordinator {
 	init(
 		deviceManager: DeviceManager,
 		deviceSelectionManager: DeviceSelectionManager,
-		pinnedApplicationState: PinnedApplicationState,
 		taskStatusReporter: TaskStatusReporter,
 		extensionHost: ExtensionHost
 	) {
 		self.deviceManager = deviceManager
-		self.pinnedApplicationState = pinnedApplicationState
 		self.deviceSelectionManager = deviceSelectionManager
 		self.taskStatusReporter = taskStatusReporter
 
@@ -45,7 +43,6 @@ final class InstallCoordinator {
 
 		let fetchArtifact = FetchArtifactTask(
 			taskStatusReporter: taskStatusReporter,
-			pinnedApplicationState: pinnedApplicationState,
 			artifactDownloader: artifactDownloader,
 			context: context
 		)
@@ -77,7 +74,6 @@ final class InstallCoordinator {
 
 		let fetchArtifact = FetchArtifactTask(
 			taskStatusReporter: taskStatusReporter,
-			pinnedApplicationState: pinnedApplicationState,
 			artifactDownloader: artifactDownloader,
 			context: context
 		)
@@ -108,7 +104,6 @@ final class InstallCoordinator {
 	private func install(ticket: InstallationTicketMachine.Ticket, context: LaunchContext? = nil) async throws {
 		let fetchArtifact = FetchArtifactTask(
 			taskStatusReporter: taskStatusReporter,
-			pinnedApplicationState: pinnedApplicationState,
 			artifactDownloader: artifactDownloader,
 			context: context
 		)

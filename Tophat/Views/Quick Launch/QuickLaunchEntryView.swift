@@ -1,5 +1,5 @@
 //
-//  QuickLaunchAppView.swift
+//  QuickLaunchEntryView.swift
 //  Tophat
 //
 //  Created by Lukas Romsicki on 2022-12-12.
@@ -7,38 +7,50 @@
 //
 
 import SwiftUI
+import TophatFoundation
 
-struct QuickLaunchAppView: View {
-	let app: PinnedApplication
+struct QuickLaunchEntryView: View {
+	let entry: QuickLaunchEntry
 
 	var body: some View {
 		VStack(spacing: 4) {
-			AsyncImage(url: app.icon?.url) { image in
+			AsyncImage(url: entry.iconURL) { image in
 				image
-					.pinnedApplicationImageStyle()
+					.quickLaunchEntryImageStyle()
 			} placeholder: {
 				Image(.appIconPlaceholder)
-					.pinnedApplicationImageStyle()
+					.quickLaunchEntryImageStyle()
 			}
 
 			VStack(spacing: 0) {
-				Text(app.name)
+				Text(entry.name)
 					.font(.caption)
 					.lineLimit(1)
 					.truncationMode(.tail)
 
-				Text(String(describing: app.platform))
+				Text(platformDescription)
 					.font(.system(size: 8).weight(.medium))
 					.opacity(0.8)
 					.foregroundColor(.secondary)
 			}
-
 		}
+	}
+
+	private var platformDescription: String {
+		if entry.platforms.count > 1 {
+			return "Multiple"
+		}
+
+		if let firstPlatform = entry.platforms.first {
+			return String(describing: firstPlatform)
+		}
+
+		return String(describing: Platform.unknown)
 	}
 }
 
 private extension Image {
-	func pinnedApplicationImageStyle() -> some View {
+	func quickLaunchEntryImageStyle() -> some View {
 		self
 			.resizable()
 			.scaledToFit()

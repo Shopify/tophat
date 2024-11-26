@@ -30,11 +30,11 @@ extension Apps {
 			let data = try Data(contentsOf: path)
 			let configuration = try JSONDecoder().decode(UserSpecifiedQuickLaunchEntryConfiguration.self, from: data)
 
-			let payload = TophatAddPinnedApplicationNotification.Payload(
+			let payload = TophatAddQuickLaunchEntryNotification.Payload(
 				configuration: configuration
 			)
 
-			let notification = TophatAddPinnedApplicationNotification(payload: payload)
+			let notification = TophatAddQuickLaunchEntryNotification(payload: payload)
 			TophatInterProcessNotifier().send(notification: notification)
 		}
 	}

@@ -8,10 +8,10 @@
 
 struct LaunchContext {
 	let appName: String?
-	let pinnedApplicationId: PinnedApplication.ID?
+	let quickLaunchEntryID: QuickLaunchEntry.ID?
 
-	init(appName: String? = nil, pinnedApplicationId: PinnedApplication.ID? = nil) {
+	init(appName: String? = nil, quickLaunchEntryID: QuickLaunchEntry.ID? = nil) {
 		self.appName = appName
-		self.pinnedApplicationId = pinnedApplicationId
+		self.quickLaunchEntryID = quickLaunchEntryID
 	}
 }

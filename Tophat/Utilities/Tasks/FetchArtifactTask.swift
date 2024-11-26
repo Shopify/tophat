@@ -21,18 +21,15 @@ struct FetchArtifactTask {
 	}
 
 	let taskStatusReporter: TaskStatusReporter
-	let pinnedApplicationState: PinnedApplicationState
 	let buildDownloader: ArtifactDownloader
 	let context: LaunchContext?
 
 	init(
 		taskStatusReporter: TaskStatusReporter,
-		pinnedApplicationState: PinnedApplicationState,
 		artifactDownloader: ArtifactDownloader,
 		context: LaunchContext?
 	) {
 		self.taskStatusReporter = taskStatusReporter
-		self.pinnedApplicationState = pinnedApplicationState
 		self.buildDownloader = artifactDownloader
 		self.context = context
 	}
@@ -57,7 +54,6 @@ struct FetchArtifactTask {
 		Task {
 			let updateIcon = UpdateIconTask(
 				taskStatusReporter: taskStatusReporter,
-				pinnedApplicationState: pinnedApplicationState,
 				context: context
 			)
 

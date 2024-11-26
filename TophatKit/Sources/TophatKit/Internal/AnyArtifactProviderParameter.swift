@@ -17,3 +17,9 @@ protocol AnyArtifactProviderParameter: AnyObject, Sendable {
 	var prompt: LocalizedStringResource? { get }
 	var help: LocalizedStringResource? { get }
 }
+
+extension AnyArtifactProviderParameter {
+	var isOptional: Bool {
+		Value.self is ExpressibleByNilLiteral.Type
+	}
+}

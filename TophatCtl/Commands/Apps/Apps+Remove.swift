@@ -26,7 +26,7 @@ extension Apps {
 				print("Warning: Tophat must be running for this command to succeed, but it is not running.")
 			}
 
-			let notification = TophatRemovePinnedApplicationNotification(payload: .init(id: id))
+			let notification = TophatRemoveQuickLaunchEntryNotification(payload: .init(id: id))
 			TophatInterProcessNotifier().send(notification: notification)
 		}
 	}

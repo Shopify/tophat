@@ -8,15 +8,15 @@
 
 import Foundation
 import TophatFoundation
+import SwiftData
 
 struct UpdateIconTask {
 	let taskStatusReporter: TaskStatusReporter
-	let pinnedApplicationState: PinnedApplicationState
 	let context: LaunchContext?
 
 	@MainActor
 	func callAsFunction(application: Application) async throws {
-		guard let pinnedApplicationId = context?.pinnedApplicationId else {
+		guard let quickLaunchEntryID = context?.quickLaunchEntryID else {
 			return
 		}
 
@@ -29,8 +29,19 @@ struct UpdateIconTask {
 			}
 		}
 
-		if let iconURL = application.icon, let persistedIcon = try? store(icon: iconURL, for: pinnedApplicationId) {
-			pinnedApplicationState.update(icon: persistedIcon, for: pinnedApplicationId)
+		if let iconURL = application.icon, let persistedIcon = try? store(icon: iconURL, for: quickLaunchEntryID) {
+			let container = try ModelContainer(for: QuickLaunchEntry.self)
+			let modelContext = ModelContext(container)
+
+			let existingQuickLaunchEntryFetchDescriptor = FetchDescriptor<QuickLaunchEntry>(
+				predicate: #Predicate { $0.id == quickLaunchEntryID }
+			)
+
+			if let existingQuickLaunchEntry = try modelContext.fetch(existingQuickLaunchEntryFetchDescriptor).first {
+				existingQuickLaunchEntry.iconURL = persistedIcon.url
+			}
+
+			try modelContext.save()
 		}
 	}
 
@@ -41,21 +52,5 @@ struct UpdateIconTask {
 			log.error("Failed to save icon for pinned application with identifier \(appId): \(error)")
 			throw error
 		}
-	}
-}
-
-private extension PinnedApplicationState {
-	func update(icon: ApplicationIcon, for pinnedApplicationId: PinnedApplication.ID) {
-		guard let index = index(pinnedApplicationId: pinnedApplicationId) else {
-			return
-		}
-
-		var modifiedElement = pinnedApplications[index]
-		modifiedElement.icon = icon
-		pinnedApplications[index] = modifiedElement
-	}
-
-	private func index(pinnedApplicationId: PinnedApplication.ID) -> Int? {
-		pinnedApplications.firstIndex { $0.id == pinnedApplicationId }
 	}
 }
