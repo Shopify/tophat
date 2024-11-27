@@ -22,7 +22,7 @@ public struct InstallRecipe: Equatable, Hashable, Codable {
 
 	public init(
 		source: RemoteArtifactSource,
-		launchArguments: [String],
+		launchArguments: [String] = [],
 		platformHint: Platform? = nil,
 		destinationHint: DeviceType? = nil
 	) {

@@ -11,14 +11,18 @@ import TophatFoundation
 import ZIPFoundation
 
 final class ArtifactUnpacker {
-	/// Unpacks a local artifact found on the local file system and returns the application contained in the artifact.
-	/// - Parameter artifactURL: The URL to the local artifact.
-	/// - Returns: An  `Application` instance representing the build found in the artifact.
-	func unpack(artifactURL: URL) throws -> Application {
-		guard artifactURL.isFileURL else {
+	/// Unpacks a downloaded artifact in an `ArtifactContainer` and places it in the same container.
+	/// - Parameter container: The container in which the raw artifact is located and where to place the unpacked artifact.
+	func unpack(downloadedItemInContainer container: ArtifactContainer) async throws {
+		guard let rawDownloadURL = container.rawDownloads.first, rawDownloadURL.isFileURL else {
 			throw ArtifactUnpackerError.artifactNotAvailable
 		}
 
+		let application = try unpack(artifactURL: rawDownloadURL)
+		try container.addCopy(of: .application(application))
+	}
+
+	private func unpack(artifactURL: URL) throws -> Application {
 		guard let fileFormat = ArtifactFileFormat(pathExtension: artifactURL.pathExtension) else {
 			throw ArtifactUnpackerError.unknownFileFormat
 		}
@@ -56,12 +60,13 @@ final class ArtifactUnpacker {
 	}
 
 	private func extractArtifact(at url: URL) throws -> URL {
-		let destination = url.deletingLastPathComponent().appending(path: url.fileName)
+		let destinationURL = url.deletingLastPathComponent().appending(path: url.fileName)
 
-		try FileManager.default.unzipItem(at: url, to: destination)
-		try? FileManager.default.removeItem(at: url)
+		log.info("Uncompressing artifact at \(url)")
+		try FileManager.default.unzipItem(at: url, to: destinationURL)
+		log.info("Artifact uncompressed to \(destinationURL)")
 
-		return destination
+		return destinationURL
 	}
 }
 

@@ -12,7 +12,7 @@ import SwiftData
 
 struct UpdateIconTask {
 	let taskStatusReporter: TaskStatusReporter
-	let context: LaunchContext?
+	let context: OperationContext?
 
 	@MainActor
 	func callAsFunction(application: Application) async throws {

@@ -9,43 +9,47 @@
 import Foundation
 import TophatFoundation
 
+protocol ApplicationDownloading {
+	func download(from source: RemoteArtifactSource, context: OperationContext?) async throws -> Application
+	func cleanUp() async throws
+}
+
+extension ApplicationDownloading {
+	func download(from source: RemoteArtifactSource) async throws -> Application {
+		try await download(from: source, context: nil)
+	}
+}
+
 protocol DeviceSelecting {
 	var selectedDevices: [Device] { get }
 }
 
-protocol ArtifactDownloading {
-	func download(source: RemoteArtifactSource) async throws -> Application
-}
-
-extension DeviceSelectionManager: DeviceSelecting {}
-
 /// A mechanism for producing installation tickets for selected devices based on the information
 /// provided by installation recipes.
 struct InstallationTicketMachine {
-	typealias Ticket = InstallationTicket
 	typealias TicketSequence = AsyncThrowingStream<Ticket, Error>
 
 	private let deviceSelector: DeviceSelecting
-	private let artifactDownloader: ArtifactDownloading
+	private let applicationDownloader: ApplicationDownloading
 
 	/// Creates a new instance of the processor.
 	/// - Parameters:
 	///   - deviceSelector: An instance that provides user-selected devices.
-	///   - artifactDownloader: An instance that provides downloading capability
-	init(deviceSelector: DeviceSelecting, artifactDownloader: ArtifactDownloading) {
+	///   - applicationDownloader: An instance that provides downloading capability
+	init(deviceSelector: DeviceSelecting, applicationDownloader: ApplicationDownloading) {
 		self.deviceSelector = deviceSelector
-		self.artifactDownloader = artifactDownloader
+		self.applicationDownloader = applicationDownloader
 	}
 
 	/// Begins producing tickets for the provided recipes and returns them in an asynchronous
 	/// sequence.
 	/// - Parameter recipes: The recipes to be processed.
 	/// - Returns: An asynchronous sequence of tickets.
-	func process(recipes: [InstallRecipe]) -> TicketSequence {
+	func process(recipes: [InstallRecipe], context: OperationContext? = nil) -> TicketSequence {
 		AsyncThrowingStream { continuation in
 			Task {
 				do {
-					try await process(recipes: recipes, continuation: continuation)
+					try await process(recipes: recipes, continuation: continuation, context: context)
 					continuation.finish()
 				} catch {
 					continuation.finish(throwing: error)
@@ -54,7 +58,7 @@ struct InstallationTicketMachine {
 		}
 	}
 
-	private func process(recipes: [InstallRecipe], continuation: TicketSequence.Continuation) async throws {
+	private func process(recipes: [InstallRecipe], continuation: TicketSequence.Continuation, context: OperationContext?) async throws {
 		let selectedDevices = deviceSelector.selectedDevices
 
 		guard !selectedDevices.isEmpty else {
@@ -90,7 +94,7 @@ struct InstallationTicketMachine {
 								continue recipeLoop
 							}
 
-							let application = try await artifactDownloader.download(source: recipe.source)
+							let application = try await applicationDownloader.download(from: recipe.source, context: context)
 
 							providedBuildTypes[application.platform, default: []].formUnion(application.targets)
 
@@ -128,14 +132,17 @@ struct InstallationTicketMachine {
 	}
 }
 
+extension InstallationTicketMachine {
+	struct Ticket {
+		let device: Device
+		let artifactLocation: ArtifactLocation
+		let launchArguments: [String]
+	}
+}
+
 enum InstallationTicketMachineError: Error {
 	case noCompatibleDevices(providedBuildTypes: [Platform: Set<DeviceType>])
 	case noSelectedDevices
 }
 
-/// Structure representing a request to install an application on a given device.
-struct InstallationTicket {
-	let device: Device
-	let artifactLocation: ArtifactLocation
-	let launchArguments: [String]
-}
+extension DeviceSelectionManager: DeviceSelecting {}

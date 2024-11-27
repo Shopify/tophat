@@ -44,7 +44,8 @@ struct QuickLaunchPanel: View {
 	}
 
 	private func didSelect(entry: QuickLaunchEntry) {
-		let launchContext = LaunchContext(appName: entry.name, quickLaunchEntryID: entry.id)
+		let context = OperationContext(appName: entry.name, quickLaunchEntryID: entry.id)
+
 		let recipes = entry.sources.map { source in
 			InstallRecipe(
 				source: .artifactProvider(
@@ -60,7 +61,7 @@ struct QuickLaunchPanel: View {
 		}
 
 		Task {
-			await launchApp?(recipes: recipes, context: launchContext)
+			await launchApp?(recipes: recipes, context: context)
 		}
 	}
 }
