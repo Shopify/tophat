@@ -128,8 +128,8 @@ struct URLReaderTests {
 		#expect(result == .install(requests: expectedRequests))
 	}
 
-	@Test("Handles install route with hint parameter but no build provider parameters", arguments: urlPrefixes)
-	func handlesInstallRouteWithHintParameterNoBuildProviderParameters(urlPrefix: String) async throws {
+	@Test("Handles install route with hint parameter but no artifact provider parameters", arguments: urlPrefixes)
+	func handlesInstallRouteWithHintParameterNoArtifactProviderParameters(urlPrefix: String) async throws {
 		let result = try result(url: url(prefix: urlPrefix, path: "install/test?platform=ios"))
 
 		let expectedRequests: [InstallRecipe] = [

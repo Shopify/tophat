@@ -53,14 +53,14 @@ actor InstallCoordinator {
 	/// with the download process to improve completion time.
 	///
 	/// - Parameters:
-	///   - recipes: A collection of recipes for retrieving builds.
+	///   - recipes: A collection of recipes for retrieving applications.
 	///   - context: Additional metadata for the operation.
 	func install(recipes: [InstallRecipe], context: OperationContext? = nil) async throws {
 		if idleTimer == nil {
 			observeSessionIdleState()
 		}
 
-		taskStatusReporter.notify(message: "Preparing to install \(context?.appName ?? "application")…")
+		taskStatusReporter.notify(message: "Preparing to install \(context?.quickLaunchEntry?.name ?? "application")…")
 		await deviceListLoader.loadDevices()
 
 		try await currentSession.install(recipes: recipes, context: context)

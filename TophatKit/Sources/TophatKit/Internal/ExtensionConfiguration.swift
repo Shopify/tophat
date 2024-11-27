@@ -22,12 +22,12 @@ struct ExtensionConfiguration: AppExtensionConfiguration {
 
 		Task {
 			for await message in session.receivedMessages {
-				if let retrieveBuildMessage = try? message.decode(as: RetrieveArtifactMessage.self) {
+				if let retrieveArtifactMessage = try? message.decode(as: RetrieveArtifactMessage.self) {
 					do {
-						let result = try await service.handleRetreiveArtifact(message: retrieveBuildMessage.value)
-						retrieveBuildMessage.reply(.success(result))
+						let result = try await service.handleRetreiveArtifact(message: retrieveArtifactMessage.value)
+						retrieveArtifactMessage.reply(.success(result))
 					} catch {
-						retrieveBuildMessage.reply(.failure(error))
+						retrieveArtifactMessage.reply(.failure(error))
 					}
 				}
 
@@ -36,8 +36,8 @@ struct ExtensionConfiguration: AppExtensionConfiguration {
 					fetchExtensionDescriptorMessage.reply(.success(reply))
 				}
 
-				if let cleanUpBuildMessage = try? message.decode(as: CleanUpArtifactMessage.self) {
-					try? await service.handleCleanUp(message: cleanUpBuildMessage.value)
+				if let cleanUpArtifactMessage = try? message.decode(as: CleanUpArtifactMessage.self) {
+					try? await service.handleCleanUp(message: cleanUpArtifactMessage.value)
 				}
 			}
 		}

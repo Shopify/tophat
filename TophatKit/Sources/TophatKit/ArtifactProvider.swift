@@ -8,10 +8,10 @@
 
 import Foundation
 
-/// The type you use to define a mechanism for retrieving builds for installation
+/// The type you use to define a mechanism for retrieving artifacts for installation
 /// with Tophat.
 ///
-/// Create a ``ArtifactProvider`` for each type of build source, such as for retrieving
+/// Create a ``ArtifactProvider`` for each type of artifact source, such as for retrieving
 /// from the local filesystem, a continuous integration provider, or cloud storage provider.
 /// If the source requires authentication, handle it in the ``retrieve()`` function as
 /// well.
@@ -19,26 +19,26 @@ public protocol ArtifactProvider {
 	associatedtype Result = ArtifactProviderResult
 	typealias Parameter = ArtifactProviderParameter
 
-	/// The unique identifier of the build provider.
+	/// The unique identifier of the artifact provider.
 	///
 	/// Tophat exposes this value through its own interfaces or in the graphical
 	/// user interface so that people can specify which provider to use when
-	/// retrieving a build.
+	/// retrieving an artifact.
 	static var id: String { get }
 
-	/// A human-readable title for this build provider.
+	/// A human-readable title for this artifact provider.
 	static var title: LocalizedStringResource { get }
 
 	init()
 
-	/// The function used to retrieve the build.
+	/// The function used to retrieve the artifact.
 	///
 	/// Throw any errors if they ocurred. Use any parameters wrapped with ``Parameter`` to
 	/// collect inputs from Tophat to implement the retrieval mechanism.
 	/// - Returns: A ``ArtifactProviderResult`` containing the output.
 	func retrieve() async throws -> Result
 
-	/// The function used to clean up the downloaded build once it is no longer needed.
+	/// The function used to clean up the downloaded artifact once it is no longer needed.
 	/// - Parameter localURL: The URL of the local resource that should be cleaned up.
 	func cleanUp(localURL: URL) async throws
 }

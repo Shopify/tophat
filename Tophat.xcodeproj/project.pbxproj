@@ -64,7 +64,7 @@
 		805AFDAA2CF67D4C00B3E227 /* ArtifactContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805AFDA92CF67D4900B3E227 /* ArtifactContainer.swift */; };
 		805AFDAC2CF6BB8D00B3E227 /* CachingApplicationDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805AFDAB2CF6BB8900B3E227 /* CachingApplicationDownloader.swift */; };
 		805AFDAE2CF6C22700B3E227 /* InstallSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805AFDAD2CF6C21F00B3E227 /* InstallSession.swift */; };
-		805FC43229E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FC43129E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift */; };
+		805FC43229E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805FC43129E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift */; };
 		80629BF12939818C0077960E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BE92939818C0077960E /* SettingsView.swift */; };
 		80629BF22939818C0077960E /* QuickLaunchEntryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BEC2939818C0077960E /* QuickLaunchEntryRow.swift */; };
 		80629BF32939818C0077960E /* List+GradientButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80629BED2939818C0077960E /* List+GradientButtons.swift */; };
@@ -107,8 +107,8 @@
 		80A91A132981BA1300D8A8B9 /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A91A102981BA1300D8A8B9 /* FloatingPanel.swift */; };
 		80A91A142981BA1300D8A8B9 /* FloatingPanelViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A91A112981BA1300D8A8B9 /* FloatingPanelViewModifier.swift */; };
 		80A91A162981BA2D00D8A8B9 /* LaunchFromURLPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A91A152981BA2D00D8A8B9 /* LaunchFromURLPanel.swift */; };
-		80AE75E42CF4F467000923E3 /* QuickLaunchEntrySource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AE75E32CF4F459000923E3 /* QuickLaunchEntrySource.swift */; };
-		80AE75E62CF4F660000923E3 /* QuickLaunchEntrySourceSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AE75E52CF4F657000923E3 /* QuickLaunchEntrySourceSheet.swift */; };
+		80AE75E42CF4F467000923E3 /* QuickLaunchEntryRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AE75E32CF4F459000923E3 /* QuickLaunchEntryRecipe.swift */; };
+		80AE75E62CF4F660000923E3 /* QuickLaunchEntryRecipeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AE75E52CF4F657000923E3 /* QuickLaunchEntryRecipeSheet.swift */; };
 		80AE75E82CF50ABF000923E3 /* FormFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AE75E72CF50ABD000923E3 /* FormFooterView.swift */; };
 		80B48DE72C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint in Resources */ = {isa = PBXBuildFile; fileRef = 80B48DE62C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint */; };
 		80B48DE92C8BCBC400897317 /* com.shopify.Tophat.extension.appextensionpoint in CopyFiles */ = {isa = PBXBuildFile; fileRef = 80B48DE62C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint */; };
@@ -153,7 +153,6 @@
 		80EB5D53296F6A380011DE5F /* Array+JoinedWithSpaces.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D52296F6A380011DE5F /* Array+JoinedWithSpaces.swift */; };
 		80EB5D55297095890011DE5F /* TaskStatusMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D54297095890011DE5F /* TaskStatusMetadata.swift */; };
 		80EB5D57297096FB0011DE5F /* InstallStatusMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D56297096FB0011DE5F /* InstallStatusMetadata.swift */; };
-		80EB5D5D2970A25D0011DE5F /* UpdateIconTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EB5D5C2970A25D0011DE5F /* UpdateIconTask.swift */; };
 		80ED3E5E29835AAF00A734B7 /* URL+ExpressibleByArgument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED3E5C29835A9900A734B7 /* URL+ExpressibleByArgument.swift */; };
 		80ED55462971CB3200B3AEBA /* MirrorDeviceDisplayTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80ED55452971CB3200B3AEBA /* MirrorDeviceDisplayTask.swift */; };
 		80F380432984226800A9350F /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F380422984226800A9350F /* NotificationHandler.swift */; };
@@ -292,7 +291,7 @@
 		805AFDA92CF67D4900B3E227 /* ArtifactContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactContainer.swift; sourceTree = "<group>"; };
 		805AFDAB2CF6BB8900B3E227 /* CachingApplicationDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachingApplicationDownloader.swift; sourceTree = "<group>"; };
 		805AFDAD2CF6C21F00B3E227 /* InstallSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallSession.swift; sourceTree = "<group>"; };
-		805FC43129E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BuildDownloaderError+LocalizedError.swift"; sourceTree = "<group>"; };
+		805FC43129E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtifactDownloaderError+LocalizedError.swift"; sourceTree = "<group>"; };
 		80629BE92939818C0077960E /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		80629BEC2939818C0077960E /* QuickLaunchEntryRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickLaunchEntryRow.swift; sourceTree = "<group>"; };
 		80629BED2939818C0077960E /* List+GradientButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "List+GradientButtons.swift"; sourceTree = "<group>"; };
@@ -332,8 +331,8 @@
 		80A91A102981BA1300D8A8B9 /* FloatingPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
 		80A91A112981BA1300D8A8B9 /* FloatingPanelViewModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPanelViewModifier.swift; sourceTree = "<group>"; };
 		80A91A152981BA2D00D8A8B9 /* LaunchFromURLPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchFromURLPanel.swift; sourceTree = "<group>"; };
-		80AE75E32CF4F459000923E3 /* QuickLaunchEntrySource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLaunchEntrySource.swift; sourceTree = "<group>"; };
-		80AE75E52CF4F657000923E3 /* QuickLaunchEntrySourceSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLaunchEntrySourceSheet.swift; sourceTree = "<group>"; };
+		80AE75E32CF4F459000923E3 /* QuickLaunchEntryRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLaunchEntryRecipe.swift; sourceTree = "<group>"; };
+		80AE75E52CF4F657000923E3 /* QuickLaunchEntryRecipeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickLaunchEntryRecipeSheet.swift; sourceTree = "<group>"; };
 		80AE75E72CF50ABD000923E3 /* FormFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFooterView.swift; sourceTree = "<group>"; };
 		80B48DE62C8BCBA300897317 /* com.shopify.Tophat.extension.appextensionpoint */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = com.shopify.Tophat.extension.appextensionpoint; sourceTree = "<group>"; };
 		80B48E122C8BD1D500897317 /* ArtifactRetrievalCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtifactRetrievalCoordinator.swift; sourceTree = "<group>"; };
@@ -375,7 +374,6 @@
 		80EB5D52296F6A380011DE5F /* Array+JoinedWithSpaces.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+JoinedWithSpaces.swift"; sourceTree = "<group>"; };
 		80EB5D54297095890011DE5F /* TaskStatusMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatusMetadata.swift; sourceTree = "<group>"; };
 		80EB5D56297096FB0011DE5F /* InstallStatusMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallStatusMetadata.swift; sourceTree = "<group>"; };
-		80EB5D5C2970A25D0011DE5F /* UpdateIconTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateIconTask.swift; sourceTree = "<group>"; };
 		80ED3E5C29835A9900A734B7 /* URL+ExpressibleByArgument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+ExpressibleByArgument.swift"; sourceTree = "<group>"; };
 		80ED55452971CB3200B3AEBA /* MirrorDeviceDisplayTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirrorDeviceDisplayTask.swift; sourceTree = "<group>"; };
 		80F380422984226800A9350F /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
@@ -518,7 +516,7 @@
 				80EB5D50296F68CD0011DE5F /* OperationContext.swift */,
 				80629C21293A8D270077960E /* ProvisioningProfile.swift */,
 				8046321E2CF106C9002F6E8F /* QuickLaunchEntry.swift */,
-				80AE75E32CF4F459000923E3 /* QuickLaunchEntrySource.swift */,
+				80AE75E32CF4F459000923E3 /* QuickLaunchEntryRecipe.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -539,7 +537,7 @@
 			children = (
 				80EB5D4C296F64F50011DE5F /* ApplicationError+LocalizedError.swift */,
 				80EB5D52296F6A380011DE5F /* Array+JoinedWithSpaces.swift */,
-				805FC43129E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift */,
+				805FC43129E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift */,
 				802671462947C33C001A804D /* Bundle+Extensions.swift */,
 				804FF6582914239800147652 /* Collection+Filter.swift */,
 				80EB5D4A296F64D70011DE5F /* DeviceError+LocalizedError.swift */,
@@ -591,7 +589,7 @@
 			isa = PBXGroup;
 			children = (
 				80629BEE2939818C0077960E /* QuickLaunchEntrySheet.swift */,
-				80AE75E52CF4F657000923E3 /* QuickLaunchEntrySourceSheet.swift */,
+				80AE75E52CF4F657000923E3 /* QuickLaunchEntryRecipeSheet.swift */,
 				80629BEF2939818C0077960E /* AppsTab.swift */,
 				809874AB294BB37A00EC541E /* DevicesTab.swift */,
 				80343E462CA39A1A00642D54 /* ExtensionsTab.swift */,
@@ -709,7 +707,6 @@
 				80EB5D48296F5AAF0011DE5F /* InstallApplicationTask.swift */,
 				80ED55452971CB3200B3AEBA /* MirrorDeviceDisplayTask.swift */,
 				80EB5D46296F59270011DE5F /* PrepareDeviceTask.swift */,
-				80EB5D5C2970A25D0011DE5F /* UpdateIconTask.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -1036,7 +1033,7 @@
 				80629BF52939818C0077960E /* AppsTab.swift in Sources */,
 				8046321F2CF106D5002F6E8F /* QuickLaunchEntry.swift in Sources */,
 				805AFDAA2CF67D4C00B3E227 /* ArtifactContainer.swift in Sources */,
-				80AE75E62CF4F660000923E3 /* QuickLaunchEntrySourceSheet.swift in Sources */,
+				80AE75E62CF4F660000923E3 /* QuickLaunchEntryRecipeSheet.swift in Sources */,
 				80D71F262984CF100006E1BF /* OnboardingItemLayout.swift in Sources */,
 				8090E25B2967741F003106B9 /* TaskState.swift in Sources */,
 				80CBACEE298988B700F778DD /* LaunchAtLoginController.swift in Sources */,
@@ -1059,7 +1056,6 @@
 				80A91A0D2981B9F900D8A8B9 /* ShowingAlternateItemsViewModifier.swift in Sources */,
 				80A91A162981BA2D00D8A8B9 /* LaunchFromURLPanel.swift in Sources */,
 				8090E2032950C1CC003106B9 /* CollapsibleSection.swift in Sources */,
-				80EB5D5D2970A25D0011DE5F /* UpdateIconTask.swift in Sources */,
 				80518F632984A64F00FB8803 /* OnboardingWindow.swift in Sources */,
 				80EB5D55297095890011DE5F /* TaskStatusMetadata.swift in Sources */,
 				80DC0FDA2C822E7F00E5C9EE /* UpdateController.swift in Sources */,
@@ -1102,7 +1098,7 @@
 				80691D282CDA9AE9006572CD /* ArtifactDownloader.swift in Sources */,
 				80629BF42939818C0077960E /* QuickLaunchEntrySheet.swift in Sources */,
 				804ECB7C2975C15300DE78F4 /* DevicePicker.swift in Sources */,
-				805FC43229E9BE0A00A78208 /* BuildDownloaderError+LocalizedError.swift in Sources */,
+				805FC43229E9BE0A00A78208 /* ArtifactDownloaderError+LocalizedError.swift in Sources */,
 				80462F992CEFF04F002F6E8F /* AppExtensionIdentity+WithXPCSession.swift in Sources */,
 				80629C22293A8D270077960E /* ProvisioningProfile.swift in Sources */,
 				80D71F1C2984CE720006E1BF /* XcodeOnboardingItem.swift in Sources */,
@@ -1124,7 +1120,7 @@
 				80A66D6D2981BC9900ECBCB6 /* ErrorNotifier.swift in Sources */,
 				80FF03EF29087473008509E0 /* InstallCoordinator.swift in Sources */,
 				B6AA44DD296F78670017321C /* GeneralTab.swift in Sources */,
-				80AE75E42CF4F467000923E3 /* QuickLaunchEntrySource.swift in Sources */,
+				80AE75E42CF4F467000923E3 /* QuickLaunchEntryRecipe.swift in Sources */,
 				8029A081298AF1E90002C579 /* ApplicationIcon.swift in Sources */,
 				80EB5D4D296F64F50011DE5F /* ApplicationError+LocalizedError.swift in Sources */,
 				80629BF62939818C0077960E /* GradientButton.swift in Sources */,

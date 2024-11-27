@@ -19,12 +19,12 @@ struct QuickLaunchEntrySheet: View {
 	var entry: QuickLaunchEntry?
 
 	@State private var name: String = ""
-	@State private var sources: [QuickLaunchEntrySource] = []
+	@State private var recipes: [QuickLaunchEntryRecipe] = []
 
-	@State private var selectedSource: QuickLaunchEntrySource?
-	@State private var editingSource: QuickLaunchEntrySource?
+	@State private var selectedRecipe: QuickLaunchEntryRecipe?
+	@State private var editingRecipe: QuickLaunchEntryRecipe?
 
-	@State private var isAddingNewSource = false
+	@State private var isAddingNewRecipe = false
 
 	var body: some View {
 		VStack(alignment: .leading, spacing: 0) {
@@ -34,52 +34,52 @@ struct QuickLaunchEntrySheet: View {
 				}
 
 				Section {
-					List(selection: $selectedSource) {
-						ForEach(sources) { source in
-							if let artifactProvider = artifactProvider(id: source.artifactProviderID) {
+					List(selection: $selectedRecipe) {
+						ForEach(recipes) { recipe in
+							if let artifactProvider = artifactProvider(id: recipe.artifactProviderID) {
 								VStack(alignment: .leading, spacing: 3) {
 									Text(artifactProvider.title)
 									HStack {
-										BadgedText(text: Text(String(describing: source.platformHint)))
+										BadgedText(text: Text(String(describing: recipe.platformHint)))
 
-										if let destinationHint = source.destinationHint {
+										if let destinationHint = recipe.destinationHint {
 											BadgedText(text: Text(String(describing: destinationHint)))
 										}
 									}
 								}
 								.listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
-								.tag(source)
+								.tag(recipe)
 							}
 						}
 						.onMove { indexSet, offset in
-							sources.move(fromOffsets: indexSet, toOffset: offset)
+							recipes.move(fromOffsets: indexSet, toOffset: offset)
 						}
 						.onDelete { indexSet in
-							sources.remove(atOffsets: indexSet)
+							recipes.remove(atOffsets: indexSet)
 						}
 					}
 					.listGradientButtons {
 						GradientButton(style: .plus) {
-							isAddingNewSource = true
+							isAddingNewRecipe = true
 						}
 					} minusButton: {
 						GradientButton(style: .minus) {
-							if let selectedSourceID = selectedSource?.id {
-								sources.removeAll { $0.id == selectedSourceID }
+							if let selectedRecipeID = selectedRecipe?.id {
+								recipes.removeAll { $0.id == selectedRecipeID }
 							}
 						}
-						.disabled(selectedSource == nil)
+						.disabled(selectedRecipe == nil)
 					}
-					.contextMenu(forSelectionType: QuickLaunchEntrySource.self) { selectionSet in
+					.contextMenu(forSelectionType: QuickLaunchEntryRecipe.self) { selectionSet in
 						Button("Edit…") {
-							editingSource = sources.first { $0 == selectionSet.first }
+							editingRecipe = recipes.first { $0 == selectionSet.first }
 						}
 					} primaryAction: { selectionSet in
-						editingSource = sources.first { $0 == selectionSet.first }
+						editingRecipe = recipes.first { $0 == selectionSet.first }
 					}
 				} header: {
-					Text("Sources")
-					Text("Create one or more sources so that Tophat can install this application to each of your selected devices.")
+					Text("Recipes")
+					Text("Create one or more recipes so that Tophat can install this application to each of your selected devices.")
 				}
 			}
 			.formStyle(.grouped)
@@ -88,7 +88,7 @@ struct QuickLaunchEntrySheet: View {
 
 			FormFooterView(
 				defaultActionTitleKey: entry == nil ? "Add" : "Save",
-				defaultActionDisabled: name.isEmpty || sources.isEmpty
+				defaultActionDisabled: name.isEmpty || recipes.isEmpty
 			) {
 				performSave()
 				dismiss()
@@ -101,17 +101,17 @@ struct QuickLaunchEntrySheet: View {
 		.onAppear {
 			if let entry {
 				self.name = entry.name
-				self.sources = entry.sources
+				self.recipes = entry.recipes
 			}
 		}
 		.onTapGesture(count: 1) {
-			selectedSource = nil
+			selectedRecipe = nil
 		}
-		.sheet(isPresented: $isAddingNewSource) {
-			QuickLaunchEntrySourceSheet(sources: $sources)
+		.sheet(isPresented: $isAddingNewRecipe) {
+			QuickLaunchEntryRecipeSheet(recipes: $recipes)
 		}
-		.sheet(item: $editingSource) { source in
-			QuickLaunchEntrySourceSheet(sources: $sources, source: source)
+		.sheet(item: $editingRecipe) { recipe in
+			QuickLaunchEntryRecipeSheet(recipes: $recipes, recipe: recipe)
 		}
 	}
 
@@ -126,7 +126,7 @@ struct QuickLaunchEntrySheet: View {
 	private func performSave() {
 		if let entry {
 			entry.name = name
-			entry.sources = sources
+			entry.recipes = recipes
 		} else {
 			var fetchDescriptor = FetchDescriptor<QuickLaunchEntry>(
 				sortBy: [SortDescriptor(\.order, order: .reverse)]
@@ -136,7 +136,7 @@ struct QuickLaunchEntrySheet: View {
 			let existingEntries = try? modelContext.fetch(fetchDescriptor)
 			let lastOrder = existingEntries?.first?.order ?? 0
 
-			let newEntry = QuickLaunchEntry(name: name, sources: sources, order: lastOrder + 1)
+			let newEntry = QuickLaunchEntry(name: name, recipes: recipes, order: lastOrder + 1)
 			modelContext.insert(newEntry)
 		}
 	}

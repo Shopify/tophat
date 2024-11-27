@@ -50,7 +50,7 @@ struct Install: ParsableCommand {
 			TophatInstallConfigurationNotification(
 				payload: TophatInstallConfigurationNotification.Payload(
 					installRecipes: try JSONDecoder().decode(
-						[UserSpecifiedInstallRecipe].self,
+						[UserSpecifiedRecipeConfiguration].self,
 						from: Data(contentsOf: configuration)
 					)
 				)

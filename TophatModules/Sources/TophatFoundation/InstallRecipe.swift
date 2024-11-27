@@ -9,7 +9,7 @@
 /// Structure representing instructions for installing a artifact from a remote source.
 public struct InstallRecipe: Equatable, Hashable, Codable {
 	/// The source of the artifact to install.
-	public let source: RemoteArtifactSource
+	public let source: ArtifactSource
 
 	/// The arguments to pass to the application at launch.
 	public let launchArguments: [String]
@@ -21,7 +21,7 @@ public struct InstallRecipe: Equatable, Hashable, Codable {
 	public let destinationHint: DeviceType?
 
 	public init(
-		source: RemoteArtifactSource,
+		source: ArtifactSource,
 		launchArguments: [String] = [],
 		platformHint: Platform? = nil,
 		destinationHint: DeviceType? = nil

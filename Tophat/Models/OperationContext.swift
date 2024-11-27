@@ -7,11 +7,9 @@
 //
 
 struct OperationContext {
-	let appName: String?
-	let quickLaunchEntryID: QuickLaunchEntry.ID?
+	let quickLaunchEntry: QuickLaunchEntry?
 
-	init(appName: String? = nil, quickLaunchEntryID: QuickLaunchEntry.ID? = nil) {
-		self.appName = appName
-		self.quickLaunchEntryID = quickLaunchEntryID
+	init(quickLaunchEntry: QuickLaunchEntry? = nil) {
+		self.quickLaunchEntry = quickLaunchEntry
 	}
 }

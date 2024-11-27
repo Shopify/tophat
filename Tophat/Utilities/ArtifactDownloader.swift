@@ -17,7 +17,7 @@ final class ArtifactDownloader {
 		self.artifactRetrievalCoordinator = artifactRetrievalCoordinator
 	}
 
-	func download(from source: RemoteArtifactSource, to container: ArtifactContainer) async throws {
+	func download(from source: ArtifactSource, to container: ArtifactContainer) async throws {
 		switch source {
 			case .artifactProvider(let metadata):
 				log.info("[ArtifactDownloader] Downloading artifact from artifact provider", metadata: metadata.loggerMetadata)

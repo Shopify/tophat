@@ -12,9 +12,9 @@ public struct TophatInstallConfigurationNotification: TophatInterProcessNotifica
 	public static let name = "TophatInstallConfiguration"
 
 	public struct Payload: Codable {
-		public let installRecipes: [UserSpecifiedInstallRecipe]
+		public let installRecipes: [UserSpecifiedRecipeConfiguration]
 
-		public init(installRecipes: [UserSpecifiedInstallRecipe]) {
+		public init(installRecipes: [UserSpecifiedRecipeConfiguration]) {
 			self.installRecipes = installRecipes
 		}
 	}

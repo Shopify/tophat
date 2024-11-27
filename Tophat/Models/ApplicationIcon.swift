@@ -15,25 +15,14 @@ public struct ApplicationIcon {
 		self.url = url
 	}
 
-	public static func createAndPersist(fromOrigin iconURL: URL?, for appID: String) throws -> Self? {
-		guard let destinationURL = try iconDestinationURL(id: appID) else {
-			return nil
-		}
-
-		guard let iconURL = iconURL else {
-			return nil
-		}
-
+	public static func createAndPersist(fromOrigin iconURL: URL, for appID: String) throws -> Self {
+		let destinationURL = try iconDestinationURL(id: appID)
 		try FileManager.default.replaceItem(at: destinationURL, withCopyOfItemAt: iconURL)
 
 		return Self(url: destinationURL)
 	}
 
-	private static func iconDestinationURL(id: String) throws -> URL? {
-		guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
-			return nil
-		}
-
+	private static func iconDestinationURL(id: String) throws -> URL {
 		let appSupportDirectoryURL = try FileManager.default.url(
 			for: .applicationSupportDirectory,
 			in: .userDomainMask,
@@ -41,6 +30,7 @@ public struct ApplicationIcon {
 			create: true
 		)
 
+		let bundleIdentifier = Bundle.main.bundleIdentifier!
 		let url = appSupportDirectoryURL.appending(path: bundleIdentifier)
 		try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
 

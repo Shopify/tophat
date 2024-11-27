@@ -57,7 +57,14 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	@AppStorage("ListenPort") private var listenPort: Int = 29070
 	@AppStorage("HasCompletedFirstLaunch") private var hasCompletedFirstLaunch = false
 
-	let modelContainer = try! ModelContainer(for: QuickLaunchEntry.self)
+	let modelContainer = try! ModelContainer(
+		for: QuickLaunchEntry.self,
+		configurations: ModelConfiguration(
+			url: .applicationSupportDirectory
+				.appending(component: Bundle.main.bundleIdentifier!)
+				.appending(component: "Tophat.store")
+		)
+	)
 
 	private var menuBarExtra: FluidMenuBarExtra?
 
@@ -67,6 +74,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 		userDriverDelegate: nil
 	)
 
+	let extensionHost = ExtensionHost()
 	private let server = TophatServer()
 	private let urlHandler = URLReader()
 	private let notificationHandler = NotificationHandler()
@@ -77,8 +85,6 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	let launchAtLoginController = LaunchAtLoginController()
 
 	let updateController: UpdateController
-
-	let extensionHost = ExtensionHost()
 
 	private let deviceSelectionManager: DeviceSelectionManager
 	private let taskStatusReporter: TaskStatusReporter
@@ -277,7 +283,7 @@ extension AppDelegate: NotificationHandlerDelegate {
 		do {
 			if let existingEntry = try context.fetch(existingEntryFetchDescriptor).first {
 				existingEntry.name = quickLaunchEntry.name
-				existingEntry.sources = quickLaunchEntry.sources
+				existingEntry.recipes = quickLaunchEntry.recipes
 			} else {
 				var fetchDescriptor = FetchDescriptor<QuickLaunchEntry>(
 					sortBy: [SortDescriptor(\.order, order: .reverse)]
@@ -289,8 +295,8 @@ extension AppDelegate: NotificationHandlerDelegate {
 				quickLaunchEntry.order = lastOrder + 1
 
 				context.insert(quickLaunchEntry)
+				try context.save()
 			}
-
 		} catch {
 			log.error("Failed to update Quick Launch entry!")
 		}

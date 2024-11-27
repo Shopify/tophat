@@ -10,7 +10,7 @@
 public enum ArtifactLocation {
 	/// The artifact is located in a remote location, either on the web or on the local machine. A remote
 	/// location is a location that is **not** controlled by Tophat.
-	case remote(source: RemoteArtifactSource)
+	case remote(source: ArtifactSource)
 
 	/// The artifact is located in a location controlled by Tophat and has already been processed.
 	case local(application: Application)
