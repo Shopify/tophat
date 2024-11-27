@@ -35,6 +35,9 @@ public protocol ArtifactProvider {
 	///
 	/// Throw any errors if they ocurred. Use any parameters wrapped with ``Parameter`` to
 	/// collect inputs from Tophat to implement the retrieval mechanism.
+	///
+	/// To display an error message in the user interface, conform thrown errors to the
+	/// `LocalizedError` protocol.
 	/// - Returns: A ``ArtifactProviderResult`` containing the output.
 	func retrieve() async throws -> Result
 

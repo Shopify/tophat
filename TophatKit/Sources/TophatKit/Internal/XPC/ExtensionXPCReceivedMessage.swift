@@ -39,7 +39,8 @@ struct ExtensionXPCReceivedMessageContainer {
 					replyHandler(nil, error)
 				}
 			case .failure(let error):
-				replyHandler(nil, error)
+				// The error will be an NSError over XPC anyway.
+				replyHandler(nil, NSError(embeddingLocalizedDescriptionsFrom: error))
 		}
 	}
 }
