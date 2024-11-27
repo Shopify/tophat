@@ -102,11 +102,15 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 		self.deviceSelectionManager = DeviceSelectionManager(deviceManager: deviceManager)
 		self.taskStatusReporter = TaskStatusReporter()
 
+		let artifactDownloader = ArtifactDownloader(
+			artifactRetrievalCoordinator: ArtifactRetrievalCoordinator(appExtensionIdentityResolver: extensionHost)
+		)
+
 		self.installCoordinator = InstallCoordinator(
-			deviceManager: deviceManager,
-			deviceSelectionManager: deviceSelectionManager,
-			taskStatusReporter: taskStatusReporter,
-			extensionHost: extensionHost
+			artifactDownloader: artifactDownloader,
+			deviceListLoader: deviceManager,
+			deviceSelector: deviceSelectionManager,
+			taskStatusReporter: taskStatusReporter
 		)
 
 		self.utilityPathPreferences = UtilityPathPreferences()

@@ -1,12 +1,12 @@
 //
-//  LaunchContext.swift
+//  OperationContext.swift
 //  Tophat
 //
 //  Created by Lukas Romsicki on 2023-01-11.
 //  Copyright © 2023 Shopify. All rights reserved.
 //
 
-struct LaunchContext {
+struct OperationContext {
 	let appName: String?
 	let quickLaunchEntryID: QuickLaunchEntry.ID?
 
