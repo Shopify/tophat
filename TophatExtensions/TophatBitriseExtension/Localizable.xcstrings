@@ -1,0 +1,42 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "App Slug" : {
+
+    },
+    "Artifact Name" : {
+
+    },
+    "Artifact Slug" : {
+
+    },
+    "Authentication" : {
+
+    },
+    "Bitrise" : {
+
+    },
+    "Bitrise (Branch)" : {
+
+    },
+    "Branch" : {
+
+    },
+    "Build Slug" : {
+
+    },
+    "Personal Access Token" : {
+
+    },
+    "To create a personal access token, go to [app.bitrise.io/me/account/security](https://app.bitrise.io/me/account/security)." : {
+
+    },
+    "Token" : {
+
+    },
+    "Workflow Name" : {
+
+    }
+  },
+  "version" : "1.0"
+}
