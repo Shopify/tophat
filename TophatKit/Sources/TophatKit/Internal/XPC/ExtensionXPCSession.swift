@@ -82,7 +82,10 @@ extension ExtensionXPCSession {
 			}
 
 			service.send(identifier: message.identifier, data: dataToSend) { dataFromReply, error in
-				if let error {
+				if let nsError = error as? NSError, let localizedError = ExtensionXPCGenericLocalizedError(nsError: nsError) {
+					continuation.resume(throwing: localizedError)
+					return
+				} else if let error {
 					continuation.resume(throwing: error)
 					return
 				}
