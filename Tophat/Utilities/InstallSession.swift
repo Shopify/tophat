@@ -70,7 +70,7 @@ actor InstallSession {
 	/// with the download process to improve completion time.
 	///
 	/// - Parameters:
-	///   - recipes: A collection of recipes for retrieving builds.
+	///   - recipes: A collection of recipes for retrieving applications.
 	///   - context: Additional metadata for the operation.
 	func install(recipes: [InstallRecipe], context: OperationContext? = nil) async throws {
 		activeRequestsCount += 1
@@ -109,7 +109,7 @@ actor InstallSession {
 
 		if !prepareDeviceResult.deviceWasColdBooted {
 			// If the device wasn't cold booted, bring it to the foreground later in the process.
-			log.info("Bringing device with identifier \(device.id) to foreground")
+			log.info("[InstallSession] Bringing device with identifier \(device.id) to foreground")
 
 			// This is a non-critical feature, it is allowed to fail in case the
 			// user hasn't accepted permissions.
@@ -123,5 +123,15 @@ actor InstallSession {
 			device: device,
 			launchArguments: ticket.launchArguments
 		)
+
+		if let icon = application.icon, let quickLaunchEntry = context?.quickLaunchEntry {
+			do {
+				log.info("[InstallSession] Updating application icon for Quick Launch entry with identifier \(quickLaunchEntry.id)")
+				let persistedIcon = try ApplicationIcon.createAndPersist(fromOrigin: icon, for: quickLaunchEntry.id)
+				quickLaunchEntry.iconURL = persistedIcon.url
+			} catch {
+				log.error("[InstallSession] Failed to update application icon for Quick Launch entry with identifier \(quickLaunchEntry.id)")
+			}
+		}
 	}
 }

@@ -61,13 +61,13 @@ final class NotificationHandler {
 				let quickLaunchEntry = QuickLaunchEntry(
 					id: configuration.id,
 					name: configuration.name,
-					sources: configuration.sources.map { source in
+					recipes: configuration.recipes.map { source in
 						let artifactProviderMetadata = ArtifactProviderMetadata(
 							id: source.artifactProviderID,
 							parameters: source.artifactProviderParameters
 						)
 
-						return QuickLaunchEntrySource(
+						return QuickLaunchEntryRecipe(
 							artifactProviderID: artifactProviderMetadata.id,
 							artifactProviderParameters: artifactProviderMetadata.parameters,
 							launchArguments: source.launchArguments,

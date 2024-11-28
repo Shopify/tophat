@@ -12,8 +12,6 @@ import SwiftData
 
 @Model
 final class QuickLaunchEntry: Identifiable, Hashable {
-	typealias Source = InstallRecipe
-
 	@Attribute(.unique)
 	var id: String
 
@@ -22,21 +20,21 @@ final class QuickLaunchEntry: Identifiable, Hashable {
 	var iconURL: URL?
 
 	@Relationship(deleteRule: .cascade, minimumModelCount: 1)
-	var sources: [QuickLaunchEntrySource]
+	var recipes: [QuickLaunchEntryRecipe]
 
 	var order: Int = 0
 
-	init(id: String? = nil, name: String, iconURL: URL? = nil, sources: [QuickLaunchEntrySource], order: Int = 0) {
+	init(id: String? = nil, name: String, iconURL: URL? = nil, recipes: [QuickLaunchEntryRecipe], order: Int = 0) {
 		self.id = id ?? UUID().uuidString
 		self.name = name
 		self.iconURL = iconURL
-		self.sources = sources
+		self.recipes = recipes
 		self.order = order
 	}
 }
 
 extension QuickLaunchEntry {
 	var platforms: Set<Platform> {
-		Set(sources.compactMap { $0.platformHint })
+		Set(recipes.compactMap { $0.platformHint })
 	}
 }

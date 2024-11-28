@@ -10,12 +10,12 @@ import Foundation
 import TophatFoundation
 
 protocol ApplicationDownloading {
-	func download(from source: RemoteArtifactSource, context: OperationContext?) async throws -> Application
+	func download(from source: ArtifactSource, context: OperationContext?) async throws -> Application
 	func cleanUp() async throws
 }
 
 extension ApplicationDownloading {
-	func download(from source: RemoteArtifactSource) async throws -> Application {
+	func download(using source: ArtifactSource) async throws -> Application {
 		try await download(from: source, context: nil)
 	}
 }

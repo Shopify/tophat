@@ -28,7 +28,7 @@ struct QuickLaunchPanel: View {
 					LazyVGrid(columns: columns, alignment: .leading, spacing: 14) {
 						ForEach(entries) { entry in
 							Button {
-								didSelect(entry: entry)
+								Task { await launchApp?(quickLaunchEntry: entry) }
 							} label: {
 								QuickLaunchEntryView(entry: entry)
 							}
@@ -40,28 +40,6 @@ struct QuickLaunchPanel: View {
 			}
 			.padding([.top, .horizontal], 16)
 			.padding(.bottom, 12)
-		}
-	}
-
-	private func didSelect(entry: QuickLaunchEntry) {
-		let context = OperationContext(appName: entry.name, quickLaunchEntryID: entry.id)
-
-		let recipes = entry.sources.map { source in
-			InstallRecipe(
-				source: .artifactProvider(
-					metadata: ArtifactProviderMetadata(
-						id: source.artifactProviderID,
-						parameters: source.artifactProviderParameters
-					)
-				),
-				launchArguments: source.launchArguments,
-				platformHint: source.platformHint,
-				destinationHint: source.destinationHint
-			)
-		}
-
-		Task {
-			await launchApp?(recipes: recipes, context: context)
 		}
 	}
 }

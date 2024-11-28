@@ -7,9 +7,9 @@
 //
 
 public struct UserSpecifiedQuickLaunchEntryConfiguration: Codable {
-	public typealias Source = UserSpecifiedInstallRecipe
+	public typealias Recipe = UserSpecifiedRecipeConfiguration
 
 	public let id: String
 	public let name: String
-	public let sources: [Source]
+	public let recipes: [Recipe]
 }

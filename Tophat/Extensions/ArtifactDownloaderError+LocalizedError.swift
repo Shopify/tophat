@@ -12,14 +12,14 @@ extension ArtifactDownloaderError: LocalizedError {
 	var errorDescription: String? {
 		switch self {
 			case .failedToDownloadArtifact:
-				return "The build could not be downloaded"
+				return "The artifact could not be downloaded"
 		}
 	}
 
 	var failureReason: String? {
 		switch self {
 			case .failedToDownloadArtifact:
-				return "An unexpected error occurred while downloading the build."
+				return "An unexpected error occurred while downloading the artifact."
 		}
 	}
 

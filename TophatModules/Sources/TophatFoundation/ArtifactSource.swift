@@ -1,5 +1,5 @@
 //
-//  RemoteArtifactSource.swift
+//  ArtifactSource.swift
 //  TophatFoundation
 //
 //  Created by Lukas Romsicki on 2024-11-21.
@@ -9,7 +9,7 @@
 import Foundation
 
 /// The source of an artifact.
-public enum RemoteArtifactSource: Equatable, Hashable, Codable {
+public enum ArtifactSource: Equatable, Hashable, Codable {
 	case artifactProvider(metadata: ArtifactProviderMetadata)
 	case file(url: URL)
 }

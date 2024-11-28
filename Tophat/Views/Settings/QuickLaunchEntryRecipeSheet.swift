@@ -1,5 +1,5 @@
 //
-//  QuickLaunchEntrySourceSheet.swift
+//  QuickLaunchEntryRecipeSheet.swift
 //  Tophat
 //
 //  Created by Lukas Romsicki on 2024-11-25.
@@ -10,13 +10,13 @@ import SwiftUI
 import TophatFoundation
 @_spi(TophatKitInternal) import TophatKit
 
-struct QuickLaunchEntrySourceSheet: View {
+struct QuickLaunchEntryRecipeSheet: View {
 	@Environment(\.modelContext) private var modelContext
 	@Environment(\.dismiss) private var dismiss
 	@Environment(ExtensionHost.self) private var extensionHost
 
-	@Binding var sources: [QuickLaunchEntrySource]
-	var source: QuickLaunchEntrySource?
+	@Binding var recipes: [QuickLaunchEntryRecipe]
+	var recipe: QuickLaunchEntryRecipe?
 
 	@State private var artifactProviderID: String?
 	@State private var artifactProviderParameters: [String: String] = [:]
@@ -104,7 +104,7 @@ struct QuickLaunchEntrySourceSheet: View {
 			Divider()
 
 			FormFooterView(
-				defaultActionTitleKey: source == nil ? "Add" : "Save",
+				defaultActionTitleKey: recipe == nil ? "Add" : "Save",
 				defaultActionDisabled: defaultActionDisabled
 			) {
 				performSave()
@@ -116,12 +116,12 @@ struct QuickLaunchEntrySourceSheet: View {
 		.frame(width: 500)
 		.fixedSize()
 		.onAppear {
-			if let source {
-				self.artifactProviderID = source.artifactProviderID
-				self.artifactProviderParameters = source.artifactProviderParameters
-				self.launchArguments = source.launchArguments
-				self.platform = source.platformHint
-				self.destination = source.destinationHint
+			if let recipe {
+				self.artifactProviderID = recipe.artifactProviderID
+				self.artifactProviderParameters = recipe.artifactProviderParameters
+				self.launchArguments = recipe.launchArguments
+				self.platform = recipe.platformHint
+				self.destination = recipe.destinationHint
 			} else if artifactProviderID == nil {
 				artifactProviderID = artifactProviders.first?.id
 			}
@@ -173,15 +173,15 @@ struct QuickLaunchEntrySourceSheet: View {
 			return
 		}
 
-		if let source {
-			source.artifactProviderID = artifactProviderID
-			source.artifactProviderParameters = self.artifactProviderParameters
-			source.launchArguments = self.launchArguments
-			source.platformHint = self.platform
-			source.destinationHint = self.destination
+		if let recipe {
+			recipe.artifactProviderID = artifactProviderID
+			recipe.artifactProviderParameters = self.artifactProviderParameters
+			recipe.launchArguments = self.launchArguments
+			recipe.platformHint = self.platform
+			recipe.destinationHint = self.destination
 
 		} else {
-			let newSource = QuickLaunchEntrySource(
+			let newRecipe = QuickLaunchEntryRecipe(
 				artifactProviderID: artifactProviderID,
 				artifactProviderParameters: self.artifactProviderParameters,
 				launchArguments: self.launchArguments,
@@ -189,7 +189,7 @@ struct QuickLaunchEntrySourceSheet: View {
 				destinationHint: self.destination
 			)
 
-			sources.append(newSource)
+			recipes.append(newRecipe)
 		}
 	}
 }

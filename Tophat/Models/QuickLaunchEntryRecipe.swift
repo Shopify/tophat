@@ -1,5 +1,5 @@
 //
-//  QuickLaunchEntrySource.swift
+//  QuickLaunchEntryRecipe.swift
 //  Tophat
 //
 //  Created by Lukas Romsicki on 2024-11-25.
@@ -11,7 +11,7 @@ import TophatFoundation
 import SwiftData
 
 @Model
-final class QuickLaunchEntrySource: Hashable {
+final class QuickLaunchEntryRecipe: Hashable {
 	var artifactProviderID: String
 	var artifactProviderParameters: [String: String]
 	var launchArguments: [String]

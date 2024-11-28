@@ -20,7 +20,7 @@ actor CachingApplicationDownloader: ApplicationDownloading {
 	private let artifactUnpacker: ArtifactUnpacker
 	private let taskStatusReporter: TaskStatusReporter
 
-	private var downloads: [RemoteArtifactSource: Download] = [:]
+	private var downloads: [ArtifactSource: Download] = [:]
 	private var clearCacheTask: Task<(), Error>?
 
 	init(
@@ -38,7 +38,7 @@ actor CachingApplicationDownloader: ApplicationDownloading {
 	///
 	/// - Parameter source: The source of the remote artifact to download.
 	/// - Returns: An application.
-	func download(from source: RemoteArtifactSource, context: OperationContext? = nil) async throws -> Application {
+	func download(from source: ArtifactSource, context: OperationContext? = nil) async throws -> Application {
 		if let clearCacheTask {
 			// Wait if the cache is being cleared.
 			_ = await clearCacheTask.result
@@ -52,7 +52,7 @@ actor CachingApplicationDownloader: ApplicationDownloading {
 
 		let task = Task {
 			let taskStatus = TaskStatus(
-				displayName: "Fetching \(context?.appName ?? "App")",
+				displayName: "Fetching \(context?.quickLaunchEntry?.name ?? "App")",
 				initialState: .running(message: "Downloading", progress: .indeterminate)
 			)
 
