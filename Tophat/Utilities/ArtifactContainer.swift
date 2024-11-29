@@ -55,9 +55,7 @@ final class ArtifactContainer: Identifiable {
 				artifacts.append(.rawDownload(destinationURL))
 
 			case .application(let application):
-				let baseURL = application.url.deletingLastPathComponent()
-
-				guard baseURL == url else {
+				guard application.url.isDescendant(of: url) else {
 					throw ArtifactContainerError.applicationNotCoLocated
 				}
 
@@ -82,5 +80,14 @@ enum ArtifactContainerError: Error {
 extension ArtifactContainer: Deletable {
 	func delete() async throws {
 		try FileManager.default.removeItem(at: url)
+	}
+}
+
+private extension URL {
+	func isDescendant(of url: URL) -> Bool {
+		let ancestorPathComponents = url.pathComponents
+		let childPathComponents = self.pathComponents
+
+		return ancestorPathComponents.count < childPathComponents.count && !zip(ancestorPathComponents, childPathComponents).contains(where: !=)
 	}
 }
