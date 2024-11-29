@@ -32,7 +32,9 @@ struct ExtensionsTab: View {
 					} label: {
 						Label {
 							Text(availableExtension.specification.title)
-							Text(availableExtension.specification.description ?? "")
+							if let description = availableExtension.specification.description {
+								Text(description)
+							}
 						} icon: {
 							SymbolChip(systemName: "puzzlepiece.extension.fill", color: .gray)
 								.imageScale(.medium)

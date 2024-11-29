@@ -126,6 +126,11 @@ struct QuickLaunchEntryRecipeSheet: View {
 				artifactProviderID = artifactProviders.first?.id
 			}
 		}
+		.onChange(of: artifactProviderID, initial: false) { oldValue, newValue in
+			if oldValue != nil, newValue != nil, newValue != oldValue {
+				artifactProviderParameters.removeAll()
+			}
+		}
 	}
 
 	private var artifactProviders: [ArtifactProviderSpecification] {

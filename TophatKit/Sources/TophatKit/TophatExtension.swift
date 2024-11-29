@@ -42,6 +42,8 @@ public protocol SettingsProviding {
 }
 
 public extension TophatExtension {
+	static var description: LocalizedStringResource? { nil }
+
 	var configuration: some AppExtensionConfiguration {
 		ExtensionConfiguration(appExtension: self)
 	}
