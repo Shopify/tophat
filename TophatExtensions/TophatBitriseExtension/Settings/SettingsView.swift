@@ -10,9 +10,8 @@ import SwiftUI
 import TophatKit
 
 struct SettingsView: View {
-	@SecureStorage(Constants.keychainPersonalAccessTokenKey) var personalAccessToken: String?
-
-	@State private var enteredPersonalAccessToken: String = ""
+	@SecureStorage(Constants.keychainPersonalAccessTokenKey) var storedPersonalAccessToken: String?
+	@State private var enteredPersonalAccessToken = ""
 
 	var body: some View {
 		Form {
@@ -26,10 +25,10 @@ struct SettingsView: View {
 		}
 		.formStyle(.grouped)
 		.onAppear {
-			enteredPersonalAccessToken = personalAccessToken ?? ""
+			enteredPersonalAccessToken = storedPersonalAccessToken ?? ""
 		}
-		.onDisappear {
-			personalAccessToken = enteredPersonalAccessToken
+		.onChange(of: enteredPersonalAccessToken, initial: false) { oldValue, newValue in
+			storedPersonalAccessToken = newValue.isEmpty ? nil : newValue
 		}
 	}
 }
