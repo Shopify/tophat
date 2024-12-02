@@ -12,10 +12,10 @@ import TophatFoundation
 extension ApplicationError: LocalizedError {
 	public var errorDescription: String? {
 		switch self {
-			case .missingProvisioningProfile, .deviceNotProvisioned, .applicationNotSigned:
-				return "This application canʼt be installed"
+			case .missingProvisioningProfile, .deviceNotProvisioned, .applicationNotSigned, .incompatible:
+				"This application canʼt be installed"
 			default:
-				return nil
+				nil
 		}
 	}
 
@@ -23,10 +23,21 @@ extension ApplicationError: LocalizedError {
 		switch self {
 			case .missingProvisioningProfile:
 				return "The selected device requires that the application contains an embedded provisioning profile, but none was found in the application bundle."
+
 			case .deviceNotProvisioned:
 				return "The selected device is not provisioned."
+
 			case .applicationNotSigned:
 				return "The selected device requires that the application is signed with an Apple Development or Enterprise certificate."
+
+			case .incompatible(let application, let device):
+				let applicationPlatformDescription = String(describing: application.platform)
+				let applicationTargetsDescription = application.targets.map { String(describing: $0) }.formatted(.list(type: .and))
+				let devicePlatformDescription = String(describing: device.runtime.platform)
+				let deviceTargetDescription = String(describing: device.type)
+
+				return "The application was built for \(applicationPlatformDescription) \(applicationTargetsDescription), but \(device.name) is \(devicePlatformDescription.indefiniteArticle) \(devicePlatformDescription) \(deviceTargetDescription)."
+
 			default:
 				return nil
 		}
@@ -35,11 +46,13 @@ extension ApplicationError: LocalizedError {
 	var recoverySuggestion: String? {
 		switch self {
 			case .deviceNotProvisioned:
-				return "Add your device to the Apple Developer Portal before building the application."
+				"Add your device to the Apple Developer Portal before building the application."
 			case .applicationNotSigned:
-				return "Ensure that the application is signed and try again."
+				"Ensure that the application is signed and try again."
+			case .incompatible:
+				"Ensure that the correct artifact is being downloaded and that the correct platform and destination are being specified."
 			default:
-				return nil
+				nil
 		}
 	}
 }

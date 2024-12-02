@@ -6,9 +6,11 @@
 //  Copyright © 2022 Shopify. All rights reserved.
 //
 
+import TophatFoundation
+
 enum ApplicationError: Error {
 	case failedToReadBundleIdentifier
-	case incompatibleDeviceType
+	case incompatible(application: Application, device: Device)
 	case missingProvisioningProfile
 	case deviceNotProvisioned
 	case applicationNotSigned
