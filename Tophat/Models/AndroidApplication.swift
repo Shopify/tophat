@@ -52,11 +52,9 @@ struct AndroidApplication: Application {
 	}
 
 	func validateEligibility(for device: Device) throws {
-		guard platform == device.runtime.platform else {
-			throw ApplicationError.incompatibleDeviceType
+		guard platform == device.runtime.platform, targets.contains(device.type) else {
+			throw ApplicationError.incompatible(application: self, device: device)
 		}
-
-		// Android applications can be installed on any Android device.
 	}
 }
 
