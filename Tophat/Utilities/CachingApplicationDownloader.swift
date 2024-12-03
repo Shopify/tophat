@@ -74,8 +74,18 @@ actor CachingApplicationDownloader: ApplicationDownloading {
 			return application
 		}
 
-		downloads[source] = Download(container: container, task: task)
-		return try await task.value
+		let download = Download(container: container, task: task)
+		downloads[source] = download
+
+		do {
+			return try await task.value
+		} catch {
+			// If the download failed, do not cache it.
+			try? await download.container.delete()
+			downloads[source] = nil
+
+			throw error
+		}
 	}
 
 	/// Deletes all cached data that was tracked by this instance.

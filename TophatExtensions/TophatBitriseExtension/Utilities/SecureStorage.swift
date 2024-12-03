@@ -7,39 +7,27 @@
 //
 
 import SwiftUI
-import Observation
 import SimpleKeychain
 
 @propertyWrapper
-public struct SecureStorage: DynamicProperty {
+struct SecureStorage {
 	private let key: String
 	private let keychain = SimpleKeychain()
 
-	@State private var value: String?
-
 	public init(_ key: String) {
 		self.key = key
-		self._value = State(initialValue: try? keychain.string(forKey: key))
 	}
 
 	public var wrappedValue: String? {
-		get { value }
+		get {
+			try? keychain.string(forKey: key)
+		}
 		nonmutating set {
 			if let newValue {
 				try? keychain.set(newValue, forKey: key)
 			} else {
 				try? keychain.deleteItem(forKey: key)
 			}
-
-			value = newValue
-		}
-	}
-
-	public var projectedValue: Binding<String?> {
-		Binding {
-			wrappedValue
-		} set: { newValue in
-			wrappedValue = newValue
 		}
 	}
 }
