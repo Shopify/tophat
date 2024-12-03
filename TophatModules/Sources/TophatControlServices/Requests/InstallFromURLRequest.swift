@@ -9,7 +9,7 @@
 import Foundation
 
 public struct InstallFromURLRequest: TophatRemoteControlRequest {
-	public typealias Reply = Never
+	public typealias Reply = InstallationRequestReply
 
 	public let id: UUID
 	public let url: URL

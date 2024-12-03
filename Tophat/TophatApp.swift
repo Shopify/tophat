@@ -315,16 +315,12 @@ extension AppDelegate: RemoteControlReceiverDelegate {
 		}
 	}
 
-	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) {
-		Task {
-			await launchApp(artifactURL: url, launchArguments: launchArguments)
-		}
+	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async {
+		await launchApp(artifactURL: url, launchArguments: launchArguments)
 	}
 
-	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) {
-		Task {
-			await launchApp(recipes: recipes)
-		}
+	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async {
+		await launchApp(recipes: recipes)
 	}
 }
 

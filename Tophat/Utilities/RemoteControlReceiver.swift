@@ -13,8 +13,8 @@ import TophatControlServices
 protocol RemoteControlReceiverDelegate: AnyObject {
 	func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry)
 	func remoteControlReceiver(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID)
-	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe])
-	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String])
+	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async
+	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async
 }
 
 final class RemoteControlReceiver {
@@ -26,7 +26,9 @@ final class RemoteControlReceiver {
 		Task {
 			for await request in service.requests(for: InstallFromURLRequest.self) {
 				let requestValue = request.value
-				delegate?.remoteControlReceiver(didOpenURL: requestValue.url, launchArguments: requestValue.launchArguments)
+
+				await delegate?.remoteControlReceiver(didOpenURL: requestValue.url, launchArguments: requestValue.launchArguments)
+				request.reply(.init())
 			}
 		}
 
@@ -48,7 +50,8 @@ final class RemoteControlReceiver {
 					)
 				}
 
-				delegate?.remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes: recipes)
+				await delegate?.remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes: recipes)
+				request.reply(.init())
 			}
 		}
 

@@ -9,7 +9,7 @@
 import Foundation
 
 public struct InstallFromRecipesRequest: TophatRemoteControlRequest {
-	public typealias Reply = Never
+	public typealias Reply = InstallationRequestReply
 
 	public let id: UUID
 	public let recipes: [UserSpecifiedRecipeConfiguration]

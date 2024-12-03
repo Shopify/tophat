@@ -47,7 +47,7 @@ struct Install: AsyncParsableCommand {
 				launchArguments: launchArguments
 			)
 
-			try service.send(request: request)
+			try await service.send(request: request, timeout: 60)
 
 		} else if let configuration {
 			let request = InstallFromRecipesRequest(
@@ -57,7 +57,7 @@ struct Install: AsyncParsableCommand {
 				)
 			)
 
-			try service.send(request: request)
+			try await service.send(request: request, timeout: 60)
 		}
 	}
 }
