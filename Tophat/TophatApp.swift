@@ -77,7 +77,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	let extensionHost = ExtensionHost()
 	private let server = TophatServer()
 	private let urlHandler = URLReader()
-	private let notificationHandler = NotificationHandler()
+	private let remoteControlReceiver = RemoteControlReceiver()
 
 	let deviceManager: DeviceManager
 	let utilityPathPreferences: UtilityPathPreferences
@@ -138,7 +138,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 		configureEventSubscriptions()
 
 		self.server.delegate = self
-		self.notificationHandler.delegate = self
+		self.remoteControlReceiver.delegate = self
 		self.taskStatusReporter.delegate = self
 	}
 
@@ -269,10 +269,10 @@ extension AppDelegate: TophatServerDelegate {
 	}
 }
 
-// MARK: - NotificationHandlerDelegate
+// MARK: - RemoteControlReceiverDelegate
 
-extension AppDelegate: NotificationHandlerDelegate {
-	func notificationHandler(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry) {
+extension AppDelegate: RemoteControlReceiverDelegate {
+	func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry) {
 		let context = ModelContext(modelContainer)
 
 		let existingID = quickLaunchEntry.id
@@ -302,7 +302,7 @@ extension AppDelegate: NotificationHandlerDelegate {
 		}
 	}
 
-	func notificationHandler(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) {
+	func remoteControlReceiver(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) {
 		let context = ModelContext(modelContainer)
 
 		do {
@@ -315,13 +315,13 @@ extension AppDelegate: NotificationHandlerDelegate {
 		}
 	}
 
-	func notificationHandler(didOpenURL url: URL, launchArguments: [String]) {
+	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) {
 		Task {
 			await launchApp(artifactURL: url, launchArguments: launchArguments)
 		}
 	}
 
-	func notificationHandler(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) {
+	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) {
 		Task {
 			await launchApp(recipes: recipes)
 		}

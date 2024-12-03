@@ -9,9 +9,9 @@
 import Foundation
 import ArgumentParser
 import TophatFoundation
-import TophatUtilities
+import TophatControlServices
 
-struct Install: ParsableCommand {
+struct Install: AsyncParsableCommand {
 	static var configuration = CommandConfiguration(
 		abstract: "Installs an application.",
 		discussion: "This command infers platform and build type after the artifact has been downloaded. It is ideal for local artifacts that don't take any time to download."
@@ -26,7 +26,7 @@ struct Install: ParsableCommand {
 	@Option(parsing: .upToNextOption, help: "Arguments to pass to the application on launch when using --url.")
 	var launchArguments: [String] = []
 
-	func run() throws {
+	func run() async throws {
 		guard url != nil || configuration != nil else {
 			throw ValidationError("You must specify one of --url or --configuration.")
 		}
@@ -39,28 +39,25 @@ struct Install: ParsableCommand {
 			throw ValidationError("--launch-arguments can only be used with --url. When using --configuration, launch arguments are specified in the configuration file.")
 		}
 
-		let notification: (any TophatInterProcessNotification)? = if let url {
-			TophatInstallURLNotification(
-				payload: TophatInstallURLNotification.Payload(
-					url: url,
-					launchArguments: launchArguments
-				)
-			)
-		} else if let configuration {
-			TophatInstallConfigurationNotification(
-				payload: TophatInstallConfigurationNotification.Payload(
-					installRecipes: try JSONDecoder().decode(
-						[UserSpecifiedRecipeConfiguration].self,
-						from: Data(contentsOf: configuration)
-					)
-				)
-			)
-		} else {
-			nil
-		}
+		let service = TophatRemoteControlService()
 
-		if let notification {
-			TophatInterProcessNotifier().send(notification: notification)
+		if let url {
+			let request = InstallFromURLRequest(
+				url: url,
+				launchArguments: launchArguments
+			)
+
+			try service.send(request: request)
+
+		} else if let configuration {
+			let request = InstallFromRecipesRequest(
+				recipes: try JSONDecoder().decode(
+					[UserSpecifiedRecipeConfiguration].self,
+					from: Data(contentsOf: configuration)
+				)
+			)
+
+			try service.send(request: request)
 		}
 	}
 }

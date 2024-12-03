@@ -1,18 +1,18 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.10
 
 import PackageDescription
 
 let package = Package(
 	name: "TophatModules",
 	platforms: [
-		.macOS(.v13)
+		.macOS(.v14)
 	],
 	products: [
 		.library(name: "AndroidDeviceKit", targets: ["AndroidDeviceKit"]),
 		.library(name: "AppleDeviceKit", targets: ["AppleDeviceKit"]),
 		.library(name: "ShellKit", targets: ["ShellKit"]),
+		.library(name: "TophatControlServices", targets: ["TophatControlServices"]),
 		.library(name: "TophatFoundation", targets: ["TophatFoundation"]),
-		.library(name: "TophatUtilities", targets: ["TophatUtilities"]),
 		.library(name: "TophatServer", targets: ["TophatServer"])
 	],
 	dependencies: [
@@ -42,13 +42,11 @@ let package = Package(
 				.product(name: "Logging", package: "swift-log")
 			]
 		),
-		.target(name: "TophatFoundation"),
 		.target(
-			name: "TophatUtilities",
-			dependencies: [
-				.target(name: "TophatFoundation")
-			]
+			name: "TophatControlServices",
+			dependencies: [.product(name: "Logging", package: "swift-log")]
 		),
+		.target(name: "TophatFoundation"),
 		.target(
 			name: "TophatServer",
 			dependencies: [
