@@ -7,7 +7,7 @@
 //
 
 /// The type of a device.
-public enum DeviceType: String, Codable, CaseIterable {
+public enum DeviceType: String, Codable, CaseIterable, Sendable {
 	case simulator
 	case device
 }

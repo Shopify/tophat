@@ -14,7 +14,7 @@ import AppKit
 
 extension Apps {
 	struct Remove: AsyncParsableCommand {
-		static var configuration = CommandConfiguration(
+		static let configuration = CommandConfiguration(
 			abstract: "Removes an application from Quick Launch."
 		)
 

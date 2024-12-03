@@ -14,7 +14,7 @@ import AppKit
 
 extension Apps {
 	struct Add: AsyncParsableCommand {
-		static var configuration = CommandConfiguration(
+		static let configuration = CommandConfiguration(
 			abstract: "Adds a new application to Quick Launch.",
 			discussion: "If an existing item with the same identifier already exists, the item will be updated with new information."
 		)

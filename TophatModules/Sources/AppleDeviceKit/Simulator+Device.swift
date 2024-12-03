@@ -81,7 +81,7 @@ extension Simulator: Device {
 }
 
 private extension Runtime {
-	private static let search = Regex {
+	nonisolated(unsafe) private static let search = Regex {
 		"com.apple.CoreSimulator.SimRuntime."
 		TryCapture {
 			ChoiceOf {

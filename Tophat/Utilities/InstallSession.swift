@@ -19,6 +19,7 @@ import TophatFoundation
 actor InstallSession {
 	private let applicationDownloader: ApplicationDownloading
 	private let ticketMachine: InstallationTicketMachine
+	private let quickLaunchEntryIconUpdater: QuickLaunchEntryIconUpdating
 	private let taskStatusReporter: TaskStatusReporter
 
 	private var activeRequestsCount: Int = 0 {
@@ -39,6 +40,7 @@ actor InstallSession {
 	init(
 		artifactDownloader: ArtifactDownloader,
 		deviceSelector: DeviceSelecting,
+		quickLaunchEntryIconUpdater: QuickLaunchEntryIconUpdating,
 		taskStatusReporter: TaskStatusReporter
 	) {
 		self.applicationDownloader = CachingApplicationDownloader(
@@ -52,6 +54,7 @@ actor InstallSession {
 			applicationDownloader: applicationDownloader
 		)
 
+		self.quickLaunchEntryIconUpdater = quickLaunchEntryIconUpdater
 		self.taskStatusReporter = taskStatusReporter
 
 		(self.isIdleUpdates, self.isIdleUpdatesContinuation) = AsyncStream.makeStream()
@@ -124,13 +127,15 @@ actor InstallSession {
 			launchArguments: ticket.launchArguments
 		)
 
-		if let icon = application.icon, let quickLaunchEntry = context?.quickLaunchEntry {
+		if let iconURL = application.icon, let quickLaunchEntryID = context?.quickLaunchEntryID {
 			do {
-				log.info("[InstallSession] Updating application icon for Quick Launch entry with identifier \(quickLaunchEntry.id)")
-				let persistedIcon = try ApplicationIcon.createAndPersist(fromOrigin: icon, for: quickLaunchEntry.id)
-				quickLaunchEntry.iconURL = persistedIcon.url
+				log.info("[InstallSession] Updating application icon for Quick Launch entry with identifier \(quickLaunchEntryID)")
+				try await quickLaunchEntryIconUpdater.updateIcon(
+					iconURL: iconURL,
+					quickLaunchEntryID: quickLaunchEntryID
+				)
 			} catch {
-				log.error("[InstallSession] Failed to update application icon for Quick Launch entry with identifier \(quickLaunchEntry.id)")
+				log.error("[InstallSession] Failed to update application icon for Quick Launch entry with identifier \(quickLaunchEntryID)")
 			}
 		}
 	}

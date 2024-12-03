@@ -7,7 +7,7 @@
 //
 
 /// A operating system that an executable can run on.
-public enum Platform: String, Codable, CaseIterable {
+public enum Platform: String, Codable, CaseIterable, Sendable {
 	case iOS = "ios"
 	case watchOS = "watchos"
 	case tvOS = "tvos"

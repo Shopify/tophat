@@ -9,8 +9,8 @@
 import Foundation
 
 /// The protocol you use to define notifications to be sent between Tophat processes.
-public protocol TophatRemoteControlRequest: Codable {
-	associatedtype Reply: Codable
+public protocol TophatRemoteControlRequest: Codable, Sendable {
+	associatedtype Reply: Codable, Sendable
 
 	var id: UUID { get }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 public protocol ArtifactProviderResult {}
 
-public struct ArtifactProviderResultContainer: Codable, ArtifactProviderResult {
+public struct ArtifactProviderResultContainer: Codable, ArtifactProviderResult, Sendable {
 	public var localURL: URL
 }
 

@@ -7,7 +7,7 @@
 //
 
 /// The connection by which a device is attached to the system.
-public enum Connection {
+public enum Connection: Sendable {
 	/// The device is connected through a physical interface such as USB.
 	case direct
 	/// The device is connected through a network connection such as through 802.11 (Wi-Fi).

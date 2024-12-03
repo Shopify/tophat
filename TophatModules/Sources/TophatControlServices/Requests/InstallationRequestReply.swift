@@ -6,6 +6,6 @@
 //  Copyright © 2024 Shopify. All rights reserved.
 //
 
-public struct InstallationRequestReply: Codable {
+public struct InstallationRequestReply: Codable, Sendable {
 	public init() {}
 }

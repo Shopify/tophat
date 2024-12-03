@@ -14,8 +14,11 @@ typealias PathResolver = AndroidPathResolver
 
 /// Resolves paths for common Android utilities.
 public struct AndroidPathResolver {
+	// The delegate will only be written to once, and only by the main app.
+	// Safe to ignore isolation checking unless the setup changes.
+
 	/// An object that can provide custom paths to use.
-	public static var delegate: AndroidPathResolverDelegate?
+	public nonisolated(unsafe) static var delegate: AndroidPathResolverDelegate?
 
 	public static var sdkRoot: URL {
 		if let customPath = delegate?.pathToSdkRoot() {

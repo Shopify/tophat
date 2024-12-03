@@ -16,7 +16,7 @@ import Foundation
 /// You must tell the application about the task status for it to be reported in the
 /// UI. To do this, the task must be registered in the application's task status
 /// reporter using ``TaskStatusReporter/register(taskStatus:)``.
-final class TaskStatus: Identifiable, ObservableObject {
+@MainActor final class TaskStatus: Identifiable, ObservableObject {
 	typealias ID = String
 
 	let id: ID
@@ -34,12 +34,12 @@ final class TaskStatus: Identifiable, ObservableObject {
 
 	/// Updates the state of the task.
 	/// - Parameter state: The new state of the task.
-	@MainActor func update(state: TaskState) {
+	func update(state: TaskState) {
 		self.state = state
 	}
 
 	/// Convenience for setting the state of the task to ``TaskState/done``.
-	@MainActor func markAsDone() {
+	func markAsDone() {
 		update(state: .done)
 	}
 }
@@ -47,11 +47,11 @@ final class TaskStatus: Identifiable, ObservableObject {
 // MARK: - Hashable
 
 extension TaskStatus: Hashable {
-	static func == (lhs: TaskStatus, rhs: TaskStatus) -> Bool {
+	nonisolated static func == (lhs: TaskStatus, rhs: TaskStatus) -> Bool {
 		lhs.id == rhs.id
 	}
 
-	func hash(into hasher: inout Hasher) {
+	nonisolated func hash(into hasher: inout Hasher) {
 		hasher.combine(id)
 	}
 }

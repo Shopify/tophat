@@ -8,7 +8,7 @@
 
 import TophatFoundation
 
-public struct UserSpecifiedRecipeConfiguration: Codable {
+public struct UserSpecifiedRecipeConfiguration: Codable, Sendable {
 	public let artifactProviderID: String
 	public let artifactProviderParameters: [String: String]
 	public let launchArguments: [String]

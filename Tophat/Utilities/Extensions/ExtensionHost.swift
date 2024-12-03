@@ -10,10 +10,10 @@ import Foundation
 import ExtensionFoundation
 @_spi(TophatKitInternal) import TophatKit
 
-@Observable final class ExtensionHost {
-	@MainActor private(set) var availableExtensions: [TophatExtension] = []
+@MainActor @Observable final class ExtensionHost {
+	private(set) var availableExtensions: [TophatExtension] = []
 
-	@MainActor func discover() {
+	func discover() {
 		Task {
 			do {
 				let sequence = try AppExtensionIdentity.matching(

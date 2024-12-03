@@ -15,8 +15,8 @@ struct InstallApplicationTask {
 
 	func callAsFunction(application: Application, device: Device, launchArguments: [String]) async throws {
 		let metadata = InstallStatusMetadata(deviceId: device.id)
-		let appName = application.name ?? context?.quickLaunchEntry?.name
-		let status = TaskStatus(
+		let appName = application.name ?? context?.applicationDisplayName
+		let status = await TaskStatus(
 			displayName: "Installing \(appName ?? "App")",
 			initialState: .preparing,
 			metadata: metadata
@@ -36,10 +36,10 @@ struct InstallApplicationTask {
 		log.info("Application validated for installation on device")
 
 		log.info("Installing application from local path \(application.url.path(percentEncoded: false))")
-		taskStatusReporter.notify(message: "Installing \(notificationAppName) on \(device.name)…")
+		await taskStatusReporter.notify(message: "Installing \(notificationAppName) on \(device.name)…")
 		await status.update(state: .running(message: "Installing to \(device.name)"))
 
-		try device.install(application: application)
+		try await device.install(application: application)
 
 		let bundleIdentifier = try application.bundleIdentifier
 
@@ -49,9 +49,9 @@ struct InstallApplicationTask {
 		}
 
 		log.info("Launching application with bundle identifier \(bundleIdentifier)")
-		taskStatusReporter.notify(message: "Launching \(notificationAppName) on \(device.name)…")
+		await taskStatusReporter.notify(message: "Launching \(notificationAppName) on \(device.name)…")
 		await status.update(state: .running(message: "Launching on \(device.name)"))
 
-		try device.launch(application: application, arguments: launchArguments)
+		try await device.launch(application: application, arguments: launchArguments)
 	}
 }

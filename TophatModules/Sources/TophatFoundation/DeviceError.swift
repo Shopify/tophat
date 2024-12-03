@@ -27,7 +27,7 @@ public enum DeviceError: Error {
 	/// The device timed out while waiting to be unlocked.
 	case deviceUnlockTimedOut
 
-	public enum FailedToLaunchAppReason {
+	public enum FailedToLaunchAppReason: Sendable {
 		case unexpected
 		case requiresManualProfileTrust
 	}

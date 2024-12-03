@@ -11,13 +11,13 @@ import ExtensionFoundation
 import TophatFoundation
 @_spi(TophatKitInternal) import TophatKit
 
-protocol AppExtensionIdentityResolving {
+protocol AppExtensionIdentityResolving: Sendable {
 	func identity(artifactProviderID: String) async -> AppExtensionIdentity?
 }
 
 extension ExtensionHost: AppExtensionIdentityResolving {
 	func identity(artifactProviderID: String) async -> AppExtensionIdentity? {
-		let extensionWithIdentity = await availableExtensions.first { availableExtension in
+		let extensionWithIdentity = availableExtensions.first { availableExtension in
 			availableExtension.specification.artifactProviders.contains { $0.id == artifactProviderID }
 		}
 
@@ -29,7 +29,7 @@ extension ExtensionHost: AppExtensionIdentityResolving {
 	}
 }
 
-protocol ArtifactRetrievalCoordinating {
+protocol ArtifactRetrievalCoordinating: Sendable {
 	func retrieve(metadata: ArtifactProviderMetadata) async throws -> URL
 	func cleanUp(artifactProviderID: String, localURL: URL) async throws
 }

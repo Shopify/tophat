@@ -25,13 +25,6 @@ struct ShowingAdvancedOptions: ViewModifier {
 	}
 }
 
-private struct ShowingAdvancedOptionsKey: EnvironmentKey {
-	static var defaultValue: Bool = false
-}
-
 extension EnvironmentValues {
-	var showingAdvancedOptions: Bool {
-		get { self[ShowingAdvancedOptionsKey.self] }
-		set { self[ShowingAdvancedOptionsKey.self] = newValue }
-	}
+	@Entry var showingAdvancedOptions = false
 }

@@ -51,8 +51,8 @@ actor CachingApplicationDownloader: ApplicationDownloading {
 		let container = ArtifactContainer()
 
 		let task = Task {
-			let taskStatus = TaskStatus(
-				displayName: "Fetching \(context?.quickLaunchEntry?.name ?? "App")",
+			let taskStatus = await TaskStatus(
+				displayName: "Fetching \(context?.applicationDisplayName ?? "App")",
 				initialState: .running(message: "Downloading", progress: .indeterminate)
 			)
 
@@ -67,7 +67,7 @@ actor CachingApplicationDownloader: ApplicationDownloading {
 			await taskStatus.update(state: .running(message: "Unpacking", progress: .indeterminate))
 			try await artifactUnpacker.unpack(downloadedItemInContainer: container)
 
-			guard let application = container.applications.first else {
+			guard let application = await container.applications.first else {
 				throw CachingApplicationDownloaderError.applicationNotFoundInArtifactContainer
 			}
 

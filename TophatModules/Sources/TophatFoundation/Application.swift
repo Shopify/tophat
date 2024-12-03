@@ -9,7 +9,7 @@
 import Foundation
 
 /// An installable application found on the local file system.
-public protocol Application: Deletable {
+public protocol Application: Sendable, Deletable {
 	/// The display name of the application.
 	var name: String? { get }
 

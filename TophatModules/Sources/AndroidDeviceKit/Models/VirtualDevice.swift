@@ -6,7 +6,7 @@
 //  Copyright © 2022 Shopify. All rights reserved.
 //
 
-struct VirtualDevice {
+struct VirtualDevice: Sendable {
 	let name: String
 	let device: String
 	let path: String

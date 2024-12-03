@@ -20,7 +20,7 @@ final class ShowOnboardingWindowAction {
 		self.utilityPathPreferences = utilityPathPreferences
 	}
 
-	func callAsFunction() {
+	@MainActor func callAsFunction() {
 		if onboardingWindow == nil {
 			onboardingWindow = OnboardingWindow {
 				OnboardingView()
@@ -36,13 +36,6 @@ final class ShowOnboardingWindowAction {
 	}
 }
 
-private struct ShowOnboardingWindowKey: EnvironmentKey {
-	static var defaultValue: ShowOnboardingWindowAction?
-}
-
 extension EnvironmentValues {
-	var showOnboardingWindow: ShowOnboardingWindowAction? {
-		get { self[ShowOnboardingWindowKey.self] }
-		set { self[ShowOnboardingWindowKey.self] = newValue }
-	}
+	@Entry var showOnboardingWindow: ShowOnboardingWindowAction?
 }

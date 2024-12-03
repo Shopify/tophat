@@ -8,8 +8,8 @@
 
 import Foundation
 
-protocol AnyArtifactProviderParameter: AnyObject, Sendable {
-	associatedtype Value: ArtifactProviderValue, Sendable
+protocol AnyArtifactProviderParameter: AnyObject {
+	associatedtype Value: ArtifactProviderValue
 
 	var key: String { get }
 	var title: LocalizedStringResource { get }

@@ -27,13 +27,6 @@ struct MirrorDeviceDisplayAction {
 	}
 }
 
-private struct MirrorDeviceDisplayKey: EnvironmentKey {
-	static var defaultValue: MirrorDeviceDisplayAction?
-}
-
 extension EnvironmentValues {
-	var mirrorDeviceDisplay: MirrorDeviceDisplayAction? {
-		get { self[MirrorDeviceDisplayKey.self] }
-		set { self[MirrorDeviceDisplayKey.self] = newValue }
-	}
+	@Entry var mirrorDeviceDisplay: MirrorDeviceDisplayAction?
 }

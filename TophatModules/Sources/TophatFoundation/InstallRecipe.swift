@@ -7,7 +7,7 @@
 //
 
 /// Structure representing instructions for installing a artifact from a remote source.
-public struct InstallRecipe: Equatable, Hashable, Codable {
+public struct InstallRecipe: Equatable, Hashable, Codable, Sendable {
 	/// The source of the artifact to install.
 	public let source: ArtifactSource
 

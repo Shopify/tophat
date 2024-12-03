@@ -22,12 +22,12 @@ struct AvdManager {
 }
 
 private extension VirtualDevice {
-	private static let anyWhitespace = OneOrMore(.whitespace)
-	private static let characterOrSymbolCapture = Capture {
+	nonisolated(unsafe) private static let anyWhitespace = OneOrMore(.whitespace)
+	nonisolated(unsafe) private static let characterOrSymbolCapture = Capture {
 		OneOrMore(CharacterClass.anyNonNewline)
 	}
 
-	private static let search = Regex {
+	nonisolated(unsafe) private static let search = Regex {
 		"Name: "
 		characterOrSymbolCapture
 		anyWhitespace

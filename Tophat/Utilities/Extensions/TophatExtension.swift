@@ -10,7 +10,7 @@ import Foundation
 import ExtensionFoundation
 @_spi(TophatKitInternal) import TophatKit
 
-struct TophatExtension {
+struct TophatExtension: Sendable {
 	let identity: AppExtensionIdentity
 	let specification: ExtensionSpecification
 }

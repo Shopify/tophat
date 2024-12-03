@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct ExtensionXPCReceivedMessageContainer {
+struct ExtensionXPCReceivedMessageContainer: Sendable {
 	private let identifier: String
 	private let data: Data
-	private let replyHandler: (Data?, Error?) -> Void
+	private let replyHandler: @Sendable (Data?, Error?) -> Void
 
-	init(identifier: String, data: Data, replyHandler: @escaping (Data?, Error?) -> Void) {
+	init(identifier: String, data: Data, replyHandler: @escaping @Sendable (Data?, Error?) -> Void) {
 		self.identifier = identifier
 		self.data = data
 		self.replyHandler = replyHandler

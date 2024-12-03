@@ -32,7 +32,7 @@ struct ExtensionConfiguration: AppExtensionConfiguration {
 				}
 
 				if let fetchExtensionDescriptorMessage = try? message.decode(as: FetchExtensionSpecificationMessage.self) {
-					let reply = await service.handleExtensionDescriptor(message: fetchExtensionDescriptorMessage.value)
+					let reply = service.handleExtensionDescriptor(message: fetchExtensionDescriptorMessage.value)
 					fetchExtensionDescriptorMessage.reply(.success(reply))
 				}
 

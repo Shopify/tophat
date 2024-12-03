@@ -12,7 +12,7 @@ struct MirrorDeviceDisplayTask {
 	let taskStatusReporter: TaskStatusReporter
 
 	func callAsFunction(device: Device) async throws {
-		let status = TaskStatus(displayName: "Mirroring \(device.name)", initialState: .running(message: "Connecting"))
+		let status = await TaskStatus(displayName: "Mirroring \(device.name)", initialState: .running(message: "Connecting"))
 		await taskStatusReporter.add(status: status)
 
 		defer {
@@ -21,6 +21,6 @@ struct MirrorDeviceDisplayTask {
 			}
 		}
 
-		try device.stream()
+		try await device.stream()
 	}
 }

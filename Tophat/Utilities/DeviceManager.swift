@@ -12,7 +12,7 @@ import TophatFoundation
 /// The `DeviceManager` coordinates between different device providers. Device providers
 /// "plug-in" to the `DeviceManager` such that it is the sole entity responsible for retrieving
 /// and managing devices in a platform-agnostic manner.
-final class DeviceManager: ObservableObject {
+@MainActor final class DeviceManager: ObservableObject {
 	private let deviceProviders: [DeviceProvider.Type]
 
 	/// A collection of all devices from all sources.
@@ -25,7 +25,7 @@ final class DeviceManager: ObservableObject {
 	@Published private(set) var isLoading = false
 
 	/// Loads all available devices into `devices`.
-	@MainActor func loadDevices() async {
+	func loadDevices() async {
 		guard !isLoading else {
 			log.info("Not loading devices because they are already being loaded")
 			return

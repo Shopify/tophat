@@ -7,7 +7,7 @@
 //
 
 /// The state of the device.
-public enum DeviceState {
+public enum DeviceState: Sendable {
 	case ready
 	case unavailable
 }

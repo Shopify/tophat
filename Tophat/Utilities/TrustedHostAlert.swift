@@ -10,7 +10,7 @@ import Foundation
 import AppKit
 import SwiftUI
 
-final class TrustedHostAlert {
+@MainActor final class TrustedHostAlert {
 	@CodableAppStorage("TrustedHosts") private var trustedHosts: [String] = []
 
 	func requestTrust(for host: String) async -> HostTrustResult {

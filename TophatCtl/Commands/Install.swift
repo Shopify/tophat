@@ -12,7 +12,7 @@ import TophatFoundation
 import TophatControlServices
 
 struct Install: AsyncParsableCommand {
-	static var configuration = CommandConfiguration(
+	static let configuration = CommandConfiguration(
 		abstract: "Installs an application.",
 		discussion: "This command infers platform and build type after the artifact has been downloaded. It is ideal for local artifacts that don't take any time to download."
 	)
