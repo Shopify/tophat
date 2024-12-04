@@ -23,9 +23,7 @@ extension Apps {
 		var path: URL
 
 		func run() async throws {
-			if !NSRunningApplication.isTophatRunning {
-				print("Warning: Tophat must be running for this command to succeed, but it is not running.")
-			}
+			checkIfHostAppIsRunning()
 
 			let data = try Data(contentsOf: path)
 			let configuration = try JSONDecoder().decode(UserSpecifiedQuickLaunchEntryConfiguration.self, from: data)

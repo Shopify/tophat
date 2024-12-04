@@ -38,6 +38,8 @@ struct Install: AsyncParsableCommand {
 	var launchArguments: [String] = []
 
 	func run() async throws {
+		checkIfHostAppIsRunning()
+
 		let service = TophatRemoteControlService()
 		let urlParsedAsArgument = URL(argument: idOrPath)
 

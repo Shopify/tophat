@@ -16,6 +16,8 @@ extension List {
 		)
 
 		func run() async throws {
+			checkIfHostAppIsRunning()
+
 			let reply = try await TophatRemoteControlService().send(request: ListProvidersRequest())
 
 			print("Providers:")
