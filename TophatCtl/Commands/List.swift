@@ -12,6 +12,7 @@ struct List: AsyncParsableCommand {
 	static let configuration = CommandConfiguration(
 		abstract: "Lists things Tophat knows about.",
 		subcommands: [
+			Apps.self,
 			Providers.self
 		]
 	)

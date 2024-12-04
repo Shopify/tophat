@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftData
 import TophatFoundation
 import TophatControlServices
 @_spi(TophatKitInternal) import TophatKit
@@ -21,9 +22,11 @@ protocol RemoteControlReceiverDelegate: AnyObject, Sendable {
 struct RemoteControlReceiver {
 	private let service = TophatRemoteControlService()
 	private let extensionHost: ExtensionHost
+	private let modelContainer: ModelContainer
 
-	init(extensionHost: ExtensionHost) {
+	init(extensionHost: ExtensionHost, modelContainer: ModelContainer) {
 		self.extensionHost = extensionHost
+		self.modelContainer = modelContainer
 	}
 
 	func start(delegate: RemoteControlReceiverDelegate) {
@@ -118,6 +121,27 @@ struct RemoteControlReceiver {
 				}
 
 				request.reply(.init(providers: providers))
+			}
+		}
+
+		Task {
+			for await request in service.requests(for: ListAppsRequset.self) {
+				let fetchDescriptor = FetchDescriptor<QuickLaunchEntry>()
+				let context = ModelContext(modelContainer)
+				let entries = (try? context.fetch(fetchDescriptor)) ?? []
+
+				request.reply(
+					.init(
+						apps: entries.map { entry in
+							.init(
+								id: entry.id,
+								name: entry.name,
+								platforms: entry.platforms,
+								recipeCount: entry.recipes.count
+							)
+						}
+					)
+				)
 			}
 		}
 	}

@@ -103,7 +103,10 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	private var cancellables = Set<AnyCancellable>()
 
 	override init() {
-		self.remoteControlReceiver = RemoteControlReceiver(extensionHost: extensionHost)
+		self.remoteControlReceiver = RemoteControlReceiver(
+			extensionHost: extensionHost,
+			modelContainer: modelContainer
+		)
 
 		self.deviceManager = DeviceManager(sources: [
 			AppleDevices.self,
