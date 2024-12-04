@@ -20,6 +20,8 @@ final class ArtifactDownloader: Sendable {
 	func download(from source: ArtifactSource, to container: ArtifactContainer) async throws {
 		switch source {
 			case .artifactProvider(let metadata):
+				try await validateHostTrustIfNeeded(metadata: metadata)
+
 				log.info("[ArtifactDownloader] Downloading artifact from artifact provider", metadata: metadata.loggerMetadata)
 				let fileURL = try await artifactRetrievalCoordinator.retrieve(metadata: metadata)
 				log.info("The artifact provider has made the artifact available at \(fileURL)")
@@ -35,6 +37,26 @@ final class ArtifactDownloader: Sendable {
 				try await container.addCopy(of: .rawDownload(fileURL))
 		}
 	}
+
+	private func validateHostTrustIfNeeded(metadata: ArtifactProviderMetadata) async throws {
+		guard metadata.id == "http" else {
+			return
+		}
+
+		log.info("[ArtifactDownloader] Built-in HTTP artifact provider detected. Validating trust.")
+
+		guard
+			let urlParameter = metadata.parameters["url"],
+			let url = URL(string: urlParameter),
+			let host = url.host()
+		else {
+			throw ArtifactDownloaderError.untrustedHost
+		}
+
+		guard await TrustedHostAlert().requestTrust(for: host) == .allow else {
+			throw ArtifactDownloaderError.untrustedHost
+		}
+	}
 }
 
 private extension ArtifactProviderMetadata {
@@ -48,4 +70,5 @@ private extension ArtifactProviderMetadata {
 
 enum ArtifactDownloaderError: Error {
 	case failedToDownloadArtifact
+	case untrustedHost
 }
