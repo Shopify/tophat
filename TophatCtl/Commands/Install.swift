@@ -11,53 +11,71 @@ import ArgumentParser
 import TophatFoundation
 import TophatControlServices
 
+private let discussion = """
+When specifying the path to a JSON configuration file, use the following format to specify recipes:
+
+[
+  {
+	"artifactProviderID": "<example>",
+	"artifactProviderParameters": {},
+	"launchArguments": [],
+	"platformHint": "ios",
+	"destinationHint": "simulator"
+  }
+]
+"""
+
 struct Install: AsyncParsableCommand {
 	static let configuration = CommandConfiguration(
 		abstract: "Installs an application.",
-		discussion: "This command infers platform and build type after the artifact has been downloaded. It is ideal for local artifacts that don't take any time to download."
+		discussion: discussion
 	)
 
-	@Option(name: [.short, .long], help: "The URL or local path of the artifact.")
-	var url: URL? = nil
+	@Argument(help: "The identifier of the Quick Launch entry, local path or URL to an artifact, or local path to a JSON configuration file.")
+	var idOrPath: String
 
-	@Option(name: [.short, .long], help: "The path to the configuration file to use for installation.")
-	var configuration: URL? = nil
-
-	@Option(parsing: .upToNextOption, help: "Arguments to pass to the application on launch when using --url.")
+	@Option(parsing: .upToNextOption, help: "Arguments to pass to the application on launch when an artifact is provided.")
 	var launchArguments: [String] = []
 
 	func run() async throws {
-		guard url != nil || configuration != nil else {
-			throw ValidationError("You must specify one of --url or --configuration.")
-		}
-
-		guard url == nil || configuration == nil else {
-			throw ValidationError("You must specify only one of --url or --configuration, but not both.")
-		}
-
-		if configuration != nil, !launchArguments.isEmpty {
-			throw ValidationError("--launch-arguments can only be used with --url. When using --configuration, launch arguments are specified in the configuration file.")
-		}
-
 		let service = TophatRemoteControlService()
+		let urlParsedAsArgument = URL(argument: idOrPath)
 
-		if let url {
-			let request = InstallFromURLRequest(
-				url: url,
-				launchArguments: launchArguments
-			)
+		guard
+			let urlParsedAsArgument,
+			let scheme = urlParsedAsArgument.scheme,
+			urlParsedAsArgument.isFileURL ? urlParsedAsArgument.pathExtension != "" : scheme.hasPrefix("http")
+		else {
+			try assertLaunchArgumentsEmpty()
+			try await service.send(request: InstallFromQuickLaunchRequest(quickLaunchEntryID: idOrPath), timeout: 60)
+			return
+		}
 
-			try await service.send(request: request, timeout: 60)
+		if urlParsedAsArgument.pathExtension == "json" {
+			try assertLaunchArgumentsEmpty()
 
-		} else if let configuration {
 			let request = InstallFromRecipesRequest(
 				recipes: try JSONDecoder().decode(
 					[UserSpecifiedRecipeConfiguration].self,
-					from: Data(contentsOf: configuration)
+					from: Data(contentsOf: urlParsedAsArgument)
 				)
 			)
 
 			try await service.send(request: request, timeout: 60)
+			return
+		}
+
+		let request = InstallFromURLRequest(
+			url: urlParsedAsArgument,
+			launchArguments: launchArguments
+		)
+
+		try await service.send(request: request, timeout: 60)
+	}
+
+	private func assertLaunchArgumentsEmpty() throws {
+		guard launchArguments.isEmpty else {
+			throw ValidationError("--launch-arguments can only be used when specifying the path to an artifact and now when specifying an identifier or path to a JSON configuration file.")
 		}
 	}
 }

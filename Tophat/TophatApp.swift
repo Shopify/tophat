@@ -336,6 +336,18 @@ extension AppDelegate: RemoteControlReceiverDelegate {
 	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async {
 		await launchApp(recipes: recipes)
 	}
+
+	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async {
+		let context = ModelContext(modelContainer)
+
+		let fetchDescriptor = FetchDescriptor<QuickLaunchEntry>(
+			predicate: #Predicate { $0.id == quickLaunchEntryIdentifier }
+		)
+
+		if let entry = try? context.fetch(fetchDescriptor).first {
+			await launchApp(quickLaunchEntry: entry)
+		}
+	}
 }
 
 // MARK: - TaskStatusReporterDelegate

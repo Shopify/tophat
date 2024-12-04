@@ -16,6 +16,7 @@ protocol RemoteControlReceiverDelegate: AnyObject, Sendable {
 	func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry)
 	func remoteControlReceiver(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID)
 	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async
+	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async
 	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async
 }
 
@@ -142,6 +143,13 @@ struct RemoteControlReceiver {
 						}
 					)
 				)
+			}
+		}
+
+		Task {
+			for await request in service.requests(for: InstallFromQuickLaunchRequest.self) {
+				await delegate.remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier: request.value.quickLaunchEntryID)
+				request.reply(.init())
 			}
 		}
 	}
