@@ -14,17 +14,19 @@ struct DeviceMenu: View {
 	@Environment(\.mirrorDeviceDisplay) private var mirrorDeviceDisplay
 	@CodableAppStorage("PinnedDevices") private var pinnedDeviceIdentifiers: [String] = []
 
+	@State private var deviceState: DeviceState = .unavailable
+
 	let device: Device
 
 	var body: some View {
 		Menu {
 			if device.type == .simulator {
-				Button(device.state == .ready ? "Running" : "Start") {
+				Button(deviceState == .ready ? "Running" : "Start") {
 					Task {
 						await prepareDevice?(device: device)
 					}
 				}
-				.disabled(device.state == .ready)
+				.disabled(deviceState == .ready)
 			}
 
 			if device.runtime.platform == .android {
@@ -33,15 +35,15 @@ struct DeviceMenu: View {
 						await mirrorDeviceDisplay?(device: device)
 					}
 				}
-				.disabled(device.state != .ready)
+				.disabled(deviceState != .ready)
 			}
 
 			Button(device.runtime.platform == .android ? "Show Device Logs" : "Open Console…") {
-				Task.detached {
-					try? device.openLogs()
+				Task {
+					try? await device.openLogs()
 				}
 			}
-			.disabled(device.state != .ready)
+			.disabled(deviceState != .ready)
 
 			Divider()
 
@@ -61,7 +63,7 @@ struct DeviceMenu: View {
 						try? device.focus()
 					}
 				}
-				.disabled(device.state != .ready)
+				.disabled(deviceState != .ready)
 
 				Divider()
 
@@ -74,6 +76,9 @@ struct DeviceMenu: View {
 				.foregroundColor(.secondary)
 		}
 		.buttonStyle(.plain)
+		.task {
+			deviceState = await device.state
+		}
 	}
 
 	private var pinned: Bool {

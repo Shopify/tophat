@@ -7,7 +7,7 @@
 //
 
 /// The location of an artifact.
-public enum ArtifactLocation {
+public enum ArtifactLocation: Sendable {
 	/// The artifact is located in a remote location, either on the web or on the local machine. A remote
 	/// location is a location that is **not** controlled by Tophat.
 	case remote(source: ArtifactSource)

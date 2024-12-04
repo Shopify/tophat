@@ -11,7 +11,7 @@ import TophatFoundation
 import SwiftUI
 
 /// Manages the user's selection of devices to install builds to.
-final class DeviceSelectionManager: ObservableObject {
+@MainActor final class DeviceSelectionManager: ObservableObject {
 	private unowned let deviceManager: DeviceManager
 
 	@CodableAppStorage("SelectedDeviceIdentifiers") var selectedDeviceIdentifiers: [String] = []

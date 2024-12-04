@@ -6,7 +6,7 @@
 //  Copyright © 2024 Shopify. All rights reserved.
 //
 
-public struct UserSpecifiedQuickLaunchEntryConfiguration: Codable {
+public struct UserSpecifiedQuickLaunchEntryConfiguration: Codable, Sendable {
 	public typealias Recipe = UserSpecifiedRecipeConfiguration
 
 	public let id: String

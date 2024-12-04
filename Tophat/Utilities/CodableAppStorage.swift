@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 @propertyWrapper
-struct CodableAppStorage<Value: Codable>: DynamicProperty {
+@MainActor struct CodableAppStorage<Value: Codable>: DynamicProperty {
 	@ObservedObject private var store: UserDefaultsKeyStore<Value>
 
 	init(wrappedValue defaultValue: Value, _ key: String, storage: UserDefaults = .standard) {
@@ -33,7 +33,7 @@ struct CodableAppStorage<Value: Codable>: DynamicProperty {
 		)
 	}
 
-	public mutating func update() {
+	nonisolated public mutating func update() {
 	   _store.update()
 	}
 }

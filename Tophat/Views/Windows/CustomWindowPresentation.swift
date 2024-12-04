@@ -9,16 +9,9 @@
 import SwiftUI
 
 protocol CustomWindowPresentation {
-	func dismiss()
-}
-
-private struct CustomWindowPresentationKey: EnvironmentKey {
-	static let defaultValue: CustomWindowPresentation? = nil
+	@MainActor func dismiss()
 }
 
 extension EnvironmentValues {
-	var customWindowPresentation: CustomWindowPresentation? {
-		get { self[CustomWindowPresentationKey.self] }
-		set { self[CustomWindowPresentationKey.self] = newValue }
-	}
+	@Entry var customWindowPresentation: CustomWindowPresentation? = nil
 }

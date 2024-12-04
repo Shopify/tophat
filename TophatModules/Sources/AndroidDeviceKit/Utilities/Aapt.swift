@@ -10,10 +10,10 @@ import Foundation
 import ShellKit
 import RegexBuilder
 
-class AaptError: Error {}
+final class AaptError: Error {}
 
 public struct Aapt {
-	private static let appNameRegex = Regex {
+	nonisolated(unsafe) private static let appNameRegex = Regex {
 		"application-label:'"
 		Capture {
 			OneOrMore(CharacterClass(.anyNonNewline))
@@ -21,7 +21,7 @@ public struct Aapt {
 		"'"
 	}
 
-	private static let packageNameRegex = Regex {
+	nonisolated(unsafe) private static let packageNameRegex = Regex {
 		"package: name='"
 		Capture {
 			OneOrMore(.anyNonNewline.subtracting(.whitespace), .reluctant)

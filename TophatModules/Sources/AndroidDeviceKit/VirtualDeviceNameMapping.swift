@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct VirtualDeviceNameMapping {
+struct VirtualDeviceNameMapping: Sendable {
 	let connectedDevice: ConnectedDevice
 	let virtualDeviceName: String?
 }

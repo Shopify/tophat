@@ -62,12 +62,12 @@ struct Adb {
 }
 
 private extension ConnectedDevice {
-	private static let anyWhitespace = OneOrMore(.whitespace)
-	private static let characterOrSymbolCapture = Capture {
+	nonisolated(unsafe) private static let anyWhitespace = OneOrMore(.whitespace)
+	nonisolated(unsafe) private static let characterOrSymbolCapture = Capture {
 		OneOrMore(.any.subtracting(.whitespace))
 	}
 
-	private static let search = Regex {
+	nonisolated(unsafe) private static let search = Regex {
 		characterOrSymbolCapture
 		anyWhitespace
 		TryCapture {

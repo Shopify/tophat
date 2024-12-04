@@ -10,24 +10,22 @@ import Foundation
 import TophatFoundation
 import TophatControlServices
 
-protocol RemoteControlReceiverDelegate: AnyObject {
+protocol RemoteControlReceiverDelegate: AnyObject, Sendable {
 	func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry)
 	func remoteControlReceiver(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID)
 	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async
 	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async
 }
 
-final class RemoteControlReceiver {
-	weak var delegate: RemoteControlReceiverDelegate?
-
+struct RemoteControlReceiver {
 	private let service = TophatRemoteControlService()
 
-	init() {
+	func start(delegate: RemoteControlReceiverDelegate) {
 		Task {
 			for await request in service.requests(for: InstallFromURLRequest.self) {
 				let requestValue = request.value
 
-				await delegate?.remoteControlReceiver(didOpenURL: requestValue.url, launchArguments: requestValue.launchArguments)
+				await delegate.remoteControlReceiver(didOpenURL: requestValue.url, launchArguments: requestValue.launchArguments)
 				request.reply(.init())
 			}
 		}
@@ -50,7 +48,7 @@ final class RemoteControlReceiver {
 					)
 				}
 
-				await delegate?.remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes: recipes)
+				await delegate.remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes: recipes)
 				request.reply(.init())
 			}
 		}
@@ -80,14 +78,14 @@ final class RemoteControlReceiver {
 					}
 				)
 
-				delegate?.remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry: quickLaunchEntry)
+				delegate.remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry: quickLaunchEntry)
 			}
 		}
 
 		Task {
 			for await request in service.requests(for: RemoveQuickLaunchEntryRequest.self) {
 				let requestValue = request.value
-				delegate?.remoteControlReceiver(
+				delegate.remoteControlReceiver(
 					didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier: requestValue.quickLaunchEntryID
 				)
 			}

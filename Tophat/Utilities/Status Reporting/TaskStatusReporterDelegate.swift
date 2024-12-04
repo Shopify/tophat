@@ -7,6 +7,5 @@
 //
 
 public protocol TaskStatusReporterDelegate: AnyObject {
-	func taskStatusReporter(didReceiveRequestToShowNotificationWithMessage message: String)
-	func taskStatusReporter(didReceiveRequestToShowAlertWithOptions options: AlertOptions)
+	@MainActor func taskStatusReporter(didReceiveRequestToShowNotificationWithMessage message: String)
 }

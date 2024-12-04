@@ -8,7 +8,7 @@
 
 import AppKit
 
-public struct AlertOptions {
+public struct AlertOptions: Sendable {
 	public let title: String
 	public let content: String
 	public let style: NSAlert.Style

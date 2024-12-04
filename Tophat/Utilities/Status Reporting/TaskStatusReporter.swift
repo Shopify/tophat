@@ -11,7 +11,7 @@ import Collections
 import AppKit
 
 /// Manages task statuses and publishes changes to them.
-final class TaskStatusReporter: ObservableObject {
+@MainActor final class TaskStatusReporter: ObservableObject {
 	weak var delegate: TaskStatusReporterDelegate?
 
 	private var cancellables: Set<AnyCancellable> = []
@@ -28,7 +28,7 @@ final class TaskStatusReporter: ObservableObject {
 	/// When a task reaches a ``TaskState/done`` state, the status is
 	/// automatically removed from the list of tasks after a short delay.
 	/// - Parameter status: The task status to add.
-	@MainActor func add(status: TaskStatus) {
+	func add(status: TaskStatus) {
 		var cancellable: AnyCancellable?
 		cancellable = status.$state
 			.sink { [weak self] taskState in
@@ -47,7 +47,7 @@ final class TaskStatusReporter: ObservableObject {
 	/// - Parameters:
 	///   - status: The task status to remove.
 	///   - withDelay: Whether to delay removal by a few seconds.
-	@MainActor func remove(status: TaskStatus, withDelay: Bool = false) {
+	func remove(status: TaskStatus, withDelay: Bool = false) {
 		Task {
 			if withDelay {
 				try await Task.sleep(for: .seconds(2))
@@ -58,18 +58,13 @@ final class TaskStatusReporter: ObservableObject {
 	}
 
 	/// Removes all failed or done task statuses.
-	@MainActor func clearConcluded() {
+	func clearConcluded() {
 		let filteredItems = statuses.filter { !$0.state.isConcluded }
 		statuses = OrderedSet(filteredItems)
 	}
 
 	func notify(message: String) {
 		delegate?.taskStatusReporter(didReceiveRequestToShowNotificationWithMessage: message)
-	}
-
-	@MainActor func alert(title: String, content: String, style: NSAlert.Style, buttonText: String) {
-		let options = AlertOptions(title: title, content: content, style: style, buttonText: buttonText)
-		delegate?.taskStatusReporter(didReceiveRequestToShowAlertWithOptions: options)
 	}
 
 	private func updateSubscriptions() {

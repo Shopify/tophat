@@ -16,7 +16,7 @@ public struct FetchExtensionSpecificationMessage: ExtensionXPCMessage {
 }
 
 @_spi(TophatKitInternal)
-public struct ExtensionSpecification: Codable {
+public struct ExtensionSpecification: Codable, Sendable {
 	public let title: LocalizedStringResource
 	public let description: LocalizedStringResource?
 	public let isConfigurable: Bool
@@ -38,7 +38,7 @@ public struct ExtensionSpecification: Codable {
 }
 
 @_spi(TophatKitInternal)
-public struct ArtifactProviderSpecification: Identifiable, Codable {
+public struct ArtifactProviderSpecification: Identifiable, Codable, Sendable {
 	public let id: String
 	public let title: LocalizedStringResource
 	public let parameters: [ArtifactProviderParameterSpecification]
@@ -53,7 +53,7 @@ public struct ArtifactProviderSpecification: Identifiable, Codable {
 }
 
 @_spi(TophatKitInternal)
-public struct ArtifactProviderParameterSpecification: Codable {
+public struct ArtifactProviderParameterSpecification: Codable, Sendable {
 	public let key: String
 	public let title: LocalizedStringResource
 	public let description: LocalizedStringResource?

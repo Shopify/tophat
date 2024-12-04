@@ -13,7 +13,7 @@ jobs:
       pull-requests: write
     steps:
       - name: Select Xcode Version
-        run: sudo xcode-select -switch /Applications/Xcode_16.app
+        run: sudo xcode-select -switch /Applications/Xcode_16.1.app
 
       - name: Checkout
         uses: actions/checkout@v4

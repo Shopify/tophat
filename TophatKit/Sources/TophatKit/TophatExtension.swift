@@ -15,7 +15,7 @@ import SwiftUI
 ///
 /// Use this type to register the components of an extension to provide Tophat with
 /// the functionality you implement.
-public protocol TophatExtension: AppExtension {
+public protocol TophatExtension: AppExtension, Sendable {
 	/// The human-readable name for the extension.
 	static var title: LocalizedStringResource { get }
 
@@ -38,19 +38,19 @@ public protocol SettingsProviding {
 
 	/// The view to display in the Tophat Settings window to allow
 	/// the extension to be configured.
-	@ViewBuilder static var settings: SettingsBody { get }
+	@MainActor @ViewBuilder static var settings: SettingsBody { get }
 }
 
 public extension TophatExtension {
 	static var description: LocalizedStringResource? { nil }
 
-	var configuration: some AppExtensionConfiguration {
+	@MainActor var configuration: some AppExtensionConfiguration {
 		ExtensionConfiguration(appExtension: self)
 	}
 }
 
 public extension TophatExtension where Self: SettingsProviding {
-	var configuration: AppExtensionSceneConfiguration {
+	@MainActor var configuration: AppExtensionSceneConfiguration {
 		AppExtensionSceneConfiguration(
 			PrimitiveAppExtensionScene(id: "TophatExtensionSettings") {
 				Self.settings

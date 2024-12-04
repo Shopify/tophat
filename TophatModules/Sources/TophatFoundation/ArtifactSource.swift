@@ -9,7 +9,7 @@
 import Foundation
 
 /// The source of an artifact.
-public enum ArtifactSource: Equatable, Hashable, Codable {
+public enum ArtifactSource: Sendable, Equatable, Hashable, Codable {
 	case artifactProvider(metadata: ArtifactProviderMetadata)
 	case file(url: URL)
 }

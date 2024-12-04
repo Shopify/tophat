@@ -8,4 +8,6 @@
 
 import Logging
 
-let log = Logger(label: "TophatControlServices")
+// This will only be written to once, and only by the main app.
+// Safe to ignore isolation checking unless the setup changes.
+nonisolated(unsafe) public var log: Logger?

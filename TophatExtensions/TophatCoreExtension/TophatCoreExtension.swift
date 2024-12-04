@@ -13,7 +13,7 @@ import SwiftUI
 @main
 struct TophatCoreExtension: TophatExtension, ArtifactProviding {
 	static let title: LocalizedStringResource = "Core Features"
-	static var description: LocalizedStringResource? = "Built-in Tophat functionality"
+	static let description: LocalizedStringResource? = "Built-in Tophat functionality"
 
 	static var artifactProviders: some ArtifactProviders {
 		HTTPArtifactProvider()

@@ -18,6 +18,7 @@ import AndroidDeviceKit
 import AppleDeviceKit
 import FluidMenuBarExtra
 import TophatFoundation
+import TophatControlServices
 import SwiftData
 
 let log = Logger(label: Bundle.main.bundleIdentifier!)
@@ -35,6 +36,7 @@ struct TophatApp: App {
 
 		AndroidDeviceKit.log = log
 		AppleDeviceKit.log = log
+		TophatControlServices.log = log
 	}
 
 	var body: some Scene {
@@ -52,6 +54,7 @@ struct TophatApp: App {
 	}
 }
 
+@MainActor
 private final class AppDelegate: NSObject, NSApplicationDelegate {
 	// Hope nobody is running a Jedi Academy server...
 	@AppStorage("ListenPort") private var listenPort: Int = 29070
@@ -112,10 +115,13 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 			artifactRetrievalCoordinator: ArtifactRetrievalCoordinator(appExtensionIdentityResolver: extensionHost)
 		)
 
+		let quickLaunchEntryIconUpdater = QuickLaunchEntryIconUpdater(modelContainer: modelContainer)
+
 		self.installCoordinator = InstallCoordinator(
 			artifactDownloader: artifactDownloader,
 			deviceListLoader: deviceManager,
 			deviceSelector: deviceSelectionManager,
+			quickLaunchEntryIconUpdater: quickLaunchEntryIconUpdater,
 			taskStatusReporter: taskStatusReporter
 		)
 
@@ -138,7 +144,6 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 		configureEventSubscriptions()
 
 		self.server.delegate = self
-		self.remoteControlReceiver.delegate = self
 		self.taskStatusReporter.delegate = self
 	}
 
@@ -210,6 +215,8 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	}
 
 	private func configureEventSubscriptions() {
+		self.remoteControlReceiver.start(delegate: self)
+
 		Task { @MainActor in
 			// Companion to the showDockIconWhenOpen() modifier to hide the dock icon when all
 			// modified windows are closed.
@@ -264,15 +271,17 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 // MARK: - TophatServerDelegate
 
 extension AppDelegate: TophatServerDelegate {
-	func server(didOpenURL url: URL) {
-		handle(urls: [url])
+	nonisolated func server(didOpenURL url: URL) {
+		Task {
+			await handle(urls: [url])
+		}
 	}
 }
 
 // MARK: - RemoteControlReceiverDelegate
 
 extension AppDelegate: RemoteControlReceiverDelegate {
-	func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry) {
+	nonisolated func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry) {
 		let context = ModelContext(modelContainer)
 
 		let existingID = quickLaunchEntry.id
@@ -302,7 +311,7 @@ extension AppDelegate: RemoteControlReceiverDelegate {
 		}
 	}
 
-	func remoteControlReceiver(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) {
+	nonisolated func remoteControlReceiver(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) {
 		let context = ModelContext(modelContainer)
 
 		do {
@@ -330,21 +339,12 @@ extension AppDelegate: TaskStatusReporterDelegate {
 	func taskStatusReporter(didReceiveRequestToShowNotificationWithMessage message: String) {
 		Notifications.notify(message: message)
 	}
-
-	@MainActor func taskStatusReporter(didReceiveRequestToShowAlertWithOptions options: AlertOptions) {
-		Notifications.alert(
-			title: options.title,
-			content: options.content,
-			style: options.style,
-			buttonText: options.buttonText
-		)
-	}
 }
 
 // MARK: - UNUserNotificationCenterDelegate
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+	nonisolated func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 		completionHandler([.badge, .banner, .sound])
 	}
 }

@@ -13,7 +13,7 @@ public enum Executable {
 	case url(URL)
 }
 
-public protocol ShellCommand {
+public protocol ShellCommand: Sendable {
 	/// Name of the command, finding it in the user's PATH if the URL is nil
 	var executable: Executable { get }
 

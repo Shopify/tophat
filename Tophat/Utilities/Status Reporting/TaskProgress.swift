@@ -7,7 +7,7 @@
 //
 
 /// The progress of a running task.
-enum TaskProgress {
+enum TaskProgress: Sendable {
 	/// The task does not report progress.
 	case indeterminate
 	/// The task has measurable progress.

@@ -8,12 +8,12 @@
 
 import Foundation
 
-public struct TophatRemoteControlReceivedRequest<T: TophatRemoteControlRequest> {
+public struct TophatRemoteControlReceivedRequest<T: TophatRemoteControlRequest>: Sendable where T: Sendable {
 	public let value: T
 
 	public func reply(_ reply: T.Reply) {
 		guard let userInfo = try? JSONSerialization.jsonObject(with: JSONEncoder().encode(reply)) as? [AnyHashable: Any] else {
-			log.warning("[TophatRemoteControlReceivedRequest] Warning: The reply data cannot be represented as JSON! It will not be sent.")
+			log?.warning("[TophatRemoteControlReceivedRequest] Warning: The reply data cannot be represented as JSON! It will not be sent.")
 			return
 		}
 

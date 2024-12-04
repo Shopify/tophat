@@ -6,7 +6,7 @@
 //  Copyright © 2022 Shopify. All rights reserved.
 //
 
-struct Simulator {
+struct Simulator: Sendable {
 	let udid: String
 	let runtimeIdentifier: String
 	let name: String

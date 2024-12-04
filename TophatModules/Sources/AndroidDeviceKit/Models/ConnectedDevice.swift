@@ -6,7 +6,7 @@
 //  Copyright © 2022 Shopify. All rights reserved.
 //
 
-struct ConnectedDevice {
+struct ConnectedDevice: Sendable {
 	let serial: String
 	let _state: State
 	let usb: String?
@@ -15,7 +15,7 @@ struct ConnectedDevice {
 	let device: String?
 	let transportId: String?
 
-	enum State: String {
+	enum State: String, Sendable {
 		case device = "device"
 		case offline = "offline"
 		case noDevice = "no device"

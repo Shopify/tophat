@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ExtensionService {
+struct ExtensionService: Sendable {
 	private let appExtension: any TophatExtension
 
 	init(appExtension: some TophatExtension) {

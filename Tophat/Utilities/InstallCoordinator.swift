@@ -9,7 +9,7 @@
 import Foundation
 import TophatFoundation
 
-protocol DeviceListLoading {
+protocol DeviceListLoading: Sendable {
 	func loadDevices() async
 }
 
@@ -23,6 +23,7 @@ actor InstallCoordinator {
 	private let artifactDownloader: ArtifactDownloader
 	private let deviceListLoader: DeviceListLoading
 	private let deviceSelector: DeviceSelecting
+	private let quickLaunchEntryIconUpdater: QuickLaunchEntryIconUpdating
 	private let taskStatusReporter: TaskStatusReporter
 
 	private var currentSession: InstallSession
@@ -33,16 +34,19 @@ actor InstallCoordinator {
 		artifactDownloader: ArtifactDownloader,
 		deviceListLoader: DeviceListLoading,
 		deviceSelector: DeviceSelecting,
+		quickLaunchEntryIconUpdater: QuickLaunchEntryIconUpdating,
 		taskStatusReporter: TaskStatusReporter
 	) {
 		self.artifactDownloader = artifactDownloader
 		self.deviceListLoader = deviceListLoader
 		self.deviceSelector = deviceSelector
+		self.quickLaunchEntryIconUpdater = quickLaunchEntryIconUpdater
 		self.taskStatusReporter = taskStatusReporter
 
 		self.currentSession = InstallSession(
 			artifactDownloader: artifactDownloader,
 			deviceSelector: deviceSelector,
+			quickLaunchEntryIconUpdater: quickLaunchEntryIconUpdater,
 			taskStatusReporter: taskStatusReporter
 		)
 	}
@@ -60,7 +64,7 @@ actor InstallCoordinator {
 			observeSessionIdleState()
 		}
 
-		taskStatusReporter.notify(message: "Preparing to install \(context?.quickLaunchEntry?.name ?? "application")…")
+		await taskStatusReporter.notify(message: "Preparing to install \(context?.applicationDisplayName ?? "application")…")
 		await deviceListLoader.loadDevices()
 
 		try await currentSession.install(recipes: recipes, context: context)
@@ -70,6 +74,7 @@ actor InstallCoordinator {
 		currentSession = InstallSession(
 			artifactDownloader: artifactDownloader,
 			deviceSelector: deviceSelector,
+			quickLaunchEntryIconUpdater: quickLaunchEntryIconUpdater,
 			taskStatusReporter: taskStatusReporter
 		)
 

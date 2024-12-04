@@ -7,7 +7,7 @@
 //
 
 /// The state of a running task.
-enum TaskState {
+enum TaskState: Sendable {
 	/// The task is preparing to run.
 	case preparing
 	/// The task is waiting for a precondition.
@@ -19,7 +19,7 @@ enum TaskState {
 	/// The task is fully complete and will not perform any further operations.
 	case done
 
-	enum WaitingReason {
+	enum WaitingReason: Sendable {
 		/// The task is waiting because a device is locked.
 		case deviceIsLocked
 	}

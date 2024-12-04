@@ -9,7 +9,7 @@
 import Foundation
 
 @propertyWrapper
-public final class ArtifactProviderParameter<Value>: @unchecked Sendable where Value: ArtifactProviderValue, Value: Sendable {
+public final class ArtifactProviderParameter<Value> where Value: ArtifactProviderValue {
 	public let key: String
 	public let title: LocalizedStringResource
 	public let description: LocalizedStringResource?

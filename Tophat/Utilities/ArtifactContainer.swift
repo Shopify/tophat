@@ -9,7 +9,7 @@
 import Foundation
 import TophatFoundation
 
-final class ArtifactContainer: Identifiable {
+actor ArtifactContainer: Identifiable {
 	let id: UUID
 	private(set) var artifacts: [Artifact]
 
@@ -65,7 +65,7 @@ final class ArtifactContainer: Identifiable {
 }
 
 extension ArtifactContainer {
-	enum Artifact {
+	enum Artifact: Sendable {
 		case rawDownload(URL)
 		case application(Application)
 	}

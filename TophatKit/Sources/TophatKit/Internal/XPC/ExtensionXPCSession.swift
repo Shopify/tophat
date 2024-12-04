@@ -14,7 +14,7 @@ import Foundation
 }
 
 @_spi(TophatKitInternal)
-public final class ExtensionXPCSession: NSObject, @unchecked Sendable {
+@preconcurrency public final class ExtensionXPCSession: NSObject {
 	private let connection: NSXPCConnection
 
 	let receivedMessages: AsyncStream<ExtensionXPCReceivedMessageContainer>

@@ -9,8 +9,8 @@
 import Foundation
 
 @_spi(TophatKitInternal)
-public protocol ExtensionXPCMessage: Codable {
-	associatedtype Reply: Codable
+public protocol ExtensionXPCMessage: Codable, Sendable {
+	associatedtype Reply: Codable, Sendable
 }
 
 extension ExtensionXPCMessage {

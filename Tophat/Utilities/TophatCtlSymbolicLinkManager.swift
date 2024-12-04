@@ -8,10 +8,9 @@
 
 import Foundation
 
-final class TophatCtlSymbolicLinkManager: ObservableObject {
+@MainActor final class TophatCtlSymbolicLinkManager: ObservableObject {
 	private let utilityName = "tophatctl"
 
-	@MainActor
 	func install() async {
 		guard let destinationPath = destinationPath else {
 			return
@@ -21,7 +20,6 @@ final class TophatCtlSymbolicLinkManager: ObservableObject {
 		objectWillChange.send()
 	}
 
-	@MainActor
 	func uninstall() async {
 		await runElevatedShellCommand(string: uninstallCommand)
 		objectWillChange.send()

@@ -9,7 +9,7 @@
 import Foundation
 import ShellKit
 
-class ApkAnalyzerError: Error {}
+final class ApkAnalyzerError: Error {}
 
 public struct ApkAnalyzer {
 	public static func getIconPath(apkUrl: URL) throws -> String {

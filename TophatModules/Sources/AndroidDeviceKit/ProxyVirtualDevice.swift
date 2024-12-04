@@ -13,17 +13,29 @@ import TophatFoundation
 /// on the fly.
 final class ProxyVirtualDevice {
 	private let virtualDevice: VirtualDevice
-	private var connectedDevice: ConnectedDevice?
+	private let connectedDeviceStore: ConnectedDeviceStore
 
 	init(virtualDevice: VirtualDevice, connectedDevice: ConnectedDevice? = nil) {
 		self.virtualDevice = virtualDevice
-		self.connectedDevice = connectedDevice
+		self.connectedDeviceStore = ConnectedDeviceStore(virtualDevice: virtualDevice, connectedDevice: connectedDevice)
 	}
+}
 
-	private func updateConnectedDevice() async {
-		let connectedDevices = Adb.listDevices()
-		let virtualDeviceNameMappings = await connectedDevices.mappedToVirtualDeviceNames()
-		self.connectedDevice = virtualDeviceNameMappings.connectedDevice(for: virtualDevice)
+private extension ProxyVirtualDevice {
+	actor ConnectedDeviceStore {
+		private let virtualDevice: VirtualDevice
+		private(set) var connectedDevice: ConnectedDevice?
+
+		init(virtualDevice: VirtualDevice, connectedDevice: ConnectedDevice?) {
+			self.virtualDevice = virtualDevice
+			self.connectedDevice = connectedDevice
+		}
+
+		func update() async {
+			let connectedDevices = Adb.listDevices()
+			let virtualDeviceNameMappings = await connectedDevices.mappedToVirtualDeviceNames()
+			self.connectedDevice = virtualDeviceNameMappings.connectedDevice(for: virtualDevice)
+		}
 	}
 }
 
@@ -51,7 +63,9 @@ extension ProxyVirtualDevice: Device {
 	}
 
 	var state: DeviceState {
-		connectedDevice?.state ?? .unavailable
+		get async {
+			await connectedDeviceStore.connectedDevice?.state ?? .unavailable
+		}
 	}
 
 	var isLocked: Bool {
@@ -65,10 +79,10 @@ extension ProxyVirtualDevice: Device {
 			throw DeviceError.failedToBoot
 		}
 
-		await updateConnectedDevice()
+		await connectedDeviceStore.update()
 
-		guard let connectedDevice = connectedDevice else {
-			throw DeviceError.deviceNotAvailable(state: state)
+		guard let connectedDevice = await connectedDeviceStore.connectedDevice else {
+			throw await DeviceError.deviceNotAvailable(state: state)
 		}
 
 		do {
@@ -78,9 +92,9 @@ extension ProxyVirtualDevice: Device {
 		}
 	}
 
-	func openLogs() throws {
-		guard let connectedDevice = connectedDevice else {
-			throw DeviceError.deviceNotAvailable(state: state)
+	func openLogs() async throws {
+		guard let connectedDevice = await connectedDeviceStore.connectedDevice else {
+			throw await DeviceError.deviceNotAvailable(state: state)
 		}
 
 		return try connectedDevice.openLogs()
@@ -101,19 +115,19 @@ extension ProxyVirtualDevice: Device {
 		}
 	}
 
-	func install(application: Application) throws {
+	func install(application: Application) async throws {
 		// Equivalent errors thrown by ConnectedDevice
-		try connectedDevice?.install(application: application)
+		try await connectedDeviceStore.connectedDevice?.install(application: application)
 	}
 
-	func launch(application: Application, arguments: [String]? = nil) throws {
+	func launch(application: Application, arguments: [String]? = nil) async throws {
 		// Equivalent errors thrown by ConnectedDevice
-		try connectedDevice?.launch(application: application, arguments: arguments)
+		try await connectedDeviceStore.connectedDevice?.launch(application: application, arguments: arguments)
 	}
 
-	func stream() throws {
+	func stream() async throws {
 		do {
-			try connectedDevice?.stream()
+			try await connectedDeviceStore.connectedDevice?.stream()
 		} catch {
 			throw DeviceError.failedToStream
 		}

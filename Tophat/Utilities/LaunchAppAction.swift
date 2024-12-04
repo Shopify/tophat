@@ -17,7 +17,7 @@ struct LaunchAppAction {
 	}
 
 	func callAsFunction(quickLaunchEntry entry: QuickLaunchEntry) async {
-		let context = OperationContext(quickLaunchEntry: entry)
+		let context = OperationContext(quickLaunchEntryID: entry.id, applicationDisplayName: entry.name)
 
 		let recipes = entry.recipes.map { source in
 			InstallRecipe(
@@ -63,13 +63,6 @@ struct LaunchAppAction {
 	}
 }
 
-private struct LaunchAppKey: EnvironmentKey {
-	static var defaultValue: LaunchAppAction?
-}
-
 extension EnvironmentValues {
-	var launchApp: LaunchAppAction? {
-		get { self[LaunchAppKey.self] }
-		set { self[LaunchAppKey.self] = newValue }
-	}
+	@Entry var launchApp: LaunchAppAction?
 }

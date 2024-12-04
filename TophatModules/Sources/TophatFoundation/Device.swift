@@ -9,7 +9,7 @@
 import Foundation
 
 /// Structure representing any kind of device.
-public protocol Device {
+public protocol Device: Sendable {
 	/// The unique identifier of the device.
 	var id: String { get }
 
@@ -26,7 +26,7 @@ public protocol Device {
 	var connection: Connection { get }
 
 	/// The current state of the device.
-	var state: DeviceState { get }
+	var state: DeviceState { get async }
 
 	/// Whether the device is locked.
 	var isLocked: Bool { get async throws }
@@ -39,20 +39,20 @@ public protocol Device {
 
 	/// Installs an application to the device.
 	/// - Parameter application: The application to install..
-	func install(application: Application) throws
+	func install(application: Application) async throws
 
 	/// Launches a given application on the device.
 	/// - Parameter application: The application to launch
-	func launch(application: Application, arguments: [String]?) throws
+	func launch(application: Application, arguments: [String]?) async throws
 
 	/// Waits until the device has been unlocked.
 	func waitUntilUnlocked() async throws
 
 	/// Streams a device to the host machine.
-	func stream() throws
+	func stream() async throws
 
 	/// Opens the system logs of the device
-	func openLogs() throws
+	func openLogs() async throws
 }
 
 // The following methods don't apply to all types of devices, so we default to no-op.

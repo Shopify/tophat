@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class TophatRemoteControlService {
+public final class TophatRemoteControlService: Sendable {
 	private let notificationCenter = DistributedNotificationCenter.default()
 
 	public init() {}

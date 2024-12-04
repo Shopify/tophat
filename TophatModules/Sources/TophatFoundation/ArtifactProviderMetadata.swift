@@ -6,7 +6,7 @@
 //
 
 /// The metadata required to retrieve a artifact from a artifact provider.
-public struct ArtifactProviderMetadata: Equatable, Hashable, Codable {
+public struct ArtifactProviderMetadata: Sendable, Equatable, Hashable, Codable {
 	/// The identifier of the artifact provider that should retrieve the artifact.
 	public let id: String
 

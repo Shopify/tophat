@@ -10,16 +10,16 @@ import Foundation
 import TophatFoundation
 import ZIPFoundation
 
-final class ArtifactUnpacker {
+final class ArtifactUnpacker: Sendable {
 	/// Unpacks a downloaded artifact in an `ArtifactContainer` and places it in the same container.
 	/// - Parameter container: The container in which the raw artifact is located and where to place the unpacked artifact.
 	func unpack(downloadedItemInContainer container: ArtifactContainer) async throws {
-		guard let rawDownloadURL = container.rawDownloads.first, rawDownloadURL.isFileURL else {
+		guard let rawDownloadURL = await container.rawDownloads.first, rawDownloadURL.isFileURL else {
 			throw ArtifactUnpackerError.artifactNotAvailable
 		}
 
 		let application = try unpack(artifactURL: rawDownloadURL)
-		try container.addCopy(of: .application(application))
+		try await container.addCopy(of: .application(application))
 	}
 
 	private func unpack(artifactURL: URL) throws -> Application {

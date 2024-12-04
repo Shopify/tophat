@@ -10,7 +10,7 @@ import Foundation
 import TophatFoundation
 import Logging
 
-final class ArtifactDownloader {
+final class ArtifactDownloader: Sendable {
 	private let artifactRetrievalCoordinator: ArtifactRetrievalCoordinating
 
 	init(artifactRetrievalCoordinator: ArtifactRetrievalCoordinating) {
@@ -25,14 +25,14 @@ final class ArtifactDownloader {
 				log.info("The artifact provider has made the artifact available at \(fileURL)")
 
 				log.info("[ArtifactDownloader] Adding downloaded artifact to container with identifier \(container.id)")
-				try container.addCopy(of: .rawDownload(fileURL))
+				try await container.addCopy(of: .rawDownload(fileURL))
 
 				log.info("[ArtifactDownloader] Notifying artifact provider with identifier \(metadata.id) to clean up temporary files")
 				try await artifactRetrievalCoordinator.cleanUp(artifactProviderID: metadata.id, localURL: fileURL)
 
 			case .file(let fileURL):
 				log.info("[ArtifactDownloader] Adding downloaded artifact to container with identifier \(container.id)")
-				try container.addCopy(of: .rawDownload(fileURL))
+				try await container.addCopy(of: .rawDownload(fileURL))
 		}
 	}
 }

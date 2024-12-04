@@ -29,8 +29,9 @@ extension Process {
 		// a single dispatch queue.
 		let outputQueue = DispatchQueue(label: "bash-output-queue")
 
-		var outputData = Data()
-		var errorData = Data()
+		// Concurrency is protected using the DispatchQueue.
+		nonisolated(unsafe) var outputData = Data()
+		nonisolated(unsafe) var errorData = Data()
 
 		let outputPipe = Pipe()
 		standardOutput = outputPipe

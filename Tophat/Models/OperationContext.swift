@@ -6,10 +6,12 @@
 //  Copyright © 2023 Shopify. All rights reserved.
 //
 
-struct OperationContext {
-	let quickLaunchEntry: QuickLaunchEntry?
+struct OperationContext: Sendable {
+	let quickLaunchEntryID: QuickLaunchEntry.ID?
+	let applicationDisplayName: String?
 
-	init(quickLaunchEntry: QuickLaunchEntry? = nil) {
-		self.quickLaunchEntry = quickLaunchEntry
+	init(quickLaunchEntryID: QuickLaunchEntry.ID? = nil, applicationDisplayName: String? = nil) {
+		self.quickLaunchEntryID = quickLaunchEntryID
+		self.applicationDisplayName = applicationDisplayName
 	}
 }

@@ -9,7 +9,7 @@
 import Foundation
 import TophatFoundation
 
-protocol ApplicationDownloading {
+protocol ApplicationDownloading: Sendable {
 	func download(from source: ArtifactSource, context: OperationContext?) async throws -> Application
 	func cleanUp() async throws
 }
@@ -20,8 +20,8 @@ extension ApplicationDownloading {
 	}
 }
 
-protocol DeviceSelecting {
-	var selectedDevices: [Device] { get }
+protocol DeviceSelecting: Sendable {
+	@MainActor var selectedDevices: [Device] { get }
 }
 
 /// A mechanism for producing installation tickets for selected devices based on the information
@@ -59,17 +59,17 @@ struct InstallationTicketMachine {
 	}
 
 	private func process(recipes: [InstallRecipe], continuation: TicketSequence.Continuation, context: OperationContext?) async throws {
-		let selectedDevices = deviceSelector.selectedDevices
+		let selectedDevices = await deviceSelector.selectedDevices
 
 		guard !selectedDevices.isEmpty else {
 			throw InstallationTicketMachineError.noSelectedDevices
 		}
 
-		var processedTicketCount = 0
+		let state = RecipeProcessingState()
 
-		var providedBuildTypes: [Platform: Set<DeviceType>] = recipes.reduce(into: [:]) { partialResult, recipe in
+		for recipe in recipes {
 			if let platform = recipe.platformHint, let destination = recipe.destinationHint {
-				partialResult[platform, default: []].insert(destination)
+				await state.track(providedDestinations: [destination], for: platform)
 			}
 		}
 
@@ -86,7 +86,7 @@ struct InstallationTicketMachine {
 							launchArguments: recipe.launchArguments
 						)
 
-						processedTicketCount += 1
+						await state.incrementProcessedTicketCount()
 						continuation.yield(ticket)
 					} else {
 						recipeLoop: for recipe in recipes where recipe.platformHint == nil {
@@ -96,7 +96,7 @@ struct InstallationTicketMachine {
 
 							let application = try await applicationDownloader.download(from: recipe.source, context: context)
 
-							providedBuildTypes[application.platform, default: []].formUnion(application.targets)
+							await state.track(providedDestinations: application.targets, for: application.platform)
 
 							guard
 								device.runtime.platform == application.platform,
@@ -111,7 +111,7 @@ struct InstallationTicketMachine {
 								launchArguments: recipe.launchArguments
 							)
 
-							processedTicketCount += 1
+							await state.incrementProcessedTicketCount()
 							continuation.yield(ticket)
 						}
 					}
@@ -121,8 +121,8 @@ struct InstallationTicketMachine {
 			try await group.waitForAll()
 		}
 
-		guard processedTicketCount > 0 else {
-			throw InstallationTicketMachineError.noCompatibleDevices(providedBuildTypes: providedBuildTypes)
+		guard await state.processedTicketCount > 0 else {
+			throw InstallationTicketMachineError.noCompatibleDevices(providedDestinations: await state.providedDestinations)
 		}
 	}
 
@@ -133,7 +133,20 @@ struct InstallationTicketMachine {
 }
 
 extension InstallationTicketMachine {
-	struct Ticket {
+	private actor RecipeProcessingState {
+		private(set) var providedDestinations: [Platform: Set<DeviceType>] = [:]
+		private(set) var processedTicketCount: Int = 0
+
+		func incrementProcessedTicketCount() {
+			processedTicketCount += 1
+		}
+
+		func track(providedDestinations destinations: Set<DeviceType>, for platform: Platform) {
+			providedDestinations[platform, default: []].formUnion(destinations)
+		}
+	}
+
+	struct Ticket: Sendable {
 		let device: Device
 		let artifactLocation: ArtifactLocation
 		let launchArguments: [String]
@@ -141,7 +154,7 @@ extension InstallationTicketMachine {
 }
 
 enum InstallationTicketMachineError: Error {
-	case noCompatibleDevices(providedBuildTypes: [Platform: Set<DeviceType>])
+	case noCompatibleDevices(providedDestinations: [Platform: Set<DeviceType>])
 	case noSelectedDevices
 }
 

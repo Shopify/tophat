@@ -9,7 +9,7 @@
 import AppKit
 import SwiftUI
 
-final class OnboardingWindow<Content: View>: NSPanel, CustomWindowPresentation {
+@MainActor final class OnboardingWindow<Content: View>: NSPanel, CustomWindowPresentation {
 	private let rootView: () -> Content
 
 	private lazy var hostingView: NSHostingView<some View> = {

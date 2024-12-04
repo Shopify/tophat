@@ -31,7 +31,7 @@ struct StatusPopover: View {
 							.font(.body)
 							.foregroundColor(.primary)
 
-						Text(String(describing: status))
+						Text(String(describing: status.state))
 							.font(.caption)
 							.foregroundColor(.primary)
 							.opacity(0.7)
@@ -43,9 +43,9 @@ struct StatusPopover: View {
 	}
 }
 
-extension TaskStatus: CustomStringConvertible {
+extension TaskState: CustomStringConvertible {
 	var description: String {
-		switch state {
+		switch self {
 			case .preparing:
 				return "Preparing"
 			case .waiting:

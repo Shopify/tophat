@@ -27,13 +27,6 @@ struct PrepareDeviceAction {
 	}
 }
 
-private struct PrepareDeviceKey: EnvironmentKey {
-	static var defaultValue: PrepareDeviceAction?
-}
-
 extension EnvironmentValues {
-	var prepareDevice: PrepareDeviceAction? {
-		get { self[PrepareDeviceKey.self] }
-		set { self[PrepareDeviceKey.self] = newValue }
-	}
+	@Entry var prepareDevice: PrepareDeviceAction?
 }
