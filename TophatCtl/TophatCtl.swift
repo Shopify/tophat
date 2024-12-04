@@ -9,7 +9,7 @@
 import ArgumentParser
 
 @main
-struct TophatCtl: ParsableCommand {
+struct TophatCtl: AsyncParsableCommand {
 	static var configuration = CommandConfiguration(
 		commandName: "tophatctl",
 		abstract: "A utility for interacting with Tophat from command line applications.",

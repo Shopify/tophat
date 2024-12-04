@@ -1,8 +1,9 @@
 //
 //  UserSpecifiedRecipeConfiguration.swift
-//  TophatUtilities
+//  TophatControlServices
 //
-//  Created by Lukas Romsicki on 2024-11-21.
+//  Created by Lukas Romsicki on 2024-12-02.
+//  Copyright © 2024 Shopify. All rights reserved.
 //
 
 import TophatFoundation

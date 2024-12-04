@@ -9,11 +9,11 @@
 import Foundation
 import ArgumentParser
 import TophatFoundation
-import TophatUtilities
+import TophatControlServices
 import AppKit
 
 extension Apps {
-	struct Remove: ParsableCommand {
+	struct Remove: AsyncParsableCommand {
 		static var configuration = CommandConfiguration(
 			abstract: "Removes an application from Quick Launch."
 		)
@@ -26,8 +26,8 @@ extension Apps {
 				print("Warning: Tophat must be running for this command to succeed, but it is not running.")
 			}
 
-			let notification = TophatRemoveQuickLaunchEntryNotification(payload: .init(id: id))
-			TophatInterProcessNotifier().send(notification: notification)
+			let request = RemoveQuickLaunchEntryRequest(quickLaunchEntryID: id)
+			try TophatRemoteControlService().send(request: request)
 		}
 	}
 }

@@ -9,11 +9,11 @@
 import Foundation
 import ArgumentParser
 import TophatFoundation
-import TophatUtilities
+import TophatControlServices
 import AppKit
 
 extension Apps {
-	struct Add: ParsableCommand {
+	struct Add: AsyncParsableCommand {
 		static var configuration = CommandConfiguration(
 			abstract: "Adds a new application to Quick Launch.",
 			discussion: "If an existing item with the same identifier already exists, the item will be updated with new information."
@@ -22,7 +22,7 @@ extension Apps {
 		@Argument(help: "The path to the configuration file for the app.")
 		var path: URL
 
-		func run() throws {
+		func run() async throws {
 			if !NSRunningApplication.isTophatRunning {
 				print("Warning: Tophat must be running for this command to succeed, but it is not running.")
 			}
@@ -30,12 +30,8 @@ extension Apps {
 			let data = try Data(contentsOf: path)
 			let configuration = try JSONDecoder().decode(UserSpecifiedQuickLaunchEntryConfiguration.self, from: data)
 
-			let payload = TophatAddQuickLaunchEntryNotification.Payload(
-				configuration: configuration
-			)
-
-			let notification = TophatAddQuickLaunchEntryNotification(payload: payload)
-			TophatInterProcessNotifier().send(notification: notification)
+			let request = AddQuickLaunchEntryRequest(configuration: configuration)
+			try TophatRemoteControlService().send(request: request)
 		}
 	}
 }

@@ -13,10 +13,10 @@
 		8005282F2CB718C200226174 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8005282E2CB718C200226174 /* TophatKit */; };
 		800528312CB718C700226174 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 800528302CB718C700226174 /* TophatKit */; };
 		8006E7F02943D3090089805E /* VisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8006E7EF2943D3090089805E /* VisualEffects */; };
+		802635052CFE68720020D841 /* TophatControlServices in Frameworks */ = {isa = PBXBuildFile; productRef = 802635042CFE68720020D841 /* TophatControlServices */; };
+		802635072CFE6B930020D841 /* TophatControlServices in Frameworks */ = {isa = PBXBuildFile; productRef = 802635062CFE6B930020D841 /* TophatControlServices */; };
 		80346F042BEBD527002F54BC /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 80346F032BEBD527002F54BC /* AsyncAlgorithms */; };
 		803B874B290055C70062F070 /* AndroidDeviceKit in Frameworks */ = {isa = PBXBuildFile; productRef = 803B874A290055C70062F070 /* AndroidDeviceKit */; };
-		805543CC2CB715EB004E1D18 /* TophatUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 805543CB2CB715EB004E1D18 /* TophatUtilities */; };
-		805543CE2CB715F1004E1D18 /* TophatUtilities in Frameworks */ = {isa = PBXBuildFile; productRef = 805543CD2CB715F1004E1D18 /* TophatUtilities */; };
 		807D7B0F29835762007942B4 /* TophatFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 807D7B0E29835762007942B4 /* TophatFoundation */; };
 		807D7B1629835795007942B4 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 807D7B1529835795007942B4 /* ArgumentParser */; };
 		807D7B1A298357C6007942B4 /* tophatctl in Copy tophatctl */ = {isa = PBXBuildFile; fileRef = 807D7B0729835756007942B4 /* tophatctl */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -189,10 +189,10 @@
 			files = (
 				80F74E252909E8EA0040F026 /* AppleDeviceKit in Frameworks */,
 				B6AA44CF296DF8EF0017321C /* ZIPFoundation in Frameworks */,
+				802635052CFE68720020D841 /* TophatControlServices in Frameworks */,
 				8006E7F02943D3090089805E /* VisualEffects in Frameworks */,
 				7F4532AD251A6C4700F2CFC8 /* Logging in Frameworks */,
 				8090E268296775BE003106B9 /* Collections in Frameworks */,
-				805543CC2CB715EB004E1D18 /* TophatUtilities in Frameworks */,
 				80C18345290232D1008D3B80 /* TophatFoundation in Frameworks */,
 				80346F042BEBD527002F54BC /* AsyncAlgorithms in Frameworks */,
 				80DC0FD82C82225600E5C9EE /* Sparkle in Frameworks */,
@@ -217,7 +217,7 @@
 			files = (
 				807D7B1629835795007942B4 /* ArgumentParser in Frameworks */,
 				807D7B0F29835762007942B4 /* TophatFoundation in Frameworks */,
-				805543CE2CB715F1004E1D18 /* TophatUtilities in Frameworks */,
+				802635072CFE6B930020D841 /* TophatControlServices in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,8 +305,8 @@
 				B6AA44CE296DF8EF0017321C /* ZIPFoundation */,
 				80346F032BEBD527002F54BC /* AsyncAlgorithms */,
 				80DC0FD72C82225600E5C9EE /* Sparkle */,
-				805543CB2CB715EB004E1D18 /* TophatUtilities */,
 				8005282E2CB718C200226174 /* TophatKit */,
+				802635042CFE68720020D841 /* TophatControlServices */,
 			);
 			productName = Tophat;
 			productReference = 7F35024F24A5060500EE76EA /* Tophat.app */;
@@ -352,7 +352,7 @@
 			packageProductDependencies = (
 				807D7B0E29835762007942B4 /* TophatFoundation */,
 				807D7B1529835795007942B4 /* ArgumentParser */,
-				805543CD2CB715F1004E1D18 /* TophatUtilities */,
+				802635062CFE6B930020D841 /* TophatControlServices */,
 			);
 			productName = tophatctl;
 			productReference = 807D7B0729835756007942B4 /* tophatctl */;
@@ -1141,6 +1141,14 @@
 			package = 8006E7EE2943D3090089805E /* XCRemoteSwiftPackageReference "VisualEffects" */;
 			productName = VisualEffects;
 		};
+		802635042CFE68720020D841 /* TophatControlServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TophatControlServices;
+		};
+		802635062CFE6B930020D841 /* TophatControlServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TophatControlServices;
+		};
 		80346F032BEBD527002F54BC /* AsyncAlgorithms */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 80346F022BEBD527002F54BC /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
@@ -1149,14 +1157,6 @@
 		803B874A290055C70062F070 /* AndroidDeviceKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AndroidDeviceKit;
-		};
-		805543CB2CB715EB004E1D18 /* TophatUtilities */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TophatUtilities;
-		};
-		805543CD2CB715F1004E1D18 /* TophatUtilities */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TophatUtilities;
 		};
 		807D7B0E29835762007942B4 /* TophatFoundation */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -8,7 +8,7 @@
 
 import ArgumentParser
 
-struct Apps: ParsableCommand {
+struct Apps: AsyncParsableCommand {
 	static var configuration = CommandConfiguration(
 		abstract: "Adds, removes, or modifies Quick Launch entries.",
 		subcommands: [
