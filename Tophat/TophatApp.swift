@@ -80,7 +80,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	let extensionHost = ExtensionHost()
 	private let server = TophatServer()
 	private let urlHandler = URLReader()
-	private let remoteControlReceiver = RemoteControlReceiver()
+	private let remoteControlReceiver: RemoteControlReceiver
 
 	let deviceManager: DeviceManager
 	let utilityPathPreferences: UtilityPathPreferences
@@ -103,6 +103,8 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	private var cancellables = Set<AnyCancellable>()
 
 	override init() {
+		self.remoteControlReceiver = RemoteControlReceiver(extensionHost: extensionHost)
+
 		self.deviceManager = DeviceManager(sources: [
 			AppleDevices.self,
 			AndroidDevices.self

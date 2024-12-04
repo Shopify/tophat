@@ -9,6 +9,7 @@
 import Foundation
 import TophatFoundation
 import TophatControlServices
+@_spi(TophatKitInternal) import TophatKit
 
 protocol RemoteControlReceiverDelegate: AnyObject, Sendable {
 	func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry)
@@ -19,6 +20,11 @@ protocol RemoteControlReceiverDelegate: AnyObject, Sendable {
 
 struct RemoteControlReceiver {
 	private let service = TophatRemoteControlService()
+	private let extensionHost: ExtensionHost
+
+	init(extensionHost: ExtensionHost) {
+		self.extensionHost = extensionHost
+	}
 
 	func start(delegate: RemoteControlReceiverDelegate) {
 		Task {
@@ -88,6 +94,30 @@ struct RemoteControlReceiver {
 				delegate.remoteControlReceiver(
 					didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier: requestValue.quickLaunchEntryID
 				)
+			}
+		}
+
+		Task {
+			for await request in service.requests(for: ListProvidersRequest.self) {
+				let specifications = await extensionHost.availableExtensions.map(\.specification)
+				var providers: [ListProvidersRequest.Reply.Provider] = []
+
+				for specification in specifications {
+					providers.append(
+						contentsOf: specification.artifactProviders.map { artifactProvider in
+							.init(
+								id: artifactProvider.id,
+								title: artifactProvider.title.key,
+								extensionTitle: specification.title.key,
+								parameters: artifactProvider.parameters.map { parameter in
+									.init(key: parameter.key, title: parameter.title.key)
+								}
+							)
+						}
+					)
+				}
+
+				request.reply(.init(providers: providers))
 			}
 		}
 	}

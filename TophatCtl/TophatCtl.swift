@@ -15,7 +15,8 @@ struct TophatCtl: AsyncParsableCommand {
 		abstract: "A utility for interacting with Tophat from command line applications.",
 		subcommands: [
 			Install.self,
-			Apps.self
+			Apps.self,
+			List.self
 		]
 	)
 }
