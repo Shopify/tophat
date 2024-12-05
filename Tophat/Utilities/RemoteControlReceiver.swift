@@ -7,18 +7,28 @@
 //
 
 import Foundation
+import SwiftData
 import TophatFoundation
 import TophatControlServices
+@_spi(TophatKitInternal) import TophatKit
 
 protocol RemoteControlReceiverDelegate: AnyObject, Sendable {
 	func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry)
 	func remoteControlReceiver(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID)
 	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async
+	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async
 	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async
 }
 
 struct RemoteControlReceiver {
 	private let service = TophatRemoteControlService()
+	private let extensionHost: ExtensionHost
+	private let modelContainer: ModelContainer
+
+	init(extensionHost: ExtensionHost, modelContainer: ModelContainer) {
+		self.extensionHost = extensionHost
+		self.modelContainer = modelContainer
+	}
 
 	func start(delegate: RemoteControlReceiverDelegate) {
 		Task {
@@ -88,6 +98,58 @@ struct RemoteControlReceiver {
 				delegate.remoteControlReceiver(
 					didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier: requestValue.quickLaunchEntryID
 				)
+			}
+		}
+
+		Task {
+			for await request in service.requests(for: ListProvidersRequest.self) {
+				let specifications = await extensionHost.availableExtensions.map(\.specification)
+				var providers: [ListProvidersRequest.Reply.Provider] = []
+
+				for specification in specifications {
+					providers.append(
+						contentsOf: specification.artifactProviders.map { artifactProvider in
+							.init(
+								id: artifactProvider.id,
+								title: artifactProvider.title.key,
+								extensionTitle: specification.title.key,
+								parameters: artifactProvider.parameters.map { parameter in
+									.init(key: parameter.key, title: parameter.title.key)
+								}
+							)
+						}
+					)
+				}
+
+				request.reply(.init(providers: providers))
+			}
+		}
+
+		Task {
+			for await request in service.requests(for: ListAppsRequset.self) {
+				let fetchDescriptor = FetchDescriptor<QuickLaunchEntry>()
+				let context = ModelContext(modelContainer)
+				let entries = (try? context.fetch(fetchDescriptor)) ?? []
+
+				request.reply(
+					.init(
+						apps: entries.map { entry in
+							.init(
+								id: entry.id,
+								name: entry.name,
+								platforms: entry.platforms,
+								recipeCount: entry.recipes.count
+							)
+						}
+					)
+				)
+			}
+		}
+
+		Task {
+			for await request in service.requests(for: InstallFromQuickLaunchRequest.self) {
+				await delegate.remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier: request.value.quickLaunchEntryID)
+				request.reply(.init())
 			}
 		}
 	}

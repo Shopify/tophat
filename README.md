@@ -62,7 +62,7 @@ Downloads with Tophat are powered by _artifact providers_. Some artifact provide
 
 The format by which this information is specified varies slightly depending on whether you use URLs, Quick Launch, or `tophatctl`, but each API requires roughly the same information.
 
-You can view a list of all artifact provider IDs using `tophatctl providers`.
+You can view a list of all artifact provider IDs using `tophatctl list providers`.
 
 Each request can install multiple artifacts. Within each request, these are called _recipes_, and are particularly useful when you want to have one link that supports both simulators and devices in the same link, where different builds are required for each.
 

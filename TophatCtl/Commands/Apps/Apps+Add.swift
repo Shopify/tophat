@@ -12,20 +12,38 @@ import TophatFoundation
 import TophatControlServices
 import AppKit
 
+private let discussion = """
+If an existing item with the same identifier already exists, the item will be updated with new information.
+
+Use the following JSON format when specifying a configuration file:
+
+{
+  "id": "example",
+  "name": "Example",
+  "recipes": [
+    {
+      "artifactProviderID": "example",
+      "artifactProviderParameters": {},
+      "launchArguments": [],
+      "platformHint": "ios",
+      "destinationHint": "simulator"
+    }
+  ]
+}
+"""
+
 extension Apps {
 	struct Add: AsyncParsableCommand {
 		static let configuration = CommandConfiguration(
 			abstract: "Adds a new application to Quick Launch.",
-			discussion: "If an existing item with the same identifier already exists, the item will be updated with new information."
+			discussion: discussion
 		)
 
 		@Argument(help: "The path to the configuration file for the app.")
 		var path: URL
 
 		func run() async throws {
-			if !NSRunningApplication.isTophatRunning {
-				print("Warning: Tophat must be running for this command to succeed, but it is not running.")
-			}
+			checkIfHostAppIsRunning()
 
 			let data = try Data(contentsOf: path)
 			let configuration = try JSONDecoder().decode(UserSpecifiedQuickLaunchEntryConfiguration.self, from: data)

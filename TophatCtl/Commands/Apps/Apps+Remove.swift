@@ -22,9 +22,7 @@ extension Apps {
 		var id: String
 
 		func run() throws {
-			if !NSRunningApplication.isTophatRunning {
-				print("Warning: Tophat must be running for this command to succeed, but it is not running.")
-			}
+			checkIfHostAppIsRunning()
 
 			let request = RemoveQuickLaunchEntryRequest(quickLaunchEntryID: id)
 			try TophatRemoteControlService().send(request: request)

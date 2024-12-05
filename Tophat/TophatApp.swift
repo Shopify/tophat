@@ -80,7 +80,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	let extensionHost = ExtensionHost()
 	private let server = TophatServer()
 	private let urlHandler = URLReader()
-	private let remoteControlReceiver = RemoteControlReceiver()
+	private let remoteControlReceiver: RemoteControlReceiver
 
 	let deviceManager: DeviceManager
 	let utilityPathPreferences: UtilityPathPreferences
@@ -103,6 +103,11 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	private var cancellables = Set<AnyCancellable>()
 
 	override init() {
+		self.remoteControlReceiver = RemoteControlReceiver(
+			extensionHost: extensionHost,
+			modelContainer: modelContainer
+		)
+
 		self.deviceManager = DeviceManager(sources: [
 			AppleDevices.self,
 			AndroidDevices.self
@@ -330,6 +335,18 @@ extension AppDelegate: RemoteControlReceiverDelegate {
 
 	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async {
 		await launchApp(recipes: recipes)
+	}
+
+	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async {
+		let context = ModelContext(modelContainer)
+
+		let fetchDescriptor = FetchDescriptor<QuickLaunchEntry>(
+			predicate: #Predicate { $0.id == quickLaunchEntryIdentifier }
+		)
+
+		if let entry = try? context.fetch(fetchDescriptor).first {
+			await launchApp(quickLaunchEntry: entry)
+		}
 	}
 }
 
