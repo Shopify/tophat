@@ -59,6 +59,11 @@ struct MainMenu: View {
 					}
 					.buttonStyle(.menuItem(activatesApplication: true, blinks: true))
 				}
+
+				Divider()
+					.padding(.horizontal, Theme.Size.menuPaddingHorizontal)
+
+				EmptyCachesMenuItem()
 			}
 
 			Divider()
