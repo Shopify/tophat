@@ -12,21 +12,27 @@ extension ArtifactDownloaderError: LocalizedError {
 	var errorDescription: String? {
 		switch self {
 			case .failedToDownloadArtifact:
-				return "The artifact could not be downloaded"
+				"The artifact could not be downloaded"
+			case .untrustedHost:
+				"The download was aborted"
 		}
 	}
 
 	var failureReason: String? {
 		switch self {
 			case .failedToDownloadArtifact:
-				return "An unexpected error occurred while downloading the artifact."
+				"An unexpected error occurred while downloading the artifact."
+			case .untrustedHost:
+				"The host that the artifact is being downloaded from is untrusted."
 		}
 	}
 
 	var recoverySuggestion: String? {
 		switch self {
 			case .failedToDownloadArtifact:
-				return "Check your network connection and try again."
+				"Check your network connection and try again."
+			case .untrustedHost:
+				"Verify that you trust the origin of the artifact before retrying."
 		}
 	}
 }
