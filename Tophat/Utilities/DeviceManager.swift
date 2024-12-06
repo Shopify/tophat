@@ -12,17 +12,17 @@ import TophatFoundation
 /// The `DeviceManager` coordinates between different device providers. Device providers
 /// "plug-in" to the `DeviceManager` such that it is the sole entity responsible for retrieving
 /// and managing devices in a platform-agnostic manner.
-@MainActor final class DeviceManager: ObservableObject {
+@MainActor @Observable final class DeviceManager {
 	private let deviceProviders: [DeviceProvider.Type]
 
 	/// A collection of all devices from all sources.
-	@Published private(set) var devices: [Device] = []
+	private(set) var devices: [Device] = []
 
 	init(sources: [DeviceProvider.Type]) {
 		self.deviceProviders = sources
 	}
 
-	@Published private(set) var isLoading = false
+	private(set) var isLoading = false
 
 	/// Loads all available devices into `devices`.
 	func loadDevices() async {

@@ -35,7 +35,7 @@ struct SettingsView: View {
 
 			DevicesTab()
 				.tabItem {
-					Label("Devices", systemImage: "ipad.and.iphone")
+					Label("Devices and Simulators", systemImage: "ipad.and.iphone")
 				}
 				.tag(SettingsTab.devices)
 

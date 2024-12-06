@@ -20,6 +20,7 @@ struct DeviceItem: View {
 				VStack(alignment: .leading, spacing: 2) {
 					Text(device.name)
 						.foregroundColor(.primary)
+						.lineLimit(1)
 
 					Text(String(describing: device.runtime))
 						.font(.caption2)

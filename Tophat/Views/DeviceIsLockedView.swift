@@ -11,7 +11,7 @@ import TophatFoundation
 
 struct DeviceIsLockedView: View {
 	@EnvironmentObject private var taskStatusReporter: TaskStatusReporter
-	@EnvironmentObject private var deviceManager: DeviceManager
+	@Environment(DeviceManager.self) private var deviceManager
 
 	var body: some View {
 		VStack(alignment: .center, spacing: 16) {
