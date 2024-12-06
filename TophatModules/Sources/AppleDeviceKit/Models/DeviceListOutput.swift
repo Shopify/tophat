@@ -29,6 +29,7 @@ struct DeviceListOutput: Decodable {
 
 			struct HardwareProperties: Decodable {
 				let udid: String
+				let platform: String
 			}
 		}
 	}

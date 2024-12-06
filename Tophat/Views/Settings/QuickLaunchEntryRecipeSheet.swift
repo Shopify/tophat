@@ -40,7 +40,7 @@ struct QuickLaunchEntryRecipeSheet: View {
 
 				Section {
 					Picker("Platform", selection: $platform) {
-						ForEach([Platform.iOS, Platform.android], id: \.self) { platform in
+						ForEach(Platform.allCases.filter { $0 != .unknown }, id: \.self) { platform in
 							Text(String(describing: platform))
 								.tag(platform)
 						}

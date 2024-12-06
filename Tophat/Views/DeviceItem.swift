@@ -54,9 +54,26 @@ struct DeviceItem: View {
 						.scaledToFit()
 						.frame(maxWidth: 14)
 				} else {
-					Image(systemName: device.name.contains("iPad") ? "ipad" : "iphone")
+					Image(systemName: systemImageName)
 				}
 			}
+		}
+	}
+
+	private var systemImageName: String {
+		switch device.runtime.platform {
+			case .iOS where device.name.contains("iPad"):
+				"ipad"
+			case .iOS:
+				"iphone"
+			case .watchOS:
+				"applewatch"
+			case .tvOS:
+				"appletv"
+			case .visionOS:
+				"vision.pro"
+			default:
+				"questionmark"
 		}
 	}
 

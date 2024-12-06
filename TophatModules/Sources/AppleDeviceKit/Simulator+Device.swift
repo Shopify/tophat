@@ -88,6 +88,7 @@ private extension Runtime {
 				"iOS"
 				"watchOS"
 				"tvOS"
+				"visionOS"
 			}
 		} transform: { substring in
 			String(substring)
@@ -119,6 +120,8 @@ private extension Platform {
 				self = .watchOS
 			case "tvOS":
 				self = .tvOS
+			case "visionOS":
+				self = .visionOS
 			default:
 				self = .unknown
 		}

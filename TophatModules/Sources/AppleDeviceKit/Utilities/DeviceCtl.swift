@@ -68,6 +68,7 @@ private extension ConnectedDevice {
 		self.connectionState = deviceListDevice.connectionProperties.transportType == nil ? .unavailable : .connected
 
 		self.deviceIdentifier = deviceListDevice.hardwareProperties.udid
+		self.platformName = deviceListDevice.hardwareProperties.platform
 		self.deviceName = deviceListDevice.deviceProperties.name
 		self.productVersion = deviceListDevice.deviceProperties.osVersionNumber
 	}
