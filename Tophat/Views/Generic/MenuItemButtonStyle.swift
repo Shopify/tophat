@@ -16,8 +16,16 @@ struct MenuItemButtonStyle: PrimitiveButtonStyle {
 	var activatesApplication = false
 	var blinks = false
 
+	// The .disabled() view modifier is not being used because it causes performance issues
+	// in the interface. This workaround manually implements disabled behavior.
+	var isEnabled = false
+
 	func makeBody(configuration: Configuration) -> some View {
 		Button {
+			guard isEnabled else {
+				return
+			}
+
 			let trigger = configuration.trigger
 
 			Task { @MainActor in
@@ -35,7 +43,13 @@ struct MenuItemButtonStyle: PrimitiveButtonStyle {
 		} label: {
 			configuration.label
 		}
-		.buttonStyle(MenuItemButtonStyleInternal(animationTrigger: animationTrigger, blinkDuration: blinkDuration))
+		.buttonStyle(
+			MenuItemButtonStyleInternal(
+				animationTrigger: animationTrigger,
+				blinkDuration: blinkDuration,
+				isEnabled: isEnabled
+			)
+		)
 	}
 }
 
@@ -44,16 +58,18 @@ private struct MenuItemButtonStyleInternal: ButtonStyle {
 
 	var animationTrigger: Int
 	var blinkDuration: TimeInterval
+	var isEnabled: Bool
 
 	func makeBody(configuration: Configuration) -> some View {
 		configuration.label
+			.foregroundStyle(isEnabled ? .primary : .tertiary)
 			.padding(.vertical, Theme.Size.menuPaddingVertical)
 			.padding(.horizontal, Theme.Size.menuPaddingHorizontal)
 			.frame(maxWidth: .infinity, alignment: .leading)
 			.background {
 				RoundedRectangle(cornerRadius: 4)
 					.fill(.quaternary)
-					.phaseAnimator([hovering ? 1 : 0, 0, 1], trigger: animationTrigger) { view, phase  in
+					.phaseAnimator([isEnabled && hovering ? 1 : 0, 0, 1], trigger: animationTrigger) { view, phase  in
 						view.opacity(phase)
 					} animation: { _ in
 						Animation(BlinkAnimation(duration: blinkDuration / 3))
@@ -72,8 +88,8 @@ extension PrimitiveButtonStyle where Self == MenuItemButtonStyle {
 		menuItem(activatesApplication: false, blinks: false)
 	}
 
-	static func menuItem(activatesApplication: Bool = false, blinks: Bool = false) -> Self {
-		MenuItemButtonStyle(activatesApplication: activatesApplication, blinks: blinks)
+	static func menuItem(activatesApplication: Bool = false, blinks: Bool = false, disabled: Bool = false) -> Self {
+		MenuItemButtonStyle(activatesApplication: activatesApplication, blinks: blinks, isEnabled: !disabled)
 	}
 }
 

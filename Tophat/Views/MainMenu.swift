@@ -35,7 +35,10 @@ struct MainMenu: View {
 			Divider()
 				.padding(.horizontal, Theme.Size.menuPaddingHorizontal)
 
-			LaunchFromLocationMenuItem()
+			VStack(alignment: .leading, spacing: 0) {
+				DeselectAllDevicesMenuItem()
+				LaunchFromLocationMenuItem()
+			}
 
 			if showingAdvancedOptions {
 				Divider()
