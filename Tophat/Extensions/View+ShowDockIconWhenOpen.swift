@@ -19,7 +19,7 @@ private struct ShowDockIconWhenOpenViewModifier: ViewModifier {
 
 	func body(content: Content) -> some View {
 		content
-			.onChange(of: controlActiveState) { oldValue, newValue in
+			.onChange(of: controlActiveState, initial: true) { oldValue, newValue in
 				if newValue != .inactive, NSApp.activationPolicy() == .accessory {
 					NSApp.setActivationPolicy(.regular)
 				}

@@ -45,7 +45,7 @@ struct ArtifactRetrievalCoordinator {
 extension ArtifactRetrievalCoordinator: ArtifactRetrievalCoordinating {
 	func retrieve(metadata: ArtifactProviderMetadata) async throws -> URL {
 		guard let artifactProvidingExtension = await appExtensionIdentityResolver.identity(artifactProviderID: metadata.id) else {
-			throw ArtifactRetrievalCoordinatorError.artifactProviderNotFound
+			throw ArtifactRetrievalCoordinatorError.artifactProviderNotFound(id: metadata.id)
 		}
 
 		return try await artifactProvidingExtension.withXPCSession { session in
@@ -61,7 +61,7 @@ extension ArtifactRetrievalCoordinator: ArtifactRetrievalCoordinating {
 
 	func cleanUp(artifactProviderID: String, localURL: URL) async throws {
 		guard let artifactProvidingExtension = await appExtensionIdentityResolver.identity(artifactProviderID: artifactProviderID) else {
-			throw ArtifactRetrievalCoordinatorError.artifactProviderNotFound
+			throw ArtifactRetrievalCoordinatorError.artifactProviderNotFound(id: artifactProviderID)
 		}
 
 		try await artifactProvidingExtension.withXPCSession { session in
@@ -72,5 +72,5 @@ extension ArtifactRetrievalCoordinator: ArtifactRetrievalCoordinating {
 }
 
 enum ArtifactRetrievalCoordinatorError: Error {
-	case artifactProviderNotFound
+	case artifactProviderNotFound(id: String)
 }

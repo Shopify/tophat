@@ -31,10 +31,10 @@ struct AboutView: View {
 					}
 				}
 
-				Text("Made with ❤️ by Lukas Romsicki, Jared Hendry, Harley Cooper, and the Mobile Foundations team at Shopify.")
+				Text("Made with ❤️ by Lukas Romsicki, Jared Hendry, Caio Lima, Harley Cooper, and the Mobile Foundations team at Shopify.")
 					.font(.subheadline)
 					.foregroundColor(.secondary)
-					.lineLimit(2, reservesSpace: true)
+					.lineLimit(3, reservesSpace: true)
 
 				VStack(alignment: .leading, spacing: 4) {
 					Button("Why is it called Tophat?") {
