@@ -50,7 +50,8 @@ final class ArtifactDownloader: NSObject {
 			let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
 			if statusCode != 200 {
 				let body = (try? String(contentsOf: localURL)) ?? "<no response>"
-				throw ArtifactDownloaderError.failedToDownloadArtifact("Received status code \(statusCode). Response: \(body)")
+				log.error("Error downloading artifact: Received status code \(statusCode). Response: \(body)")
+				throw ArtifactDownloaderError.failedToDownloadArtifact("Received status code \(statusCode). Check the logs for details.")
 			}
 			
 			try FileManager.default.moveItem(at: localURL, to: destinationURL)
