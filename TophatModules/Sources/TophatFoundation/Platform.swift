@@ -11,6 +11,7 @@ public enum Platform: String, Codable, CaseIterable, Sendable {
 	case iOS = "ios"
 	case watchOS = "watchos"
 	case tvOS = "tvos"
+	case visionOS = "visionos"
 	case android
 	case unknown
 }
@@ -28,6 +29,8 @@ extension Platform: CustomStringConvertible {
 				return "tvOS"
 			case .android:
 				return "Android"
+			case .visionOS:
+				return "visionOS"
 			case .unknown:
 				return "Unknown"
 		}

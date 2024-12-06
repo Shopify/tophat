@@ -60,26 +60,20 @@ struct DeviceList: View {
 		}
 	}
 
-	private var supportedDevices: [Device] {
-		deviceManager.devices.filter { device in
-			[.iOS, .android].contains(device.runtime.platform)
-		}
-	}
-
 	private var devices: [Device] {
-		supportedDevices.filter { device in
+		deviceManager.devices.filter { device in
 			device.type == .device
 		}
 	}
 
 	private var pinnedSimualators: [Device] {
-		supportedDevices.filter { device in
+		deviceManager.devices.filter { device in
 			device.type == .simulator && pinnedDeviceIdentifiers.contains(device.id)
 		}
 	}
 
 	private var otherSimulators: [Device] {
-		supportedDevices.filter { device in
+		deviceManager.devices.filter { device in
 			device.type == .simulator && !pinnedDeviceIdentifiers.contains(device.id)
 		}
 	}
