@@ -10,7 +10,7 @@ import SwiftUI
 import TophatFoundation
 
 struct DevicesTab: View {
-	@EnvironmentObject private var deviceManager: DeviceManager
+	@Environment(DeviceManager.self) private var deviceManager
 	@CodableAppStorage("PinnedDevices") private var pinnedDeviceIdentifiers: [String] = []
 
 	var body: some View {
@@ -29,8 +29,8 @@ struct DevicesTab: View {
 					}
 				}
 			} header: {
-				Text("Pinned Devices")
-				Text("By default, these devices are shown in Other Devices. You can choose which devices should always be displayed at the top together with physical devices.")
+				Text("Pinned Simulators")
+				Text("By default, simulators are displayed in a collapsed section. You can choose which simulators should always be visible.")
 			}
 		}
 		.formStyle(.grouped)
@@ -50,7 +50,7 @@ struct DevicesTab: View {
 
 	private var pinnableDevices: [Device] {
 		deviceManager.devices.filter { device in
-			device.connection == .internal && [.iOS, .android].contains(device.runtime.platform)
+			device.type == .simulator
 		}
 	}
 }

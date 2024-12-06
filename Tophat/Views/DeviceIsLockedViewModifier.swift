@@ -10,14 +10,14 @@ import SwiftUI
 
 struct DeviceIsLockedViewModifier: ViewModifier {
 	@EnvironmentObject private var taskStatusReporter: TaskStatusReporter
-	@EnvironmentObject private var deviceManager: DeviceManager
+	@Environment(DeviceManager.self) private var deviceManager
 
 	func body(content: Content) -> some View {
 		content
 			.floatingPanel(isPresented: .constant(isWaitingForDeviceUnlock), isPersistent: true) {
 				DeviceIsLockedView()
 					.environmentObject(taskStatusReporter)
-					.environmentObject(deviceManager)
+					.environment(deviceManager)
 			}
 	}
 
