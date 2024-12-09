@@ -23,7 +23,7 @@ struct BranchArtifactProvider: ArtifactProvider {
 	@Parameter(key: "branch", title: "Branch")
 	var branch: String
 
-	@Parameter(key: "workflow", title: "Workflow Name")
+	@Parameter(key: "workflow", title: "Workflow")
 	var workflow: String
 
 	@Parameter(key: "artifact_name", title: "Artifact Name")
