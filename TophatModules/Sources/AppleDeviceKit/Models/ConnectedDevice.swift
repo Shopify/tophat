@@ -12,6 +12,7 @@ struct ConnectedDevice: Sendable {
 	let deviceName: String
 	let productVersion: String
 	let connectionState: ConnectionState
+	let platformName: String
 
 	enum Interface: Sendable {
 		case usb

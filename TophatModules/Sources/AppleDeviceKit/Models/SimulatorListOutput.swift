@@ -1,12 +1,12 @@
 //
-//  SimulatorList.swift
+//  SimulatorListOutput.swift
 //  AppleDeviceKit
 //
 //  Created by Lukas Romsicki on 2022-10-20.
 //  Copyright © 2022 Shopify. All rights reserved.
 //
 
-struct SimulatorList: Decodable {
+struct SimulatorListOutput: Decodable {
 	let devices: [String: [Device]]
 
 	struct Device: Decodable {

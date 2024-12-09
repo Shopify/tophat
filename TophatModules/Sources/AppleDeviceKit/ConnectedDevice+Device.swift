@@ -19,7 +19,15 @@ extension ConnectedDevice: Device {
 	}
 
 	var runtime: Runtime {
-		.init(platform: .iOS, version: .exact(productVersion))
+		let platform: Platform = switch platformName {
+			case "iOS": .iOS
+			case "watchOS": .watchOS
+			case "tvOS": .tvOS
+			case "visionOS": .visionOS
+			default: .unknown
+		}
+
+		return Runtime(platform: platform, version: .exact(productVersion))
 	}
 
 	var type: DeviceType {

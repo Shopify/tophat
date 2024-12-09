@@ -19,7 +19,7 @@ final class SimCtl {
 			throw SimCtlError()
 		}
 
-		let simulatorList = try JSONDecoder().decode(SimulatorList.self, from: data)
+		let simulatorList = try JSONDecoder().decode(SimulatorListOutput.self, from: data)
 
 		return simulatorList.devices.flatMap { runtimeIdentifier, devices in
 			devices.map { Simulator(from: $0, runtimeIdentifier: runtimeIdentifier) }
@@ -44,7 +44,7 @@ final class SimCtl {
 }
 
 private extension Simulator {
-	init(from simulatorListDevice: SimulatorList.Device, runtimeIdentifier: String) {
+	init(from simulatorListDevice: SimulatorListOutput.Device, runtimeIdentifier: String) {
 		self.udid = simulatorListDevice.udid
 		self.runtimeIdentifier = runtimeIdentifier
 		self.name = simulatorListDevice.name

@@ -52,12 +52,11 @@ struct AppleApplication: Application {
 
 		var set: Set<DeviceType> = []
 
-		// Only iOS supported, for now.
 		platformNames.forEach { platformName in
 			switch platformName {
-				case "iPhoneOS":
+				case "iPhoneOS", "WatchOS", "AppleTVOS", "XROS":
 					set.insert(.device)
-				case "iPhoneSimulator":
+				case "iPhoneSimulator", "WatchSimulator", "AppleTVSimulator", "XRSimulator":
 					set.insert(.simulator)
 				default:
 					break
@@ -68,8 +67,26 @@ struct AppleApplication: Application {
 	}
 
 	var platform: Platform {
-		// Only iOS supported, for now.
-		.iOS
+		guard let platformNames = bundle?.infoDictionary?["CFBundleSupportedPlatforms"] as? [String] else {
+			return .unknown
+		}
+
+		for platformName in platformNames {
+			switch platformName {
+				case "iPhoneOS", "iPhoneSimulator":
+					return .iOS
+				case "WatchOS", "WatchSimulator":
+					return .watchOS
+				case "AppleTVOS", "AppleTVSimulator":
+					return .tvOS
+				case "XROS", "XRSimulator":
+					return .visionOS
+				default:
+					return .unknown
+			}
+		}
+
+		return .unknown
 	}
 
 	var bundleIdentifier: String {
