@@ -1,0 +1,9 @@
+//
+//  Project.xcconfig
+//  Tophat
+//
+//  Created by Lukas Romsicki on 2024-12-09.
+//  Copyright © 2024 Shopify. All rights reserved.
+//
+
+MACOSX_DEPLOYMENT_TARGET = 14.0
