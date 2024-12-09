@@ -179,6 +179,7 @@
 		8001A5132CFE293D00325E7B /* Tophat */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (8001A5962CFE293D00325E7B /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 8001A5972CFE293D00325E7B /* PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Tophat; sourceTree = "<group>"; };
 		8001A59C2CFE294100325E7B /* TophatTests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (8001A5A02CFE294100325E7B /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TophatTests; sourceTree = "<group>"; };
 		8001A5AD2CFE294400325E7B /* TophatCtl */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TophatCtl; sourceTree = "<group>"; };
+		804B75432D07635700986C9E /* Configurations */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Configurations; sourceTree = "<group>"; };
 		80D648482CB0E1C200135729 /* TophatExtensions */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (80D6485F2CB0E22200135729 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 808C6E442CF8D8260030359E /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = TophatExtensions; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -244,6 +245,7 @@
 		7F35024624A5060500EE76EA = {
 			isa = PBXGroup;
 			children = (
+				804B75432D07635700986C9E /* Configurations */,
 				8001A5132CFE293D00325E7B /* Tophat */,
 				8001A59C2CFE294100325E7B /* TophatTests */,
 				8001A5AD2CFE294400325E7B /* TophatCtl */,
@@ -579,6 +581,8 @@
 /* Begin XCBuildConfiguration section */
 		7F35027624A5060700EE76EA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = Project.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -630,7 +634,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -644,6 +647,8 @@
 		};
 		7F35027724A5060700EE76EA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = Project.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -689,7 +694,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -702,6 +706,8 @@
 		};
 		7F35027924A5060700EE76EA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = Tophat.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -709,7 +715,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = A7XGC83MZE;
@@ -721,7 +726,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.11.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -729,6 +733,8 @@
 		};
 		7F35027A24A5060700EE76EA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = Tophat.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -736,7 +742,6 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = "";
@@ -749,7 +754,6 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.11.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -759,6 +763,8 @@
 		};
 		7F35027C24A5060700EE76EA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = TophatTests.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
@@ -780,6 +786,8 @@
 		};
 		7F35027D24A5060700EE76EA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = TophatTests.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
@@ -801,6 +809,8 @@
 		};
 		807D7B0C29835756007942B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = TophatCtl.xcconfig;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = TophatCtl/TophatCtl.entitlements;
@@ -817,6 +827,8 @@
 		};
 		807D7B0D29835756007942B4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = TophatCtl.xcconfig;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = TophatCtl/TophatCtl.entitlements;
@@ -835,11 +847,12 @@
 		};
 		808C6E3B2CF8D81F0030359E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = TophatBitriseExtension.xcconfig;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatBitriseExtension/TophatBitriseExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A7XGC83MZE;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -854,8 +867,6 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatBitriseExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -866,12 +877,13 @@
 		};
 		808C6E3C2CF8D81F0030359E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = TophatBitriseExtension.xcconfig;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatBitriseExtension/TophatBitriseExtension.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = A7XGC83MZE;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -887,8 +899,6 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatBitriseExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -899,11 +909,12 @@
 		};
 		80D648582CB0E20C00135729 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = TophatCoreExtension.xcconfig;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatCoreExtension/TophatCoreExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A7XGC83MZE;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -918,8 +929,6 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatCoreExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -930,13 +939,14 @@
 		};
 		80D648592CB0E20C00135729 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 804B75432D07635700986C9E /* Configurations */;
+			baseConfigurationReferenceRelativePath = TophatCoreExtension.xcconfig;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatCoreExtension/TophatCoreExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = A7XGC83MZE;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -952,8 +962,6 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatCoreExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

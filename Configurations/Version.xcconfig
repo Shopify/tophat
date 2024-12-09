@@ -1,0 +1,10 @@
+//
+//  Version.xcconfig
+//  Tophat
+//
+//  Created by Lukas Romsicki on 2024-12-09.
+//  Copyright © 2024 Shopify. All rights reserved.
+//
+
+MARKETING_VERSION = 1.11.1
+CURRENT_PROJECT_VERSION = 1
