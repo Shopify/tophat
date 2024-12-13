@@ -309,8 +309,10 @@ extension AppDelegate: RemoteControlReceiverDelegate {
 				quickLaunchEntry.order = lastOrder + 1
 
 				context.insert(quickLaunchEntry)
-				try context.save()
 			}
+
+			try context.save()
+
 		} catch {
 			log.error("Failed to update Quick Launch entry!")
 		}
