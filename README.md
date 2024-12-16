@@ -50,12 +50,12 @@ Customize Tophat to your needs with the Settings window. Adjust preferences, add
 
 ## Integrating Tophat
 
-> :bulb: As of Tophat 2, key Tophat APIs have changed and the legacy APIs have been removed. If you still need to support your existing integrations, use Tophat 1 and refer to the [legacy integration guide](#integrating-tophat-legacy) below.
+> :bulb: The following APIs have been introduced in Tophat 2. Legacy APIs have been removed.
 
-Downloads with Tophat are powered by _artifact providers_. Some artifact providers are built-in to Tophat, while some can be installed using Tophat Extensions (see [_Extensions_](#extensions)). When triggering an install with Tophat, you will need to specify the following information:
+Downloads with Tophat are powered by **_artifact providers_**. Some providers are built-in to Tophat, while some can be installed using Tophat Extensions (see [_Extensions_](#extensions)). When triggering an install with Tophat, you will need to specify the following information:
 
-- The artifact providerʼs ID.
-- The artifact providerʼs parameters.
+- The providerʼs ID.
+- The providerʼs parameters.
 - The platform (optional).
 - The destination (optional).
 - A list of launch arguments (optional).
@@ -70,9 +70,11 @@ Each request can install multiple artifacts. Within each request, these are call
 
 Tophat handles URLs using both the `tophat://` and `http://` schemes so that you can use them in any website or application. Where possible, prefer the `tophat://` scheme which does not navigate away from the current page.
 
-The examples below will use `tophat://`, but `tophat://` is interchangeable with `https://localhost:29070/` for use with GitHub, for example.
+The examples below will use `tophat://`, but `tophat://` is interchangeable with `http://localhost:29070/` for use with GitHub, for example.
 
-#### Format
+> :memo: When creating an install link, prefer using “Install with Tophat” as the link text.
+
+#### URL Format
 
 Below is an example for a hypothetical artifact provider for Google Cloud Storage. In this case, `gcs` is the artifact provider ID:
 
@@ -98,17 +100,25 @@ Launch arguments may be specified using the `arguments` query parameter:
 tophat://install/gcs?bucket=<bucket>&object=<object>&arguments=one,two,three
 ```
 
-> :memo: When creating an install link, prefer using “Install with Tophat” as the link text.
+On iOS, these arguments are retrievable using `ProcessInfo`. On Android, these arguments are delivered to your appʼs main activity _via_ intent argument extras in the `TOPHAT_ARGUMENTS` key as an array of strings.
 
-### Built-In Providers
+## Using Tophat
 
-You can download artifacts from public HTTP resources:
+### Core Providers
+
+Some core providers are built-in to Tophat. These provide a balance between ease of use and flexibility.
+
+#### Basic HTTP
 
 ```
-tophat://install/http?url=<the_full_url>
+tophat://install/http?url=<full_public_url>
 ```
 
-A shell script allows you to have full control over how the artifact is downloaded. For an executable shell script located at `~/Library/Application Scripts/com.shopify.Tophat.TophatCoreExtension/filename` with executable flag set with `chmod +x filename`, the script can be invoked using:
+#### Shell Script
+
+A shell script allows you to have full control over how the artifact is downloaded. Shell scripts are placed in `~/Library/Application Scripts/com.shopify.Tophat.TophatCoreExtension/` and must have their executable flags set with `chmod +x <filename>`.
+
+For example, a shell script with filename `filename` placed in the location described above can be invoked using:
 
 ```
 tophat://install/shell?script=filename
@@ -119,52 +129,13 @@ The script is provided with two positional arguments:
 - `$1` is a full path to a **staging** directory where you may temporarily store files during download and unzip.
 - `$2` is a full path to the **output** directory where exactly one artifact must be located when the script finishes. Tophat will look in this directory to install the application.
 
-## Integrating Tophat (Legacy)
-
-> This legacy guide is deprecated only applies to Tophat 1.
-
-There are a number of ways to interact with Tophat so that you can integrate it into your project with ease.
-
-### GitHub
-
-Tophat features a lightweight web server so that you can launch apps using CI artifacts. To handle builds that use separate artifacts for different device types, specify a `virtual` URL that points to a simulator-only build, and a `physical` URL that points to a device-only build:
-
-```
-http://localhost:29070/install/<ios|android>?virtual=https://url/to/virtual&physical=https://url/to/physical
-```
-
-Or, for universal builds that work on all device types, use the `universal` query param:
-
-```
-http://localhost:29070/install/<ios|android>?universal=https://url/to/virtual
-```
-
-You can also specify arguments to pass to the application on launch using the `launchArguments` query string. For example:
-
-```
-&launchArguments=one,two,three
-```
-
-On iOS, these arguments are retrievable using `ProcessInfo`. On Android, these arguments are delivered to your appʼs main activity _via_ intent argument extras in the `TOPHAT_ARGUMENTS` key as an array of strings.
-
-### URL Schemes
-
-For applications that support custom URL schemes, use the `tophat://` scheme to launch right into Tophat:
-
-```
-tophat://install/<ios|android>?universal=https://url/to/universal
-```
-
-URL schemes and handling _via_ web server both use the same URL format.
-
-## Using Tophat
-
 ### Command Line Helper
 
 Tophat can be integrated with various tools and projects using `tophatctl`, Tophatʼs companion command line app. You can use `tophatctl` to perform the following tasks:
 
 - **Manage Quick Launch apps.** Pre-populate Tophat with your projectʼs apps in a `dev up` step.
 - **Install apps.** Install an app by URL or path.
+- **List providers.** Display provider configuration to assist with integration.
 
 For more details on how to use `tophatctl`, run the following command after installing the Command Line Helper:
 
