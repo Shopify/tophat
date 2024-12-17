@@ -58,6 +58,7 @@ struct AppsTab: View {
 						for index in indexSet {
 							let entry = entries[index]
 							modelContext.delete(entry)
+							try? modelContext.save()
 						}
 					}
 				}
@@ -69,6 +70,7 @@ struct AppsTab: View {
 					GradientButton(style: .minus) {
 						if let selectedEntry {
 							modelContext.delete(selectedEntry)
+							try? modelContext.save()
 							self.selectedEntry = nil
 						}
 					}
