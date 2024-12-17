@@ -48,6 +48,10 @@ Before opening a pull request, check if there are any open [issues](https://gith
 To build Tophat, you will need at least Xcode 15.0 and macOS 14.0.
 
 1. Fork the repo and create a new branch for your changes.
+1. Run the bootstrap script to set up your Team ID:
+   ```bash
+   ./bootstrap.sh
+   ```
 1. Ensure that you have [Mint](https://github.com/yonaskolb/Mint) installed, either directly or _via_ Homebrew:
    ```bash
    brew install mint
