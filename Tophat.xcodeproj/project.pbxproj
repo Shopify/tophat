@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2FB8697D2D160A0C00D18973 /* TophatFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 2FB8697C2D160A0C00D18973 /* TophatFoundation */; };
 		7F4532AD251A6C4700F2CFC8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA71E0924C95CAC001C9574 /* Logging */; };
 		7F4532AF251A6C4700F2CFC8 /* LoggingOSLog in Frameworks */ = {isa = PBXBuildFile; productRef = 7F8EC94425086F3B00D4D42B /* LoggingOSLog */; };
 		8001A4812CF9275400325E7B /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 8001A4802CF9275400325E7B /* SimpleKeychain */; };
@@ -236,12 +237,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				800528312CB718C700226174 /* TophatKit in Frameworks */,
+				2FB8697D2D160A0C00D18973 /* TophatFoundation in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2FB8697B2D160A0C00D18973 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		7F35024624A5060500EE76EA = {
 			isa = PBXGroup;
 			children = (
@@ -252,6 +261,7 @@
 				8086AE3628F9E8680069217E /* TophatModules */,
 				8005282D2CB7185E00226174 /* TophatKit */,
 				80D648482CB0E1C200135729 /* TophatExtensions */,
+				2FB8697B2D160A0C00D18973 /* Frameworks */,
 				7F35025024A5060500EE76EA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -397,6 +407,7 @@
 			name = TophatCoreExtension;
 			packageProductDependencies = (
 				800528302CB718C700226174 /* TophatKit */,
+				2FB8697C2D160A0C00D18973 /* TophatFoundation */,
 			);
 			productName = TophatBaseExtension;
 			productReference = 80D6484D2CB0E20C00135729 /* TophatCoreExtension.appex */;
@@ -1100,6 +1111,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2FB8697C2D160A0C00D18973 /* TophatFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TophatFoundation;
+		};
 		7F8EC94425086F3B00D4D42B /* LoggingOSLog */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7F8EC94325086F3B00D4D42B /* XCRemoteSwiftPackageReference "swift-log-oslog" */;

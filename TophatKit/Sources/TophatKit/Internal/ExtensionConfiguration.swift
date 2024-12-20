@@ -24,7 +24,7 @@ struct ExtensionConfiguration: AppExtensionConfiguration {
 			for await message in session.receivedMessages {
 				if let retrieveArtifactMessage = try? message.decode(as: RetrieveArtifactMessage.self) {
 					do {
-						let result = try await service.handleRetreiveArtifact(message: retrieveArtifactMessage.value)
+						let result = try await service.handleRetrieveArtifact(message: retrieveArtifactMessage.value)
 						retrieveArtifactMessage.reply(.success(result))
 					} catch {
 						retrieveArtifactMessage.reply(.failure(error))

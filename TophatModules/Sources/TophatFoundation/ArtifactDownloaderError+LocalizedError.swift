@@ -9,16 +9,16 @@
 import Foundation
 
 extension ArtifactDownloaderError: LocalizedError {
-	var errorDescription: String? {
+	public var errorDescription: String? {
 		switch self {
-			case .failedToDownloadArtifact:
-				"The artifact could not be downloaded"
+			case .failedToDownloadArtifact(let reason):
+				"The artifact could not be downloaded: \(reason)"
 			case .untrustedHost:
 				"The download was aborted"
 		}
 	}
 
-	var failureReason: String? {
+	public var failureReason: String? {
 		switch self {
 			case .failedToDownloadArtifact:
 				"An unexpected error occurred while downloading the artifact."
@@ -27,7 +27,7 @@ extension ArtifactDownloaderError: LocalizedError {
 		}
 	}
 
-	var recoverySuggestion: String? {
+	public var recoverySuggestion: String? {
 		switch self {
 			case .failedToDownloadArtifact:
 				"Check your network connection and try again."

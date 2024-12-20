@@ -67,8 +67,3 @@ private extension ArtifactProviderMetadata {
 		]
 	}
 }
-
-enum ArtifactDownloaderError: Error {
-	case failedToDownloadArtifact
-	case untrustedHost
-}

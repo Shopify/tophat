@@ -15,15 +15,15 @@ struct ExtensionService: Sendable {
 		self.appExtension = appExtension
 	}
 
-	func handleRetreiveArtifact(message: RetrieveArtifactMessage) async throws -> RetrieveArtifactMessage.Reply {
+	func handleRetrieveArtifact(message: RetrieveArtifactMessage) async throws -> RetrieveArtifactMessage.Reply {
 		guard let artifactProvider = makeArtifactProvider(id: message.providerID) else {
-			throw RetreiveArtifactError.noArtifactProviders
+			throw RetrieveArtifactError.noArtifactProviders
 		}
 
 		try artifactProvider.setParameters(to: message.parameters)
 
 		guard let resultContainer = try await artifactProvider.retrieve() as? ArtifactProviderResultContainer else {
-			throw RetreiveArtifactError.invalidResult
+			throw RetrieveArtifactError.invalidResult
 		}
 
 		return resultContainer
@@ -35,7 +35,7 @@ struct ExtensionService: Sendable {
 
 	func handleCleanUp(message: CleanUpArtifactMessage) async throws {
 		guard let artifactProvider = makeArtifactProvider(id: message.providerID) else {
-			throw RetreiveArtifactError.noArtifactProviders
+			throw RetrieveArtifactError.noArtifactProviders
 		}
 
 		try await artifactProvider.cleanUp(localURL: message.url)
@@ -54,7 +54,7 @@ struct ExtensionService: Sendable {
 	}
 }
 
-enum RetreiveArtifactError: Error {
+enum RetrieveArtifactError: Error {
 	case noArtifactProviders
 	case invalidResult
 }
