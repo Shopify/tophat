@@ -48,10 +48,12 @@ Before opening a pull request, check if there are any open [issues](https://gith
 To build Tophat, you will need at least Xcode 15.0 and macOS 14.0.
 
 1. Fork the repo and create a new branch for your changes.
-1. Run the bootstrap script to set up your Team ID:
+1. For non-Shopify contributors: Run the `setup_team.sh` script to set up your Team ID:
    ```bash
-   ./bootstrap.sh
+   ./setup_team.sh
    ```
+   This will ensure your Team ID is used for the build. For Shopify contributors,
+   a single build in Xcode will populate this file with the Shopify Team ID.
 1. Ensure that you have [Mint](https://github.com/yonaskolb/Mint) installed, either directly or _via_ Homebrew:
    ```bash
    brew install mint
