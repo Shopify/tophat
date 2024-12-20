@@ -255,6 +255,7 @@
 				7F35025024A5060500EE76EA /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		7F35025024A5060500EE76EA /* Products */ = {
 			isa = PBXGroup;
