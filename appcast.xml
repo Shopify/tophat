@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>2.0.1</title>
+            <pubDate>Tue, 21 Jan 2025 18:24:35 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>34</sparkle:version>
+            <sparkle:shortVersionString>2.0.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Thanks for using Tophat! This update contains a few bug fixes:</p><ul><li>Fixed an issue where values passed as parameters to Tophat URLs were percent-decoded twice.</li><li>Fixed an issue where entries could not be removed from Quick Launch from the Settings window.</li></ul>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.0.1/Tophat-2.0.1.zip" length="6704132" type="application/octet-stream" sparkle:edSignature="VyxQTiPjRlBKzhA/pwnYQ07dI3tG4TEgyeHnLRJx9CzLFmwWiPw+4lyihzdha9ljMz1lyVhvUIbo+4puvlu9Ag=="/>
+        </item>
+        <item>
             <title>2.0.0</title>
             <pubDate>Fri, 13 Dec 2024 20:22:24 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
@@ -21,16 +31,6 @@
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <description><![CDATA[<p>This update fixes an issue where certain Android apps could not be launched by Tophat.</p>]]></description>
             <enclosure url="https://github.com/Shopify/tophat/releases/download/v1.11.1/Tophat-1.11.1.zip" length="6036052" type="application/octet-stream" sparkle:edSignature="4Ryu25cNF9xpvS41pzBw1crkytI5Mmv08gIfngmRMkWfKum6D+VR6IJ0SeNHFRuWdTnZyuu1eEFInvAMukeYDw=="/>
-        </item>
-        <item>
-            <title>1.11.0</title>
-            <pubDate>Mon, 23 Sep 2024 16:11:26 +0000</pubDate>
-            <link>https://github.com/Shopify/tophat</link>
-            <sparkle:version>30</sparkle:version>
-            <sparkle:shortVersionString>1.11.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>This update contains improvements and bug fixes:</p><ul><li>Tophat can now check for updates and install them automatically.</li><li>Fixed an issue where applications would not launch correctly on iOS 18 simulators.</li><li>Fixed an issue that caused the Settings window to open in the background.</li></ul>]]></description>
-            <enclosure url="https://github.com/Shopify/tophat/releases/download/v1.11.0/Tophat-1.11.0.zip" length="6035570" type="application/octet-stream" sparkle:edSignature="y3yYiKqDbHpX7rvRTlFCUOtuIH33B+JlsUWZ2NsW9h+ODexM2BHVZkosYMVSgtGZdlYcdi1SIs79dJ0qCubjAg=="/>
         </item>
     </channel>
 </rss>
