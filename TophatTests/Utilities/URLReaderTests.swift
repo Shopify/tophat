@@ -296,6 +296,48 @@ struct URLReaderTests {
 		#expect(result == .install(requests: expectedRequests))
 	}
 
+	@Test("Removes percent encoding from arguments parameter values", arguments: urlPrefixes)
+	func removesPercentEncodingFromArgumentsParameterValues(urlPrefix: String) async throws {
+		let result = try result(url: url(prefix: urlPrefix, path: "install/test?arguments=a%20b"))
+
+		let expectedRequests: [InstallRecipe] = [
+			.init(
+				source: .artifactProvider(
+					metadata: .init(
+						id: "test",
+                        parameters: [:]
+					)
+				),
+				launchArguments: ["a b"],
+				platformHint: nil,
+				destinationHint: nil
+			)
+		]
+
+		#expect(result == .install(requests: expectedRequests))
+	}
+
+	@Test("Preserves double percent encoded arguments parameter values", arguments: urlPrefixes)
+	func preservesDoublePercentEncodedArgumentsParameterValues(urlPrefix: String) async throws {
+		let result = try result(url: url(prefix: urlPrefix, path: "install/test?arguments=http%3A%2F%2Fexample.com%2Fpath%3Fvalue%3Da%2520b"))
+
+		let expectedRequests: [InstallRecipe] = [
+			.init(
+				source: .artifactProvider(
+					metadata: .init(
+						id: "test",
+                        parameters: [:]
+					)
+				),
+				launchArguments: ["http://example.com/path?value=a%20b"],
+				platformHint: nil,
+				destinationHint: nil
+			)
+		]
+
+		#expect(result == .install(requests: expectedRequests))
+	}
+
 	private func url(prefix: String, path: String) -> URL {
 		URL(string: "\(prefix)\(path)")!
 	}

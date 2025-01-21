@@ -127,7 +127,6 @@ struct URLReader {
 		let launchArguments = binnedQueryItemValues["arguments"]?[safe: index]?
 			.split(separator: ",", omittingEmptySubsequences: true)
 			.map(String.init)
-			.compactMap(\.removingPercentEncoding)
 
 		return InstallRecipe(
 			source: .artifactProvider(
