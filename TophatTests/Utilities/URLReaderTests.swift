@@ -305,7 +305,7 @@ struct URLReaderTests {
 				source: .artifactProvider(
 					metadata: .init(
 						id: "test",
-                        parameters: [:]
+						parameters: [:]
 					)
 				),
 				launchArguments: ["a b"],
@@ -326,7 +326,7 @@ struct URLReaderTests {
 				source: .artifactProvider(
 					metadata: .init(
 						id: "test",
-                        parameters: [:]
+						parameters: [:]
 					)
 				),
 				launchArguments: ["http://example.com/path?value=a%20b"],
