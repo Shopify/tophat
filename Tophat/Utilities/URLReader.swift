@@ -107,10 +107,10 @@ struct URLReader {
 		artifactProviderID: String
 	) -> InstallRecipe {
 		let parameters: [String: String] = binnedQueryItemValues.reduce(into: [:]) { partialResult, item in
-            guard item.key != "platform", item.key != "destination", item.key != "arguments" else {
-                return
-            }
-            partialResult[item.key] = item.key == "url" ? item.value[index] : item.value[index].removingPercentEncoding
+			guard item.key != "platform", item.key != "destination", item.key != "arguments" else {
+				return
+			}
+			partialResult[item.key] = item.key == "url" ? item.value[index] : item.value[index].removingPercentEncoding
 		}
 
 		let platform: Platform? = if let platformString = binnedQueryItemValues["platform"]?[safe: index] {
