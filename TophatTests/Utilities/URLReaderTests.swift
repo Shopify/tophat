@@ -256,7 +256,7 @@ struct URLReaderTests {
 
 	@Test("Removes percent encoding from parameter values", arguments: urlPrefixes)
 	func removesPercentEncodingFromParameterValues(urlPrefix: String) async throws {
-        let result = try result(url: url(prefix: urlPrefix, path: "install/test?one=a%20b"))
+		let result = try result(url: url(prefix: urlPrefix, path: "install/test?one=a%20b"))
 
 		let expectedRequests: [InstallRecipe] = [
 			.init(
@@ -277,7 +277,7 @@ struct URLReaderTests {
 
 	@Test("Preserves double percent encoded parameter values", arguments: urlPrefixes)
 	func preservesDoublePercentEncodedParameterValues(urlPrefix: String) async throws {
-        let result = try result(url: url(prefix: urlPrefix, path: "install/test?one=http%3A%2F%2Fexample.com%2Fpath%3Fvalue%3Da%2520b"))
+		let result = try result(url: url(prefix: urlPrefix, path: "install/test?one=http%3A%2F%2Fexample.com%2Fpath%3Fvalue%3Da%2520b"))
 
 		let expectedRequests: [InstallRecipe] = [
 			.init(
