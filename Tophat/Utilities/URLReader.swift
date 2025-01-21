@@ -108,7 +108,7 @@ struct URLReader {
 	) -> InstallRecipe {
 		let parameters: [String: String] = binnedQueryItemValues.reduce(into: [:]) { partialResult, item in
 			if item.key != "platform", item.key != "destination", item.key != "arguments" {
-				partialResult[item.key] = item.value[index].removingPercentEncoding
+				partialResult[item.key] = item.value[index]
 			}
 		}
 
