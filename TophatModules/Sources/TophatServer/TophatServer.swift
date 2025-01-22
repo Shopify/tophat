@@ -62,7 +62,7 @@ public final class TophatServer {
 
 		let encodedURL = baseURL.appending(path: request.path).appending(queryItems: queryItems)
 		guard let decodedString = encodedURL.absoluteString.removingPercentEncoding,
-			  let url = URL(string: decodedString) else {
+              let url = URL(string: decodedString) else {
 			return .internalServerError
 		}
 
