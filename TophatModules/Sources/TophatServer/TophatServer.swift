@@ -54,17 +54,9 @@ public final class TophatServer {
 			return .internalServerError
 		}
 
-		let queryItems = request.queryParams.map { URLQueryItem(name: $0, value: $1) }
+		let queryItems = request.queryParams.map { URLQueryItem(name: $0, value: $1.removingPercentEncoding) }
 
-		guard let baseURL = baseURL else {
-			return .internalServerError
-		}
-
-		let encodedURL = baseURL.appending(path: request.path).appending(queryItems: queryItems)
-		guard let decodedString = encodedURL.absoluteString.removingPercentEncoding else {
-			return .internalServerError
-		}
-		guard let url = URL(string: decodedString) else {
+		guard let url = baseURL?.appending(path: request.path).appending(queryItems: queryItems) else {
 			return .internalServerError
 		}
 
