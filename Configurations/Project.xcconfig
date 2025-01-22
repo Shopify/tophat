@@ -6,4 +6,8 @@
 //  Copyright © 2024 Shopify. All rights reserved.
 //
 
+// This file must be defined in your working directory. It should contain
+// DEVELOPMENT_TEAM = <your team id>
+#include "TeamID.xcconfig"
+
 MACOSX_DEPLOYMENT_TARGET = 14.0
