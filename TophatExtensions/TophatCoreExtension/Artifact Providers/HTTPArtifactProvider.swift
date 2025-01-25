@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TophatFoundation
 import TophatKit
 
 struct HTTPArtifactProvider: ArtifactProvider {
@@ -18,6 +19,20 @@ struct HTTPArtifactProvider: ArtifactProvider {
 
 	func retrieve() async throws -> some ArtifactProviderResult {
 		let (downloadedFileURL, response) = try await URLSession.shared.download(from: url)
+		let statusCode = (response as? HTTPURLResponse)?.statusCode ?? 0
+		guard statusCode == 200 else {
+			let responseBody = (try? String(contentsOf: downloadedFileURL)) ?? "<no response>"
+			print("""
+				Failed to download artifact.
+				URL: \(url)
+				Response:
+				\(responseBody)
+				""")
+			throw ArtifactDownloaderError.failedToDownloadArtifact(reason: """
+				Received HTTP \(statusCode). Check the logs for more details.
+				"""
+			)
+		}
 
 		let destinationDirectoryURL: URL = .temporaryDirectory.appending(path: UUID().uuidString)
 		try FileManager.default.createDirectory(at: destinationDirectoryURL, withIntermediateDirectories: true)
