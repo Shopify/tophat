@@ -9,7 +9,8 @@
 import SwiftUI
 
 struct AndroidStudioOnboardingItem: View {
-	@ObservedObject var utilityPathPreferences: UtilityPathPreferences
+	@Environment(\.controlActiveState) private var controlActiveState
+	@State private var isComplete = Self.isAndroidStudioInstalled
 
 	var body: some View {
 		OnboardingItemLayout(
@@ -21,22 +22,31 @@ struct AndroidStudioOnboardingItem: View {
 				.interpolation(.high)
 				.padding(2)
 				.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
-		} infoPopoverContent: {
-			OnboardingPopoverContent(title: "Getting Started") {
-				Text("Android Studio can be downloaded from [Android Developers](https://developer.android.com/studio). Make sure to open Android Studio to install the latest SDKs and create virtual devices.")
-					.lineLimit(3, reservesSpace: true)
-			}
 		} content: {
 			OnboardingItemStatusIcon(state: isComplete ? .complete : .warning) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("Tophat needs Android studio in order to be able to install apps on Android devices.")
+					Text("Android Studio can be downloaded from [Android Developers](https://developer.android.com/studio).")
 						.lineLimit(2, reservesSpace: true)
 				}
 			}
 		}
+		.onChange(of: controlActiveState) { _, newValue in
+			if newValue == .key {
+				updateStatus()
+			}
+		}
 	}
+	
+	private func updateStatus() {
+		let newValue = Self.isAndroidStudioInstalled
 
-	private var isComplete: Bool {
-		utilityPathPreferences.resolvedAndroidSDKLocation?.isReachable() ?? false
+		if self.isComplete != newValue {
+			self.isComplete = newValue
+		}
+	}
+	
+	private static var isAndroidStudioInstalled: Bool {
+		let androidStudioPath = "/Applications/Android Studio.app"
+		return FileManager.default.fileExists(atPath: androidStudioPath)
 	}
 }

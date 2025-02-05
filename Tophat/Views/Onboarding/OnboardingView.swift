@@ -11,45 +11,60 @@ import SwiftUI
 struct OnboardingView: View {
 	@Environment(\.customWindowPresentation) private var customWindowPresentation
 
+	private let iconSize: CGFloat = 128
+	private let gradientDiameter: CGFloat = 280
+	
 	var body: some View {
-		VStack(alignment: .center, spacing: 36) {
-			VStack(spacing: 8) {
-				Image(.settingsAppIcon)
-					.resizable()
-					.scaledToFit()
-					.frame(width: 128, height: 128)
+		HStack {
+			VStack(alignment: .center, spacing: 0) {
 
-				Text("Welcome to Tophat")
-					.font(.system(size: 38, weight: .regular))
+				ZStack {
+					RadialGradient(gradient: Gradient(colors: [Color.onboardingGradient.opacity(0.3), Color.clear]),
+								   center: .center,
+								   startRadius: 0,
+								   endRadius: gradientDiameter / 2)
+						.frame(width: gradientDiameter, height: gradientDiameter)
+					
+					Image(.settingsAppIcon)
+						.resizable()
+						.scaledToFit()
+						.frame(width: iconSize, height: iconSize)
+				}
+				.frame(height: iconSize)
+				
+				Text("Tophat")
+					.font(.system(size: 36, weight: .bold))
 					.foregroundColor(.primary)
-
-				if let marketingVersion = Bundle.main.shortVersionString, let buildNumber = Bundle.main.buildNumber {
-					Text("Version \(marketingVersion) (\(buildNumber))")
+					.padding(.top, 0)
+				
+				if let marketingVersion = Bundle.main.shortVersionString {
+					Text("Version \(marketingVersion)")
 						.foregroundColor(.secondary)
 				}
+				
+				CustomizeLocationsButton()
+					.padding(.top, 16)
 			}
-
+			.frame(minWidth: 400, maxHeight: .infinity)
+			.background(Color.onboardingBackground)
+			
 			VStack(spacing: 0) {
-				Text("Make sure the following developer tools are set up to get the most from Tophat.")
+				Text("Set up the following developer tools to get the most from Tophat.")
 					.font(.body)
 					.foregroundColor(.primary)
 					.padding(.horizontal, 56)
 
 				OnboardingTaskList()
-
-				VStack(spacing: 32) {
-					CustomizeLocationsButton()
-
-					Button("Start Using Tophat") {
-						customWindowPresentation?.dismiss()
-					}
-					.controlSize(.large)
-					.keyboardShortcut(.return)
+				
+				Button("Start Using Tophat") {
+					customWindowPresentation?.dismiss()
 				}
+				.controlSize(.large)
+				.keyboardShortcut(.return)
+				.padding(.top, 4)
+				.padding(.bottom, 28)
+				
 			}
 		}
-		.padding(.top, 56)
-		.padding(.horizontal, 8)
-		.padding(.bottom, 28)
 	}
 }
