@@ -32,7 +32,7 @@ struct AndroidEmulatorsOnboardingItem: View {
 			}
 		}
 	}
-	
+
 	private func updateStatus() {
 		let newValue = Self.isEmulatorsConfigured
 
@@ -48,7 +48,6 @@ struct AndroidEmulatorsOnboardingItem: View {
 		guard let avdDirectoryContents = try? fileManager.contentsOfDirectory(atPath: avdPath) else {
 			return false
 		}
-
 		return avdDirectoryContents.contains { $0.hasSuffix(".avd") }
 	}
 }

@@ -7,8 +7,6 @@
 //
 import SwiftUI
 
-//Xcode can be downloaded from the [Apple Developer Portal](https://developer.apple.com/download/applications/) or by using [xcodes](https://github.com/RobotsAndPencils/xcodes). Make sure to open Xcode to install the Xcode Command Line Tools and the latest SDKs.
-
 struct XcodeSimulatorSDKsOnboardingItem: View {
 	@Environment(\.controlActiveState) private var controlActiveState
 	@State private var isComplete = Self.isIosSimulatorSDKsInstalled

@@ -36,7 +36,7 @@ struct AndroidStudioOnboardingItem: View {
 			}
 		}
 	}
-	
+
 	private func updateStatus() {
 		let newValue = Self.isAndroidStudioInstalled
 
@@ -44,7 +44,7 @@ struct AndroidStudioOnboardingItem: View {
 			self.isComplete = newValue
 		}
 	}
-	
+
 	private static var isAndroidStudioInstalled: Bool {
 		let androidStudioPath = "/Applications/Android Studio.app"
 		return FileManager.default.fileExists(atPath: androidStudioPath)

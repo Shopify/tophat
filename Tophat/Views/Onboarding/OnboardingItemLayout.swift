@@ -50,8 +50,7 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 
 	var body: some View {
 		HStack(spacing: 12) {
-			
-			if let _ = self.image() as? EmptyView {
+			if self.image() as? EmptyView != nil {
 				Rectangle()
 					.fill(Color.clear)
 					.frame(width: 48, height: 0)
@@ -60,7 +59,6 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 					.scaledToFit()
 					.frame(width: 48, height: 48)
 			}
-
 			VStack(alignment: .leading, spacing: 2) {
 				HStack(spacing: 6) {
 					Text(title)
@@ -86,7 +84,6 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 						.font(.subheadline)
 						.foregroundColor(.secondary)
 				}
-				
 			}
 
 			Spacer()
