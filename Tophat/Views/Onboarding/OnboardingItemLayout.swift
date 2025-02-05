@@ -13,7 +13,7 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 
 	private let title: LocalizedStringKey
 	private let image: () -> ImageView
-	private let description: LocalizedStringKey
+	private let description: LocalizedStringKey?
 
 	private let infoPopoverContent: () -> InfoPopoverContent
 	private let showInfoIcon: Bool
@@ -21,7 +21,7 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 
 	init(
 		title: LocalizedStringKey,
-		description: LocalizedStringKey,
+		description: LocalizedStringKey?,
 		@ViewBuilder image: @escaping () -> ImageView,
 		@ViewBuilder infoPopoverContent: @escaping () -> InfoPopoverContent,
 		@ViewBuilder content: @escaping () -> Content
@@ -36,7 +36,7 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 
 	init(
 		title: LocalizedStringKey,
-		description: LocalizedStringKey,
+		description: LocalizedStringKey?,
 		@ViewBuilder image: @escaping () -> ImageView,
 		@ViewBuilder content: @escaping () -> Content
 	) where InfoPopoverContent == EmptyView {
@@ -50,10 +50,15 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 
 	var body: some View {
 		HStack(spacing: 12) {
-			image()
-				.scaledToFit()
-				.frame(width: 48, height: 48)
-
+			if self.image() as? EmptyView != nil {
+				Rectangle()
+					.fill(Color.clear)
+					.frame(width: 48, height: 0)
+			} else {
+				image()
+					.scaledToFit()
+					.frame(width: 48, height: 48)
+			}
 			VStack(alignment: .leading, spacing: 2) {
 				HStack(spacing: 6) {
 					Text(title)
@@ -74,9 +79,11 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 						}
 					}
 				}
-				Text(description)
-					.font(.subheadline)
-					.foregroundColor(.secondary)
+				if let description = self.description {
+					Text(description)
+						.font(.subheadline)
+						.foregroundColor(.secondary)
+				}
 			}
 
 			Spacer()

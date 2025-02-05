@@ -16,10 +16,14 @@ struct OnboardingTaskList: View {
 		Form {
 			Section {
 				XcodeOnboardingItem()
+				XcodeCommandLineToolsOnboardingItem()
+				XcodeSimulatorSDKsOnboardingItem()
 			}
 
 			Section {
-				AndroidStudioOnboardingItem(utilityPathPreferences: utilityPathPreferences)
+				AndroidStudioOnboardingItem()
+				AndroidSDKsOnboardingItem(utilityPathPreferences: utilityPathPreferences)
+				AndroidEmulatorsOnboardingItem()
 			}
 
 			Section {
@@ -32,7 +36,7 @@ struct OnboardingTaskList: View {
 		}
 		.formStyle(.grouped)
 		.scrollDisabled(true)
-		.onChange(of: controlActiveState) { newValue in
+		.onChange(of: controlActiveState) { _, newValue in
 			if newValue == .key {
 				// Tells UtilityPathPreferences to notify subscribers
 				// that it has changed so that they can update accordingly.
