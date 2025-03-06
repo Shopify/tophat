@@ -28,7 +28,7 @@ struct QuickLaunchPanel: View {
 					LazyVGrid(columns: columns, alignment: .leading, spacing: 14) {
 						ForEach(entries) { entry in
 							Button {
-								Task { await launchApp?(quickLaunchEntry: entry) }
+								Task { try await launchApp?(quickLaunchEntry: entry) }
 							} label: {
 								QuickLaunchEntryView(entry: entry)
 							}

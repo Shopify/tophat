@@ -16,7 +16,7 @@ struct LaunchAppAction {
 		self.installCoordinator = installCoordinator
 	}
 
-	func callAsFunction(quickLaunchEntry entry: QuickLaunchEntry) async {
+	func callAsFunction(quickLaunchEntry entry: QuickLaunchEntry) async throws {
 		let context = OperationContext(quickLaunchEntryID: entry.id, applicationDisplayName: entry.name)
 
 		let recipes = entry.recipes.map { source in
@@ -33,10 +33,10 @@ struct LaunchAppAction {
 			)
 		}
 
-		await callAsFunction(recipes: recipes, context: context)
+		try await callAsFunction(recipes: recipes, context: context)
 	}
 
-	func callAsFunction(artifactURL: URL, launchArguments: [String] = [], context: OperationContext? = nil) async {
+	func callAsFunction(artifactURL: URL, launchArguments: [String] = [], context: OperationContext? = nil) async throws {
 		let source: ArtifactSource = if artifactURL.isFileURL {
 			.file(url: artifactURL)
 		} else {
@@ -48,21 +48,26 @@ struct LaunchAppAction {
 			)
 		}
 
-		await callAsFunction(
+		try await callAsFunction(
 			recipes: [InstallRecipe(source: source, launchArguments: launchArguments)],
 			context: context
 		)
 	}
 
-	func callAsFunction(recipes: [InstallRecipe], context: OperationContext? = nil) async {
+	func callAsFunction(recipes: [InstallRecipe], context: OperationContext? = nil) async throws {
 		do {
 			try await installCoordinator.install(recipes: recipes, context: context)
 		} catch {
-			ErrorNotifier().notify(error: error)
+			throw LaunchAppActionError.test
+//			ErrorNotifier().notify(error: error)
 		}
 	}
 }
 
 extension EnvironmentValues {
 	@Entry var launchApp: LaunchAppAction?
+}
+
+enum LaunchAppActionError: Error {
+	case test
 }

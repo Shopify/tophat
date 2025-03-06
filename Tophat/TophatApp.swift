@@ -252,9 +252,9 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 				Task {
 					switch urlReaderResult {
 						case .localFile(let url):
-							await launchApp(artifactURL: url)
+							try await launchApp(artifactURL: url)
 						case .install(let recipes):
-							await launchApp(recipes: recipes)
+							try await launchApp(recipes: recipes)
 					}
 				}
 			}
@@ -332,11 +332,11 @@ extension AppDelegate: RemoteControlReceiverDelegate {
 	}
 
 	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async {
-		await launchApp(artifactURL: url, launchArguments: launchArguments)
+		try await launchApp(artifactURL: url, launchArguments: launchArguments)
 	}
 
 	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async {
-		await launchApp(recipes: recipes)
+		try await launchApp(recipes: recipes)
 	}
 
 	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async {
@@ -347,7 +347,7 @@ extension AppDelegate: RemoteControlReceiverDelegate {
 		)
 
 		if let entry = try? context.fetch(fetchDescriptor).first {
-			await launchApp(quickLaunchEntry: entry)
+			try await launchApp(quickLaunchEntry: entry)
 		}
 	}
 }

@@ -35,7 +35,7 @@ struct LaunchFromURLPanel: View {
 						text = ""
 
 						Task(priority: .userInitiated) {
-							await launchApp?(artifactURL: url)
+							try await launchApp?(artifactURL: url)
 						}
 					}
 

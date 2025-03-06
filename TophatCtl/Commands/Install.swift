@@ -43,36 +43,41 @@ struct Install: AsyncParsableCommand {
 		let service = TophatRemoteControlService()
 		let urlParsedAsArgument = URL(argument: idOrPath)
 
-		guard
-			let urlParsedAsArgument,
-			let scheme = urlParsedAsArgument.scheme,
-			urlParsedAsArgument.isFileURL ? urlParsedAsArgument.pathExtension != "" : scheme.hasPrefix("http")
-		else {
-			try assertLaunchArgumentsEmpty()
-			try await service.send(request: InstallFromQuickLaunchRequest(quickLaunchEntryID: idOrPath), timeout: 60)
-			return
-		}
+		do {
+			guard
+				let urlParsedAsArgument,
+				let scheme = urlParsedAsArgument.scheme,
+				urlParsedAsArgument.isFileURL ? urlParsedAsArgument.pathExtension != "" : scheme.hasPrefix("http")
+			else {
+				try assertLaunchArgumentsEmpty()
+				try await service.send(request: InstallFromQuickLaunchRequest(quickLaunchEntryID: idOrPath), timeout: 60)
+				return
+			}
 
-		if urlParsedAsArgument.pathExtension == "json" {
-			try assertLaunchArgumentsEmpty()
+			if urlParsedAsArgument.pathExtension == "json" {
+				try assertLaunchArgumentsEmpty()
 
-			let request = InstallFromRecipesRequest(
-				recipes: try JSONDecoder().decode(
-					[UserSpecifiedRecipeConfiguration].self,
-					from: Data(contentsOf: urlParsedAsArgument)
+				let request = InstallFromRecipesRequest(
+					recipes: try JSONDecoder().decode(
+						[UserSpecifiedRecipeConfiguration].self,
+						from: Data(contentsOf: urlParsedAsArgument)
+					)
 				)
+
+				try await service.send(request: request, timeout: 60)
+				return
+			}
+
+			let request = InstallFromURLRequest(
+				url: urlParsedAsArgument,
+				launchArguments: launchArguments
 			)
 
 			try await service.send(request: request, timeout: 60)
-			return
+		} catch {
+			fputs("hello from launch app\n", stderr)
+			Install.exit(withError: ExitCode.failure)
 		}
-
-		let request = InstallFromURLRequest(
-			url: urlParsedAsArgument,
-			launchArguments: launchArguments
-		)
-
-		try await service.send(request: request, timeout: 60)
 	}
 
 	private func assertLaunchArgumentsEmpty() throws {

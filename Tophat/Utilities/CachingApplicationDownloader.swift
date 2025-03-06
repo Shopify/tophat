@@ -68,6 +68,8 @@ actor CachingApplicationDownloader: ApplicationDownloading {
 			try await artifactUnpacker.unpack(downloadedItemInContainer: container)
 
 			guard let application = await container.applications.first else {
+				fputs("Caching \n", stderr)
+
 				throw CachingApplicationDownloaderError.applicationNotFoundInArtifactContainer
 			}
 
