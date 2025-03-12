@@ -70,11 +70,11 @@ public struct AndroidPathResolver {
 	static func cmdLineTool(named name: String) -> URL? {
 		// Prefer versions of cmdline-tools in this order
 		let cmdLineReleases = [
+			"latest",
 			"6.0",
 			"5.0",
 			"4.0",
 			"2.0",
-			"latest"
 		]
 
 		let availableRelease = cmdLineReleases.first { version in
