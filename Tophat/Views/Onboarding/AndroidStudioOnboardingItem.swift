@@ -20,8 +20,6 @@ struct AndroidStudioOnboardingItem: View {
 			Image(.androidStudio)
 				.resizable()
 				.interpolation(.high)
-				.padding(2)
-				.shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
 		} content: {
 			OnboardingItemStatusIcon(state: isComplete ? .complete : .warning) {
 				OnboardingPopoverContent(title: "Needs Setup") {

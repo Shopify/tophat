@@ -21,7 +21,7 @@ struct XcodeSimulatorSDKsOnboardingItem: View {
 			OnboardingItemStatusIcon(state: isComplete ? .complete : .warning) {
 				OnboardingPopoverContent(title: "Needs Setup") {
 					Text("Open Xcode to be prompted to install the SDKs. [Learn more](https://developer.apple.com/documentation/xcode/installing-additional-simulator-runtimes#Install-Simulator-runtimes-during-first-launch)")
-						.lineLimit(2, reservesSpace: true)
+						.lineLimit(1, reservesSpace: true)
 				}
 			}
 		}

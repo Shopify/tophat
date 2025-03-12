@@ -15,15 +15,15 @@ struct OnboardingView: View {
 	private let gradientDiameter: CGFloat = 280
 
 	var body: some View {
-		HStack {
+		HStack(spacing: 0) {
 			VStack(alignment: .center, spacing: 0) {
-
 				ZStack {
-					RadialGradient(gradient: Gradient(colors: [Color.onboardingGradient.opacity(0.3), Color.clear]),
-								   center: .center,
-								   startRadius: 0,
-								   endRadius: gradientDiameter / 2)
-						.frame(width: gradientDiameter, height: gradientDiameter)
+					RadialGradient(
+						gradient: Gradient(colors: [.onboardingGradient.opacity(0.3), Color.clear]),
+						center: .center,
+						startRadius: 0,
+						endRadius: gradientDiameter / 2)
+					.frame(width: gradientDiameter, height: gradientDiameter)
 
 					Image(.settingsAppIcon)
 						.resizable()
@@ -35,7 +35,6 @@ struct OnboardingView: View {
 				Text("Tophat")
 					.font(.system(size: 36, weight: .bold))
 					.foregroundColor(.primary)
-					.padding(.top, 0)
 
 				if let marketingVersion = Bundle.main.shortVersionString {
 					Text("Version \(marketingVersion)")
@@ -44,17 +43,12 @@ struct OnboardingView: View {
 				}
 
 				CustomizeLocationsButton()
-					.padding(.top, 16)
+					.padding(.top, 24)
 			}
 			.frame(minWidth: 400, maxHeight: .infinity)
 			.background(Color.onboardingBackground)
 
-			VStack(spacing: 0) {
-				Text("Set up the following developer tools to get the most from Tophat.")
-					.font(.body)
-					.foregroundColor(.primary)
-					.padding(.horizontal, 56)
-
+			VStack(spacing: 4) {
 				OnboardingTaskList()
 
 				Button("Start Using Tophat") {
@@ -62,9 +56,7 @@ struct OnboardingView: View {
 				}
 				.controlSize(.large)
 				.keyboardShortcut(.return)
-				.padding(.top, 4)
 				.padding(.bottom, 28)
-
 			}
 		}
 	}
