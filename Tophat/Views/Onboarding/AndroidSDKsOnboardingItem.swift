@@ -13,15 +13,15 @@ struct AndroidSDKsOnboardingItem: View {
 
 	var body: some View {
 		OnboardingItemLayout(
-			title: "Android SDKs",
+			title: "SDKs",
 			description: nil
 		) {
 			EmptyView()
 		} content: {
 			OnboardingItemStatusIcon(state: isComplete ? .complete : .warning) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("Open Android Studio and install the latest SDKs. [More information](https://developer.android.com/about/versions/14/setup-sdk#install-sdk).")
-						.lineLimit(2, reservesSpace: true)
+					Text("Open Android Studio and install the latest SDKs. [Learn more](https://developer.android.com/about/versions/14/setup-sdk#install-sdk)")
+						.lineLimit(1, reservesSpace: true)
 				}
 			}
 		}

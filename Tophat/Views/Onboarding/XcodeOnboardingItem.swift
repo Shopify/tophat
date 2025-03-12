@@ -15,7 +15,7 @@ struct XcodeOnboardingItem: View {
 	var body: some View {
 		OnboardingItemLayout(
 			title: "Xcode",
-			description: "Tophat uses Xcode to manage devices and install iOS apps."
+			description: "Tophat uses Xcode to manage devices and install apps."
 		) {
 			Image(.xcode)
 				.resizable()

@@ -40,6 +40,7 @@ struct OnboardingView: View {
 				if let marketingVersion = Bundle.main.shortVersionString {
 					Text("Version \(marketingVersion)")
 						.foregroundColor(.secondary)
+						.padding(.top, 4)
 				}
 
 				CustomizeLocationsButton()

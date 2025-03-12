@@ -14,15 +14,15 @@ struct AndroidEmulatorsOnboardingItem: View {
 
 	var body: some View {
 		OnboardingItemLayout(
-			title: "Android Emulators",
+			title: "Emulators",
 			description: nil
 		) {
 			EmptyView()
 		} content: {
 			OnboardingItemStatusIcon(state: isComplete ? .complete : .warning) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("Open Android Studio and [create an Android Virtual Device](https://developer.android.com/studio/run/managing-avds).")
-						.lineLimit(1, reservesSpace: true)
+					Text("Open Android Studio and create an Android Virtual Device. [Learn more](https://developer.android.com/studio/run/managing-avds)")
+						.lineLimit(2, reservesSpace: true)
 				}
 			}
 		}
