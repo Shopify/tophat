@@ -59,11 +59,39 @@ final class ArtifactUnpacker: Sendable {
 		return fileURL
 	}
 
+	private func zipArtifactApplicationBundleRoot(at url: URL) throws -> String? {
+		let archive = try Archive(url: url, accessMode: .read)
+		// Find the "Info.plist" archive entry that is nearest to the root of the archive.
+		let shallowestInfoPlistEntry = archive
+			.filter { $0.path.hasSuffix("Info.plist") }
+			.min(by: { $0.path.count { $0 == "/" } < $1.path.count { $0 == "/" } })
+		if let entry = shallowestInfoPlistEntry, entry.path.contains("/") {
+			// It is located at least one directory deep, assume that this is the application bundle root.
+			let parentPath = (entry.path as NSString).deletingLastPathComponent
+			if archive[parentPath + "/"] != nil {
+				return parentPath
+			}
+		}
+
+		// If there are no "Info.plist" files, or one is already in the root, there is nothing to do.
+		return nil
+	}
+
 	private func extractArtifact(at url: URL) throws -> URL {
 		let destinationURL = url.deletingLastPathComponent().appending(path: url.fileName)
 
 		log.info("Uncompressing artifact at \(url)")
 		try FileManager.default.unzipItem(at: url, to: destinationURL)
+
+		if let appBundleRoot = try? zipArtifactApplicationBundleRoot(at: url) {
+			log.info("Nested application bundle detected")
+			// Move the original destination to "_tmp", then move the nested app bundle to the destination.
+			let workingDestinationURL = url.deletingLastPathComponent().appending(path: "_tmp")
+			try FileManager.default.moveItem(at: destinationURL, to: workingDestinationURL)
+			let nestedAppBundleRootURL = workingDestinationURL.appending(path: appBundleRoot)
+			try FileManager.default.moveItem(at: nestedAppBundleRootURL, to: destinationURL)
+		}
+
 		log.info("Artifact uncompressed to \(destinationURL)")
 
 		return destinationURL
