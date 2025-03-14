@@ -91,7 +91,7 @@
 	<key>NSAppleEventsUsageDescription</key>
 	<string>Tophat can automatically bring virtual device windows to the foreground. To do so, Tophat needs access to System Events.</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020–2024 Shopify. All rights reserved.</string>
+	<string>Copyright © 2020–2025 Shopify. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticTermination</key>
