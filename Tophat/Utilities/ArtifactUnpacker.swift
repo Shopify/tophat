@@ -29,7 +29,7 @@ final class ArtifactUnpacker: Sendable {
 
 		switch fileFormat {
 			case .zip:
-				let extractedURL = try extractArtifact(at: artifactURL)
+				let extractedURL = try extractArtifact(at: artifactURL, examineContents: true)
 				return try unpack(artifactURL: extractedURL)
 
 			case .appStorePackage:
@@ -59,42 +59,62 @@ final class ArtifactUnpacker: Sendable {
 		return fileURL
 	}
 
-	private func zipArtifactApplicationBundleRoot(at url: URL) throws -> String? {
-		let archive = try Archive(url: url, accessMode: .read)
-		// Find the "Info.plist" archive entry that is nearest to the root of the archive.
-		let shallowestInfoPlistEntry = archive
-			.filter { $0.path.hasSuffix("Info.plist") }
-			.min(by: { $0.path.count { $0 == "/" } < $1.path.count { $0 == "/" } })
-		if let entry = shallowestInfoPlistEntry, entry.path.contains("/") {
-			// It is located at least one directory deep, assume that this is the application bundle root.
-			let parentPath = (entry.path as NSString).deletingLastPathComponent
-			if archive[parentPath + "/"] != nil {
-				return parentPath
-			}
+	/// Examine the artifact contents for shallowly nested supported formats.
+	private func examineArtifactContents(at destinationURL: URL) throws -> URL {
+		func hasNestedInfoPlist(at url: URL) -> Bool {
+			let infoPlistURL = url.appendingPathComponent("Info.plist")
+			return FileManager.default.isReadableFile(atPath: infoPlistURL.path)
 		}
 
-		// If there are no "Info.plist" files, or one is already in the root, there is nothing to do.
-		return nil
+		log.info("Examining artifact contents at \(destinationURL)")
+
+		var isDirectory: ObjCBool = false
+		FileManager.default.fileExists(atPath: destinationURL.path, isDirectory: &isDirectory)
+
+		if isDirectory.boolValue {
+			if hasNestedInfoPlist(at: destinationURL) {
+				// The extraction was likely an app bundle without any additional nesting.
+				return destinationURL
+			}
+
+			for url in try FileManager.default.contentsOfDirectory(at: destinationURL, includingPropertiesForKeys: nil) {
+				if let fileFormat = ArtifactFileFormat(pathExtension: url.pathExtension) {
+					log.info("Nested \(fileFormat) artifact detected")
+					switch fileFormat {
+					case .applicationBundle:
+						if hasNestedInfoPlist(at: url) {
+							// This is likely a nested app bundle.
+							return url
+						}
+
+					case .appStorePackage, .androidPackage:
+						return url
+
+					case .zip:
+						// Intentionally ignore nested zip files.
+						break
+					}
+				}
+			}
+
+			// No known artifacts were detected.
+			throw ArtifactUnpackerError.unknownFileFormat
+		} else {
+			// Only a single file was extracted, no need for further examination.
+			return destinationURL
+		}
 	}
 
-	private func extractArtifact(at url: URL) throws -> URL {
+	private func extractArtifact(at url: URL, examineContents: Bool = false) throws -> URL {
 		let destinationURL = url.deletingLastPathComponent().appending(path: url.fileName)
 
 		log.info("Uncompressing artifact at \(url)")
 		try FileManager.default.unzipItem(at: url, to: destinationURL)
 
-		if let appBundleRoot = try? zipArtifactApplicationBundleRoot(at: url) {
-			log.info("Nested application bundle detected")
-			// Move the original destination to "_tmp", then move the nested app bundle to the destination.
-			let workingDestinationURL = url.deletingLastPathComponent().appending(path: "_tmp")
-			try FileManager.default.moveItem(at: destinationURL, to: workingDestinationURL)
-			let nestedAppBundleRootURL = workingDestinationURL.appending(path: appBundleRoot)
-			try FileManager.default.moveItem(at: nestedAppBundleRootURL, to: destinationURL)
-		}
+		let finalURL: URL = examineContents ? try examineArtifactContents(at: destinationURL) : destinationURL
+		log.info("Artifact uncompressed to \(finalURL)")
 
-		log.info("Artifact uncompressed to \(destinationURL)")
-
-		return destinationURL
+		return finalURL
 	}
 }
 
