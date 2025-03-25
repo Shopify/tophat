@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>2.1.1</title>
+            <pubDate>Tue, 25 Mar 2025 21:34:16 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>37</sparkle:version>
+            <sparkle:shortVersionString>2.1.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Thanks for using Tophat! This update fixes an issue where the latest Android command line tools version was not always used.</p>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.1.1/Tophat-2.1.1.zip" length="6730549" type="application/octet-stream" sparkle:edSignature="h09C9rG4L0jmK/OqLSY0pnitOsn6aHg/t71M5AVGwNMg5NEtXcvczhd1clKEbUU8YX4tU2hGLRrizcEUdfChDw=="/>
+        </item>
+        <item>
             <title>2.1.0</title>
             <pubDate>Fri, 14 Mar 2025 17:33:55 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
@@ -21,16 +31,6 @@
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <description><![CDATA[<p>Thanks for using Tophat! This update fixes an issue where URL parameters passed to Tophat using the localhost service may not be correctly decoded.</p>]]></description>
             <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.0.2/Tophat-2.0.2.zip" length="6705458" type="application/octet-stream" sparkle:edSignature="ilX7BXVd5tJwBIciOB5gemeuWoJj0X109Xd08hxzXZcOwjkBjUP1t5ezztvkuQrzxZr1Xtz2CRVZdSbUWhSXBA=="/>
-        </item>
-        <item>
-            <title>2.0.1</title>
-            <pubDate>Tue, 21 Jan 2025 18:24:35 +0000</pubDate>
-            <link>https://github.com/Shopify/tophat</link>
-            <sparkle:version>34</sparkle:version>
-            <sparkle:shortVersionString>2.0.1</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>Thanks for using Tophat! This update contains a few bug fixes:</p><ul><li>Fixed an issue where values passed as parameters to Tophat URLs were percent-decoded twice.</li><li>Fixed an issue where entries could not be removed from Quick Launch from the Settings window.</li></ul>]]></description>
-            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.0.1/Tophat-2.0.1.zip" length="6704132" type="application/octet-stream" sparkle:edSignature="VyxQTiPjRlBKzhA/pwnYQ07dI3tG4TEgyeHnLRJx9CzLFmwWiPw+4lyihzdha9ljMz1lyVhvUIbo+4puvlu9Ag=="/>
         </item>
     </channel>
 </rss>
