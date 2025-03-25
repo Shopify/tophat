@@ -68,24 +68,29 @@ public struct AndroidPathResolver {
 	}
 
 	static func cmdLineTool(named name: String) -> URL? {
-		// Prefer versions of cmdline-tools in this order
-		let cmdLineReleases = [
-			"latest",
-			"6.0",
-			"5.0",
-			"4.0",
-			"2.0",
-		]
+		let cmdLineToolsURL = sdkRoot.appending(path: "cmdline-tools")
+		let cmdLineToolsLatestURL = cmdLineToolsURL.appending(paths: ["latest", "bin", name])
 
-		let availableRelease = cmdLineReleases.first { version in
-			sdkRoot.appending(paths: ["cmdline-tools", version, "bin", name]).isReachable()
+		if cmdLineToolsLatestURL.isReachable() {
+			return cmdLineToolsLatestURL
 		}
 
-		guard let availableRelease = availableRelease else {
+		guard let contents = try? FileManager.default.contentsOfDirectory(
+			at: cmdLineToolsURL,
+			includingPropertiesForKeys: [.isDirectoryKey],
+			options: .skipsHiddenFiles
+		) else {
 			return nil
 		}
 
-		return sdkRoot.appending(paths: ["cmdline-tools", availableRelease, "bin", name])
+		let availableVersions = contents.filter { versionURL in
+			versionURL.lastPathComponent != "latest" && versionURL.appending(paths: ["bin", name]).isReachable()
+		}
+
+		return availableVersions
+			.sorted { $0.lastPathComponent.compare($1.lastPathComponent, options: .numeric) == .orderedDescending }
+			.first?
+			.appending(paths: ["bin", name])
 	}
 
 	static func buildTool(named name: String) -> URL? {
