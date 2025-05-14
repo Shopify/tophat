@@ -23,6 +23,30 @@ final class ArtifactDownloader: Sendable {
 				try await validateHostTrustIfNeeded(metadata: metadata)
 
 				log.info("[ArtifactDownloader] Downloading artifact from artifact provider", metadata: metadata.loggerMetadata)
+
+                if metadata.id == "http" {
+                    // Built-in HTTP provider – download directly instead of using an extension.
+                    guard let urlString = metadata.parameters["url"],
+                          let remoteURL = URL(string: urlString) else {
+                        throw ArtifactDownloaderError.failedToDownloadArtifact
+                    }
+                    
+                    let (downloadedTempURL, _) = try await URLSession.shared.download(from: remoteURL)
+                    
+                    // Give the file its original name so the extension is preserved for later processing.
+                    let renamedTempURL = downloadedTempURL.deletingLastPathComponent().appending(path: remoteURL.lastPathComponent)
+                    try? FileManager.default.removeItem(at: renamedTempURL) // Remove if it already exists
+                    try FileManager.default.moveItem(at: downloadedTempURL, to: renamedTempURL)
+                    
+                    log.info("[ArtifactDownloader] Remote artifact downloaded to temporary location \(renamedTempURL.path)")
+                    
+                    try await container.addCopy(of: .rawDownload(renamedTempURL))
+                    
+                    log.info("[ArtifactDownloader] added copy to container \(renamedTempURL.path)")
+                    
+                    return // Nothing else to do – skip extension-based retrieval/cleanup
+                }
+
 				let fileURL = try await artifactRetrievalCoordinator.retrieve(metadata: metadata)
 				log.info("The artifact provider has made the artifact available at \(fileURL)")
 
