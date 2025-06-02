@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>2.1.2</title>
+            <pubDate>Mon, 02 Jun 2025 16:36:22 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>38</sparkle:version>
+            <sparkle:shortVersionString>2.1.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Thanks for using Tophat! This update fixes an issue where Tophat was unable to communicate with certain Android emulators depending on API level and command line tools version.</p>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.1.2/Tophat-2.1.2.zip" length="6443932" type="application/octet-stream" sparkle:edSignature="ZZ4xu6zm4WaOkhbVj+2lgYHpawfmbwTCeEARpyUXTpU3SV5OXRpUI8sD15NFNYv6FGKtcShr3x2euKPDqJjCBQ=="/>
+        </item>
+        <item>
             <title>2.1.1</title>
             <pubDate>Tue, 25 Mar 2025 21:34:16 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
@@ -21,16 +31,6 @@
             <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
             <description><![CDATA[<p>Thanks for using Tophat!  This update contains a few improvements:</p><ul><li>The welcome window has been redesigned to provide more granular guidance when setting up developer tools for the first time.</li><li>Tophat now uses the latest installed version of the Android command line tools by default.</li></ul>]]></description>
             <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.1.0/Tophat-2.1.0.zip" length="6724178" type="application/octet-stream" sparkle:edSignature="/jmYChYqRLRUX2MOgALICkm59s+OCX+d3KDVstB5uLosrCgbstp7ziyTj0zTubU2EQ29A8ZgF+JFJWAhBQTkBg=="/>
-        </item>
-        <item>
-            <title>2.0.2</title>
-            <pubDate>Wed, 22 Jan 2025 17:00:46 +0000</pubDate>
-            <link>https://github.com/Shopify/tophat</link>
-            <sparkle:version>35</sparkle:version>
-            <sparkle:shortVersionString>2.0.2</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>Thanks for using Tophat! This update fixes an issue where URL parameters passed to Tophat using the localhost service may not be correctly decoded.</p>]]></description>
-            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.0.2/Tophat-2.0.2.zip" length="6705458" type="application/octet-stream" sparkle:edSignature="ilX7BXVd5tJwBIciOB5gemeuWoJj0X109Xd08hxzXZcOwjkBjUP1t5ezztvkuQrzxZr1Xtz2CRVZdSbUWhSXBA=="/>
         </item>
     </channel>
 </rss>
