@@ -20,6 +20,7 @@ enum AdbCommand {
 	case install(serial: String, apkUrl: URL)
 	case launch(serial: String, componentName: String, arguments: [String])
 	case avdName(serial: String)
+	case getProp(serial: String, property: String)
 	case waitForDevice(serial: String)
 	case resolveActivity(serial: String, packageName: String)
 }
@@ -48,6 +49,9 @@ extension AdbCommand: ShellCommand {
 
 			case .avdName(let serial):
 				return ["-s", serial, "emu", "avd", "name"]
+
+			case .getProp(let serial, let property):
+				return ["-s", serial, "shell", "getprop", property]
 
 			case .waitForDevice(let serial):
 				return ["-s", serial, "wait-for-device", "shell", "'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'"]

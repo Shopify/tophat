@@ -25,13 +25,17 @@ struct Adb {
 	}
 
 	static func getVirtualDeviceName(for device: ConnectedDevice) throws -> String {
-		let output = try run(command: .adb(.avdName(serial: device.serial)), log: log)
+		let serial = device.serial
 
-		guard let value = output.components(separatedBy: .newlines).first else {
+		let output = try firstLine(of: .adb(.getProp(serial: serial, property: "ro.boot.qemu.avd_name")))
+			?? firstLine(of: .adb(.getProp(serial: serial, property: "ro.kernel.qemu.avd_name")))
+			?? firstLine(of: .adb(.avdName(serial: serial)))
+
+		guard let output else {
 			throw AdbError()
 		}
 
-		return value
+		return output
 	}
 
 	static func install(serial: String, apkUrl: URL) throws {
@@ -58,6 +62,16 @@ struct Adb {
 		// Artificially give Emulator time to communicate with adb
 		// TODO: Figure out how Android Studio does it without sleeping
 		sleep(3)
+	}
+
+	private static func firstLine(of command: ShellCommand) throws -> String? {
+		let output = try run(command: command, log: log)
+
+		guard let firstLineString = output.components(separatedBy: .newlines).first else {
+			return nil
+		}
+
+		return firstLineString.isEmpty ? nil : firstLineString
 	}
 }
 
