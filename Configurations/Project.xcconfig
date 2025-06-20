@@ -6,4 +6,4 @@
 //  Copyright © 2024 Shopify. All rights reserved.
 //
 
-MACOSX_DEPLOYMENT_TARGET = 14.0
+MACOSX_DEPLOYMENT_TARGET = 15.0
