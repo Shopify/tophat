@@ -24,7 +24,25 @@ final class ArtifactUnpacker: Sendable {
 
 	private func unpack(artifactURL: URL) throws -> Application {
 		guard let fileFormat = ArtifactFileFormat(pathExtension: artifactURL.pathExtension) else {
-			throw ArtifactUnpackerError.unknownFileFormat
+			guard artifactURL.isDirectory else {
+				throw ArtifactUnpackerError.unknownFileFormat
+			}
+
+			let enclosedFileURLs = try FileManager.default.contentsOfDirectory(
+				at: artifactURL,
+				includingPropertiesForKeys: nil
+			)
+
+			let supportedPathExtensions = ArtifactFileFormat.allCases.map(\.pathExtension)
+			let firstSupportedEnclosedFileURL = enclosedFileURLs.first { fileURL in
+				supportedPathExtensions.contains(fileURL.pathExtension)
+			}
+
+			guard let firstSupportedEnclosedFileURL else {
+				throw ArtifactUnpackerError.unknownFileFormat
+			}
+
+			return try unpack(artifactURL: firstSupportedEnclosedFileURL)
 		}
 
 		switch fileFormat {
@@ -60,7 +78,13 @@ final class ArtifactUnpacker: Sendable {
 	}
 
 	private func extractArtifact(at url: URL) throws -> URL {
-		let destinationURL = url.deletingLastPathComponent().appending(path: url.fileName)
+		let archive = try Archive(url: url, accessMode: .read)
+
+		// Since application bundles are directories, avoid creating invalid
+		// bundles if the destination directory would happen to end in ".app"
+		let isDirectlyArchivedApplicationBundle = archive["Info.plist"] != nil
+		let destinationFileName = isDirectlyArchivedApplicationBundle ? url.fileName : url.fileRoot
+		let destinationURL = url.deletingLastPathComponent().appending(path: destinationFileName)
 
 		log.info("Uncompressing artifact at \(url)")
 		try FileManager.default.unzipItem(at: url, to: destinationURL)
@@ -73,6 +97,10 @@ final class ArtifactUnpacker: Sendable {
 private extension URL {
 	var fileName: String {
 		lastPathComponent.replacingOccurrences(of: ".\(pathExtension)", with: "")
+	}
+
+	var fileRoot: String {
+		lastPathComponent.components(separatedBy: ".").first ?? lastPathComponent
 	}
 }
 
