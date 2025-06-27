@@ -165,7 +165,7 @@ Tophat requires a few developer tools to be set up. On first launch, Tophat will
 
 ## Requirements
 
-Tophat requires macOS 14 or later.
+Tophat requires macOS 15 or later.
 
 ### iOS Development
 
