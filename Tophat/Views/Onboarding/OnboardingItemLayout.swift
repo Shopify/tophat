@@ -21,7 +21,7 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 
 	init(
 		title: LocalizedStringKey,
-		description: LocalizedStringKey?,
+		description: LocalizedStringKey? = nil,
 		@ViewBuilder image: @escaping () -> ImageView,
 		@ViewBuilder infoPopoverContent: @escaping () -> InfoPopoverContent,
 		@ViewBuilder content: @escaping () -> Content
@@ -36,7 +36,7 @@ struct OnboardingItemLayout<ImageView: View, InfoPopoverContent: View, Content: 
 
 	init(
 		title: LocalizedStringKey,
-		description: LocalizedStringKey?,
+		description: LocalizedStringKey? = nil,
 		@ViewBuilder image: @escaping () -> ImageView,
 		@ViewBuilder content: @escaping () -> Content
 	) where InfoPopoverContent == EmptyView {

@@ -27,7 +27,7 @@ struct ScreenCopyOnboardingItem: View {
 					.lineLimit(1, reservesSpace: true)
 			}
 		} content: {
-			OnboardingItemStatusIcon(state: isComplete ? .complete : .warning) {
+			OnboardingItemStatusIcon(status: isComplete ? .complete : .incomplete) {
 				OnboardingPopoverContent(title: "Needs Setup (Optional)") {
 					Text("In order to mirror the display of a connected Android device, scrcpy must be installed.")
 						.lineLimit(2, reservesSpace: true)

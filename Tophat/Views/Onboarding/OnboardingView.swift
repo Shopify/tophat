@@ -19,11 +19,13 @@ struct OnboardingView: View {
 			VStack(alignment: .center, spacing: 0) {
 				ZStack {
 					RadialGradient(
-						gradient: Gradient(colors: [.onboardingGradient.opacity(0.3), Color.clear]),
+						colors: [.onboardingGradient.opacity(0.3), Color.clear],
 						center: .center,
 						startRadius: 0,
-						endRadius: gradientDiameter / 2)
+						endRadius: gradientDiameter / 2
+					)
 					.frame(width: gradientDiameter, height: gradientDiameter)
+					.blur(radius: 30)
 
 					Image(.settingsAppIcon)
 						.resizable()
