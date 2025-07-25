@@ -7,44 +7,48 @@
 //
 
 import SwiftUI
+import ShellKit
 
 struct XcodeOnboardingItem: View {
 	@Environment(\.controlActiveState) private var controlActiveState
-	@State private var isComplete = Self.isXcodeInstalled
+	@State private var status: OnboardingItemStatus = .indeterminate
 
 	var body: some View {
 		OnboardingItemLayout(
 			title: "Xcode",
-			description: "Tophat uses Xcode to manage devices and install apps."
+			description: "Tophat uses Xcode to install apps on devices and simulators."
 		) {
 			Image(.xcode)
 				.resizable()
 				.interpolation(.high)
+		} infoPopoverContent: {
+			OnboardingPopoverContent(title: "Getting Started") {
+				Text("Xcode can be downloaded from [Apple Developer](https://developer.apple.com/download/applications/). Make sure to open Xcode to complete the required setup tasks.")
+					.lineLimit(2, reservesSpace: true)
+			}
 		} content: {
-			OnboardingItemStatusIcon(state: isComplete ? .complete : .warning) {
+			OnboardingItemStatusIcon(status: status) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("Xcode can be downloaded from the [Apple Developer Portal](https://developer.apple.com/download/applications/) or by using [xcodes](https://github.com/RobotsAndPencils/xcodes).")
+					Text("In order to install apps on Apple devices or simulators, Xcode must be installed and set up.")
 						.lineLimit(2, reservesSpace: true)
 				}
 			}
 		}
 		.onChange(of: controlActiveState) { _, newValue in
 			if newValue == .key {
-				updateStatus()
+				Task { await updateStatus() }
 			}
 		}
 	}
 
-	private func updateStatus() {
-		let newValue = Self.isXcodeInstalled
-
-		if self.isComplete != newValue {
-			self.isComplete = newValue
-		}
+	private func updateStatus() async {
+		status = .indeterminate
+		let isXcodeInstalledResolved = (try? await isXcodeInstalled()) ?? false
+		status = isXcodeInstalledResolved ? .complete : .incomplete
 	}
 
-	private static var isXcodeInstalled: Bool {
-		let xcodePath = "/Applications/Xcode.app"
-		return FileManager.default.fileExists(atPath: xcodePath)
+	private nonisolated func isXcodeInstalled() async throws -> Bool {
+		let output = try run(command: .xcodebuild(.version), log: log)
+		return output.contains("Build version")
 	}
 }

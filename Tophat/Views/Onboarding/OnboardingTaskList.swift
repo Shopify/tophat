@@ -17,13 +17,13 @@ struct OnboardingTaskList: View {
 			Section {
 				XcodeOnboardingItem()
 				XcodeCommandLineToolsOnboardingItem()
-				XcodeSimulatorSDKsOnboardingItem()
+				XcodePlatformsOnboardingItem()
 			}
 
 			Section {
 				AndroidStudioOnboardingItem()
-				AndroidSDKsOnboardingItem(utilityPathPreferences: utilityPathPreferences)
-				AndroidEmulatorsOnboardingItem()
+				AndroidSDKToolsOnboardingItem(utilityPathPreferences: utilityPathPreferences)
+				AndroidPlatformsOnboardingItem(utilityPathPreferences: utilityPathPreferences)
 			}
 
 			Section {

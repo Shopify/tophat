@@ -12,15 +12,17 @@ struct XcodeCommandLineToolsOnboardingItem: View {
 	@State private var isComplete = Self.isCommandLineToolsReachable
 
 	var body: some View {
-		OnboardingItemLayout(
-			title: "Xcode Command Line Tools",
-			description: nil
-		) {
+		OnboardingItemLayout(title: "Xcode Command Line Tools") {
 			EmptyView()
+		} infoPopoverContent: {
+			OnboardingPopoverContent(title: "Getting Started") {
+				Text("The Xcode Command Line Tools are installed automatically the first time you open Xcode.")
+					.lineLimit(2, reservesSpace: true)
+			}
 		} content: {
-			OnboardingItemStatusIcon(state: isComplete ? .complete : .warning) {
+			OnboardingItemStatusIcon(status: isComplete ? .complete : .incomplete) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("Open Xcode to be prompted to install the Xcode Command Line Tools.")
+					Text("In order to install apps on Apple devices or simulators, the Xcode Command Line Tools must be installed.")
 						.lineLimit(2, reservesSpace: true)
 				}
 			}

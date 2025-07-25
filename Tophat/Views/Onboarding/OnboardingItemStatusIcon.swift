@@ -9,30 +9,25 @@
 import SwiftUI
 
 struct OnboardingItemStatusIcon<Content: View>: View {
-	enum Value {
-		case complete
-		case warning
-	}
-
 	@State private var popoverPresented = false
 
-	private let state: Value
+	private let status: OnboardingItemStatus
 	private let content: () -> Content?
 
-	init(state: Value, @ViewBuilder content: @escaping () -> Content? = { EmptyView() }) {
-		self.state = state
+	init(status: OnboardingItemStatus, @ViewBuilder content: @escaping () -> Content? = { EmptyView() }) {
+		self.status = status
 		self.content = content
 	}
 
 	var body: some View {
 		Group {
-			switch state {
+			switch status {
 				case .complete:
 					Image(systemName: "checkmark.circle")
 						.font(.title2)
 						.foregroundColor(.green)
 
-				case .warning:
+				case .incomplete:
 					Button {
 						popoverPresented.toggle()
 					} label: {
@@ -46,8 +41,13 @@ struct OnboardingItemStatusIcon<Content: View>: View {
 							.padding()
 							.frame(maxWidth: 400, alignment: .topLeading)
 					}
+				case .indeterminate:
+					ProgressView()
+						.progressViewStyle(.circular)
+						.controlSize(.small)
 			}
 		}
+		.frame(minWidth: 20, minHeight: 20, alignment: .center)
 		.padding(.trailing, 6)
 	}
 }

@@ -15,15 +15,20 @@ struct AndroidStudioOnboardingItem: View {
 	var body: some View {
 		OnboardingItemLayout(
 			title: "Android Studio",
-			description: "Tophat uses Android Studio to manage devices and install apps."
+			description: "Tophat uses Android Studio to install apps on devices and emulators."
 		) {
 			Image(.androidStudio)
 				.resizable()
 				.interpolation(.high)
+		} infoPopoverContent: {
+			OnboardingPopoverContent(title: "Getting Started") {
+				Text("Android Studio can be downloaded from [Android Developers](https://developer.android.com/studio).")
+					.lineLimit(2, reservesSpace: true)
+			}
 		} content: {
-			OnboardingItemStatusIcon(state: isComplete ? .complete : .warning) {
+			OnboardingItemStatusIcon(status: isComplete ? .complete : .incomplete) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("Android Studio can be downloaded from [Android Developers](https://developer.android.com/studio).")
+					Text("To provide a simple way of installing the required Android SDKs and tools, Android Studio must be installed.")
 						.lineLimit(2, reservesSpace: true)
 				}
 			}
