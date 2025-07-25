@@ -32,3 +32,10 @@ extension TophatExtension: Hashable {
 		hasher.combine(id)
 	}
 }
+
+extension TophatExtension: Comparable {
+	static func < (lhs: TophatExtension, rhs: TophatExtension) -> Bool {
+		String(localized: lhs.specification.title)
+			.caseInsensitiveCompare(String(localized: rhs.specification.title)) == .orderedAscending
+	}
+}
