@@ -52,7 +52,7 @@ import TophatFoundation
 				devices.append(contentsOf: deviceSubset)
 			}
 
-			return devices.sortedByPlatformPriority()
+			return devices.sortedByLogicalPriority()
 		}
 	}
 }
@@ -88,13 +88,24 @@ private extension Connection {
 }
 
 private extension Array<Device> {
-	func sortedByPlatformPriority() -> [Element] {
+	func sortedByLogicalPriority() -> [Element] {
 		sorted { first, second in
-			if first.connection.sortPriority == second.connection.sortPriority {
+			if first.connection.sortPriority != second.connection.sortPriority {
+				return first.connection.sortPriority < second.connection.sortPriority
+			}
+
+			if first.runtime.platform.sortPriority != second.runtime.platform.sortPriority {
 				return first.runtime.platform.sortPriority < second.runtime.platform.sortPriority
 			}
 
-			return first.connection.sortPriority < second.connection.sortPriority
+			let nameComparison = first.name.compare(second.name)
+
+			if nameComparison != .orderedSame {
+				return nameComparison == .orderedAscending
+			}
+
+			return first.runtime.version.description
+				.caseInsensitiveCompare(second.runtime.version.description) == .orderedAscending
 		}
 	}
 }
