@@ -38,7 +38,11 @@ import ExtensionFoundation
 							specifications.append(specification)
 						}
 
-						return specifications
+						let coreExtensions = specifications.filter { specification in
+							specification.id == "com.shopify.Tophat.TophatCoreExtension"
+						}
+
+						return specifications.sorted(priorityItems: coreExtensions)
 					}
 				}
 			} catch {
