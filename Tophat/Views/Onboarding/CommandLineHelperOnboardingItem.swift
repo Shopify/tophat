@@ -14,13 +14,13 @@ struct CommandLineHelperOnboardingItem: View {
 	var body: some View {
 		OnboardingItemLayout(
 			title: "Command Line Helper",
-			description: "The `tophatctl` command allows you to control Tophat from the command line."
+			description: "The `tophatctl` command lets you control Tophat from the command line."
 		) {
 			Image(.terminal)
 				.resizable()
 		} content: {
 			if symbolicLinkManager.isInstalled {
-				OnboardingItemStatusIcon(state: .complete)
+				OnboardingItemStatusIcon(status: .complete)
 			} else {
 				Button("Install…") {
 					Task {
