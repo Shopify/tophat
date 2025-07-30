@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>2.2.0</title>
+            <pubDate>Wed, 30 Jul 2025 20:15:22 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>39</sparkle:version>
+            <sparkle:shortVersionString>2.2.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Thanks for using Tophat! This update contains improvements and bug fixes:</p><ul><li>The welcome window has been updated to provide additional guidance and to better detect nonstandard installations of Xcode.</li><li>Fixed an issue that prevented Tophat from installing apps from zipped archives that contained a parent folder.</li><li>Fixed an issue that caused the order of devices and simulators to change unexpectedly.</li><li>Fixed an issue that caused the order of extensions to change unexpectedly.</li></ul><p>Tophat now requires macOS 15 or later.</p>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.2.0/Tophat-2.2.0.zip" length="6463619" type="application/octet-stream" sparkle:edSignature="/ipzanwDW9UQafBrHiiPNdo5h6hRXVuQ/7m2TJj8E+I8Y1RCeHZbSOkewkt4cD3twaHwGGMtJqNIz0TT4D9qBg=="/>
+        </item>
+        <item>
             <title>2.1.2</title>
             <pubDate>Mon, 02 Jun 2025 16:36:22 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
