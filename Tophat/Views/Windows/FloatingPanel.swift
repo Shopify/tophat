@@ -8,24 +8,23 @@
 
 import AppKit
 import SwiftUI
+import VisualEffects
 
 final class FloatingPanel<Content: View>: NSPanel, CustomWindowPresentation {
 	@Binding var isPresented: Bool
 	private let isPersistent: Bool
 	private let rootView: () -> Content
 
-	private lazy var visualEffectView: NSVisualEffectView = {
-		let view = NSVisualEffectView()
-		view.blendingMode = .behindWindow
-		view.state = .active
-		view.material = .popover
-		view.translatesAutoresizingMaskIntoConstraints = true
-		return view
-	}()
-
 	private lazy var hostingView: NSHostingView<some View> = {
 		let view = NSHostingView(
 			rootView: rootView()
+				.background(
+					VisualEffectBlur(
+						material: .popover,
+						blendingMode: .behindWindow,
+						state: .active
+					)
+				)
 				.environment(\.customWindowPresentation, self)
 				.edgesIgnoringSafeArea(.all)
 				// Compensate for extra height from hidden title bar.
@@ -64,16 +63,8 @@ final class FloatingPanel<Content: View>: NSPanel, CustomWindowPresentation {
 		standardWindowButton(.miniaturizeButton)?.isHidden = true
 		standardWindowButton(.zoomButton)?.isHidden = true
 
-		contentView = visualEffectView
-		visualEffectView.addSubview(hostingView)
+		contentView = hostingView
 		setContentSize(hostingView.intrinsicContentSize)
-
-		NSLayoutConstraint.activate([
-			hostingView.topAnchor.constraint(equalTo: visualEffectView.topAnchor),
-			hostingView.trailingAnchor.constraint(equalTo: visualEffectView.trailingAnchor),
-			hostingView.bottomAnchor.constraint(equalTo: visualEffectView.bottomAnchor),
-			hostingView.leadingAnchor.constraint(equalTo: visualEffectView.leadingAnchor)
-		])
 	}
 
 	private var titleBarHeight: CGFloat {
