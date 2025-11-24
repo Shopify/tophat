@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>2.2.1</title>
+            <pubDate>Mon, 24 Nov 2025 17:56:51 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>40</sparkle:version>
+            <sparkle:shortVersionString>2.2.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Thanks for using Tophat!  This update fixes an issue that caused Tophat to crash for some users when using the "Launch App from Location" option.</p>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.2.1/Tophat-2.2.1.zip" length="6461320" type="application/octet-stream" sparkle:edSignature="8hejrOBKhK9aqK+53/SttC9YBv9baus8E7qrrPgimGKg+m+D2yYW2h0FEq1u9ueQLxhklRqQvuS1kI6F6zW2Ag=="/>
+        </item>
+        <item>
             <title>2.2.0</title>
             <pubDate>Wed, 30 Jul 2025 20:15:22 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
