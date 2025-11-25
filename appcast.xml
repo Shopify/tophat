@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>2.3.0</title>
+            <pubDate>Tue, 25 Nov 2025 22:09:57 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>42</sparkle:version>
+            <sparkle:shortVersionString>2.3.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Thanks for using Tophat!  This update adds support for macOS Tahoe and Liquid Glass.</p>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.3.0/Tophat-2.3.0.zip" length="7740352" type="application/octet-stream" sparkle:edSignature="bVJeKnyBsLCNF1XyQHXQtxBvWNBmhk1iH3CZ1ye6lGhOhJx6RdXrxXf5fRQ+8nk1R3RJ8tPy5GPK6Cq0NZ0VDg=="/>
+        </item>
+        <item>
             <title>2.2.1</title>
             <pubDate>Mon, 24 Nov 2025 17:56:51 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
