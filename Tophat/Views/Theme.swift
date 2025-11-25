@@ -10,13 +10,22 @@ import Foundation
 
 enum Theme {
 	enum Size {
-		static let menuMargin: CGFloat = 5
-		static let menuPaddingHorizontal: CGFloat = 9
+		private static let shouldUseGlassEffects = {
+			if #available(macOS 26.0, *) {
+				true
+			} else {
+				false
+			}
+		}()
+
+		static let menuMargin: CGFloat = shouldUseGlassEffects ? 7 : 5
+		static let menuItemSpacing: CGFloat = menuMargin - (shouldUseGlassEffects ? 2 : 0)
+		static let menuPaddingHorizontal: CGFloat = shouldUseGlassEffects ? 7 : 9
 		static let menuInsetHorizontal: CGFloat = menuMargin + menuPaddingHorizontal
 		static let menuPaddingVertical: CGFloat = 3
 		static let menuInsetVertical: CGFloat = menuMargin + menuPaddingVertical
 
 		static let hairlineWidth: CGFloat = 0.5
-		static let panelCornerRadius: CGFloat = 10
+		static let panelCornerRadius: CGFloat = shouldUseGlassEffects ? 14 : 10
 	}
 }

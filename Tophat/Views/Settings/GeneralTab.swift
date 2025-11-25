@@ -22,7 +22,7 @@ struct GeneralTab: View {
 					Text("Open at Login")
 					Text("When enabled, Tophat will open automatically when you log in.")
 				}
-				.controlSize(.large)
+				.controlSize(.mini)
 			}
 
 			Section {
@@ -53,7 +53,7 @@ struct GeneralTab: View {
 					Text("Automatically Check for Updates")
 					Text("When enabled, Tophat will periodically check for new updates.")
 				}
-				.controlSize(.large)
+				.controlSize(.mini)
 
 				Toggle(isOn: $updateController.isAutomaticUpdateDownloadEnabled) {
 					Text("Automatically Download Updates")

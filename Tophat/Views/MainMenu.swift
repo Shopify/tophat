@@ -17,7 +17,7 @@ struct MainMenu: View {
 	@State private var aboutWindowPresented = false
 
 	var body: some View {
-		VStack(alignment: .leading, spacing: Theme.Size.menuMargin) {
+		VStack(alignment: .leading, spacing: Theme.Size.menuItemSpacing) {
 			MenuHeader()
 				.padding(Theme.Size.menuPaddingHorizontal)
 

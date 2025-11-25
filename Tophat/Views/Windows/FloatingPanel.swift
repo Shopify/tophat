@@ -18,13 +18,7 @@ final class FloatingPanel<Content: View>: NSPanel, CustomWindowPresentation {
 	private lazy var hostingView: NSHostingView<some View> = {
 		let view = NSHostingView(
 			rootView: rootView()
-				.background(
-					VisualEffectBlur(
-						material: .popover,
-						blendingMode: .behindWindow,
-						state: .active
-					)
-				)
+				.modifier(BackgroundViewModifier())
 				.environment(\.customWindowPresentation, self)
 				.edgesIgnoringSafeArea(.all)
 				// Compensate for extra height from hidden title bar.
@@ -55,6 +49,10 @@ final class FloatingPanel<Content: View>: NSPanel, CustomWindowPresentation {
 		titleVisibility = .hidden
 		titlebarAppearsTransparent = true
 		hidesOnDeactivate = !isPersistent
+
+		if #available(macOS 26.0, *) {
+			backgroundColor = .clear
+		}
 
 		animationBehavior = .none
 		collectionBehavior = [.auxiliary, .stationary, .moveToActiveSpace, .fullScreenAuxiliary]
@@ -97,5 +95,23 @@ final class FloatingPanel<Content: View>: NSPanel, CustomWindowPresentation {
 
 	func dismiss() {
 		close()
+	}
+}
+
+private struct BackgroundViewModifier: ViewModifier {
+	func body(content: Content) -> some View {
+		if #available(macOS 26.0, *) {
+			content
+				.glassEffect(.regular, in: RoundedRectangle(cornerRadius: 16))
+		} else {
+			content
+				.background(
+					VisualEffectBlur(
+						material: .popover,
+						blendingMode: .behindWindow,
+						state: .active
+					)
+				)
+		}
 	}
 }

@@ -1083,7 +1083,7 @@
 			repositoryURL = "https://github.com/lfroms/fluid-menu-bar-extra";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.2;
+				version = 1.2.0;
 			};
 		};
 		8090E266296775BE003106B9 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
