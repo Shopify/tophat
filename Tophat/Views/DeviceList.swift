@@ -18,7 +18,7 @@ struct DeviceList: View {
 	@State private var isOtherSimulatorsExpanded = false
 
 	var body: some View {
-		VStack(alignment: .leading, spacing: Theme.Size.menuMargin) {
+		VStack(alignment: .leading, spacing: Theme.Size.menuItemSpacing) {
 			if !devices.isEmpty {
 				DevicePickerSection(
 					title: "Devices",

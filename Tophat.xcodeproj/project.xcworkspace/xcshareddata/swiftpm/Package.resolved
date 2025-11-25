@@ -1,13 +1,13 @@
 {
-  "originHash" : "cde3a2a598d804871330e8a4a457e4ffd310ee5cf428025bd57ce19ebcde10f5",
+  "originHash" : "55faea6e22a88099a98560c65c5d1e20301236f9193e614c2be7b01ee7c7f03e",
   "pins" : [
     {
       "identity" : "fluid-menu-bar-extra",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lfroms/fluid-menu-bar-extra",
       "state" : {
-        "revision" : "b8d41bc1c2609c3943c47d00fb539de38f90b817",
-        "version" : "1.0.2"
+        "revision" : "81c7af7a2bc7ba0e9d8cd0d7faf58a8c870306fa",
+        "version" : "1.2.0"
       }
     },
     {

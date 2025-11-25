@@ -67,7 +67,7 @@ private struct MenuItemButtonStyleInternal: ButtonStyle {
 			.padding(.horizontal, Theme.Size.menuPaddingHorizontal)
 			.frame(maxWidth: .infinity, alignment: .leading)
 			.background {
-				RoundedRectangle(cornerRadius: 4)
+				RoundedRectangle(cornerRadius: highlightCornerRadius)
 					.fill(.quaternary)
 					.phaseAnimator([isEnabled && hovering ? 1 : 0, 0, 1], trigger: animationTrigger) { view, phase  in
 						view.opacity(phase)
@@ -78,8 +78,17 @@ private struct MenuItemButtonStyleInternal: ButtonStyle {
 			.onHover { hovering in
 				self.hovering = hovering
 			}
+			.contentShape(RoundedRectangle(cornerRadius: highlightCornerRadius))
 			.environment(\.buttonPressed, configuration.isPressed)
 			.environment(\.buttonHovered, hovering)
+	}
+
+	private var highlightCornerRadius: CGFloat {
+		if #available(macOS 26.0, *) {
+			10
+		} else {
+			4
+		}
 	}
 }
 

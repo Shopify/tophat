@@ -16,7 +16,7 @@ struct OnboardingView: View {
 
 	var body: some View {
 		HStack(spacing: 0) {
-			VStack(alignment: .center, spacing: 0) {
+			VStack(alignment: .center, spacing: 12) {
 				ZStack {
 					RadialGradient(
 						colors: [.onboardingGradient.opacity(0.3), Color.clear],
@@ -34,18 +34,20 @@ struct OnboardingView: View {
 				}
 				.frame(height: iconSize)
 
-				Text("Tophat")
-					.font(.system(size: 36, weight: .bold))
-					.foregroundColor(.primary)
+				VStack(alignment: .center, spacing: 0) {
+					Text("Tophat")
+						.font(.system(size: 36, weight: .bold))
+						.foregroundColor(.primary)
 
-				if let marketingVersion = Bundle.main.shortVersionString {
-					Text("Version \(marketingVersion)")
-						.foregroundColor(.secondary)
-						.padding(.top, 4)
+					if let marketingVersion = Bundle.main.shortVersionString {
+						Text("Version \(marketingVersion)")
+							.foregroundColor(.secondary)
+							.padding(.top, 4)
+					}
+
+					CustomizeLocationsButton()
+						.padding(.top, 24)
 				}
-
-				CustomizeLocationsButton()
-					.padding(.top, 24)
 			}
 			.frame(minWidth: 400, maxHeight: .infinity)
 			.background(Color.onboardingBackground)
@@ -56,6 +58,7 @@ struct OnboardingView: View {
 				Button("Start Using Tophat") {
 					customWindowPresentation?.dismiss()
 				}
+				.buttonStyle(.borderedProminent)
 				.controlSize(.large)
 				.keyboardShortcut(.return)
 				.padding(.bottom, 28)

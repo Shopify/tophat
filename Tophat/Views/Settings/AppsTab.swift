@@ -32,7 +32,7 @@ struct AppsTab: View {
 						Text("Quick Launch")
 						Text("The apps below are displayed in the Quick Launch panel so that you can launch them with one click.")
 					}
-					.controlSize(.large)
+					.controlSize(.mini)
 				}
 			}
 

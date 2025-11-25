@@ -44,7 +44,10 @@ let package = Package(
 		),
 		.target(
 			name: "TophatControlServices",
-			dependencies: [.product(name: "Logging", package: "swift-log")]
+			dependencies: [
+				.target(name: "TophatFoundation"),
+				.product(name: "Logging", package: "swift-log")
+			]
 		),
 		.target(name: "TophatFoundation"),
 		.target(
