@@ -14,6 +14,9 @@ public struct InstallRecipe: Equatable, Hashable, Codable, Sendable {
 	/// The arguments to pass to the application at launch.
 	public let launchArguments: [String]
 
+	/// An optional deep link to open after launching the application (Android only).
+	public let deepLink: String?
+
 	/// The expected platform of the artifact, used to preheat the target device.
 	public let platformHint: Platform?
 
@@ -23,11 +26,13 @@ public struct InstallRecipe: Equatable, Hashable, Codable, Sendable {
 	public init(
 		source: ArtifactSource,
 		launchArguments: [String] = [],
+		deepLink: String? = nil,
 		platformHint: Platform? = nil,
 		destinationHint: DeviceType? = nil
 	) {
 		self.source = source
 		self.launchArguments = launchArguments
+		self.deepLink = deepLink
 		self.platformHint = platformHint
 		self.destinationHint = destinationHint
 	}

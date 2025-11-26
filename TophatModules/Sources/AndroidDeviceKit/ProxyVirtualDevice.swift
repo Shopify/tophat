@@ -120,9 +120,9 @@ extension ProxyVirtualDevice: Device {
 		try await connectedDeviceStore.connectedDevice?.install(application: application)
 	}
 
-	func launch(application: Application, arguments: [String]? = nil) async throws {
+	func launch(application: Application, arguments: [String]? = nil, deepLink: String? = nil) async throws {
 		// Equivalent errors thrown by ConnectedDevice
-		try await connectedDeviceStore.connectedDevice?.launch(application: application, arguments: arguments)
+		try await connectedDeviceStore.connectedDevice?.launch(application: application, arguments: arguments, deepLink: deepLink)
 	}
 
 	func stream() async throws {

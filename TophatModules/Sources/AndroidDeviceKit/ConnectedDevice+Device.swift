@@ -72,12 +72,18 @@ extension ConnectedDevice: Device {
 		}
 	}
 
-	func launch(application: Application, arguments: [String]? = nil) throws {
+	func launch(application: Application, arguments: [String]? = nil, deepLink: String? = nil) throws {
 		let bundleIdentifier = try application.bundleIdentifier
 
 		do {
-			let componentName = try Adb.resolveActivity(serial: id, packageName: bundleIdentifier)
-			try Adb.launch(serial: id, componentName: componentName, arguments: arguments ?? [])
+			if let deepLink = deepLink {
+				// Use deep link to launch the app
+				try Adb.deepLink(serial: id, deepLink: deepLink)
+			} else {
+				// Use regular component launch
+				let componentName = try Adb.resolveActivity(serial: id, packageName: bundleIdentifier)
+				try Adb.launch(serial: id, componentName: componentName, arguments: arguments ?? [])
+			}
 		} catch {
 			throw DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .unexpected, deviceType: type)
 		}

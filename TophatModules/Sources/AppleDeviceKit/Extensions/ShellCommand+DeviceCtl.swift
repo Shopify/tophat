@@ -19,6 +19,7 @@ enum DeviceCtlCommand {
 	case list(outputUrl: URL)
 	case install(device: String, bundleUrl: URL)
 	case launch(device: String, bundleId: String, outputUrl: URL, arguments: [String])
+	case openURL(device: String, url: String)
 	case lockState(device: String, outputURL: URL)
 }
 
@@ -43,6 +44,9 @@ extension DeviceCtlCommand: ShellCommand {
 
 			case .launch(let device, let bundleId, let outputUrl, let arguments):
 				return ["devicectl", "device", "process", "launch", "--device", device, bundleId, "--json-output", outputUrl.formattedAsArgument()] + arguments
+
+			case .openURL(let device, let url):
+				return ["devicectl", "device", "process", "open", "--device", device, url]
 
 			case .lockState(let device, let outputURL):
 				return ["devicectl", "device", "info", "lockState", "--device", device, "--json-output", outputURL.formattedAsArgument()]

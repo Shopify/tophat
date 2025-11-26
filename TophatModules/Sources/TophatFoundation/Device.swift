@@ -42,8 +42,11 @@ public protocol Device: Sendable {
 	func install(application: Application) async throws
 
 	/// Launches a given application on the device.
-	/// - Parameter application: The application to launch
-	func launch(application: Application, arguments: [String]?) async throws
+	/// - Parameters:
+	///   - application: The application to launch
+	///   - arguments: Launch arguments to pass to the application
+	///   - deepLink: An optional deep link to open after launching (Android only)
+	func launch(application: Application, arguments: [String]?, deepLink: String?) async throws
 
 	/// Waits until the device has been unlocked.
 	func waitUntilUnlocked() async throws

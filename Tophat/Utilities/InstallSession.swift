@@ -124,7 +124,8 @@ actor InstallSession {
 		try await installApplication(
 			application: application,
 			device: device,
-			launchArguments: ticket.launchArguments
+			launchArguments: ticket.launchArguments,
+			deepLink: ticket.deepLink
 		)
 
 		if let iconURL = application.icon, let quickLaunchEntryID = context?.quickLaunchEntryID {

@@ -38,6 +38,10 @@ final class SimCtl {
 		try run(command: .simCtl(.launch(device: udid, bundleIdentifier: bundleIdentifier, arguments: arguments)), log: log)
 	}
 
+	static func openURL(udid: String, url: String) throws {
+		try run(command: .simCtl(.openURL(device: udid, url: url)), log: log)
+	}
+
 	static func terminate(udid: String, bundleIdentifier: String) throws {
 		try run(command: .simCtl(.terminate(device: udid, bundleIdentifier: bundleIdentifier)), log: log)
 	}
