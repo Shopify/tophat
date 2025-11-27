@@ -51,7 +51,7 @@ extension SimCtlCommand: ShellCommand {
 				return ["simctl", "launch", device, bundleIdentifier] + arguments
 
 			case .openURL(let device, let url):
-				return ["simctl", "openurl", device, url]
+				return ["simctl", "openurl", device, url.wrappedInQuotationMarks()]
 
 			case .terminate(let device, let bundleIdentifier):
 				return ["simctl", "terminate", device, bundleIdentifier]

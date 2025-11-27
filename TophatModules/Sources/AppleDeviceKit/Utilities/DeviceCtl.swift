@@ -42,7 +42,7 @@ final class DeviceCtl {
 	}
 
 	static func openURL(udid: String, url: String) throws {
-		try run(command: .deviceCtl(.openURL(device: udid, url: url)), log: log)
+		try run(command: .deviceCtl(.openURL(device: udid, url: url.wrappedInQuotationMarks())), log: log)
 	}
 
 	static nonisolated func isLocked(udid: String) async throws -> Bool {
