@@ -9,6 +9,7 @@
 import Foundation
 import TophatFoundation
 import ZIPFoundation
+import ShellKit
 
 final class ArtifactUnpacker: Sendable {
 	/// Unpacks a downloaded artifact in an `ArtifactContainer` and places it in the same container.
@@ -23,7 +24,7 @@ final class ArtifactUnpacker: Sendable {
 	}
 
 	private func unpack(artifactURL: URL) throws -> Application {
-		guard let fileFormat = ArtifactFileFormat(pathExtension: artifactURL.pathExtension) else {
+		guard let fileFormat = ArtifactFileFormat(url: artifactURL) else {
 			guard artifactURL.isDirectory else {
 				throw ArtifactUnpackerError.unknownFileFormat
 			}
@@ -33,9 +34,8 @@ final class ArtifactUnpacker: Sendable {
 				includingPropertiesForKeys: nil
 			)
 
-			let supportedPathExtensions = ArtifactFileFormat.allCases.map(\.pathExtension)
 			let firstSupportedEnclosedFileURL = enclosedFileURLs.first { fileURL in
-				supportedPathExtensions.contains(fileURL.pathExtension)
+				ArtifactFileFormat(url: fileURL) != nil
 			}
 
 			guard let firstSupportedEnclosedFileURL else {
@@ -48,6 +48,10 @@ final class ArtifactUnpacker: Sendable {
 		switch fileFormat {
 			case .zip:
 				let extractedURL = try extractArtifact(at: artifactURL)
+				return try unpack(artifactURL: extractedURL)
+
+			case .tarGzip:
+				let extractedURL = try extractTarGzipArtifact(at: artifactURL)
 				return try unpack(artifactURL: extractedURL)
 
 			case .appStorePackage:
@@ -92,6 +96,25 @@ final class ArtifactUnpacker: Sendable {
 
 		return destinationURL
 	}
+
+	private func extractTarGzipArtifact(at url: URL) throws -> URL {
+		// Use tar command to extract .tar.gz files
+		let destinationFileName = url.fileRootForTarGz
+		let destinationURL = url.deletingLastPathComponent().appending(path: destinationFileName)
+
+		log.info("Extracting tar.gz artifact at \(url)")
+
+		// Create destination directory
+		try FileManager.default.createDirectory(at: destinationURL, withIntermediateDirectories: true)
+
+		// Extract using tar command: tar -xzf <file> -C <destination>
+		let tarCommand = TarCommand.extract(archiveUrl: url, destinationUrl: destinationURL)
+		try run(command: tarCommand, log: log)
+
+		log.info("Artifact extracted to \(destinationURL)")
+
+		return destinationURL
+	}
 }
 
 private extension URL {
@@ -102,10 +125,45 @@ private extension URL {
 	var fileRoot: String {
 		lastPathComponent.components(separatedBy: ".").first ?? lastPathComponent
 	}
+
+	var fileRootForTarGz: String {
+		// Remove .tar.gz or .tgz extension
+		let name = lastPathComponent
+		if name.hasSuffix(".tar.gz") {
+			return String(name.dropLast(7))
+		} else if name.hasSuffix(".tgz") {
+			return String(name.dropLast(4))
+		}
+		return fileRoot
+	}
 }
 
 enum ArtifactUnpackerError: Error {
 	case unknownFileFormat
 	case artifactNotAvailable
 	case failedToLocateBundleInAppStorePackage
+}
+
+// MARK: - Tar Command
+
+private enum TarCommand {
+	case extract(archiveUrl: URL, destinationUrl: URL)
+}
+
+extension TarCommand: ShellCommand {
+	var executable: Executable {
+		.name("tar")
+	}
+
+	var arguments: [String] {
+		switch self {
+		case .extract(let archiveUrl, let destinationUrl):
+			return [
+				"-xzf",
+				archiveUrl.path(percentEncoded: false),
+				"-C",
+				destinationUrl.path(percentEncoded: false)
+			]
+		}
+	}
 }
