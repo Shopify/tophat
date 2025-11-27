@@ -338,6 +338,128 @@ struct URLReaderTests {
 		#expect(result == .install(requests: expectedRequests))
 	}
 
+	@Test("Handles install route with deepLink parameter", arguments: urlPrefixes)
+	func handlesInstallRouteWithDeepLinkParameter(urlPrefix: String) async throws {
+		let result = try result(url: url(prefix: urlPrefix, path: "install/test?one=a&two=b&deepLink=myscheme://path/to/feature"))
+
+		let expectedRequests: [InstallRecipe] = [
+			.init(
+				source: .artifactProvider(
+					metadata: .init(
+						id: "test",
+						parameters: ["one": "a", "two": "b"]
+					)
+				),
+				launchArguments: [],
+				deepLink: "myscheme://path/to/feature",
+				platformHint: nil,
+				destinationHint: nil
+			)
+		]
+
+		#expect(result == .install(requests: expectedRequests))
+	}
+
+	@Test("Removes percent encoding from deepLink parameter values", arguments: urlPrefixes)
+	func removesPercentEncodingFromDeepLinkParameterValues(urlPrefix: String) async throws {
+		let result = try result(url: url(prefix: urlPrefix, path: "install/test?deepLink=myscheme%3A%2F%2Fpath"))
+
+		let expectedRequests: [InstallRecipe] = [
+			.init(
+				source: .artifactProvider(
+					metadata: .init(
+						id: "test",
+						parameters: [:]
+					)
+				),
+				launchArguments: [],
+				deepLink: "myscheme://path",
+				platformHint: nil,
+				destinationHint: nil
+			)
+		]
+
+		#expect(result == .install(requests: expectedRequests))
+	}
+
+	@Test("Handles install route with all parameters including deepLink", arguments: urlPrefixes)
+	func handlesInstallRouteAllParametersIncludingDeepLink(urlPrefix: String) async throws {
+		let result = try result(url: url(prefix: urlPrefix, path: "install/test?one=a&two=b&platform=android&destination=device&arguments=arg1,arg2&deepLink=myscheme://feature&one=c&two=d&platform=ios&destination=simulator&arguments=arg3&deepLink=otherscheme://other"))
+
+		let expectedRequests: [InstallRecipe] = [
+			.init(
+				source: .artifactProvider(
+					metadata: .init(
+						id: "test",
+						parameters: ["one": "a", "two": "b"]
+					)
+				),
+				launchArguments: ["arg1", "arg2"],
+				deepLink: "myscheme://feature",
+				platformHint: .android,
+				destinationHint: .device
+			),
+			.init(
+				source: .artifactProvider(
+					metadata: .init(
+						id: "test",
+						parameters: ["one": "c", "two": "d"]
+					)
+				),
+				launchArguments: ["arg3"],
+				deepLink: "otherscheme://other",
+				platformHint: .iOS,
+				destinationHint: .simulator
+			)
+		]
+
+		#expect(result == .install(requests: expectedRequests))
+	}
+
+	@Test("Handles install route without deepLink parameter", arguments: urlPrefixes)
+	func handlesInstallRouteWithoutDeepLinkParameter(urlPrefix: String) async throws {
+		let result = try result(url: url(prefix: urlPrefix, path: "install/test?one=a&two=b&platform=android&destination=device&arguments=arg1,arg2"))
+
+		let expectedRequests: [InstallRecipe] = [
+			.init(
+				source: .artifactProvider(
+					metadata: .init(
+						id: "test",
+						parameters: ["one": "a", "two": "b"]
+					)
+				),
+				launchArguments: ["arg1", "arg2"],
+				deepLink: nil,
+				platformHint: .android,
+				destinationHint: .device
+			)
+		]
+
+		#expect(result == .install(requests: expectedRequests))
+	}
+
+	@Test("Handles install route with empty deepLink parameter", arguments: urlPrefixes)
+	func handlesInstallRouteWithEmptyDeepLinkParameter(urlPrefix: String) async throws {
+		let result = try result(url: url(prefix: urlPrefix, path: "install/test?one=a&two=b&deepLink="))
+
+		let expectedRequests: [InstallRecipe] = [
+			.init(
+				source: .artifactProvider(
+					metadata: .init(
+						id: "test",
+						parameters: ["one": "a", "two": "b"]
+					)
+				),
+				launchArguments: [],
+				deepLink: "",
+				platformHint: nil,
+				destinationHint: nil
+			)
+		]
+
+		#expect(result == .install(requests: expectedRequests))
+	}
+
 	private func url(prefix: String, path: String) -> URL {
 		URL(string: "\(prefix)\(path)")!
 	}

@@ -61,9 +61,15 @@ extension ConnectedDevice: Device {
 		}
 	}
 
-	func launch(application: Application, arguments: [String]? = nil) throws {
+	func launch(application: Application, arguments: [String]? = nil, deepLink: String? = nil) throws {
 		do {
-			try DeviceCtl.launch(udid: id, bundleId: application.bundleIdentifier, arguments: arguments ?? [])
+			if let deepLink = deepLink {
+				// Open deep link directly - this will launch the app automatically
+				try DeviceCtl.openURL(udid: id, url: deepLink)
+			} else {
+				// Regular launch with arguments
+				try DeviceCtl.launch(udid: id, bundleId: application.bundleIdentifier, arguments: arguments ?? [])
+			}
 		} catch {
 			let bundleIdentifier = try application.bundleIdentifier
 			throw DeviceError.failedToLaunchApp(

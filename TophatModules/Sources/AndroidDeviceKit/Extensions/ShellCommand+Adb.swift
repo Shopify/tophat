@@ -19,6 +19,7 @@ enum AdbCommand {
 	case devices
 	case install(serial: String, apkUrl: URL)
 	case launch(serial: String, componentName: String, arguments: [String])
+  case deepLink(serial: String, deepLink: String)
 	case avdName(serial: String)
 	case getProp(serial: String, property: String)
 	case waitForDevice(serial: String)
@@ -46,6 +47,9 @@ extension AdbCommand: ShellCommand {
 				}
 
 				return ["-s", serial, "shell", "am", "start", "-n", componentName] + extras
+
+      case .deepLink(let serial, let deepLink):
+        return ["-s", serial, "shell", "am", "start", "-a", "android.intent.action.VIEW", "-d", deepLink.wrappedInQuotationMarks()]
 
 			case .avdName(let serial):
 				return ["-s", serial, "emu", "avd", "name"]

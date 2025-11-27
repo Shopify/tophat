@@ -46,6 +46,10 @@ struct Adb {
 		try run(command: .adb(.launch(serial: serial, componentName: componentName, arguments: arguments)), log: log)
 	}
 
+	static func deepLink(serial: String, deepLink: String) throws {
+		try run(command: .adb(.deepLink(serial: serial, deepLink: deepLink)), log: log)
+	}
+
 	static func resolveActivity(serial: String, packageName: String) throws -> String {
 		let output = try run(command: .adb(.resolveActivity(serial: serial, packageName: packageName)), log: log)
 

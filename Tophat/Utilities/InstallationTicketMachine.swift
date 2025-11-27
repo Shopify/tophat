@@ -83,7 +83,8 @@ struct InstallationTicketMachine {
 						let ticket = Ticket(
 							device: device,
 							artifactLocation: .remote(source: recipe.source),
-							launchArguments: recipe.launchArguments
+							launchArguments: recipe.launchArguments,
+							deepLink: recipe.deepLink
 						)
 
 						await state.incrementProcessedTicketCount()
@@ -108,7 +109,8 @@ struct InstallationTicketMachine {
 							let ticket = Ticket(
 								device: device,
 								artifactLocation: .local(application: application),
-								launchArguments: recipe.launchArguments
+								launchArguments: recipe.launchArguments,
+								deepLink: recipe.deepLink
 							)
 
 							await state.incrementProcessedTicketCount()
@@ -150,6 +152,7 @@ extension InstallationTicketMachine {
 		let device: Device
 		let artifactLocation: ArtifactLocation
 		let launchArguments: [String]
+		let deepLink: String?
 	}
 }
 
