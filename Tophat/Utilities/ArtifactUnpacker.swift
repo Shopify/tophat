@@ -99,8 +99,8 @@ final class ArtifactUnpacker: Sendable {
 
 	private func extractTarGzipArtifact(at url: URL) throws -> URL {
 		// Use tar command to extract .tar.gz files
-		let destinationFileName = url.fileRootForTarGz
-		let destinationURL = url.deletingLastPathComponent().appending(path: destinationFileName)
+        let destinationFileName = url.deletingFullPathExtension
+        let destinationURL = url.deletingLastPathComponent().appending(path: destinationFileName)
 
 		log.info("Extracting tar.gz artifact at \(url)")
 
@@ -114,27 +114,6 @@ final class ArtifactUnpacker: Sendable {
 		log.info("Artifact extracted to \(destinationURL)")
 
 		return destinationURL
-	}
-}
-
-private extension URL {
-	var fileName: String {
-		lastPathComponent.replacingOccurrences(of: ".\(pathExtension)", with: "")
-	}
-
-	var fileRoot: String {
-		lastPathComponent.components(separatedBy: ".").first ?? lastPathComponent
-	}
-
-	var fileRootForTarGz: String {
-		// Remove .tar.gz or .tgz extension
-		let name = lastPathComponent
-		if name.hasSuffix(".tar.gz") {
-			return String(name.dropLast(7))
-		} else if name.hasSuffix(".tgz") {
-			return String(name.dropLast(4))
-		}
-		return fileRoot
 	}
 }
 

@@ -69,7 +69,7 @@ private extension ArtifactFileFormat {
 			case .zip:
 				return .zip
 			case .tarGzip:
-				return .init(filenameExtension: "tar.gz")
+				return .gzip
 			case .applicationBundle:
 				return .applicationBundle
 			case .appStorePackage, .androidPackage:

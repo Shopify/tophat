@@ -22,19 +22,11 @@ public extension ArtifactFileFormat {
 		self.init(rawValue: pathExtension)
 	}
 
-	/// Initializes from a file URL, supporting multi-part extensions like .tar.gz
-	init?(url: URL) {
-		let path = url.lastPathComponent.lowercased()
-
-		// Check for multi-part extensions first
-		if path.hasSuffix(".tar.gz") {
-			self = .tarGzip
-			return
-		}
-
-		// Fall back to single extension
-		self.init(pathExtension: url.pathExtension)
-	}
+  /// Initializes from a file URL, supporting multi-part extensions generically
+    init?(url: URL) {
+        let ext = url.fullPathExtension.lowercased()
+        self.init(pathExtension: ext)
+    }
 
 	var pathExtension: String {
 		rawValue
