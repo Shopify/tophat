@@ -49,7 +49,7 @@ struct ExtensionsTab: View {
 			}
 
 			Section {
-				Text("Tophat extensions can be enabled or disabled in [System Settings](x-apple.systempreferences:com.apple.preference).")
+				Text("Tophat extensions can be enabled or disabled in [System Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension?ExtensionItems).")
 					.font(.subheadline)
 					.foregroundColor(.secondary)
 			}
