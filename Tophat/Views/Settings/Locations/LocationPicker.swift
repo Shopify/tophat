@@ -36,7 +36,7 @@ struct LocationPicker<Label: View, Icon: View>: View {
 				label()
 			}
 		}
-		.onChange(of: mode) { newValue in
+		.onChange(of: mode) {
 			if mode == .automatic {
 				preferredValue = nil
 			}

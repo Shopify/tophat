@@ -16,7 +16,7 @@ struct ShowingAlternateItemsViewModifier: ViewModifier {
 	func body(content: Content) -> some View {
 		return content
 			.environment(\.showingAlternateItems, keyModifierFlagsState.optionKeyPressed)
-			.onChange(of: scenePhase) { newValue in
+			.onChange(of: scenePhase) {
 				// Handle edge case where event monitor is not yet listening while menu is being opened.
 				keyModifierFlagsState.optionKeyPressed = NSEvent.modifierFlags.contains(.option)
 			}

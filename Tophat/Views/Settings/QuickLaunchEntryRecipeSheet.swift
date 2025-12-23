@@ -73,7 +73,7 @@ struct QuickLaunchEntryRecipeSheet: View {
 
 				Section("Launch Arguments") {
 					List(selection: $selectedLaunchArgumentIndex) {
-						ForEach(Array($launchArguments.enumerated()), id: \.0) { (index, $launchArgument) in
+						ForEach(Array($launchArguments.enumerated()), id: \.0) { (_, $launchArgument) in
 							TextField("Blank Argument", text: $launchArgument)
 								.tag(launchArgument)
 						}
@@ -126,7 +126,7 @@ struct QuickLaunchEntryRecipeSheet: View {
 				artifactProviderID = artifactProviders.first?.id
 			}
 		}
-		.onChange(of: artifactProviderID, initial: false) { oldValue, newValue in
+		.onChange(of: artifactProviderID) { oldValue, newValue in
 			if oldValue != nil, newValue != nil, newValue != oldValue {
 				artifactProviderParameters.removeAll()
 			}

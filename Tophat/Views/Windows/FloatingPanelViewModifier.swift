@@ -34,7 +34,7 @@ private struct FloatingPanelViewModifier<PanelContent: View>: ViewModifier {
 				panel?.close()
 				panel = nil
 			}
-			.onChange(of: isPresented) { newValue in
+			.onChange(of: isPresented) { _, newValue in
 				if newValue {
 					present()
 				} else {
