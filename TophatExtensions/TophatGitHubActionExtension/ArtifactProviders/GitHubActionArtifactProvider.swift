@@ -12,8 +12,6 @@ import TophatKit
 
 struct GitHubActionArtifactProvider: ArtifactProvider {
 
-    struct Error: Swift.Error {}
-
     @SecureStorage(Constants.keychainGitHubPersonalAccessTokenKey)
     var personalAccessToken: String?
 
@@ -29,36 +27,46 @@ struct GitHubActionArtifactProvider: ArtifactProvider {
     @Parameter(key: "artifact_id", title: "Artifact Id")
     var artifactId: String
 
-    private var apiClient: GitHubActionAPIClient? {
-        personalAccessToken.map(GitHubActionAPIClient.init)
-    }
-
     private var urlSession = URLSession.shared
     private let fileManager = FileManager.default
 
     func retrieve() async throws -> any ArtifactProviderResult {
-        guard let apiClient else {
-            throw Error()
+        guard let personalAccessToken, !personalAccessToken.isEmpty else {
+            throw GitHubActionArtifactProviderError.accessTokenNotSet
         }
 
-        let (downloadedFileURL, suggestedFilename) = try await apiClient.downloadArtifact(
-            owner: owner,
-            repository: repository,
-            artifactId: artifactId
-        )
+        let apiClient = GitHubActionAPIClient(personalAccessToken: personalAccessToken)
 
-        let destinationDirectoryURL: URL = .temporaryDirectory.appending(path: UUID().uuidString)
-        try fileManager.createDirectory(at: destinationDirectoryURL, withIntermediateDirectories: true)
+        do {
+            let (downloadedFileURL, suggestedFilename) = try await apiClient.downloadArtifact(
+                owner: owner,
+                repository: repository,
+                artifactId: artifactId
+            )
 
-        let destinationURL = destinationDirectoryURL
-            .appending(component: suggestedFilename ?? downloadedFileURL.lastPathComponent)
+            let destinationDirectoryURL: URL = .temporaryDirectory.appending(path: UUID().uuidString)
+            try fileManager.createDirectory(at: destinationDirectoryURL, withIntermediateDirectories: true)
 
-        try fileManager.moveItem(at: downloadedFileURL, to: destinationURL)
+            let destinationURL = destinationDirectoryURL
+                .appending(component: suggestedFilename ?? downloadedFileURL.lastPathComponent)
 
-        return .result(localURL: destinationURL)
+            try fileManager.moveItem(at: downloadedFileURL, to: destinationURL)
+            return .result(localURL: destinationURL)
+        } catch {
+            throw convertError(error)
+        }
     }
 
     func cleanUp(localURL: URL) async throws {
         try fileManager.removeItem(at: localURL)
+    }
+
+    private func convertError(_ error: Error) -> GitHubActionArtifactProviderError {
+        switch error {
+        case GitHubActionAPIClient.Error.unauthorized: .unauthorized
+        case GitHubActionAPIClient.Error.notFound: .notFound
+        case GitHubActionAPIClient.Error.removed: .removed
+        default: .unexpected
+        }
     }
 }
