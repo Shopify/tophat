@@ -6,12 +6,16 @@
 //  Copyright © 2025 Shopify. All rights reserved.
 //
 
+import ExtensionFoundation
 import Foundation
-import TophatKit
 import SwiftUI
-internal import ExtensionFoundation
+import TophatKit
 
 @main
-struct TophatGitHubExtension: TophatExtension {
-    static let title: LocalizedStringResource = "GitHub"
+struct TophatGitHubExtension: TophatExtension, ArtifactProviding {
+    static let title: LocalizedStringResource = "GitHub Action"
+
+    static var artifactProviders: some ArtifactProviders {
+        GitHubActionArtifactProvider()
+    }
 }
