@@ -1,6 +1,6 @@
 //
 //  GitHubActionAPIClient.swift
-//  TophatGitHubExtension
+//  TophatGitHubActionExtension
 //
 //  Created by Doan Thieu on 23/12/25.
 //  Copyright © 2025 Shopify. All rights reserved.
