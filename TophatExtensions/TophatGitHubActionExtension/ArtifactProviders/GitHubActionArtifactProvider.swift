@@ -1,16 +1,23 @@
 //
 //  GitHubActionArtifactProvider.swift
-//  TophatGitHubExtension
+//  TophatGitHubActionExtension
 //
 //  Created by Doan Thieu on 23/12/25.
 //  Copyright © 2025 Shopify. All rights reserved.
 //
 
 import Foundation
+import SecureStorage
 import TophatKit
 
 struct GitHubActionArtifactProvider: ArtifactProvider {
-    static var id = "github-action"
+
+    struct Error: Swift.Error {}
+
+    @SecureStorage(Constants.keychainGitHubPersonalAccessTokenKey)
+    var personalAccessToken: String?
+
+    static var id = "gha"
     static var title: LocalizedStringResource = "GitHub Action"
 
     @Parameter(key: "owner", title: "Owner")
@@ -22,11 +29,18 @@ struct GitHubActionArtifactProvider: ArtifactProvider {
     @Parameter(key: "artifact_id", title: "Artifact Id")
     var artifactId: String
 
-    private let apiClient = GitHubActionAPIClient(personalAccessToken: "")
+    private var apiClient: GitHubActionAPIClient? {
+        personalAccessToken.map(GitHubActionAPIClient.init)
+    }
+
     private var urlSession = URLSession.shared
     private let fileManager = FileManager.default
 
     func retrieve() async throws -> any ArtifactProviderResult {
+        guard let apiClient else {
+            throw Error()
+        }
+
         let (downloadedFileURL, suggestedFilename) = try await apiClient.downloadArtifact(
             owner: owner,
             repository: repository,

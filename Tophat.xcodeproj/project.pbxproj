@@ -10,6 +10,7 @@
 		4D7657402EFA9A5B00319B8C /* TophatGitHubActionExtension.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D7657392EFA9A5B00319B8C /* TophatGitHubActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4D7657472EFA9A8E00319B8C /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4D7657462EFA9A8E00319B8C /* TophatKit */; };
 		4D76626B2EFB9D2200319B8C /* SecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 4D76626A2EFB9D2200319B8C /* SecureStorage */; };
+		4D7664032EFB9E5400319B8C /* SecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 4D7664022EFB9E5400319B8C /* SecureStorage */; };
 		7F4532AD251A6C4700F2CFC8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA71E0924C95CAC001C9574 /* Logging */; };
 		7F4532AF251A6C4700F2CFC8 /* LoggingOSLog in Frameworks */ = {isa = PBXBuildFile; productRef = 7F8EC94425086F3B00D4D42B /* LoggingOSLog */; };
 		8005282F2CB718C200226174 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8005282E2CB718C200226174 /* TophatKit */; };
@@ -134,6 +135,8 @@
 			membershipExceptions = (
 				TophatGitHubActionExtension/API/GitHubActionAPIClient.swift,
 				TophatGitHubActionExtension/ArtifactProviders/GitHubActionArtifactProvider.swift,
+				TophatGitHubActionExtension/Settings/Constants.swift,
+				TophatGitHubActionExtension/Settings/SettingsView.swift,
 				TophatGitHubActionExtension/TophatGitHubActionExtension.swift,
 			);
 			target = 4D7657382EFA9A5B00319B8C /* TophatGitHubActionExtension */;
@@ -208,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D7657472EFA9A8E00319B8C /* TophatKit in Frameworks */,
+				4D7664032EFB9E5400319B8C /* SecureStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +326,7 @@
 			name = TophatGitHubActionExtension;
 			packageProductDependencies = (
 				4D7657462EFA9A8E00319B8C /* TophatKit */,
+				4D7664022EFB9E5400319B8C /* SecureStorage */,
 			);
 			productName = TophatGitHubExtension;
 			productReference = 4D7657392EFA9A5B00319B8C /* TophatGitHubActionExtension.appex */;
@@ -1287,6 +1292,10 @@
 			productName = TophatKit;
 		};
 		4D76626A2EFB9D2200319B8C /* SecureStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SecureStorage;
+		};
+		4D7664022EFB9E5400319B8C /* SecureStorage */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SecureStorage;
 		};
