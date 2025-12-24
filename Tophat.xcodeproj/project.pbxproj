@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		4D7657402EFA9A5B00319B8C /* TophatGitHubActionExtension.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D7657392EFA9A5B00319B8C /* TophatGitHubActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4D7657472EFA9A8E00319B8C /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4D7657462EFA9A8E00319B8C /* TophatKit */; };
+		4D76626B2EFB9D2200319B8C /* SecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 4D76626A2EFB9D2200319B8C /* SecureStorage */; };
 		7F4532AD251A6C4700F2CFC8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA71E0924C95CAC001C9574 /* Logging */; };
 		7F4532AF251A6C4700F2CFC8 /* LoggingOSLog in Frameworks */ = {isa = PBXBuildFile; productRef = 7F8EC94425086F3B00D4D42B /* LoggingOSLog */; };
-		8001A4812CF9275400325E7B /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 8001A4802CF9275400325E7B /* SimpleKeychain */; };
 		8005282F2CB718C200226174 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8005282E2CB718C200226174 /* TophatKit */; };
 		800528312CB718C700226174 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 800528302CB718C700226174 /* TophatKit */; };
 		8006E7F02943D3090089805E /* VisualEffects in Frameworks */ = {isa = PBXBuildFile; productRef = 8006E7EF2943D3090089805E /* VisualEffects */; };
@@ -169,7 +169,6 @@
 				TophatBitriseExtension/Settings/Constants.swift,
 				TophatBitriseExtension/Settings/SettingsView.swift,
 				TophatBitriseExtension/TophatBitriseExtension.swift,
-				TophatBitriseExtension/Utilities/SecureStorage.swift,
 			);
 			target = 808C6E312CF8D81F0030359E /* TophatBitriseExtension */;
 		};
@@ -254,8 +253,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8001A4812CF9275400325E7B /* SimpleKeychain in Frameworks */,
 				808C6E462CF8D8600030359E /* TophatKit in Frameworks */,
+				4D76626B2EFB9D2200319B8C /* SecureStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -433,7 +432,7 @@
 			name = TophatBitriseExtension;
 			packageProductDependencies = (
 				808C6E452CF8D8600030359E /* TophatKit */,
-				8001A4802CF9275400325E7B /* SimpleKeychain */,
+				4D76626A2EFB9D2200319B8C /* SecureStorage */,
 			);
 			productName = TophatBitriseExtension;
 			productReference = 808C6E322CF8D81F0030359E /* TophatBitriseExtension.appex */;
@@ -509,7 +508,6 @@
 				807D7B1429835795007942B4 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 				80346F022BEBD527002F54BC /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 				80DC0FD62C82225600E5C9EE /* XCRemoteSwiftPackageReference "Sparkle" */,
-				8001A47F2CF9275400325E7B /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
 			);
 			preferredProjectObjectVersion = 50;
 			productRefGroup = 7F35025024A5060500EE76EA /* Products */;
@@ -1225,14 +1223,6 @@
 				minimumVersion = 1.4.0;
 			};
 		};
-		8001A47F2CF9275400325E7B /* XCRemoteSwiftPackageReference "SimpleKeychain" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/auth0/SimpleKeychain.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
-			};
-		};
 		8006E7EE2943D3090089805E /* XCRemoteSwiftPackageReference "VisualEffects" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/twostraws/VisualEffects";
@@ -1296,6 +1286,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = TophatKit;
 		};
+		4D76626A2EFB9D2200319B8C /* SecureStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SecureStorage;
+		};
 		7F8EC94425086F3B00D4D42B /* LoggingOSLog */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7F8EC94325086F3B00D4D42B /* XCRemoteSwiftPackageReference "swift-log-oslog" */;
@@ -1305,11 +1299,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7FA71E0824C95CAC001C9574 /* XCRemoteSwiftPackageReference "swift-log" */;
 			productName = Logging;
-		};
-		8001A4802CF9275400325E7B /* SimpleKeychain */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8001A47F2CF9275400325E7B /* XCRemoteSwiftPackageReference "SimpleKeychain" */;
-			productName = SimpleKeychain;
 		};
 		8005282E2CB718C200226174 /* TophatKit */ = {
 			isa = XCSwiftPackageProductDependency;
