@@ -17,8 +17,8 @@ struct GitHubActionArtifactProvider: ArtifactProvider {
     @SecureStorage(Constants.keychainGitHubPersonalAccessTokenKey)
     var personalAccessToken: String?
 
-    static var id = "gha"
-    static var title: LocalizedStringResource = "GitHub Action"
+    static let id = "gha"
+    static let title: LocalizedStringResource = "GitHub Action"
 
     @Parameter(key: "owner", title: "Owner")
     var owner: String
