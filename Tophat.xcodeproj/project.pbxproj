@@ -132,6 +132,8 @@
 		4D76574C2EFA9AAD00319B8C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				TophatGitHubExtension/API/GitHubActionAPIClient.swift,
+				TophatGitHubExtension/ArtifactProviders/GitHubActionArtifactProvider.swift,
 				TophatGitHubExtension/TophatGitHubExtension.swift,
 			);
 			target = 4D7657382EFA9A5B00319B8C /* TophatGitHubExtension */;
