@@ -1,6 +1,6 @@
 //
-//  TophatGitHubExtension.swift
-//  TophatGitHubExtension
+//  TophatGitHubActionExtension.swift
+//  TophatGitHubActionExtension
 //
 //  Created by Doan Thieu on 23/12/25.
 //  Copyright © 2025 Shopify. All rights reserved.
@@ -12,7 +12,7 @@ import SwiftUI
 import TophatKit
 
 @main
-struct TophatGitHubExtension: TophatExtension, ArtifactProviding {
+struct TophatGitHubActionExtension: TophatExtension, ArtifactProviding {
     static let title: LocalizedStringResource = "GitHub Action"
 
     static var artifactProviders: some ArtifactProviders {
