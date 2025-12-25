@@ -136,6 +136,7 @@
 				TophatGitHubActionExtension/API/GitHubActionAPIClient.swift,
 				TophatGitHubActionExtension/API/GitHubActionArtifactProviderError.swift,
 				TophatGitHubActionExtension/ArtifactProviders/GitHubActionArtifactProvider.swift,
+				TophatGitHubActionExtension/Localizable.xcstrings,
 				TophatGitHubActionExtension/Settings/Constants.swift,
 				TophatGitHubActionExtension/Settings/SettingsView.swift,
 				TophatGitHubActionExtension/TophatGitHubActionExtension.swift,
