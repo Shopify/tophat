@@ -1,0 +1,30 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Artifact Id" : {
+
+    },
+    "Authentication" : {
+
+    },
+    "GitHub Action" : {
+
+    },
+    "Owner" : {
+
+    },
+    "Personal Access Token" : {
+
+    },
+    "Repository" : {
+
+    },
+    "To learn more about GitHub's personal access token, visit [Managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)." : {
+
+    },
+    "Token" : {
+
+    }
+  },
+  "version" : "1.1"
+}
