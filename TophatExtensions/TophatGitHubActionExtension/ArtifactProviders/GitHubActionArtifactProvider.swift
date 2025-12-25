@@ -27,7 +27,6 @@ struct GitHubActionArtifactProvider: ArtifactProvider {
     @Parameter(key: "artifact_id", title: "Artifact Id")
     var artifactId: String
 
-    private var urlSession = URLSession.shared
     private let fileManager = FileManager.default
 
     func retrieve() async throws -> any ArtifactProviderResult {
