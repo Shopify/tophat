@@ -51,7 +51,7 @@ struct DeviceList: View {
 				.frame(maxHeight: 240)
 			}
 		}
-		.onChange(of: scenePhase) { oldValue, newValue in
+		.onChange(of: scenePhase) { _, newValue in
 			if newValue == .active {
 				Task(priority: .userInitiated) {
 					await deviceManager.loadDevices()

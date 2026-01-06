@@ -15,7 +15,7 @@ struct ShowingAdvancedOptions: ViewModifier {
 	func body(content: Content) -> some View {
 		content
 			.environment(\.showingAdvancedOptions, openedWithModifier)
-			.onChange(of: scenePhase) { newValue in
+			.onChange(of: scenePhase) { _, newValue in
 				if newValue == .active {
 					openedWithModifier = NSEvent.modifierFlags.contains(.option)
 				} else {

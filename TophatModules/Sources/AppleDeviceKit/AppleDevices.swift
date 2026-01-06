@@ -20,7 +20,7 @@ public struct AppleDevices: DeviceProvider {
 				group.addTask {
 					let devicesByIdentifier = Dictionary(grouping: await physicalDevices, by: { $0.id })
 
-					let devicesWithFastestConnections = devicesByIdentifier.compactMap { id, devices in
+					let devicesWithFastestConnections = devicesByIdentifier.compactMap { _, devices in
 						devices.first { $0.connection == .direct } ?? devices.first { $0.connection == .network }
 					}
 

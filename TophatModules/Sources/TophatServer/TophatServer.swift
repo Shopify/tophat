@@ -76,7 +76,7 @@ public final class TophatServer {
 
 private extension Array where Element == (String, String) {
 	subscript(_ keyToFind: String) -> String? {
-		first { key, value in
+		first { key, _ in
 			key == keyToFind
 		}?.1
 	}

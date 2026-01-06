@@ -26,7 +26,7 @@ struct DevicePicker: View {
 	private func selected(device: Device) -> Binding<Bool> {
 		Binding {
 			deviceSelectionManager.selectedDevices.contains { $0.id == device.id }
-		} set: { newValue in
+		} set: { _ in
 			didSelect(device: device)
 		}
 	}
