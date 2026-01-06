@@ -65,11 +65,17 @@ extension Simulator: Device {
 		}
 	}
 
-	func launch(application: Application, arguments: [String]? = nil) throws {
+	func launch(application: Application, arguments: [String]? = nil, deepLink: String? = nil) throws {
 		let bundleIdentifier = try application.bundleIdentifier
 
 		do {
-			try SimCtl.launch(udid: id, bundleIdentifier: bundleIdentifier, arguments: arguments ?? [])
+			if let deepLink = deepLink {
+				// Open deep link directly - this will launch the app automatically
+				try SimCtl.openURL(udid: id, url: deepLink)
+			} else {
+				// Regular launch with arguments
+				try SimCtl.launch(udid: id, bundleIdentifier: bundleIdentifier, arguments: arguments ?? [])
+			}
 		} catch {
 			throw DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .unexpected, deviceType: .simulator)
 		}

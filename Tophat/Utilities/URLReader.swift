@@ -65,7 +65,7 @@ struct URLReader {
 		}
 
 		let parameterQueryItemValues = binnedQueryItemValues.filter { element in
-			element.key != "platform" && element.key != "destination" && element.key != "arguments"
+			element.key != "platform" && element.key != "destination" && element.key != "arguments" && element.key != "deepLink"
 		}
 
 		let valueCount = parameterQueryItemValues.values.first?.count ?? 0
@@ -107,7 +107,7 @@ struct URLReader {
 		artifactProviderID: String
 	) -> InstallRecipe {
 		let parameters: [String: String] = binnedQueryItemValues.reduce(into: [:]) { partialResult, item in
-			if item.key != "platform", item.key != "destination", item.key != "arguments" {
+			if item.key != "platform", item.key != "destination", item.key != "arguments", item.key != "deepLink" {
 				partialResult[item.key] = item.value[index]
 			}
 		}
@@ -128,6 +128,8 @@ struct URLReader {
 			.split(separator: ",", omittingEmptySubsequences: true)
 			.map(String.init)
 
+		let deepLink = binnedQueryItemValues["deepLink"]?[safe: index]
+
 		return InstallRecipe(
 			source: .artifactProvider(
 				metadata: ArtifactProviderMetadata(
@@ -136,6 +138,7 @@ struct URLReader {
 				)
 			),
 			launchArguments: launchArguments ?? [],
+			deepLink: deepLink,
 			platformHint: platform,
 			destinationHint: destination
 		)
