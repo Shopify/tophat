@@ -68,6 +68,8 @@ private extension ArtifactFileFormat {
 		switch self {
 			case .zip:
 				return .zip
+			case .tarGzip:
+				return .gzip
 			case .applicationBundle:
 				return .applicationBundle
 			case .appStorePackage, .androidPackage:
