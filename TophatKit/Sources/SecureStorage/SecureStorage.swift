@@ -10,7 +10,7 @@ import SwiftUI
 import SimpleKeychain
 
 @propertyWrapper
-struct SecureStorage {
+public struct SecureStorage {
 	private let key: String
 	private let keychain = SimpleKeychain()
 
