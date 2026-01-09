@@ -45,7 +45,7 @@ Before opening a pull request, check if there are any open [issues](https://gith
 
 ## Developing
 
-To build Tophat, you will need at least Xcode 15.0 and macOS 14.0.
+To build Tophat, you will need at least Xcode 26.0 and macOS 15.6.
 
 1. Fork the repo and create a new branch for your changes.
 1. Ensure that you have [Mint](https://github.com/yonaskolb/Mint) installed, either directly or _via_ Homebrew:
@@ -57,17 +57,6 @@ To build Tophat, you will need at least Xcode 15.0 and macOS 14.0.
    mint bootstrap
    ```
    This will allow you to run SwiftLint using `mint run swiftlint`.
-1. Before you start a piece of work, ensure that you sync any submodules using:
-   ```bash
-   git submodule update --init --recursive
-   ```
 1. Make any changes to Tophat and create commits as needed.
 1. Add tests, if needed.
 1. Create a pull request and provide detailed context in the description.
-
-### Creating a Release
-
-To create a release build of Tophat, use the following steps:
-
-1. Create an archive using Product → Archive.
-1. Select the archive that was created, click Distribute App, then Copy App.
