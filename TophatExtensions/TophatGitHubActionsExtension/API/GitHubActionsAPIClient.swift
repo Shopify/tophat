@@ -1,6 +1,6 @@
 //
-//  GitHubActionAPIClient.swift
-//  TophatGitHubActionExtension
+//  GitHubActionsAPIClient.swift
+//  TophatGitHubActionsExtension
 //
 //  Created by Doan Thieu on 23/12/25.
 //  Copyright © 2025 Shopify. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct GitHubActionAPIClient {
+struct GitHubActionsAPIClient {
 
     enum Error: Swift.Error {
         case unauthorized
@@ -51,7 +51,7 @@ struct GitHubActionAPIClient {
     }
 }
 
-extension GitHubActionAPIClient {
+extension GitHubActionsAPIClient {
 
     private func makeURLRequest(url: URL, apiVersion: String, token: String) -> URLRequest {
         var request = URLRequest(url: url)

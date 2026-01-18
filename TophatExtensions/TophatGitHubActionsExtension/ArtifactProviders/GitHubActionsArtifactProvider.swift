@@ -1,6 +1,6 @@
 //
-//  GitHubActionArtifactProvider.swift
-//  TophatGitHubActionExtension
+//  GitHubActionsArtifactProvider.swift
+//  TophatGitHubActionsExtension
 //
 //  Created by Doan Thieu on 23/12/25.
 //  Copyright © 2025 Shopify. All rights reserved.
@@ -10,13 +10,13 @@ import Foundation
 import SecureStorage
 import TophatKit
 
-struct GitHubActionArtifactProvider: ArtifactProvider {
+struct GitHubActionsArtifactProvider: ArtifactProvider {
 
     @SecureStorage(Constants.keychainGitHubPersonalAccessTokenKey)
     var personalAccessToken: String?
 
     static let id = "gha"
-    static let title: LocalizedStringResource = "GitHub Action"
+    static let title: LocalizedStringResource = "GitHub Actions"
 
     @Parameter(key: "owner", title: "Owner")
     var owner: String
@@ -31,10 +31,10 @@ struct GitHubActionArtifactProvider: ArtifactProvider {
 
     func retrieve() async throws -> any ArtifactProviderResult {
         guard let personalAccessToken, !personalAccessToken.isEmpty else {
-            throw GitHubActionArtifactProviderError.accessTokenNotSet
+            throw GitHubActionsArtifactProviderError.accessTokenNotSet
         }
 
-        let apiClient = GitHubActionAPIClient(personalAccessToken: personalAccessToken)
+        let apiClient = GitHubActionsAPIClient(personalAccessToken: personalAccessToken)
 
         do {
             let (downloadedFileURL, suggestedFilename) = try await apiClient.downloadArtifact(
@@ -60,11 +60,11 @@ struct GitHubActionArtifactProvider: ArtifactProvider {
         try fileManager.removeItem(at: localURL)
     }
 
-    private func convertError(_ error: Error) -> GitHubActionArtifactProviderError {
+    private func convertError(_ error: Error) -> GitHubActionsArtifactProviderError {
         switch error {
-        case GitHubActionAPIClient.Error.unauthorized: .unauthorized
-        case GitHubActionAPIClient.Error.notFound: .notFound
-        case GitHubActionAPIClient.Error.removed: .removed
+        case GitHubActionsAPIClient.Error.unauthorized: .unauthorized
+        case GitHubActionsAPIClient.Error.notFound: .notFound
+        case GitHubActionsAPIClient.Error.removed: .removed
         default: .unexpected
         }
     }

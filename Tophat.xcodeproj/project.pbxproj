@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4D7657402EFA9A5B00319B8C /* TophatGitHubActionExtension.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D7657392EFA9A5B00319B8C /* TophatGitHubActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		4D7657402EFA9A5B00319B8C /* TophatGitHubActionsExtension.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D7657392EFA9A5B00319B8C /* TophatGitHubActionsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4D7657472EFA9A8E00319B8C /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4D7657462EFA9A8E00319B8C /* TophatKit */; };
 		4D76626B2EFB9D2200319B8C /* SecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 4D76626A2EFB9D2200319B8C /* SecureStorage */; };
 		4D7664032EFB9E5400319B8C /* SecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 4D7664022EFB9E5400319B8C /* SecureStorage */; };
@@ -101,7 +101,7 @@
 			files = (
 				808C6E3A2CF8D81F0030359E /* TophatBitriseExtension.appex in CopyFiles */,
 				80D648552CB0E20C00135729 /* TophatCoreExtension.appex in CopyFiles */,
-				4D7657402EFA9A5B00319B8C /* TophatGitHubActionExtension.appex in CopyFiles */,
+				4D7657402EFA9A5B00319B8C /* TophatGitHubActionsExtension.appex in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +118,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		4D7657392EFA9A5B00319B8C /* TophatGitHubActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = TophatGitHubActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D7657392EFA9A5B00319B8C /* TophatGitHubActionsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = TophatGitHubActionsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F35024F24A5060500EE76EA /* Tophat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tophat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F35026424A5060600EE76EA /* TophatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TophatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8005282D2CB7185E00226174 /* TophatKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TophatKit; sourceTree = "<group>"; };
@@ -132,15 +132,15 @@
 		4D76574C2EFA9AAD00319B8C /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				TophatGitHubActionExtension/API/GitHubActionAPIClient.swift,
-				TophatGitHubActionExtension/API/GitHubActionArtifactProviderError.swift,
-				TophatGitHubActionExtension/ArtifactProviders/GitHubActionArtifactProvider.swift,
-				TophatGitHubActionExtension/Localizable.xcstrings,
-				TophatGitHubActionExtension/Settings/Constants.swift,
-				TophatGitHubActionExtension/Settings/SettingsView.swift,
-				TophatGitHubActionExtension/TophatGitHubActionExtension.swift,
+				TophatGitHubActionsExtension/API/GitHubActionsAPIClient.swift,
+				TophatGitHubActionsExtension/API/GitHubActionsArtifactProviderError.swift,
+				TophatGitHubActionsExtension/ArtifactProviders/GitHubActionsArtifactProvider.swift,
+				TophatGitHubActionsExtension/Localizable.xcstrings,
+				TophatGitHubActionsExtension/Settings/Constants.swift,
+				TophatGitHubActionsExtension/Settings/SettingsView.swift,
+				TophatGitHubActionsExtension/TophatGitHubActionExtension.swift,
 			);
-			target = 4D7657382EFA9A5B00319B8C /* TophatGitHubActionExtension */;
+			target = 4D7657382EFA9A5B00319B8C /* TophatGitHubActionsExtension */;
 		};
 		8001A5962CFE293D00325E7B /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -303,7 +303,7 @@
 				807D7B0729835756007942B4 /* tophatctl */,
 				80D6484D2CB0E20C00135729 /* TophatCoreExtension.appex */,
 				808C6E322CF8D81F0030359E /* TophatBitriseExtension.appex */,
-				4D7657392EFA9A5B00319B8C /* TophatGitHubActionExtension.appex */,
+				4D7657392EFA9A5B00319B8C /* TophatGitHubActionsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -311,9 +311,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4D7657382EFA9A5B00319B8C /* TophatGitHubActionExtension */ = {
+		4D7657382EFA9A5B00319B8C /* TophatGitHubActionsExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D7657432EFA9A5B00319B8C /* Build configuration list for PBXNativeTarget "TophatGitHubActionExtension" */;
+			buildConfigurationList = 4D7657432EFA9A5B00319B8C /* Build configuration list for PBXNativeTarget "TophatGitHubActionsExtension" */;
 			buildPhases = (
 				4D7657352EFA9A5B00319B8C /* Sources */,
 				4D7657362EFA9A5B00319B8C /* Frameworks */,
@@ -323,13 +323,13 @@
 			);
 			dependencies = (
 			);
-			name = TophatGitHubActionExtension;
+			name = TophatGitHubActionsExtension;
 			packageProductDependencies = (
 				4D7657462EFA9A8E00319B8C /* TophatKit */,
 				4D7664022EFB9E5400319B8C /* SecureStorage */,
 			);
 			productName = TophatGitHubExtension;
-			productReference = 4D7657392EFA9A5B00319B8C /* TophatGitHubActionExtension.appex */;
+			productReference = 4D7657392EFA9A5B00319B8C /* TophatGitHubActionsExtension.appex */;
 			productType = "com.apple.product-type.extensionkit-extension";
 		};
 		7F35024E24A5060500EE76EA /* Tophat */ = {
@@ -522,7 +522,7 @@
 				807D7B0629835756007942B4 /* tophatctl */,
 				80D6484C2CB0E20C00135729 /* TophatCoreExtension */,
 				808C6E312CF8D81F0030359E /* TophatBitriseExtension */,
-				4D7657382EFA9A5B00319B8C /* TophatGitHubActionExtension */,
+				4D7657382EFA9A5B00319B8C /* TophatGitHubActionsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -635,7 +635,7 @@
 /* Begin PBXTargetDependency section */
 		4D76573F2EFA9A5B00319B8C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4D7657382EFA9A5B00319B8C /* TophatGitHubActionExtension */;
+			target = 4D7657382EFA9A5B00319B8C /* TophatGitHubActionsExtension */;
 			targetProxy = 4D76573E2EFA9A5B00319B8C /* PBXContainerItemProxy */;
 		};
 		7F35026624A5060600EE76EA /* PBXTargetDependency */ = {
@@ -666,7 +666,7 @@
 			buildSettings = {
 				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatGitHubActionExtension/TophatGitHubActionExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatGitHubActionsExtension/TophatGitHubActionExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -686,8 +686,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TophatExtensions/TophatGitHubActionExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TophatGitHubActionExtension;
+				INFOPLIST_FILE = TophatExtensions/TophatGitHubActionsExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TophatGitHubActionsExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Shopify. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -697,7 +697,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 2.3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatGitHubActionExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatGitHubActionsExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUNTIME_EXCEPTION_ALLOW_DYLD_ENVIRONMENT_VARIABLES = NO;
 				RUNTIME_EXCEPTION_ALLOW_JIT = NO;
@@ -719,7 +719,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatGitHubActionExtension/TophatGitHubActionExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatGitHubActionsExtension/TophatGitHubActionExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -727,8 +727,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TophatExtensions/TophatGitHubActionExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TophatGitHubActionExtension;
+				INFOPLIST_FILE = TophatExtensions/TophatGitHubActionsExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TophatGitHubActionsExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Shopify. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1144,7 +1144,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4D7657432EFA9A5B00319B8C /* Build configuration list for PBXNativeTarget "TophatGitHubActionExtension" */ = {
+		4D7657432EFA9A5B00319B8C /* Build configuration list for PBXNativeTarget "TophatGitHubActionsExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D7657412EFA9A5B00319B8C /* Debug */,

@@ -1,6 +1,6 @@
 //
-//  GitHubActionArtifactProviderError.swift
-//  TophatGitHubActionExtension
+//  GitHubActionsArtifactProviderError.swift
+//  TophatGitHubActionsExtension
 //
 //  Created by Doan Thieu on 24/12/25.
 //  Copyright © 2025 Shopify. All rights reserved.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum GitHubActionArtifactProviderError: Error {
+enum GitHubActionsArtifactProviderError: Error {
     case accessTokenNotSet
     case unauthorized
     case notFound
@@ -16,7 +16,7 @@ enum GitHubActionArtifactProviderError: Error {
     case unexpected
 }
 
-extension GitHubActionArtifactProviderError: LocalizedError {
+extension GitHubActionsArtifactProviderError: LocalizedError {
     var errorDescription: String? {
         "Failed to download artifact"
     }
@@ -39,9 +39,9 @@ extension GitHubActionArtifactProviderError: LocalizedError {
     var recoverySuggestion: String? {
         switch self {
         case .accessTokenNotSet:
-            "Go to Tophat Settings → Extensions → GitHub Action to add a token."
+            "Go to Tophat Settings → Extensions → GitHub Actions to add a token."
         case .unauthorized:
-            "Go to Tophat Settings → Extensions → GitHub Action to update the token."
+            "Go to Tophat Settings → Extensions → GitHub Actions to update the token."
         case .notFound, .removed:
             nil
         case .unexpected:
