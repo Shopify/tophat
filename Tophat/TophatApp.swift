@@ -16,7 +16,6 @@ import Sparkle
 import TophatServer
 import AndroidDeviceKit
 import AppleDeviceKit
-import FluidMenuBarExtra
 import TophatFoundation
 import TophatControlServices
 import SwiftData

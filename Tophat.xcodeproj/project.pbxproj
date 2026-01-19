@@ -22,7 +22,6 @@
 		807D7B1A298357C6007942B4 /* tophatctl in Copy tophatctl */ = {isa = PBXBuildFile; fileRef = 807D7B0729835756007942B4 /* tophatctl */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		808C6E3A2CF8D81F0030359E /* TophatBitriseExtension.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = 808C6E322CF8D81F0030359E /* TophatBitriseExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		808C6E462CF8D8600030359E /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 808C6E452CF8D8600030359E /* TophatKit */; };
-		8090E201294FA29E003106B9 /* FluidMenuBarExtra in Frameworks */ = {isa = PBXBuildFile; productRef = 8090E200294FA29E003106B9 /* FluidMenuBarExtra */; };
 		8090E268296775BE003106B9 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 8090E267296775BE003106B9 /* Collections */; };
 		80C18345290232D1008D3B80 /* TophatFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 80C18344290232D1008D3B80 /* TophatFoundation */; };
 		80D2799829005DD000F03649 /* TophatServer in Frameworks */ = {isa = PBXBuildFile; productRef = 80D2799729005DD000F03649 /* TophatServer */; };
@@ -201,7 +200,6 @@
 				7F4532AF251A6C4700F2CFC8 /* LoggingOSLog in Frameworks */,
 				80D2799829005DD000F03649 /* TophatServer in Frameworks */,
 				803B874B290055C70062F070 /* AndroidDeviceKit in Frameworks */,
-				8090E201294FA29E003106B9 /* FluidMenuBarExtra in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,7 +300,6 @@
 				80C18344290232D1008D3B80 /* TophatFoundation */,
 				80F74E242909E8EA0040F026 /* AppleDeviceKit */,
 				8006E7EF2943D3090089805E /* VisualEffects */,
-				8090E200294FA29E003106B9 /* FluidMenuBarExtra */,
 				8090E267296775BE003106B9 /* Collections */,
 				B6AA44CE296DF8EF0017321C /* ZIPFoundation */,
 				80346F032BEBD527002F54BC /* AsyncAlgorithms */,
@@ -442,7 +439,6 @@
 				7FA71E0824C95CAC001C9574 /* XCRemoteSwiftPackageReference "swift-log" */,
 				7F8EC94325086F3B00D4D42B /* XCRemoteSwiftPackageReference "swift-log-oslog" */,
 				8006E7EE2943D3090089805E /* XCRemoteSwiftPackageReference "VisualEffects" */,
-				8090E1FF294FA29E003106B9 /* XCRemoteSwiftPackageReference "fluid-menu-bar-extra" */,
 				8090E266296775BE003106B9 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				B6AA44CD296DF8EF0017321C /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				807D7B1429835795007942B4 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
@@ -1078,14 +1074,6 @@
 				version = 1.5.0;
 			};
 		};
-		8090E1FF294FA29E003106B9 /* XCRemoteSwiftPackageReference "fluid-menu-bar-extra" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/lfroms/fluid-menu-bar-extra";
-			requirement = {
-				kind = exactVersion;
-				version = 1.2.0;
-			};
-		};
 		8090E266296775BE003106B9 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections";
@@ -1170,11 +1158,6 @@
 		808C6E452CF8D8600030359E /* TophatKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TophatKit;
-		};
-		8090E200294FA29E003106B9 /* FluidMenuBarExtra */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8090E1FF294FA29E003106B9 /* XCRemoteSwiftPackageReference "fluid-menu-bar-extra" */;
-			productName = FluidMenuBarExtra;
 		};
 		8090E267296775BE003106B9 /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;
