@@ -28,7 +28,7 @@ struct SettingsView: View {
         .onAppear {
             enteredPersonalAccessToken = storedPersonalAccessToken ?? ""
         }
-        .onChange(of: enteredPersonalAccessToken) { oldValue, newValue in
+        .onChange(of: enteredPersonalAccessToken) { _, newValue in
             storedPersonalAccessToken = newValue.isEmpty ? nil : newValue
         }
     }
