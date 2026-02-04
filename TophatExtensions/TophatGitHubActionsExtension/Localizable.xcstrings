@@ -1,7 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Artifact Id" : {
+    "Artifact ID" : {
 
     },
     "Authentication" : {
@@ -19,7 +19,7 @@
     "Repository" : {
 
     },
-    "To learn more about GitHub's personal access token, visit [Managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)." : {
+    "To create a personal access token, go to [github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens)." : {
 
     },
     "Token" : {

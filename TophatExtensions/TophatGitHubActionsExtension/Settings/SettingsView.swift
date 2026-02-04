@@ -19,7 +19,7 @@ struct SettingsView: View {
             Section("Authentication") {
                 SecureField("Personal Access Token", text: $enteredPersonalAccessToken, prompt: Text("Token"))
 
-                Text("To learn more about GitHub's personal access token, visit [Managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens).")
+                Text("To create a personal access token, go to [github.com/settings/personal-access-tokens](https://github.com/settings/personal-access-tokens).")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }

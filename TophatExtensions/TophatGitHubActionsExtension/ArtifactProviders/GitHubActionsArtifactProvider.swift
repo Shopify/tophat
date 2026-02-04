@@ -24,7 +24,7 @@ struct GitHubActionsArtifactProvider: ArtifactProvider {
     @Parameter(key: "repo", title: "Repository")
     var repository: String
 
-    @Parameter(key: "artifact_id", title: "Artifact Id")
+    @Parameter(key: "artifact_id", title: "Artifact ID")
     var artifactId: String
 
     private let fileManager = FileManager.default
