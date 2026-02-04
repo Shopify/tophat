@@ -35,37 +35,46 @@ struct GitHubActionsArtifactProvider: ArtifactProvider {
         }
 
         let apiClient = GitHubActionsAPIClient(personalAccessToken: personalAccessToken)
+        let (downloadedFileURL, urlResponse) = try await apiClient.downloadArtifact(
+            owner: owner,
+            repository: repository,
+            artifactId: artifactId
+        )
 
-        do {
-            let (downloadedFileURL, suggestedFilename) = try await apiClient.downloadArtifact(
-                owner: owner,
-                repository: repository,
-                artifactId: artifactId
-            )
+        try validateResponse(urlResponse)
+        let destinationDirectoryURL: URL = .temporaryDirectory.appending(path: UUID().uuidString)
+        try fileManager.createDirectory(at: destinationDirectoryURL, withIntermediateDirectories: true)
 
-            let destinationDirectoryURL: URL = .temporaryDirectory.appending(path: UUID().uuidString)
-            try fileManager.createDirectory(at: destinationDirectoryURL, withIntermediateDirectories: true)
+        let destinationURL = destinationDirectoryURL
+            .appending(component: urlResponse.suggestedFilename ?? downloadedFileURL.lastPathComponent)
 
-            let destinationURL = destinationDirectoryURL
-                .appending(component: suggestedFilename ?? downloadedFileURL.lastPathComponent)
-
-            try fileManager.moveItem(at: downloadedFileURL, to: destinationURL)
-            return .result(localURL: destinationURL)
-        } catch {
-            throw convertError(error)
-        }
+        try fileManager.moveItem(at: downloadedFileURL, to: destinationURL)
+        return .result(localURL: destinationURL)
     }
 
     func cleanUp(localURL: URL) async throws {
         try fileManager.removeItem(at: localURL)
     }
+}
 
-    private func convertError(_ error: Error) -> GitHubActionsArtifactProviderError {
-        switch error {
-        case GitHubActionsAPIClient.Error.unauthorized: .unauthorized
-        case GitHubActionsAPIClient.Error.notFound: .notFound
-        case GitHubActionsAPIClient.Error.removed: .removed
-        default: .unexpected
+extension GitHubActionsArtifactProvider {
+
+    private func validateResponse(_ response: URLResponse) throws {
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw GitHubActionsArtifactProviderError.unexpected
+        }
+
+        guard httpResponse.statusCode == 302 else {
+            switch httpResponse.statusCode {
+            case 401:
+                throw GitHubActionsArtifactProviderError.unauthorized
+            case 404:
+                throw GitHubActionsArtifactProviderError.notFound
+            case 410:
+                throw GitHubActionsArtifactProviderError.removed
+            default:
+                throw GitHubActionsArtifactProviderError.unexpected
+            }
         }
     }
 }

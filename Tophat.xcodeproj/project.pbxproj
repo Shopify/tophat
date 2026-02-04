@@ -133,8 +133,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				TophatGitHubActionsExtension/API/GitHubActionsAPIClient.swift,
-				TophatGitHubActionsExtension/API/GitHubActionsArtifactProviderError.swift,
 				TophatGitHubActionsExtension/ArtifactProviders/GitHubActionsArtifactProvider.swift,
+				TophatGitHubActionsExtension/ArtifactProviders/GitHubActionsArtifactProviderError.swift,
 				TophatGitHubActionsExtension/Localizable.xcstrings,
 				TophatGitHubActionsExtension/Settings/Constants.swift,
 				TophatGitHubActionsExtension/Settings/SettingsView.swift,

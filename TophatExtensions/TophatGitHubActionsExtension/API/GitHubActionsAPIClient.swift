@@ -10,13 +10,6 @@ import Foundation
 
 struct GitHubActionsAPIClient {
 
-    enum Error: Swift.Error {
-        case unauthorized
-        case notFound
-        case removed
-        case unexpected
-    }
-
     private let personalAccessToken: String
     private let baseAPIUrl = "https://api.github.com"
     private let apiVersion = "2022-11-28"
@@ -32,7 +25,7 @@ struct GitHubActionsAPIClient {
         owner: String,
         repository: String,
         artifactId: String
-    ) async throws -> (URL, String?) {
+    ) async throws -> (URL, URLResponse) {
         let url = URL(string: baseAPIUrl)!
             .appending(path: "repos")
             .appending(path: owner)
@@ -44,10 +37,7 @@ struct GitHubActionsAPIClient {
 
         let urlRequest = makeURLRequest(url: url, apiVersion: apiVersion, token: personalAccessToken)
 
-        let (downloadedFileURL, urlResponse) = try await urlSession.download(for: urlRequest)
-        try validateResponse(urlResponse)
-
-        return (downloadedFileURL, urlResponse.suggestedFilename)
+        return try await urlSession.download(for: urlRequest)
     }
 }
 
@@ -67,24 +57,5 @@ extension GitHubActionsAPIClient {
         }
 
         return request
-    }
-
-    private func validateResponse(_ response: URLResponse) throws {
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw Error.unexpected
-        }
-
-        guard httpResponse.statusCode == 302 else {
-            switch httpResponse.statusCode {
-            case 401:
-                throw Error.unauthorized
-            case 404:
-                throw Error.notFound
-            case 410:
-                throw Error.removed
-            default:
-                throw Error.unexpected
-            }
-        }
     }
 }
