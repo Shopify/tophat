@@ -138,7 +138,7 @@
 				TophatGitHubActionsExtension/Localizable.xcstrings,
 				TophatGitHubActionsExtension/Settings/Constants.swift,
 				TophatGitHubActionsExtension/Settings/SettingsView.swift,
-				TophatGitHubActionsExtension/TophatGitHubActionExtension.swift,
+				TophatGitHubActionsExtension/TophatGitHubActionsExtension.swift,
 			);
 			target = 4D7657382EFA9A5B00319B8C /* TophatGitHubActionsExtension */;
 		};
@@ -666,7 +666,7 @@
 			buildSettings = {
 				AUTOMATION_APPLE_EVENTS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatGitHubActionsExtension/TophatGitHubActionExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatGitHubActionsExtension/TophatGitHubActionsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
@@ -719,7 +719,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatGitHubActionsExtension/TophatGitHubActionExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TophatExtensions/TophatGitHubActionsExtension/TophatGitHubActionsExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
