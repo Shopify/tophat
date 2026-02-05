@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SecureStorage
 import TophatKit
 
 struct BranchArtifactProvider: ArtifactProvider {

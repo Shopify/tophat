@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		4D7657402EFA9A5B00319B8C /* TophatGitHubActionsExtension.appex in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D7657392EFA9A5B00319B8C /* TophatGitHubActionsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4D7657472EFA9A8E00319B8C /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4D7657462EFA9A8E00319B8C /* TophatKit */; };
-		4D76626B2EFB9D2200319B8C /* SecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 4D76626A2EFB9D2200319B8C /* SecureStorage */; };
-		4D7664032EFB9E5400319B8C /* SecureStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 4D7664022EFB9E5400319B8C /* SecureStorage */; };
+		4D94A0C42F34B56200916167 /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 4D94A0C32F34B56200916167 /* SimpleKeychain */; };
+		4D94A0C62F34B56B00916167 /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = 4D94A0C52F34B56B00916167 /* SimpleKeychain */; };
 		7F4532AD251A6C4700F2CFC8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = 7FA71E0924C95CAC001C9574 /* Logging */; };
 		7F4532AF251A6C4700F2CFC8 /* LoggingOSLog in Frameworks */ = {isa = PBXBuildFile; productRef = 7F8EC94425086F3B00D4D42B /* LoggingOSLog */; };
 		8005282F2CB718C200226174 /* TophatKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8005282E2CB718C200226174 /* TophatKit */; };
@@ -139,6 +139,7 @@
 				TophatGitHubActionsExtension/Settings/Constants.swift,
 				TophatGitHubActionsExtension/Settings/SettingsView.swift,
 				TophatGitHubActionsExtension/TophatGitHubActionsExtension.swift,
+				TophatGitHubActionsExtension/Utilities/SecureStorage.swift,
 			);
 			target = 4D7657382EFA9A5B00319B8C /* TophatGitHubActionsExtension */;
 		};
@@ -173,6 +174,7 @@
 				TophatBitriseExtension/Settings/Constants.swift,
 				TophatBitriseExtension/Settings/SettingsView.swift,
 				TophatBitriseExtension/TophatBitriseExtension.swift,
+				TophatBitriseExtension/Utilities/SecureStorage.swift,
 			);
 			target = 808C6E312CF8D81F0030359E /* TophatBitriseExtension */;
 		};
@@ -211,8 +213,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D94A0C62F34B56B00916167 /* SimpleKeychain in Frameworks */,
 				4D7657472EFA9A8E00319B8C /* TophatKit in Frameworks */,
-				4D7664032EFB9E5400319B8C /* SecureStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,8 +259,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D94A0C42F34B56200916167 /* SimpleKeychain in Frameworks */,
 				808C6E462CF8D8600030359E /* TophatKit in Frameworks */,
-				4D76626B2EFB9D2200319B8C /* SecureStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +328,7 @@
 			name = TophatGitHubActionsExtension;
 			packageProductDependencies = (
 				4D7657462EFA9A8E00319B8C /* TophatKit */,
-				4D7664022EFB9E5400319B8C /* SecureStorage */,
+				4D94A0C52F34B56B00916167 /* SimpleKeychain */,
 			);
 			productName = TophatGitHubExtension;
 			productReference = 4D7657392EFA9A5B00319B8C /* TophatGitHubActionsExtension.appex */;
@@ -436,7 +438,7 @@
 			name = TophatBitriseExtension;
 			packageProductDependencies = (
 				808C6E452CF8D8600030359E /* TophatKit */,
-				4D76626A2EFB9D2200319B8C /* SecureStorage */,
+				4D94A0C32F34B56200916167 /* SimpleKeychain */,
 			);
 			productName = TophatBitriseExtension;
 			productReference = 808C6E322CF8D81F0030359E /* TophatBitriseExtension.appex */;
@@ -511,6 +513,7 @@
 				807D7B1429835795007942B4 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
 				80346F022BEBD527002F54BC /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 				80DC0FD62C82225600E5C9EE /* XCRemoteSwiftPackageReference "Sparkle" */,
+				4D94A0BF2F34B4FB00916167 /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
 			);
 			preferredProjectObjectVersion = 50;
 			productRefGroup = 7F35025024A5060500EE76EA /* Products */;
@@ -1185,6 +1188,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4D94A0BF2F34B4FB00916167 /* XCRemoteSwiftPackageReference "SimpleKeychain" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/SimpleKeychain.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 		7F8EC94325086F3B00D4D42B /* XCRemoteSwiftPackageReference "swift-log-oslog" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/chrisaljoudi/swift-log-oslog.git";
@@ -1256,13 +1267,15 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = TophatKit;
 		};
-		4D76626A2EFB9D2200319B8C /* SecureStorage */ = {
+		4D94A0C32F34B56200916167 /* SimpleKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SecureStorage;
+			package = 4D94A0BF2F34B4FB00916167 /* XCRemoteSwiftPackageReference "SimpleKeychain" */;
+			productName = SimpleKeychain;
 		};
-		4D7664022EFB9E5400319B8C /* SecureStorage */ = {
+		4D94A0C52F34B56B00916167 /* SimpleKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SecureStorage;
+			package = 4D94A0BF2F34B4FB00916167 /* XCRemoteSwiftPackageReference "SimpleKeychain" */;
+			productName = SimpleKeychain;
 		};
 		7F8EC94425086F3B00D4D42B /* LoggingOSLog */ = {
 			isa = XCSwiftPackageProductDependency;

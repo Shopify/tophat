@@ -1,24 +1,24 @@
 //
 //  SecureStorage.swift
-//  Tophat
+//  TophatGitHubActionsExtension
 //
-//  Created by Lukas Romsicki on 2024-11-28.
-//  Copyright © 2024 Shopify. All rights reserved.
+//  Created by Doan Thieu on 5/2/26.
+//  Copyright © 2026 Shopify. All rights reserved.
 //
 
 import SwiftUI
 import SimpleKeychain
 
 @propertyWrapper
-public struct SecureStorage {
+struct SecureStorage {
 	private let key: String
 	private let keychain = SimpleKeychain()
 
-	public init(_ key: String) {
+	init(_ key: String) {
 		self.key = key
 	}
 
-	public var wrappedValue: String? {
+	var wrappedValue: String? {
 		get {
 			try? keychain.string(forKey: key)
 		}
