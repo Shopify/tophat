@@ -676,7 +676,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TophatExtensions/TophatGitHubActionsExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TophatGitHubActionsExtension;
+				INFOPLIST_KEY_CFBundleDisplayName = "GitHub Actions";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Shopify. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -708,7 +708,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TophatExtensions/TophatGitHubActionsExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TophatGitHubActionsExtension;
+				INFOPLIST_KEY_CFBundleDisplayName = "GitHub Actions";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 Shopify. All rights reserved.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -716,7 +716,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatGitHubActionExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shopify.Tophat.TophatGitHubActionsExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
