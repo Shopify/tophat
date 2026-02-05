@@ -64,7 +64,7 @@ extension GitHubActionsArtifactProvider {
 			throw GitHubActionsArtifactProviderError.unexpected
 		}
 
-		guard httpResponse.statusCode == 302 else {
+		guard httpResponse.statusCode == 200 else {
 			switch httpResponse.statusCode {
 			case 401:
 				throw GitHubActionsArtifactProviderError.unauthorized
