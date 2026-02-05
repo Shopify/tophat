@@ -11,13 +11,13 @@ import TophatKit
 
 @main
 struct TophatGitHubActionsExtension: TophatExtension, ArtifactProviding, SettingsProviding {
-    static let title: LocalizedStringResource = "GitHub Actions"
+	static let title: LocalizedStringResource = "GitHub Actions"
 
-    static var artifactProviders: some ArtifactProviders {
-        GitHubActionsArtifactProvider()
-    }
+	static var artifactProviders: some ArtifactProviders {
+		GitHubActionsArtifactProvider()
+	}
 
-    static var settings: some View {
-        SettingsView()
-    }
+	static var settings: some View {
+		SettingsView()
+	}
 }

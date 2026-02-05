@@ -7,5 +7,5 @@
 //
 
 enum Constants {
-    static let keychainGitHubPersonalAccessTokenKey = "GitHubPersonalAccessToken"
+	static let keychainGitHubPersonalAccessTokenKey = "GitHubPersonalAccessToken"
 }
