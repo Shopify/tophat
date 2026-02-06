@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import SecureStorage
 import TophatKit
 
 struct SettingsView: View {
