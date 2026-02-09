@@ -5,14 +5,14 @@ import PackageDescription
 
 let package = Package(
     name: "TophatKit",
-	platforms: [
-		.macOS(.v14)
-	],
+    platforms: [
+        .macOS(.v14)
+    ],
     products: [
         .library(
             name: "TophatKit",
             targets: ["TophatKit"]
-		    ),
+        )
     ],
     targets: [
         .target(name: "TophatKit")
