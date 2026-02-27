@@ -37,6 +37,9 @@ struct Install: AsyncParsableCommand {
 	@Option(parsing: .upToNextOption, help: "Arguments to pass to the application on launch when an artifact is provided.")
 	var launchArguments: [String] = []
 
+	@Option(name: .long, help: "The identifier of the device to install to (UDID for Apple devices, serial for Android). Overrides the device selection in the Tophat UI.")
+	var deviceId: String?
+
 	func run() async throws {
 		checkIfHostAppIsRunning()
 
@@ -49,7 +52,7 @@ struct Install: AsyncParsableCommand {
 			urlParsedAsArgument.isFileURL ? urlParsedAsArgument.pathExtension != "" : scheme.hasPrefix("http")
 		else {
 			try assertLaunchArgumentsEmpty()
-			try await service.send(request: InstallFromQuickLaunchRequest(quickLaunchEntryID: idOrPath), timeout: 60)
+			try await service.send(request: InstallFromQuickLaunchRequest(quickLaunchEntryID: idOrPath, deviceIdentifier: deviceId), timeout: 60)
 			return
 		}
 
@@ -60,7 +63,8 @@ struct Install: AsyncParsableCommand {
 				recipes: try JSONDecoder().decode(
 					[UserSpecifiedRecipeConfiguration].self,
 					from: Data(contentsOf: urlParsedAsArgument)
-				)
+				),
+				deviceIdentifier: deviceId
 			)
 
 			try await service.send(request: request, timeout: 60)
@@ -69,7 +73,8 @@ struct Install: AsyncParsableCommand {
 
 		let request = InstallFromURLRequest(
 			url: urlParsedAsArgument,
-			launchArguments: launchArguments
+			launchArguments: launchArguments,
+			deviceIdentifier: deviceId
 		)
 
 		try await service.send(request: request, timeout: 60)

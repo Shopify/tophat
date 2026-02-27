@@ -16,6 +16,8 @@ extension InstallationTicketMachineError: LocalizedError {
 				"No \(description(for: providedBuildTypes)) Selected"
 			case .noSelectedDevices:
 				"No Device Selected"
+			case .deviceNotFound(let identifier):
+				"Device Not Found: \(identifier)"
 		}
 	}
 
@@ -23,6 +25,8 @@ extension InstallationTicketMachineError: LocalizedError {
 		switch self {
 			case .noCompatibleDevices:
 				"None of the specified builds are compatible with the selected devices."
+			case .deviceNotFound:
+				"No device matching the specified identifier could be found."
 			default:
 				nil
 		}
@@ -35,6 +39,8 @@ extension InstallationTicketMachineError: LocalizedError {
 				return "Select \(text.indefiniteArticle) \(text) using the Tophat menu and try again."
 			case .noSelectedDevices:
 				return "Select a device from the Tophat menu and try again."
+			case .deviceNotFound:
+				return "Make sure the device identifier is correct and the device is available."
 		}
 	}
 

@@ -15,9 +15,9 @@ import TophatControlServices
 protocol RemoteControlReceiverDelegate: AnyObject, Sendable {
 	func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry)
 	func remoteControlReceiver(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID)
-	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async
-	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async
-	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async
+	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe], context: OperationContext?) async
+	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID, context: OperationContext?) async
+	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String], context: OperationContext?) async
 }
 
 struct RemoteControlReceiver {
@@ -34,8 +34,9 @@ struct RemoteControlReceiver {
 		Task {
 			for await request in service.requests(for: InstallFromURLRequest.self) {
 				let requestValue = request.value
+				let context = requestValue.deviceIdentifier.map { OperationContext(targetDeviceIdentifier: $0) }
 
-				await delegate.remoteControlReceiver(didOpenURL: requestValue.url, launchArguments: requestValue.launchArguments)
+				await delegate.remoteControlReceiver(didOpenURL: requestValue.url, launchArguments: requestValue.launchArguments, context: context)
 				request.reply(.init())
 			}
 		}
@@ -58,7 +59,8 @@ struct RemoteControlReceiver {
 					)
 				}
 
-				await delegate.remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes: recipes)
+				let context = requestValue.deviceIdentifier.map { OperationContext(targetDeviceIdentifier: $0) }
+				await delegate.remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes: recipes, context: context)
 				request.reply(.init())
 			}
 		}
@@ -148,7 +150,8 @@ struct RemoteControlReceiver {
 
 		Task {
 			for await request in service.requests(for: InstallFromQuickLaunchRequest.self) {
-				await delegate.remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier: request.value.quickLaunchEntryID)
+				let context = request.value.deviceIdentifier.map { OperationContext(targetDeviceIdentifier: $0) }
+				await delegate.remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier: request.value.quickLaunchEntryID, context: context)
 				request.reply(.init())
 			}
 		}

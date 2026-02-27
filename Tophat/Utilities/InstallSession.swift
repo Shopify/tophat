@@ -80,7 +80,7 @@ actor InstallSession {
 		defer { activeRequestsCount -= 1 }
 
 		try await withThrowingTaskGroup(of: Void.self) { group in
-			for try await ticket in ticketMachine.process(recipes: recipes) {
+			for try await ticket in ticketMachine.process(recipes: recipes, context: context) {
 				group.addTask { [weak self] in
 					try await self?.install(ticket: ticket, context: context)
 				}

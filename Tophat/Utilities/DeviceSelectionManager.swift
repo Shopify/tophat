@@ -22,7 +22,7 @@ import SwiftUI
 		// Configure default devices if none were initially selected.
 		if selectedDeviceIdentifiers.isEmpty {
 			for platform in Platform.allCases {
-				if let firstPlatformDevice = devices.filter(by: platform).first {
+				if let firstPlatformDevice = allDevices.filter(by: platform).first {
 					selectedDeviceIdentifiers.append(firstPlatformDevice.id)
 				}
 			}
@@ -32,7 +32,7 @@ import SwiftUI
 	/// A collection of all currently selected devices.
 	var selectedDevices: [Device] {
 		get {
-			devices.filter { selectedDeviceIdentifiers.contains($0.id) }
+			allDevices.filter { selectedDeviceIdentifiers.contains($0.id) }
 		}
 		set {
 			selectedDeviceIdentifiers = newValue.map { $0.id }
@@ -40,7 +40,7 @@ import SwiftUI
 		}
 	}
 
-	private var devices: [Device] {
+	var allDevices: [Device] {
 		deviceManager.devices
 	}
 }

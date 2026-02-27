@@ -13,9 +13,11 @@ public struct InstallFromRecipesRequest: TophatRemoteControlRequest {
 
 	public let id: UUID
 	public let recipes: [UserSpecifiedRecipeConfiguration]
+	public let deviceIdentifier: String?
 
-	public init(recipes: [UserSpecifiedRecipeConfiguration]) {
+	public init(recipes: [UserSpecifiedRecipeConfiguration], deviceIdentifier: String? = nil) {
 		self.id = UUID()
 		self.recipes = recipes
+		self.deviceIdentifier = deviceIdentifier
 	}
 }

@@ -22,6 +22,7 @@ extension ApplicationDownloading {
 
 protocol DeviceSelecting: Sendable {
 	@MainActor var selectedDevices: [Device] { get }
+	@MainActor var allDevices: [Device] { get }
 }
 
 /// A mechanism for producing installation tickets for selected devices based on the information
@@ -59,10 +60,20 @@ struct InstallationTicketMachine {
 	}
 
 	private func process(recipes: [InstallRecipe], continuation: TicketSequence.Continuation, context: OperationContext?) async throws {
-		let selectedDevices = await deviceSelector.selectedDevices
+		let selectedDevices: [Device]
 
-		guard !selectedDevices.isEmpty else {
-			throw InstallationTicketMachineError.noSelectedDevices
+		if let targetDeviceIdentifier = context?.targetDeviceIdentifier {
+			let allDevices = await deviceSelector.allDevices
+			guard let device = allDevices.first(where: { $0.id == targetDeviceIdentifier }) else {
+				throw InstallationTicketMachineError.deviceNotFound(identifier: targetDeviceIdentifier)
+			}
+			selectedDevices = [device]
+		} else {
+			selectedDevices = await deviceSelector.selectedDevices
+
+			guard !selectedDevices.isEmpty else {
+				throw InstallationTicketMachineError.noSelectedDevices
+			}
 		}
 
 		let state = RecipeProcessingState()
@@ -156,6 +167,7 @@ extension InstallationTicketMachine {
 enum InstallationTicketMachineError: Error {
 	case noCompatibleDevices(providedDestinations: [Platform: Set<DeviceType>])
 	case noSelectedDevices
+	case deviceNotFound(identifier: String)
 }
 
 extension DeviceSelectionManager: DeviceSelecting {}

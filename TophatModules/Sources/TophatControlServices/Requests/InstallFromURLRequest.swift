@@ -14,10 +14,12 @@ public struct InstallFromURLRequest: TophatRemoteControlRequest {
 	public let id: UUID
 	public let url: URL
 	public let launchArguments: [String]
+	public let deviceIdentifier: String?
 
-	public init(url: URL, launchArguments: [String]) {
+	public init(url: URL, launchArguments: [String], deviceIdentifier: String? = nil) {
 		self.id = UUID()
 		self.url = url
 		self.launchArguments = launchArguments
+		self.deviceIdentifier = deviceIdentifier
 	}
 }

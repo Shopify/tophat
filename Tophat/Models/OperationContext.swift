@@ -9,9 +9,11 @@
 struct OperationContext: Sendable {
 	let quickLaunchEntryID: QuickLaunchEntry.ID?
 	let applicationDisplayName: String?
+	let targetDeviceIdentifier: String?
 
-	init(quickLaunchEntryID: QuickLaunchEntry.ID? = nil, applicationDisplayName: String? = nil) {
+	init(quickLaunchEntryID: QuickLaunchEntry.ID? = nil, applicationDisplayName: String? = nil, targetDeviceIdentifier: String? = nil) {
 		self.quickLaunchEntryID = quickLaunchEntryID
 		self.applicationDisplayName = applicationDisplayName
+		self.targetDeviceIdentifier = targetDeviceIdentifier
 	}
 }

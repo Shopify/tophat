@@ -330,23 +330,43 @@ extension AppDelegate: RemoteControlReceiverDelegate {
 		}
 	}
 
-	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async {
-		await launchApp(artifactURL: url, launchArguments: launchArguments)
+	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String], context: OperationContext?) async {
+		await launchApp(artifactURL: url, launchArguments: launchArguments, context: context)
 	}
 
-	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async {
-		await launchApp(recipes: recipes)
+	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe], context: OperationContext?) async {
+		await launchApp(recipes: recipes, context: context)
 	}
 
-	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async {
-		let context = ModelContext(modelContainer)
+	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID, context: OperationContext?) async {
+		let modelContext = ModelContext(modelContainer)
 
 		let fetchDescriptor = FetchDescriptor<QuickLaunchEntry>(
 			predicate: #Predicate { $0.id == quickLaunchEntryIdentifier }
 		)
 
-		if let entry = try? context.fetch(fetchDescriptor).first {
-			await launchApp(quickLaunchEntry: entry)
+		if let entry = try? modelContext.fetch(fetchDescriptor).first {
+			let enrichedContext = OperationContext(
+				quickLaunchEntryID: entry.id,
+				applicationDisplayName: entry.name,
+				targetDeviceIdentifier: context?.targetDeviceIdentifier
+			)
+
+			let recipes = entry.recipes.map { source in
+				InstallRecipe(
+					source: .artifactProvider(
+						metadata: ArtifactProviderMetadata(
+							id: source.artifactProviderID,
+							parameters: source.artifactProviderParameters
+						)
+					),
+					launchArguments: source.launchArguments,
+					platformHint: source.platformHint,
+					destinationHint: source.destinationHint
+				)
+			}
+
+			await launchApp(recipes: recipes, context: enrichedContext)
 		}
 	}
 }
