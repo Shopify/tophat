@@ -14,4 +14,18 @@ public struct UserSpecifiedRecipeConfiguration: Codable, Sendable {
 	public let launchArguments: [String]
 	public let platformHint: Platform
 	public let destinationHint: DeviceType?
+
+	public init(
+		artifactProviderID: String,
+		artifactProviderParameters: [String: String],
+		launchArguments: [String],
+		platformHint: Platform,
+		destinationHint: DeviceType?
+	) {
+		self.artifactProviderID = artifactProviderID
+		self.artifactProviderParameters = artifactProviderParameters
+		self.launchArguments = launchArguments
+		self.platformHint = platformHint
+		self.destinationHint = destinationHint
+	}
 }

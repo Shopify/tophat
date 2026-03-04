@@ -49,10 +49,18 @@ struct Install: AsyncParsableCommand {
 		guard
 			let urlParsedAsArgument,
 			let scheme = urlParsedAsArgument.scheme,
-			urlParsedAsArgument.isFileURL ? urlParsedAsArgument.pathExtension != "" : scheme.hasPrefix("http")
+			urlParsedAsArgument.isFileURL ? urlParsedAsArgument.pathExtension != "" : (scheme.hasPrefix("http") || scheme == "tophat")
 		else {
 			try assertLaunchArgumentsEmpty()
 			try await service.send(request: InstallFromQuickLaunchRequest(quickLaunchEntryID: idOrPath, deviceIdentifier: deviceId), timeout: 60)
+			return
+		}
+
+		if urlParsedAsArgument.scheme == "tophat" {
+			try assertLaunchArgumentsEmpty()
+			let recipes = try parseTophatURL(urlParsedAsArgument)
+			let request = InstallFromRecipesRequest(recipes: recipes, deviceIdentifier: deviceId)
+			try await service.send(request: request, timeout: 60)
 			return
 		}
 
@@ -78,6 +86,92 @@ struct Install: AsyncParsableCommand {
 		)
 
 		try await service.send(request: request, timeout: 60)
+	}
+
+	private func parseTophatURL(_ url: URL) throws -> [UserSpecifiedRecipeConfiguration] {
+		guard url.host() == "install" else {
+			throw ValidationError("Unsupported tophat URL: \(url.absoluteString)")
+		}
+
+		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+			throw ValidationError("Malformed tophat URL: \(url.absoluteString)")
+		}
+
+		let artifactProviderID = url.lastPathComponent
+		let queryItems = components.queryItems ?? []
+
+		let binnedQueryItemValues = Dictionary(grouping: queryItems) { $0.name }
+			.mapValues { items in items.compactMap(\.value) }
+
+		let reservedKeys: Set<String> = ["platform", "destination", "arguments"]
+
+		let parameterQueryItemValues = binnedQueryItemValues.filter { !reservedKeys.contains($0.key) }
+
+		let valueCount = parameterQueryItemValues.values.first?.count ?? 0
+
+		if valueCount == 0, binnedQueryItemValues.values.contains(where: { $0.count > 1 }) {
+			throw ValidationError("Malformed tophat URL: \(url.absoluteString)")
+		}
+
+		if parameterQueryItemValues.isEmpty {
+			return [
+				recipeConfiguration(
+					at: 0,
+					in: binnedQueryItemValues,
+					artifactProviderID: artifactProviderID
+				)
+			]
+		}
+
+		guard parameterQueryItemValues.allSatisfy({ $1.count == valueCount }) else {
+			throw ValidationError("Malformed tophat URL: \(url.absoluteString)")
+		}
+
+		return (0..<valueCount).map { index in
+			recipeConfiguration(
+				at: index,
+				in: binnedQueryItemValues,
+				artifactProviderID: artifactProviderID
+			)
+		}
+	}
+
+	private func recipeConfiguration(
+		at index: Int,
+		in binnedQueryItemValues: [String: [String]],
+		artifactProviderID: String
+	) -> UserSpecifiedRecipeConfiguration {
+		let reservedKeys: Set<String> = ["platform", "destination", "arguments"]
+
+		let parameters: [String: String] = binnedQueryItemValues.reduce(into: [:]) { partialResult, item in
+			if !reservedKeys.contains(item.key) {
+				partialResult[item.key] = item.value[safe: index] ?? item.value[safe: 0] ?? ""
+			}
+		}
+
+		let platformHint: Platform = if let platformString = binnedQueryItemValues["platform"]?[safe: index] {
+			Platform(rawValue: platformString) ?? .unknown
+		} else {
+			.unknown
+		}
+
+		let destinationHint: DeviceType? = if let destinationString = binnedQueryItemValues["destination"]?[safe: index] {
+			destinationString == "device" ? .device : .simulator
+		} else {
+			nil
+		}
+
+		let launchArguments = binnedQueryItemValues["arguments"]?[safe: index]?
+			.split(separator: ",", omittingEmptySubsequences: true)
+			.map(String.init) ?? []
+
+		return UserSpecifiedRecipeConfiguration(
+			artifactProviderID: artifactProviderID,
+			artifactProviderParameters: parameters,
+			launchArguments: launchArguments,
+			platformHint: platformHint,
+			destinationHint: destinationHint
+		)
 	}
 
 	private func assertLaunchArgumentsEmpty() throws {
