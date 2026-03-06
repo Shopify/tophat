@@ -40,6 +40,7 @@ actor InstallSession {
 	init(
 		artifactDownloader: ArtifactDownloader,
 		deviceSelector: DeviceSelecting,
+		deviceEnumerator: DeviceEnumerating,
 		quickLaunchEntryIconUpdater: QuickLaunchEntryIconUpdating,
 		taskStatusReporter: TaskStatusReporter
 	) {
@@ -51,6 +52,7 @@ actor InstallSession {
 
 		self.ticketMachine = InstallationTicketMachine(
 			deviceSelector: deviceSelector,
+			deviceEnumerator: deviceEnumerator,
 			applicationDownloader: applicationDownloader
 		)
 

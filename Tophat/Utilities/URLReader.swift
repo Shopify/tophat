@@ -128,6 +128,8 @@ struct URLReader {
 			.split(separator: ",", omittingEmptySubsequences: true)
 			.map(String.init)
 
+		let deviceHints = InstallRecipe.DeviceHints(platformHint: platform, destinationHint: destination)
+
 		return InstallRecipe(
 			source: .artifactProvider(
 				metadata: ArtifactProviderMetadata(
@@ -136,8 +138,7 @@ struct URLReader {
 				)
 			),
 			launchArguments: launchArguments ?? [],
-			platformHint: platform,
-			destinationHint: destination
+			deviceInfo: .hinted(deviceHints)
 		)
 	}
 }

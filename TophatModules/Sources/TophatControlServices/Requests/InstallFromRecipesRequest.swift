@@ -12,9 +12,9 @@ public struct InstallFromRecipesRequest: TophatRemoteControlRequest {
 	public typealias Reply = InstallationRequestReply
 
 	public let id: UUID
-	public let recipes: [UserSpecifiedRecipeConfiguration]
+	public let recipes: [UserSpecifiedInstallRecipeConfiguration]
 
-	public init(recipes: [UserSpecifiedRecipeConfiguration]) {
+	public init(recipes: [UserSpecifiedInstallRecipeConfiguration]) {
 		self.id = UUID()
 		self.recipes = recipes
 	}

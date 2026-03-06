@@ -57,8 +57,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: nil,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: nil, destinationHint: nil))
 			)
 		]
 
@@ -78,8 +77,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: platform,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: platform, destinationHint: nil))
 			)
 		]
 
@@ -99,8 +97,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: nil,
-				destinationHint: destination == "simulator" ? .simulator : .device
+				deviceInfo: .hinted(.init(destinationHint: destination == "simulator" ? .simulator : .device))
 			)
 		]
 
@@ -120,8 +117,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: nil,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: nil, destinationHint: nil))
 			)
 		]
 
@@ -141,8 +137,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: .iOS,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: .iOS, destinationHint: nil))
 			)
 		]
 
@@ -162,8 +157,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: nil,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: nil, destinationHint: nil))
 			),
 			.init(
 				source: .artifactProvider(
@@ -173,8 +167,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: nil,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: nil, destinationHint: nil))
 			)
 		]
 
@@ -203,8 +196,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: ["one", "two"],
-				platformHint: .iOS,
-				destinationHint: .simulator
+				deviceInfo: .hinted(.init(platformHint: .iOS, destinationHint: .simulator))
 			),
 			.init(
 				source: .artifactProvider(
@@ -214,8 +206,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: nil,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: nil, destinationHint: nil))
 			)
 		]
 
@@ -235,8 +226,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: ["one", "two"],
-				platformHint: .iOS,
-				destinationHint: .simulator
+				deviceInfo: .hinted(.init(platformHint: .iOS, destinationHint: .simulator))
 			),
 			.init(
 				source: .artifactProvider(
@@ -246,8 +236,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: ["three", "four"],
-				platformHint: .android,
-				destinationHint: .device
+				deviceInfo: .hinted(.init(platformHint: .android, destinationHint: .device))
 			)
 		]
 
@@ -267,8 +256,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: nil,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: nil, destinationHint: nil))
 			)
 		]
 
@@ -288,8 +276,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: [],
-				platformHint: nil,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: nil, destinationHint: nil))
 			)
 		]
 
@@ -309,8 +296,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: ["a b"],
-				platformHint: nil,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: nil, destinationHint: nil))
 			)
 		]
 
@@ -330,8 +316,7 @@ struct URLReaderTests {
 					)
 				),
 				launchArguments: ["http://example.com/path?value=a%20b"],
-				platformHint: nil,
-				destinationHint: nil
+				deviceInfo: .hinted(.init(platformHint: nil, destinationHint: nil))
 			)
 		]
 

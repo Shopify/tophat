@@ -23,6 +23,21 @@ When specifying the path to a JSON configuration file, use the following format 
 	"destinationHint": "simulator"
   }
 ]
+
+To target a specific device by name and runtime version:
+
+[
+  {
+	"artifactProviderID": "<example>",
+	"artifactProviderParameters": {},
+	"launchArguments": [],
+	"device": {
+	  "name": "iPhone 16 Pro",
+	  "platform": "ios",
+	  "runtimeVersion": "18.2"
+	}
+  }
+]
 """
 
 struct Install: AsyncParsableCommand {
@@ -56,13 +71,18 @@ struct Install: AsyncParsableCommand {
 		if urlParsedAsArgument.pathExtension == "json" {
 			try assertLaunchArgumentsEmpty()
 
-			let request = InstallFromRecipesRequest(
-				recipes: try JSONDecoder().decode(
-					[UserSpecifiedRecipeConfiguration].self,
-					from: Data(contentsOf: urlParsedAsArgument)
-				)
+			let recipes = try JSONDecoder().decode(
+				[UserSpecifiedInstallRecipeConfiguration].self,
+				from: Data(contentsOf: urlParsedAsArgument)
 			)
 
+			for recipe in recipes {
+				if recipe.device != nil, recipe.platformHint != nil || recipe.destinationHint != nil {
+					throw ValidationError("Cannot specify both device and platformHint or destinationHint.")
+				}
+			}
+
+			let request = InstallFromRecipesRequest(recipes: recipes)
 			try await service.send(request: request, timeout: 60)
 			return
 		}
