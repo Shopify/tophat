@@ -50,8 +50,7 @@ extension ProxyVirtualDevice: Device {
 	}
 
 	var runtime: Runtime {
-		let parsedVersion = virtualDevice.androidVersion.replacingOccurrences(of: "Android ", with: "")
-		return .init(platform: .android, version: .exact(parsedVersion))
+		.init(platform: .android, version: .exact(virtualDevice.androidVersion))
 	}
 
 	var type: DeviceType {
