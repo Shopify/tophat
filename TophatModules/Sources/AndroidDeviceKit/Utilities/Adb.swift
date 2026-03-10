@@ -56,12 +56,8 @@ struct Adb {
 		return value
 	}
 
-	static func wait(for device: ConnectedDevice) throws {
-		try run(command: .adb(.waitForDevice(serial: device.serial)), log: log)
-
-		// Artificially give Emulator time to communicate with adb
-		// TODO: Figure out how Android Studio does it without sleeping
-		sleep(3)
+	static func wait(forSerial serial: String) throws {
+		try run(command: .adb(.waitForDevice(serial: serial)), log: log)
 	}
 
 	private static func firstLine(of command: ShellCommand) throws -> String? {

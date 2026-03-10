@@ -73,21 +73,16 @@ extension ProxyVirtualDevice: Device {
 
 	func boot() async throws {
 		do {
-			try Emulator.start(name: name)
+			let serial = try await Emulator.start(name: name)
+			try Adb.wait(forSerial: serial)
 		} catch {
 			throw DeviceError.failedToBoot
 		}
 
 		await connectedDeviceStore.update()
 
-		guard let connectedDevice = await connectedDeviceStore.connectedDevice else {
+		guard await connectedDeviceStore.connectedDevice != nil else {
 			throw await DeviceError.deviceNotAvailable(state: state)
-		}
-
-		do {
-			try Adb.wait(for: connectedDevice)
-		} catch {
-			throw DeviceError.failedToBoot
 		}
 	}
 
