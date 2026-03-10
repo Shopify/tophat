@@ -40,9 +40,18 @@ private extension VirtualDevice {
 		"Target: "
 		characterOrSymbolCapture
 		anyWhitespace
-		"Based on: "
-		characterOrSymbolCapture
+		"Based on: Android "
+		Capture {
+			OneOrMore(CharacterClass.anyNonNewline, .reluctant)
+		}
 		anyWhitespace
+		Optionally {
+			"(\""
+			// Do not capture Android version codename.
+			OneOrMore(CharacterClass.anyNonNewline)
+			"\")"
+			anyWhitespace
+		}
 		"Tag/ABI: "
 		characterOrSymbolCapture
 		anyWhitespace
