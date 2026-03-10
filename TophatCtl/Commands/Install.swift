@@ -64,7 +64,13 @@ struct Install: AsyncParsableCommand {
 			urlParsedAsArgument.isFileURL ? urlParsedAsArgument.pathExtension != "" : scheme.hasPrefix("http")
 		else {
 			try assertLaunchArgumentsEmpty()
-			try await service.send(request: InstallFromQuickLaunchRequest(quickLaunchEntryID: idOrPath), timeout: 60)
+			let reply = try await service.send(request: InstallFromQuickLaunchRequest(quickLaunchEntryID: idOrPath), timeout: 60)
+
+			if let errorMessage = reply.errorMessage {
+				print(errorMessage)
+				throw ExitCode.failure
+			}
+
 			return
 		}
 
@@ -83,7 +89,13 @@ struct Install: AsyncParsableCommand {
 			}
 
 			let request = InstallFromRecipesRequest(recipes: recipes)
-			try await service.send(request: request, timeout: 60)
+			let reply = try await service.send(request: request, timeout: 60)
+
+			if let errorMessage = reply.errorMessage {
+				print(errorMessage)
+				throw ExitCode.failure
+			}
+
 			return
 		}
 
@@ -92,7 +104,11 @@ struct Install: AsyncParsableCommand {
 			launchArguments: launchArguments
 		)
 
-		try await service.send(request: request, timeout: 60)
+		let reply = try await service.send(request: request, timeout: 60)
+		if let errorMessage = reply.errorMessage {
+			print(errorMessage)
+			throw ExitCode.failure
+		}
 	}
 
 	private func assertLaunchArgumentsEmpty() throws {
