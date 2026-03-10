@@ -9,7 +9,7 @@
 import Foundation
 import TophatFoundation
 
-protocol DeviceListLoading: Sendable {
+protocol DeviceListLoading: DeviceEnumerating {
 	func loadDevices() async
 }
 
@@ -46,6 +46,7 @@ actor InstallCoordinator {
 		self.currentSession = InstallSession(
 			artifactDownloader: artifactDownloader,
 			deviceSelector: deviceSelector,
+			deviceEnumerator: deviceListLoader,
 			quickLaunchEntryIconUpdater: quickLaunchEntryIconUpdater,
 			taskStatusReporter: taskStatusReporter
 		)
@@ -74,6 +75,7 @@ actor InstallCoordinator {
 		currentSession = InstallSession(
 			artifactDownloader: artifactDownloader,
 			deviceSelector: deviceSelector,
+			deviceEnumerator: deviceListLoader,
 			quickLaunchEntryIconUpdater: quickLaunchEntryIconUpdater,
 			taskStatusReporter: taskStatusReporter
 		)

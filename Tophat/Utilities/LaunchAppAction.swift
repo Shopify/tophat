@@ -20,7 +20,12 @@ struct LaunchAppAction {
 		let context = OperationContext(quickLaunchEntryID: entry.id, applicationDisplayName: entry.name)
 
 		let recipes = entry.recipes.map { source in
-			InstallRecipe(
+			let deviceHints = InstallRecipe.DeviceHints(
+				platformHint: source.platformHint,
+				destinationHint: source.destinationHint
+			)
+
+			return InstallRecipe(
 				source: .artifactProvider(
 					metadata: ArtifactProviderMetadata(
 						id: source.artifactProviderID,
@@ -28,8 +33,7 @@ struct LaunchAppAction {
 					)
 				),
 				launchArguments: source.launchArguments,
-				platformHint: source.platformHint,
-				destinationHint: source.destinationHint
+				deviceInfo: .hinted(deviceHints)
 			)
 		}
 

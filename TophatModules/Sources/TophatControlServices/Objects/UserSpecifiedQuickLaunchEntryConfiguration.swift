@@ -7,7 +7,7 @@
 //
 
 public struct UserSpecifiedQuickLaunchEntryConfiguration: Codable, Sendable {
-	public typealias Recipe = UserSpecifiedRecipeConfiguration
+	public typealias Recipe = UserSpecifiedQuickLaunchRecipeConfiguration
 
 	public let id: String
 	public let name: String

@@ -7,7 +7,7 @@
 //
 
 /// The version of a particular runtime.
-public enum RuntimeVersion {
+public enum RuntimeVersion: Sendable, Codable, Equatable, Hashable {
 	case exact(String)
 	case unknown
 }

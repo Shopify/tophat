@@ -50,11 +50,23 @@ struct RemoteControlReceiver {
 						parameters: recipe.artifactProviderParameters
 					)
 
+					let deviceInfo: InstallRecipe.DeviceInfo? = if let device = recipe.device {
+						.specific(InstallRecipe.Device(
+							name: device.name,
+							platform: device.platform,
+							runtimeVersion: .exact(device.runtimeVersion)
+						))
+					} else {
+						.hinted(InstallRecipe.DeviceHints(
+							platformHint: recipe.platformHint,
+							destinationHint: recipe.destinationHint
+						))
+					}
+
 					return InstallRecipe(
 						source: .artifactProvider(metadata: artifactProviderMetadata),
 						launchArguments: recipe.launchArguments,
-						platformHint: recipe.platformHint,
-						destinationHint: recipe.destinationHint
+						deviceInfo: deviceInfo
 					)
 				}
 

@@ -14,6 +14,8 @@ extension InstallationTicketMachineError: LocalizedError {
 		switch self {
 			case .noCompatibleDevices(let providedBuildTypes):
 				"No \(description(for: providedBuildTypes)) Selected"
+			case .noMatchingDevices:
+				"Device Not Found"
 			case .noSelectedDevices:
 				"No Device Selected"
 		}
@@ -23,6 +25,8 @@ extension InstallationTicketMachineError: LocalizedError {
 		switch self {
 			case .noCompatibleDevices:
 				"None of the specified builds are compatible with the selected devices."
+			case .noMatchingDevices(let devices):
+				"No available device matches \(description(for: devices))."
 			default:
 				nil
 		}
@@ -33,6 +37,8 @@ extension InstallationTicketMachineError: LocalizedError {
 			case .noCompatibleDevices(let providedBuildTypes):
 				let text = description(for: providedBuildTypes)
 				return "Select \(text.indefiniteArticle) \(text) using the Tophat menu and try again."
+			case .noMatchingDevices:
+				return "Ensure the specified device is available and try again."
 			case .noSelectedDevices:
 				return "Select a device from the Tophat menu and try again."
 		}
@@ -44,5 +50,9 @@ extension InstallationTicketMachineError: LocalizedError {
 
 	private func description(for targets: Set<DeviceType>) -> String {
 		targets.map { String(describing: $0) }.formatted(.list(type: .or))
+	}
+
+	private func description(for devices: [InstallRecipe.Device]) -> String {
+		devices.map { "\($0.name) (\($0.platform) \($0.runtimeVersion))" }.formatted(.list(type: .or))
 	}
 }

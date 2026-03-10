@@ -24,20 +24,31 @@ protocol DeviceSelecting: Sendable {
 	@MainActor var selectedDevices: [Device] { get }
 }
 
+protocol DeviceEnumerating: Sendable {
+	@MainActor var devices: [Device] { get }
+}
+
 /// A mechanism for producing installation tickets for selected devices based on the information
 /// provided by installation recipes.
 struct InstallationTicketMachine {
 	typealias TicketSequence = AsyncThrowingStream<Ticket, Error>
 
 	private let deviceSelector: DeviceSelecting
+	private let deviceEnumerator: DeviceEnumerating
 	private let applicationDownloader: ApplicationDownloading
 
 	/// Creates a new instance of the processor.
 	/// - Parameters:
 	///   - deviceSelector: An instance that provides user-selected devices.
+	///   - deviceEnumerator: An instance that provides all available devices.
 	///   - applicationDownloader: An instance that provides downloading capability
-	init(deviceSelector: DeviceSelecting, applicationDownloader: ApplicationDownloading) {
+	init(
+		deviceSelector: DeviceSelecting,
+		deviceEnumerator: DeviceEnumerating,
+		applicationDownloader: ApplicationDownloading
+	) {
 		self.deviceSelector = deviceSelector
+		self.deviceEnumerator = deviceEnumerator
 		self.applicationDownloader = applicationDownloader
 	}
 
@@ -65,21 +76,48 @@ struct InstallationTicketMachine {
 			throw InstallationTicketMachineError.noSelectedDevices
 		}
 
+		let allDevices = await deviceEnumerator.devices
 		let state = RecipeProcessingState()
 
+		var processedSpecificDeviceIDs: Set<String> = []
+		var recipesToProcessAccumulator: [InstallRecipe] = []
+
 		for recipe in recipes {
-			if let platform = recipe.platformHint, let destination = recipe.destinationHint {
-				await state.track(providedDestinations: [destination], for: platform)
+			switch recipe.deviceInfo {
+			case .specific(let deviceInfo):
+				guard let device = allDevices.first(where: { $0.name == deviceInfo.name && $0.runtime.platform == deviceInfo.platform && $0.runtime.version == deviceInfo.runtimeVersion }) else {
+					await state.trackUnmatchedDevice(deviceInfo)
+					continue
+				}
+
+				let ticket = Ticket(
+					device: device,
+					artifactLocation: .remote(source: recipe.source),
+					launchArguments: recipe.launchArguments
+				)
+
+				processedSpecificDeviceIDs.insert(device.id)
+				await state.incrementProcessedTicketCount()
+				continuation.yield(ticket)
+
+			case .hinted, nil:
+				if let platform = recipe.platformHint, let destination = recipe.destinationHint {
+					await state.track(providedDestinations: [destination], for: platform)
+				}
+
+				recipesToProcessAccumulator.append(recipe)
 			}
 		}
 
+		let recipesToProcess = recipesToProcessAccumulator
+
 		try await withThrowingTaskGroup(of: Void.self) { group in
-			for device in selectedDevices {
+			for device in selectedDevices where !processedSpecificDeviceIDs.contains(device.id) {
 				group.addTask {
 					// If this ends up in the else case, it means there was not enough
 					// information in any recipe to be confident that the build will install
 					// to the device.
-					if let recipe = compatibleRecipeBasedOnHints(for: device, in: recipes) {
+					if let recipe = compatibleRecipeBasedOnHints(for: device, in: recipesToProcess) {
 						let ticket = Ticket(
 							device: device,
 							artifactLocation: .remote(source: recipe.source),
@@ -89,7 +127,7 @@ struct InstallationTicketMachine {
 						await state.incrementProcessedTicketCount()
 						continuation.yield(ticket)
 					} else {
-						recipeLoop: for recipe in recipes where recipe.platformHint == nil {
+						recipeLoop: for recipe in recipesToProcess where recipe.platformHint == nil {
 							if let destinationHint = recipe.destinationHint, device.type != destinationHint {
 								continue recipeLoop
 							}
@@ -122,6 +160,10 @@ struct InstallationTicketMachine {
 		}
 
 		guard await state.processedTicketCount > 0 else {
+			let unmatchedDevices = await state.unmatchedDevices
+			if !unmatchedDevices.isEmpty {
+				throw InstallationTicketMachineError.noMatchingDevices(unmatchedDevices)
+			}
 			throw InstallationTicketMachineError.noCompatibleDevices(providedDestinations: await state.providedDestinations)
 		}
 	}
@@ -135,6 +177,7 @@ struct InstallationTicketMachine {
 extension InstallationTicketMachine {
 	private actor RecipeProcessingState {
 		private(set) var providedDestinations: [Platform: Set<DeviceType>] = [:]
+		private(set) var unmatchedDevices: [InstallRecipe.Device] = []
 		private(set) var processedTicketCount: Int = 0
 
 		func incrementProcessedTicketCount() {
@@ -143,6 +186,10 @@ extension InstallationTicketMachine {
 
 		func track(providedDestinations destinations: Set<DeviceType>, for platform: Platform) {
 			providedDestinations[platform, default: []].formUnion(destinations)
+		}
+
+		func trackUnmatchedDevice(_ device: InstallRecipe.Device) {
+			unmatchedDevices.append(device)
 		}
 	}
 
@@ -155,7 +202,20 @@ extension InstallationTicketMachine {
 
 enum InstallationTicketMachineError: Error {
 	case noCompatibleDevices(providedDestinations: [Platform: Set<DeviceType>])
+	case noMatchingDevices([InstallRecipe.Device])
 	case noSelectedDevices
 }
 
 extension DeviceSelectionManager: DeviceSelecting {}
+
+private extension InstallRecipe {
+	var platformHint: Platform? {
+		guard case .hinted(let hints) = deviceInfo else { return nil }
+		return hints.platformHint
+	}
+
+	var destinationHint: DeviceType? {
+		guard case .hinted(let hints) = deviceInfo else { return nil }
+		return hints.destinationHint
+	}
+}
