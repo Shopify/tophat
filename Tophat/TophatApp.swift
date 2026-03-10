@@ -330,24 +330,29 @@ extension AppDelegate: RemoteControlReceiverDelegate {
 		}
 	}
 
-	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async {
-		await launchApp(artifactURL: url, launchArguments: launchArguments)
+	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async throws {
+		try await installCoordinator.install(
+			recipes: [InstallRecipe(source: url.artifactSource, launchArguments: launchArguments)]
+		)
 	}
 
-	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async {
-		await launchApp(recipes: recipes)
+	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async throws {
+		try await installCoordinator.install(recipes: recipes)
 	}
 
-	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async {
-		let context = ModelContext(modelContainer)
+	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async throws {
+		let modelContext = ModelContext(modelContainer)
 
 		let fetchDescriptor = FetchDescriptor<QuickLaunchEntry>(
 			predicate: #Predicate { $0.id == quickLaunchEntryIdentifier }
 		)
 
-		if let entry = try? context.fetch(fetchDescriptor).first {
-			await launchApp(quickLaunchEntry: entry)
+		guard let entry = try modelContext.fetch(fetchDescriptor).first else {
+			throw QuickLaunchEntryNotFoundError(identifier: quickLaunchEntryIdentifier)
 		}
+
+		let operationContext = OperationContext(quickLaunchEntryID: entry.id, applicationDisplayName: entry.name)
+		try await installCoordinator.install(recipes: entry.installRecipes, context: operationContext)
 	}
 }
 

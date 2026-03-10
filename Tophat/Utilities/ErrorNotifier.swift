@@ -12,24 +12,14 @@ import TophatFoundation
 
 final class ErrorNotifier {
 	func notify(error: Error) {
-		let localizedError = error as? LocalizedError
-		let styledError = error as? StyledAlertError
-
-		alertInBackground(
-			title: localizedError?.errorDescription,
-			style: styledError?.alertStyle,
-			content: [localizedError?.failureReason, localizedError?.recoverySuggestion].joinedWithSpaces()
-		)
-	}
-
-	private func alertInBackground(title: String?, style: NSAlert.Style?, content: String) {
-		let contentIsEmpty = content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-
 		Task.detached {
+			let styledError = error as? StyledAlertError
+			let formatted = FormattedError(error)
+
 			await Notifications.alert(
-				title: title ?? "An unexpected error has occurred",
-				content: contentIsEmpty ? "The application could not be installed due to an unexpected error. Please try again." : content,
-				style: style ?? .critical,
+				title: formatted.title,
+				content: formatted.detail,
+				style: styledError?.alertStyle ?? .critical,
 				buttonText: "Dismiss"
 			)
 		}

@@ -15,9 +15,9 @@ import TophatControlServices
 protocol RemoteControlReceiverDelegate: AnyObject, Sendable {
 	func remoteControlReceiver(didReceiveRequestToAddQuickLaunchEntry quickLaunchEntry: QuickLaunchEntry)
 	func remoteControlReceiver(didReceiveRequestToRemoveQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID)
-	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async
-	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async
-	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async
+	func remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes recipes: [InstallRecipe]) async throws
+	func remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier quickLaunchEntryIdentifier: QuickLaunchEntry.ID) async throws
+	func remoteControlReceiver(didOpenURL url: URL, launchArguments: [String]) async throws
 }
 
 struct RemoteControlReceiver {
@@ -35,8 +35,12 @@ struct RemoteControlReceiver {
 			for await request in service.requests(for: InstallFromURLRequest.self) {
 				let requestValue = request.value
 
-				await delegate.remoteControlReceiver(didOpenURL: requestValue.url, launchArguments: requestValue.launchArguments)
-				request.reply(.init())
+				do {
+					try await delegate.remoteControlReceiver(didOpenURL: requestValue.url, launchArguments: requestValue.launchArguments)
+					request.reply(.init())
+				} catch {
+					request.reply(.init(errorMessage: String(describing: FormattedError(error))))
+				}
 			}
 		}
 
@@ -70,8 +74,12 @@ struct RemoteControlReceiver {
 					)
 				}
 
-				await delegate.remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes: recipes)
-				request.reply(.init())
+				do {
+					try await delegate.remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes: recipes)
+					request.reply(.init())
+				} catch {
+					request.reply(.init(errorMessage: String(describing: FormattedError(error))))
+				}
 			}
 		}
 
@@ -160,8 +168,12 @@ struct RemoteControlReceiver {
 
 		Task {
 			for await request in service.requests(for: InstallFromQuickLaunchRequest.self) {
-				await delegate.remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier: request.value.quickLaunchEntryID)
-				request.reply(.init())
+				do {
+					try await delegate.remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier: request.value.quickLaunchEntryID)
+					request.reply(.init())
+				} catch {
+					request.reply(.init(errorMessage: String(describing: FormattedError(error))))
+				}
 			}
 		}
 	}

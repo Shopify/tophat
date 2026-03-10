@@ -7,5 +7,9 @@
 //
 
 public struct InstallationRequestReply: Codable, Sendable {
-	public init() {}
+	public let errorMessage: String?
+
+	public init(errorMessage: String? = nil) {
+		self.errorMessage = errorMessage
+	}
 }

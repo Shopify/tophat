@@ -18,42 +18,12 @@ struct LaunchAppAction {
 
 	func callAsFunction(quickLaunchEntry entry: QuickLaunchEntry) async {
 		let context = OperationContext(quickLaunchEntryID: entry.id, applicationDisplayName: entry.name)
-
-		let recipes = entry.recipes.map { source in
-			let deviceHints = InstallRecipe.DeviceHints(
-				platformHint: source.platformHint,
-				destinationHint: source.destinationHint
-			)
-
-			return InstallRecipe(
-				source: .artifactProvider(
-					metadata: ArtifactProviderMetadata(
-						id: source.artifactProviderID,
-						parameters: source.artifactProviderParameters
-					)
-				),
-				launchArguments: source.launchArguments,
-				deviceInfo: .hinted(deviceHints)
-			)
-		}
-
-		await callAsFunction(recipes: recipes, context: context)
+		await callAsFunction(recipes: entry.installRecipes, context: context)
 	}
 
 	func callAsFunction(artifactURL: URL, launchArguments: [String] = [], context: OperationContext? = nil) async {
-		let source: ArtifactSource = if artifactURL.isFileURL {
-			.file(url: artifactURL)
-		} else {
-			.artifactProvider(
-				metadata: ArtifactProviderMetadata(
-					id: "http",
-					parameters: ["url": artifactURL.absoluteString]
-				)
-			)
-		}
-
 		await callAsFunction(
-			recipes: [InstallRecipe(source: source, launchArguments: launchArguments)],
+			recipes: [InstallRecipe(source: artifactURL.artifactSource, launchArguments: launchArguments)],
 			context: context
 		)
 	}
