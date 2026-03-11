@@ -24,12 +24,12 @@ extension ConnectedDevice: Device {
 	}
 
 	var type: DeviceType {
-		guard let product = product else {
+		guard let product else {
 			// In case the product name is not available, fall back to checking the serial.
 			return serial.contains("emulator") ? .simulator : .device
 		}
 
-		return product.contains("sdk_gphone") ? .simulator : .device
+		return product.hasPrefix("sdk_") ? .simulator : .device
 	}
 
 	var connection: Connection {

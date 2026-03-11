@@ -16,7 +16,7 @@ extension ShellCommand where Self == EmulatorCommand {
 }
 
 enum EmulatorCommand {
-	case startDevice(name: String)
+	case startDevice(name: String, reportConsolePort: Int)
 }
 
 extension EmulatorCommand: ShellCommand {
@@ -26,8 +26,20 @@ extension EmulatorCommand: ShellCommand {
 
 	var arguments: [String] {
 		switch self {
-			case .startDevice(let name):
-				return ["-avd", name, "&"]
+			case .startDevice(let name, let reportConsolePort):
+				return [
+					"-avd",
+					name,
+					"-report-console",
+					"tcp:\(reportConsolePort)",
+					">/dev/null",
+					"2>&1",
+					"&",
+					"nc",
+					"-l",
+					String(reportConsolePort),
+					"</dev/null"
+				]
 		}
 	}
 }
