@@ -31,10 +31,8 @@ private extension ProxyVirtualDevice {
 			self.connectedDevice = connectedDevice
 		}
 
-		func update() async {
-			let connectedDevices = Adb.listDevices()
-			let virtualDeviceNameMappings = await connectedDevices.mappedToVirtualDeviceNames()
-			self.connectedDevice = virtualDeviceNameMappings.connectedDevice(for: virtualDevice)
+		func update(serial: String) {
+			self.connectedDevice = Adb.listDevices().first { $0.serial == serial }
 		}
 	}
 }
@@ -75,11 +73,11 @@ extension ProxyVirtualDevice: Device {
 		do {
 			let serial = try await Emulator.start(name: name)
 			try Adb.wait(forSerial: serial)
+
+			await connectedDeviceStore.update(serial: serial)
 		} catch {
 			throw DeviceError.failedToBoot
 		}
-
-		await connectedDeviceStore.update()
 
 		guard await connectedDeviceStore.connectedDevice != nil else {
 			throw await DeviceError.deviceNotAvailable(state: state)
