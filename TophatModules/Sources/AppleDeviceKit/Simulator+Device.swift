@@ -42,7 +42,7 @@ extension Simulator: Device {
 			try SimCtl.start(udid: id)
 			try focus()
 		} catch {
-			throw DeviceError.failedToBoot
+			throw DiagnosticError(DeviceError.failedToBoot, technicalDetails: error.shellErrorDiagnosticMessage)
 		}
 	}
 
@@ -61,7 +61,7 @@ extension Simulator: Device {
 
 			try SimCtl.install(udid: id, bundleUrl: application.url)
 		} catch {
-			throw DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: .simulator)
+			throw DiagnosticError(DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: .simulator), technicalDetails: error.shellErrorDiagnosticMessage)
 		}
 	}
 
@@ -71,7 +71,7 @@ extension Simulator: Device {
 		do {
 			try SimCtl.launch(udid: id, bundleIdentifier: bundleIdentifier, arguments: arguments ?? [])
 		} catch {
-			throw DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .unexpected, deviceType: .simulator)
+			throw DiagnosticError(DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .unexpected, deviceType: .simulator), technicalDetails: error.shellErrorDiagnosticMessage)
 		}
 	}
 

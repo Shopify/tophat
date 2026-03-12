@@ -28,7 +28,7 @@ enum Notifications {
 	}
 
 	@MainActor
-	static func alert(title: String, content: String, style: NSAlert.Style, buttonText: String) {
+	static func alert(title: String, content: String, style: NSAlert.Style, buttonText: String, technicalDetails: String? = nil) {
 		NSApp.activate(ignoringOtherApps: true)
 
 		let alert = NSAlert()
@@ -36,6 +36,17 @@ enum Notifications {
 		alert.informativeText = content
 		alert.alertStyle = style
 		alert.addButton(withTitle: buttonText)
-		alert.runModal()
+
+		if technicalDetails != nil {
+			alert.addButton(withTitle: "Show Details")
+		}
+
+		let response = alert.runModal()
+
+		if response == .alertSecondButtonReturn, let technicalDetails {
+			let panel = ErrorDetailPanel(detail: technicalDetails)
+			panel.center()
+			panel.makeKeyAndOrderFront(nil)
+		}
 	}
 }

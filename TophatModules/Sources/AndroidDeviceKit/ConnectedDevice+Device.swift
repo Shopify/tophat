@@ -68,7 +68,7 @@ extension ConnectedDevice: Device {
 		do {
 			try Adb.install(serial: id, apkUrl: application.url)
 		} catch {
-			throw DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: type)
+			throw DiagnosticError(DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: type), technicalDetails: error.shellErrorDiagnosticMessage)
 		}
 	}
 
@@ -79,7 +79,7 @@ extension ConnectedDevice: Device {
 			let componentName = try Adb.resolveActivity(serial: id, packageName: bundleIdentifier)
 			try Adb.launch(serial: id, componentName: componentName, arguments: arguments ?? [])
 		} catch {
-			throw DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .unexpected, deviceType: type)
+			throw DiagnosticError(DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .unexpected, deviceType: type), technicalDetails: error.shellErrorDiagnosticMessage)
 		}
 	}
 

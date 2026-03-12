@@ -76,7 +76,7 @@ extension ProxyVirtualDevice: Device {
 
 			await connectedDeviceStore.update(serial: serial)
 		} catch {
-			throw DeviceError.failedToBoot
+			throw DiagnosticError(DeviceError.failedToBoot, technicalDetails: error.shellErrorDiagnosticMessage)
 		}
 
 		guard await connectedDeviceStore.connectedDevice != nil else {
