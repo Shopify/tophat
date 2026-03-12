@@ -30,6 +30,16 @@ struct RemoteControlReceiver {
 		self.modelContainer = modelContainer
 	}
 
+	private func errorMessage(for error: Error) -> String {
+		var message = String(describing: FormattedError(error))
+
+		if let technicalDetails = (error as? DiagnosticError)?.technicalDetails {
+			message += "\n\nUnderlying Error:\n\n\(technicalDetails)"
+		}
+
+		return message
+	}
+
 	func start(delegate: RemoteControlReceiverDelegate) {
 		Task {
 			for await request in service.requests(for: InstallFromURLRequest.self) {
@@ -39,7 +49,7 @@ struct RemoteControlReceiver {
 					try await delegate.remoteControlReceiver(didOpenURL: requestValue.url, launchArguments: requestValue.launchArguments)
 					request.reply(.init())
 				} catch {
-					request.reply(.init(errorMessage: String(describing: FormattedError(error))))
+					request.reply(.init(errorMessage: errorMessage(for: error)))
 				}
 			}
 		}
@@ -78,7 +88,7 @@ struct RemoteControlReceiver {
 					try await delegate.remoteControlReceiver(didReceiveRequestToLaunchApplicationWithRecipes: recipes)
 					request.reply(.init())
 				} catch {
-					request.reply(.init(errorMessage: String(describing: FormattedError(error))))
+					request.reply(.init(errorMessage: errorMessage(for: error)))
 				}
 			}
 		}
@@ -172,7 +182,7 @@ struct RemoteControlReceiver {
 					try await delegate.remoteControlReceiver(didReceiveRequestToLaunchQuickLaunchEntryWithIdentifier: request.value.quickLaunchEntryID)
 					request.reply(.init())
 				} catch {
-					request.reply(.init(errorMessage: String(describing: FormattedError(error))))
+					request.reply(.init(errorMessage: errorMessage(for: error)))
 				}
 			}
 		}

@@ -17,6 +17,7 @@ public typealias StandardErrorHandler = @Sendable (String) -> Void
 extension Process {
 	@discardableResult func launchBash(
 		command: String,
+		timeout: TimeInterval? = nil,
 		standardOutputHandler: StandardOutputHandler? = nil,
 		standardErrorHandler: StandardErrorHandler? = nil
 	) throws -> String {
@@ -62,6 +63,16 @@ extension Process {
 		}
 
 		launch()
+
+		if let timeout {
+			let process = self
+			DispatchQueue.global().asyncAfter(deadline: .now() + timeout) {
+				if process.isRunning {
+					process.terminate()
+				}
+			}
+		}
+
 		waitUntilExit()
 
 		outputPipe.fileHandleForReading.readabilityHandler = nil

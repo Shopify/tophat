@@ -20,7 +20,8 @@ final class ErrorNotifier {
 				title: formatted.title,
 				content: formatted.detail,
 				style: styledError?.alertStyle ?? .critical,
-				buttonText: "Dismiss"
+				buttonText: "Dismiss",
+				technicalDetails: (error as? DiagnosticError)?.technicalDetails
 			)
 		}
 	}

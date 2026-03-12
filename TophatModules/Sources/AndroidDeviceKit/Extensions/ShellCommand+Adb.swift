@@ -54,7 +54,7 @@ extension AdbCommand: ShellCommand {
 				return ["-s", serial, "shell", "getprop", property]
 
 			case .waitForDevice(let serial):
-				return ["-s", serial, "wait-for-device", "shell", "'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done;'"]
+				return ["-s", serial, "wait-for-device"]
 
 			case .resolveActivity(let serial, let packageName):
 				return ["-s", serial, "shell", "pm", "resolve-activity", "--brief", packageName]

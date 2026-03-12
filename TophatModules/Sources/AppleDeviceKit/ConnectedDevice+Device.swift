@@ -57,7 +57,7 @@ extension ConnectedDevice: Device {
 		do {
 			try DeviceCtl.install(udid: id, bundleUrl: application.url)
 		} catch {
-			throw DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: type)
+			throw DiagnosticError(DeviceError.failedToInstallApp(bundleUrl: application.url, deviceType: type), technicalDetails: error.shellErrorDiagnosticMessage)
 		}
 	}
 
@@ -66,10 +66,13 @@ extension ConnectedDevice: Device {
 			try DeviceCtl.launch(udid: id, bundleId: application.bundleIdentifier, arguments: arguments ?? [])
 		} catch {
 			let bundleIdentifier = try application.bundleIdentifier
-			throw DeviceError.failedToLaunchApp(
-				bundleId: bundleIdentifier,
-				reason: launchFailureReason(error: error),
-				deviceType: type
+			throw DiagnosticError(
+				DeviceError.failedToLaunchApp(
+					bundleId: bundleIdentifier,
+					reason: launchFailureReason(error: error),
+					deviceType: type
+				),
+				technicalDetails: error.shellErrorDiagnosticMessage
 			)
 		}
 	}
