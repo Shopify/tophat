@@ -20,6 +20,7 @@ import Logging
 @discardableResult
 public func run(
 	command: ShellCommand,
+	timeout: TimeInterval? = nil,
 	log: Logger? = nil,
 	standardOutputHandler: StandardOutputHandler? = nil,
 	standardErrorHandler: StandardErrorHandler? = nil
@@ -31,6 +32,7 @@ public func run(
 	do {
 		return try process.launchBash(
 			command: command.string,
+			timeout: timeout,
 			standardOutputHandler: standardOutputHandler,
 			standardErrorHandler: standardErrorHandler
 		)
