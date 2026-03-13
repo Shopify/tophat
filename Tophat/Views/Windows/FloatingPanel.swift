@@ -25,6 +25,7 @@ final class FloatingPanel<Content: View>: NSPanel, CustomWindowPresentation {
 				.padding(.top, -titleBarHeight)
 		)
 
+		view.sizingOptions = .intrinsicContentSize
 		view.translatesAutoresizingMaskIntoConstraints = false
 		return view
 	}()
