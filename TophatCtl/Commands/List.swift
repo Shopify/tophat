@@ -13,6 +13,7 @@ struct List: AsyncParsableCommand {
 		abstract: "Lists things Tophat knows about.",
 		subcommands: [
 			Apps.self,
+			Devices.self,
 			Providers.self
 		]
 	)
