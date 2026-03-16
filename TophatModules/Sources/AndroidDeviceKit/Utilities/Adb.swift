@@ -22,7 +22,17 @@ struct Adb {
 		return output
 			.components(separatedBy: .newlines)
 			.dropFirst()
-			.compactMap { ConnectedDevice(from: $0) }
+			.compactMap { shellLine in
+				guard var device = ConnectedDevice(from: shellLine) else {
+					return nil
+				}
+
+				if device.type == .device {
+					device.resolveAndroidVersion()
+				}
+
+				return device
+			}
 	}
 
 	static func getVirtualDeviceName(for device: ConnectedDevice) throws -> String {
@@ -37,6 +47,14 @@ struct Adb {
 		}
 
 		return output
+	}
+
+	static func getVersion(serial: String) throws -> String {
+		guard let value = try firstLine(of: .adb(.getProp(serial: serial, property: "ro.build.version.release"))) else {
+			throw AdbError()
+		}
+
+		return value
 	}
 
 	static func install(serial: String, apkUrl: URL) throws {
