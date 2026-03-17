@@ -35,6 +35,11 @@ struct InstallApplicationTask {
 		try application.validateEligibility(for: device)
 		log.info("Application validated for installation on device")
 
+		if try await device.isLocked {
+			await status.update(state: .waiting(reason: .deviceIsLocked))
+			try await device.waitUntilUnlocked()
+		}
+
 		log.info("Installing application from local path \(application.url.path(percentEncoded: false))")
 		await taskStatusReporter.notify(message: "Installing \(notificationAppName) on \(device.name)…")
 		await status.update(state: .running(message: "Installing to \(device.name)"))
