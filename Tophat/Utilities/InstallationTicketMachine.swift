@@ -72,7 +72,11 @@ struct InstallationTicketMachine {
 	private func process(recipes: [InstallRecipe], continuation: TicketSequence.Continuation, context: OperationContext?) async throws {
 		let selectedDevices = await deviceSelector.selectedDevices
 
-		guard !selectedDevices.isEmpty else {
+		let hasSpecificDeviceRecipes = recipes.contains {
+			if case .specific = $0.deviceInfo { true } else { false }
+		}
+
+		if selectedDevices.isEmpty, !hasSpecificDeviceRecipes {
 			throw InstallationTicketMachineError.noSelectedDevices
 		}
 
