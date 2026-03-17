@@ -8,6 +8,7 @@
 
 import ArgumentParser
 import TophatControlServices
+import Foundation
 
 extension List {
 	struct Providers: AsyncParsableCommand {
@@ -15,24 +16,34 @@ extension List {
 			abstract: "Lists all providers available in Tophat."
 		)
 
+		@Flag(name: .long, help: "Output the result as JSON.")
+		var json = false
+
 		func run() async throws {
 			checkIfHostAppIsRunning()
 
 			let reply = try await TophatRemoteControlService().send(request: ListProvidersRequest())
 
-			print("Providers:")
+			if json {
+				let encoder = JSONEncoder()
+				encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+				let data = try encoder.encode(reply.providers)
+				print(String(data: data, encoding: .utf8)!)
+			} else {
+				print("Providers:")
 
-			for provider in reply.providers {
-				print()
+				for provider in reply.providers {
+					print()
 
-				print("‣\u{001B}[1m", provider.title, "\u{001B}[22m")
-				print("  Identifier:", provider.id)
-				print("  Extension:", provider.extensionTitle)
-				print("  Parameters:")
+					print("‣\u{001B}[1m", provider.title, "\u{001B}[22m")
+					print("  Identifier:", provider.id)
+					print("  Extension:", provider.extensionTitle)
+					print("  Parameters:")
 
-				for parameter in provider.parameters {
-					print("    ‣ Key:", parameter.key)
-					print("      Title:", parameter.title)
+					for parameter in provider.parameters {
+						print("    ‣ Key:", parameter.key)
+						print("      Title:", parameter.title)
+					}
 				}
 			}
 		}

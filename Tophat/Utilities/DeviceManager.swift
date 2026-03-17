@@ -23,37 +23,44 @@ import TophatFoundation
 	}
 
 	private(set) var isLoading = false
+	private var loadingTask: Task<Void, Never>?
 
 	/// Loads all available devices into `devices`.
+	///
+	/// If a load is already in progress, waits for the existing load to complete.
 	func loadDevices() async {
-		guard !isLoading else {
-			log.info("Not loading devices because they are already being loaded")
+		if let loadingTask {
+			log.info("Devices already loading, waiting for results")
+			await loadingTask.value
 			return
 		}
 
 		log.info("Loading devices")
 		isLoading = true
 
-		defer {
-			isLoading = false
-			log.info("Finished loading devices")
-		}
+		loadingTask = Task {
+			self.devices = await withTaskGroup(of: [Device].self) { group in
+				var devices: [Device] = []
 
-		self.devices = await withTaskGroup(of: [Device].self) { group in
-			var devices: [Device] = []
-
-			deviceProviders.forEach { provider in
-				group.addTask {
-					return await provider.all
+				deviceProviders.forEach { provider in
+					group.addTask {
+						return await provider.all
+					}
 				}
-			}
 
-			for await deviceSubset in group {
-				devices.append(contentsOf: deviceSubset)
-			}
+				for await deviceSubset in group {
+					devices.append(contentsOf: deviceSubset)
+				}
 
-			return devices.sortedByLogicalPriority()
+				return devices.sortedByLogicalPriority()
+			}
 		}
+
+		await loadingTask?.value
+
+		isLoading = false
+		loadingTask = nil
+		log.info("Finished loading devices")
 	}
 }
 

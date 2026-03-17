@@ -102,15 +102,16 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 	private var cancellables = Set<AnyCancellable>()
 
 	override init() {
-		self.remoteControlReceiver = RemoteControlReceiver(
-			extensionHost: extensionHost,
-			modelContainer: modelContainer
-		)
-
 		self.deviceManager = DeviceManager(sources: [
 			AppleDevices.self,
 			AndroidDevices.self
 		])
+
+		self.remoteControlReceiver = RemoteControlReceiver(
+			extensionHost: extensionHost,
+			modelContainer: modelContainer,
+			deviceEnumerator: deviceManager
+		)
 
 		self.deviceSelectionManager = DeviceSelectionManager(deviceManager: deviceManager)
 		self.taskStatusReporter = TaskStatusReporter()

@@ -24,10 +24,12 @@ struct RemoteControlReceiver {
 	private let service = TophatRemoteControlService()
 	private let extensionHost: ExtensionHost
 	private let modelContainer: ModelContainer
+	private let deviceEnumerator: DeviceListLoading
 
-	init(extensionHost: ExtensionHost, modelContainer: ModelContainer) {
+	init(extensionHost: ExtensionHost, modelContainer: ModelContainer, deviceEnumerator: DeviceListLoading) {
 		self.extensionHost = extensionHost
 		self.modelContainer = modelContainer
+		self.deviceEnumerator = deviceEnumerator
 	}
 
 	private func errorMessage(for error: Error) -> String {
@@ -173,6 +175,30 @@ struct RemoteControlReceiver {
 						}
 					)
 				)
+			}
+		}
+
+		Task {
+			for await request in service.requests(for: ListDevicesRequest.self) {
+				await deviceEnumerator.loadDevices()
+				let devices = await deviceEnumerator.devices
+
+				var replyDevices: [ListDevicesRequest.Reply.Device] = []
+
+				for device in devices {
+					replyDevices.append(
+						.init(
+							name: device.name,
+							type: device.type,
+							platform: device.runtime.platform,
+							runtimeVersion: device.runtime.version,
+							connection: device.connection,
+							state: await device.state
+						)
+					)
+				}
+
+				request.reply(.init(devices: replyDevices))
 			}
 		}
 

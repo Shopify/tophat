@@ -14,6 +14,11 @@ struct ConnectedDevice: Sendable {
 	let model: String?
 	let device: String?
 	let transportId: String?
+	private(set) var androidVersion: String?
+
+	mutating func resolveAndroidVersion() {
+		self.androidVersion = try? Adb.getVersion(serial: serial)
+	}
 
 	enum State: String, Sendable {
 		case device = "device"

@@ -15,8 +15,13 @@ extension ConnectedDevice: Device {
 	}
 
 	var runtime: Runtime {
-		// We aren't yet fetching the version for ADB devices.
-		.init(platform: .android, version: .unknown)
+		let version: RuntimeVersion = if let androidVersion {
+			.exact(androidVersion)
+		} else {
+			.unknown
+		}
+
+		return .init(platform: .android, version: version)
 	}
 
 	var name: String {
