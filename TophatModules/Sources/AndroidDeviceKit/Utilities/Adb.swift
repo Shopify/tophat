@@ -81,7 +81,7 @@ struct Adb {
 		try await withThrowingTaskGroup(of: Void.self) { group in
 			group.addTask {
 				while true {
-					if try firstLine(of: .adb(.getProp(serial: serial, property: "sys.boot_completed"))) == "1" {
+					if (try? firstLine(of: .adb(.getProp(serial: serial, property: "sys.boot_completed")))) == "1" {
 						return
 					}
 
@@ -90,7 +90,7 @@ struct Adb {
 			}
 
 			group.addTask {
-				try await Task.sleep(for: .seconds(300))
+				try await Task.sleep(for: .seconds(200))
 				throw AdbBootTimedOutError()
 			}
 

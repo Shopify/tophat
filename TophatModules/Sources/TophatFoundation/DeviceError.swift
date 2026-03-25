@@ -24,6 +24,8 @@ public enum DeviceError: Error {
 	case failedToStream
 	/// The device was unable to open system logs.
 	case failedToOpenLogs
+	/// The device timed out while waiting to finish booting.
+	case bootTimedOut
 	/// The device timed out while waiting to be unlocked.
 	case deviceUnlockTimedOut
 

@@ -75,6 +75,8 @@ extension ProxyVirtualDevice: Device {
 			try await Adb.wait(forSerial: serial)
 
 			await connectedDeviceStore.update(serial: serial)
+		} catch is AdbBootTimedOutError {
+			throw DeviceError.bootTimedOut
 		} catch {
 			throw DiagnosticError(DeviceError.failedToBoot, technicalDetails: error.shellErrorDiagnosticMessage)
 		}
