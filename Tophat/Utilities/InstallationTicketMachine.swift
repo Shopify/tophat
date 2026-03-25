@@ -105,8 +105,9 @@ struct InstallationTicketMachine {
 				continuation.yield(ticket)
 
 			case .hinted, nil:
-				if let platform = recipe.platformHint, let destination = recipe.destinationHint {
-					await state.track(providedDestinations: [destination], for: platform)
+				if let platform = recipe.platformHint {
+					let destinations = recipe.destinationHint.map { [$0] } ?? Set(DeviceType.allCases)
+					await state.track(providedDestinations: destinations, for: platform)
 				}
 
 				recipesToProcessAccumulator.append(recipe)

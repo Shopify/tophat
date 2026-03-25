@@ -32,9 +32,9 @@ extension ApplicationError: LocalizedError {
 
 			case .incompatible(let application, let device):
 				let applicationPlatformDescription = String(describing: application.platform)
-				let applicationTargetsDescription = application.targets.map { String(describing: $0) }.formatted(.list(type: .and))
+				let applicationTargetsDescription = application.targets.map { String(describing: $0).lowercased() }.formatted(.list(type: .and))
 				let devicePlatformDescription = String(describing: device.runtime.platform)
-				let deviceTargetDescription = String(describing: device.type)
+				let deviceTargetDescription = String(describing: device.type).lowercased()
 
 				return "The application was built for \(applicationPlatformDescription) \(applicationTargetsDescription), but \(device.name) is \(devicePlatformDescription.indefiniteArticle) \(devicePlatformDescription) \(deviceTargetDescription)."
 
