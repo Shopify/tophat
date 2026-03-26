@@ -16,10 +16,10 @@ struct QuickLaunchEntryNotFoundError: LocalizedError {
 	}
 
 	var failureReason: String? {
-		"No app with identifier \"\(identifier)\" exists."
+		"No app with the identifier “\(identifier)” was found."
 	}
 
 	var recoverySuggestion: String? {
-		"Verify the identifier and try again."
+		"Check the identifier and try again."
 	}
 }

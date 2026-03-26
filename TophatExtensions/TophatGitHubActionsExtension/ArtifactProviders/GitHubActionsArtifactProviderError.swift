@@ -18,13 +18,13 @@ enum GitHubActionsArtifactProviderError: Error {
 
 extension GitHubActionsArtifactProviderError: LocalizedError {
 	var errorDescription: String? {
-		"Failed to download artifact"
+		"Failed to Download Artifact"
 	}
 
 	var failureReason: String? {
 		switch self {
 		case .accessTokenNotSet:
-			"A GitHub personal access token has not been specified."
+			"A GitHub personal access token is required."
 		case .unauthorized:
 			"The access token used to authenticate with GitHub is invalid."
 		case .notFound:
@@ -32,7 +32,7 @@ extension GitHubActionsArtifactProviderError: LocalizedError {
 		case .removed:
 			"The requested artifact was permanently removed."
 		case .unexpected:
-			"An unexpected error has occurred."
+			"Something went wrong that Tophat wasn’t able to identify."
 		}
 	}
 

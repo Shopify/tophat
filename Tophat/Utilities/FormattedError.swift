@@ -20,13 +20,13 @@ struct FormattedError: CustomStringConvertible {
 	init(_ error: Error) {
 		let localizedError = error as? LocalizedError
 
-		self.title = localizedError?.errorDescription ?? "An unexpected error has occurred"
+		self.title = localizedError?.errorDescription ?? "An error occurred."
 
 		let content = [localizedError?.failureReason, localizedError?.recoverySuggestion].joinedWithSpaces()
 		let contentIsEmpty = content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
 
 		self.detail = contentIsEmpty
-			? "The application could not be installed due to an unexpected error. Please try again."
+			? "Tophat wasn’t able to identify the cause. Please try again."
 			: content
 	}
 }

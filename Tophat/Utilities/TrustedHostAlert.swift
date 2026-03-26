@@ -23,8 +23,8 @@ import SwiftUI
 
 			let alert = NSAlert()
 			alert.alertStyle = .critical
-			alert.messageText = "The host “\(host)” has not been trusted. Are you sure you want to continue?"
-			alert.informativeText = "Launching an application containing malicious code can harm your Mac or compromise your privacy. Be sure you trust the origin of this application before continuing."
+			alert.messageText = "The host “\(host)” hasn’t been trusted."
+			alert.informativeText = "Downloading an app from an untrusted host could harm your devices or compromise your privacy."
 
 			let trustButton = alert.addButton(withTitle: "Trust")
 			trustButton.keyEquivalent = ""

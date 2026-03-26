@@ -29,7 +29,7 @@ struct XcodeOnboardingItem: View {
 		} content: {
 			OnboardingItemStatusIcon(status: status) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("In order to install apps on Apple devices or simulators, Xcode must be installed and set up.")
+					Text("To install apps on Apple devices or simulators, Xcode must be installed and set up.")
 						.lineLimit(2, reservesSpace: true)
 				}
 			}

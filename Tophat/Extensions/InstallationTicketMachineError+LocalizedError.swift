@@ -25,7 +25,7 @@ extension InstallationTicketMachineError: LocalizedError {
 	var failureReason: String? {
 		switch self {
 			case .noCompatibleDevices:
-				"None of the specified builds are compatible with the selected devices."
+				"The available builds aren’t compatible with the selected devices."
 			case .noMatchingDevices(let devices):
 				"No available device matches \(description(for: devices))."
 			default:
@@ -39,7 +39,7 @@ extension InstallationTicketMachineError: LocalizedError {
 				let text = providedBuildTypes.map { "\($0.key) \(description(for: $0.value).lowercased())" }.formatted(.list(type: .or))
 				return "Select \(text.indefiniteArticle) \(text) using the Tophat menu and try again."
 			case .noMatchingDevices:
-				return "Ensure the specified device is available and try again."
+				return "Make sure the device is available and try again."
 			case .noSelectedDevices:
 				return "Select a device from the Tophat menu and try again."
 		}

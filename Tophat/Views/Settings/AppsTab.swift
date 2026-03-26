@@ -30,7 +30,7 @@ struct AppsTab: View {
 
 					Toggle(isOn: $showQuickLaunch) {
 						Text("Quick Launch")
-						Text("The apps below are displayed in the Quick Launch panel so that you can launch them with one click.")
+						Text("The apps below appear in the Quick Launch panel for one-click launching.")
 					}
 					.controlSize(.mini)
 				}

@@ -117,7 +117,7 @@ enum BranchArtifactProviderError: Error {
 
 extension BranchArtifactProviderError: LocalizedError {
 	var errorDescription: String? {
-		"Failed to download artifact"
+		"Failed to Download Artifact"
 	}
 
 	var failureReason: String? {
