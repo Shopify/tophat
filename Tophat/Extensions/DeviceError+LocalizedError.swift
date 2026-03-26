@@ -12,7 +12,7 @@ import TophatFoundation
 extension DeviceError: LocalizedError {
 	public var errorDescription: String? {
 		switch self {
-			case .failedToBoot:
+			case .failedToBoot, .bootTimedOut:
 				return "Failed to start device"
 			case .deviceNotAvailable, .deviceUnlockTimedOut:
 				return "The device is not available"
@@ -31,6 +31,8 @@ extension DeviceError: LocalizedError {
 		switch self {
 			case .failedToBoot:
 				return "The device could not be started due to an unexpected error."
+			case .bootTimedOut:
+				return "The device took too long to respond after starting."
 			case .deviceNotAvailable:
 				return "The device is not available."
 			case .failedToInstallApp(_, deviceType: .device):
