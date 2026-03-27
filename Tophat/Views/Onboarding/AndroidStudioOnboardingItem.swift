@@ -28,7 +28,7 @@ struct AndroidStudioOnboardingItem: View {
 		} content: {
 			OnboardingItemStatusIcon(status: isComplete ? .complete : .incomplete) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("To provide a simple way of installing the required Android SDKs and tools, Android Studio must be installed.")
+					Text("Android Studio is required to install the Android SDKs and tools.")
 						.lineLimit(2, reservesSpace: true)
 				}
 			}

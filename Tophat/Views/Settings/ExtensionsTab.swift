@@ -45,7 +45,7 @@ struct ExtensionsTab: View {
 				}
 			} header: {
 				Text("Extensions")
-				Text("Extensions are used to add extra functionality to Tophat. Some extensions have adjustable settings that can be revealed using the \(Image(systemName: "info.circle")) button.")
+				Text("Extensions add extra functionality to Tophat. Some have settings you can adjust using the \(Image(systemName: "info.circle")) button.")
 			}
 
 			Section {

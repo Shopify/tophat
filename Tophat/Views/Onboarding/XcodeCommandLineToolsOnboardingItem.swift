@@ -22,7 +22,7 @@ struct XcodeCommandLineToolsOnboardingItem: View {
 		} content: {
 			OnboardingItemStatusIcon(status: isComplete ? .complete : .incomplete) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("In order to install apps on Apple devices or simulators, the Xcode Command Line Tools must be installed.")
+					Text("To install apps on Apple devices or simulators, the Xcode Command Line Tools must be installed.")
 						.lineLimit(2, reservesSpace: true)
 				}
 			}

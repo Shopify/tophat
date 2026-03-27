@@ -164,7 +164,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 		} catch {
 			log.error("Failed to start Tophat server: \(error)")
 			Notifications.alert(
-				title: "Unable to start Tophat",
+				title: "Unable to Start Tophat",
 				content: "An error occurred while starting Tophat. Make sure no other instances of Tophat are running and try again.",
 				style: .critical,
 				buttonText: "Quit"

@@ -12,9 +12,9 @@ extension ArtifactRetrievalCoordinatorError: LocalizedError {
 	var errorDescription: String? {
 		switch self {
 			case .artifactProviderNotFound(let id) where id == "ios" || id == "android":
-				"This link is not compatible with Tophat 2"
+				"This link is not compatible with Tophat 2."
 			case .artifactProviderNotFound:
-				"The artifact could not be downloaded"
+				"The build could not be downloaded."
 		}
 	}
 
@@ -23,7 +23,7 @@ extension ArtifactRetrievalCoordinatorError: LocalizedError {
 			case .artifactProviderNotFound(let id) where id == "ios" || id == "android":
 				"The link you opened is only compatible with Tophat 1, but you are using a newer version of Tophat."
 			case .artifactProviderNotFound(let id):
-				"An artifact provider with identifier \(id) could not be found."
+				"The provider “\(id)” isn’t available."
 		}
 	}
 
@@ -32,7 +32,7 @@ extension ArtifactRetrievalCoordinatorError: LocalizedError {
 			case .artifactProviderNotFound(let id) where id == "ios" || id == "android":
 				"Update the link format or install Tophat 1 to continue using the legacy format."
 			case .artifactProviderNotFound:
-				"Make sure you entered the correct identifier and try again."
+				"Make sure the required extension is installed and the identifier is correct."
 		}
 	}
 }

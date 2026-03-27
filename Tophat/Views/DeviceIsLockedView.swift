@@ -28,7 +28,7 @@ struct DeviceIsLockedView: View {
 					.fixedSize(horizontal: false, vertical: true)
 					.multilineTextAlignment(.center)
 
-				Text("Tophat cannot launch the application on \(deviceName ?? "the device") because the device is locked.")
+				Text("Tophat can’t launch the app on \(deviceName ?? "the device") because the device is locked.")
 					.font(.subheadline)
 					.fixedSize(horizontal: false, vertical: true)
 					.multilineTextAlignment(.center)

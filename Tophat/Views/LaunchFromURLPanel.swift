@@ -17,7 +17,7 @@ struct LaunchFromURLPanel: View {
 
 	var body: some View {
 		VStack(spacing: 12) {
-			TextField("URL", text: $text, prompt: Text("Artifact URL"))
+			TextField("URL", text: $text)
 				.textFieldStyle(.plain)
 				.font(.title)
 				.foregroundColor(colorScheme == .dark ? .white : .primary)

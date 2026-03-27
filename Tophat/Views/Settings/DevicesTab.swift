@@ -30,7 +30,7 @@ struct DevicesTab: View {
 				}
 			} header: {
 				Text("Pinned Simulators")
-				Text("By default, simulators are displayed in a collapsed section. You can choose which simulators should always be visible.")
+				Text("Simulators are shown in a collapsed section by default. Choose which ones should always be visible.")
 			}
 		}
 		.formStyle(.grouped)

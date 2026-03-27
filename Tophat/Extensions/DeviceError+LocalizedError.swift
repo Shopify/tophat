@@ -13,15 +13,17 @@ extension DeviceError: LocalizedError {
 	public var errorDescription: String? {
 		switch self {
 			case .failedToBoot, .bootTimedOut:
-				return "Failed to start device"
-			case .deviceNotAvailable, .deviceUnlockTimedOut:
-				return "The device is not available"
+				return "Failed to Start Device"
+			case .deviceNotAvailable:
+				return "The device isn’t available."
+			case .deviceUnlockTimedOut:
+				return "The device is locked."
 			case .failedToInstallApp:
-				return "Failed to install application"
+				return "Failed to Install App"
 			case .failedToLaunchApp(_, .requiresManualProfileTrust, _):
-				return "The application was installed"
+				return "The app was installed, but can’t be launched."
 			case .failedToLaunchApp:
-				return "Failed to launch application"
+				return "Failed to Launch App"
 			default:
 				return nil
 		}
@@ -30,21 +32,17 @@ extension DeviceError: LocalizedError {
 	public var failureReason: String? {
 		switch self {
 			case .failedToBoot:
-				return "The device could not be started due to an unexpected error."
+				return "An error occurred while preparing the device."
 			case .bootTimedOut:
 				return "The device took too long to respond after starting."
-			case .deviceNotAvailable:
-				return "The device is not available."
-			case .failedToInstallApp(_, deviceType: .device):
-				return "The application could not be installed."
 			case .failedToInstallApp:
-				return "The application could not be installed due to an unexpected error."
+				return "An error occurred while installing the app."
 			case .failedToLaunchApp(_, .requiresManualProfileTrust, _):
-				return "The enterprise developer must be trusted on the device to launch the app."
+				return "The developer must be trusted on the device before the app can launch."
 			case .failedToLaunchApp:
-				return "The application could not be launched due to an unexpected error."
+				return "An error occurred while launching the app."
 			case .deviceUnlockTimedOut:
-				return "The operation timed out while waiting for the device to be unlocked."
+				return "The device needs to be unlocked before Tophat can continue."
 			default:
 				return nil
 		}
@@ -52,14 +50,18 @@ extension DeviceError: LocalizedError {
 
 	public var recoverySuggestion: String? {
 		switch self {
+			case .failedToBoot, .bootTimedOut:
+				return "Make sure the device is set up correctly and try again."
 			case .deviceNotAvailable:
-				return "Ensure that it is connected and try again."
-			case .failedToInstallApp(_, deviceType: .device), .deviceUnlockTimedOut:
-				return "Make sure that the device is connected and unlocked and try again."
+				return "Make sure the device is connected and try again."
+			case .failedToInstallApp(_, deviceType: .device):
+				return "Make sure the device is connected and unlocked and try again."
 			case .failedToLaunchApp(_, .requiresManualProfileTrust, _):
-				return "Go to Settings → General → VPN & Device Management to trust the developer."
+				return "On the device, go to Settings → General → VPN & Device Management to trust the developer."
 			case .failedToLaunchApp(_, _, deviceType: .device):
-				return "Make sure that the device is connected and unlocked and try again."
+				return "Make sure the device is connected and unlocked and try again."
+			case .deviceUnlockTimedOut:
+				return "Unlock the device and try again."
 			default:
 				return nil
 		}

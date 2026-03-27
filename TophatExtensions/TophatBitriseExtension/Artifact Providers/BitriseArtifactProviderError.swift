@@ -17,19 +17,19 @@ enum BitriseArtifactProviderError: Error {
 
 extension BitriseArtifactProviderError: LocalizedError {
 	var errorDescription: String? {
-		"Failed to download artifact"
+		"Failed to Download Artifact"
 	}
 
 	var failureReason: String? {
 		switch self {
 			case .accessTokenNotSet:
-				"A Bitrise personal access token has not been specified."
+				"A Bitrise personal access token is required."
 			case .unauthorized:
 				"The access token used to authenticate with Bitrise is invalid."
 			case .notFound:
 				"The requested artifact was not found. It may have expired."
 			case .unexpected:
-				"An unexpected error has occurred."
+				"Something went wrong that Tophat wasn’t able to identify."
 		}
 	}
 

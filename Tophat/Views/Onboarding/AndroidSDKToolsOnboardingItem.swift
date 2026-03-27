@@ -22,7 +22,7 @@ struct AndroidSDKToolsOnboardingItem: View {
 		} content: {
 			OnboardingItemStatusIcon(status: isComplete ? .complete : .incomplete) {
 				OnboardingPopoverContent(title: "Needs Setup") {
-					Text("In order to install apps on Android devices or emulators, the full suite of Android SDK Tools must be installed.")
+					Text("To install apps on Android devices or emulators, the full suite of Android SDK Tools must be installed.")
 						.lineLimit(2, reservesSpace: true)
 				}
 			}

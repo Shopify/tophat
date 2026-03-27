@@ -13,7 +13,7 @@ extension ApplicationError: LocalizedError {
 	public var errorDescription: String? {
 		switch self {
 			case .missingProvisioningProfile, .deviceNotProvisioned, .applicationNotSigned, .incompatible:
-				"This application canʼt be installed"
+				"This app can’t be installed."
 			default:
 				nil
 		}
@@ -22,13 +22,13 @@ extension ApplicationError: LocalizedError {
 	public var failureReason: String? {
 		switch self {
 			case .missingProvisioningProfile:
-				return "The selected device requires that the application contains an embedded provisioning profile, but none was found in the application bundle."
+				return "The app is missing a provisioning profile required by this device."
 
 			case .deviceNotProvisioned:
-				return "The selected device is not provisioned."
+				return "This device hasn’t been registered for development."
 
 			case .applicationNotSigned:
-				return "The selected device requires that the application is signed with an Apple Development or Enterprise certificate."
+				return "This device requires the app to be signed with an Apple Development or Enterprise certificate."
 
 			case .incompatible(let application, let device):
 				let applicationPlatformDescription = String(describing: application.platform)
@@ -36,7 +36,7 @@ extension ApplicationError: LocalizedError {
 				let devicePlatformDescription = String(describing: device.runtime.platform)
 				let deviceTargetDescription = String(describing: device.type).lowercased()
 
-				return "The application was built for \(applicationPlatformDescription) \(applicationTargetsDescription), but \(device.name) is \(devicePlatformDescription.indefiniteArticle) \(devicePlatformDescription) \(deviceTargetDescription)."
+				return "The app was built for \(applicationPlatformDescription) \(applicationTargetsDescription), but \(device.name) is \(devicePlatformDescription.indefiniteArticle) \(devicePlatformDescription) \(deviceTargetDescription)."
 
 			default:
 				return nil
@@ -46,11 +46,11 @@ extension ApplicationError: LocalizedError {
 	var recoverySuggestion: String? {
 		switch self {
 			case .deviceNotProvisioned:
-				"Add your device to the Apple Developer Portal before building the application."
+				"Add the device in the Apple Developer Portal and rebuild the app."
 			case .applicationNotSigned:
-				"Ensure that the application is signed and try again."
+				"Make sure the app is signed and try again."
 			case .incompatible:
-				"Ensure that the correct artifact is being downloaded and that the correct platform and destination are being specified."
+				"Check the platform and destination settings and try again."
 			default:
 				nil
 		}
