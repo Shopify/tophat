@@ -11,7 +11,17 @@ import RegexBuilder
 import ShellKit
 
 final class AdbError: Error {}
-final class AdbBootTimedOutError: Error {}
+actor AdbBootTimedOutError: Error {
+	private(set) var latestError: (any Error)?
+
+	func set(latestError error: any Error) {
+		latestError = error
+	}
+
+	func clear() {
+		latestError = nil
+	}
+}
 
 struct Adb {
 	static func listDevices() -> [ConnectedDevice] {
@@ -78,11 +88,20 @@ struct Adb {
 	static func wait(forSerial serial: String) async throws {
 		try run(command: .adb(.waitForDevice(serial: serial)), timeout: 120, log: log)
 
+		let timeoutError = AdbBootTimedOutError()
+
 		try await withThrowingTaskGroup(of: Void.self) { group in
 			group.addTask {
 				while true {
-					if (try? firstLine(of: .adb(.getProp(serial: serial, property: "sys.boot_completed")))) == "1" {
-						return
+					do {
+						let result = try firstLine(of: .adb(.getProp(serial: serial, property: "sys.boot_completed")))
+						await timeoutError.clear()
+
+						if result == "1" {
+							return
+						}
+					} catch {
+						await timeoutError.set(latestError: error)
 					}
 
 					try await Task.sleep(for: .seconds(1))
@@ -91,7 +110,7 @@ struct Adb {
 
 			group.addTask {
 				try await Task.sleep(for: .seconds(200))
-				throw AdbBootTimedOutError()
+				throw timeoutError
 			}
 
 			try await group.next()
