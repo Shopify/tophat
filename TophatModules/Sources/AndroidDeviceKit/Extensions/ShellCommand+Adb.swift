@@ -30,34 +30,34 @@ extension AdbCommand: ShellCommand {
 		.url(PathResolver.adb)
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 			case .devices:
 				return ["devices", "-l"]
 
 			case .install(let serial, let apkUrl):
-				return ["-s", serial, "install", "-r", "-d", apkUrl.path(percentEncoded: false).wrappedInQuotationMarks()]
+				return ["-s", .safe(serial), "install", "-r", "-d", .safe(apkUrl.path(percentEncoded: false))]
 
 			case .launch(let serial, let componentName, let arguments):
-				let extras: [String] = if !arguments.isEmpty {
-					["--esa", "TOPHAT_ARGUMENTS", arguments.joined(separator: ",")]
+				let extras: [ShellArgument] = if !arguments.isEmpty {
+					["--esa", "TOPHAT_ARGUMENTS", .safe(arguments.joined(separator: ","))]
 				} else {
 					[]
 				}
 
-				return ["-s", serial, "shell", "am", "start", "-n", componentName] + extras
+				return ["-s", .safe(serial), "shell", "am", "start", "-n", .safe(componentName)] + extras
 
 			case .avdName(let serial):
-				return ["-s", serial, "emu", "avd", "name"]
+				return ["-s", .safe(serial), "emu", "avd", "name"]
 
 			case .getProp(let serial, let property):
-				return ["-s", serial, "shell", "getprop", property]
+				return ["-s", .safe(serial), "shell", "getprop", .safe(property)]
 
 			case .waitForDevice(let serial):
-				return ["-s", serial, "wait-for-device"]
+				return ["-s", .safe(serial), "wait-for-device"]
 
 			case .resolveActivity(let serial, let packageName):
-				return ["-s", serial, "shell", "pm", "resolve-activity", "--brief", packageName]
+				return ["-s", .safe(serial), "shell", "pm", "resolve-activity", "--brief", .safe(packageName)]
 		}
 	}
 }

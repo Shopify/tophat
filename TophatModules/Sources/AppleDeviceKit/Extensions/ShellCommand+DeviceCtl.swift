@@ -27,31 +27,31 @@ extension DeviceCtlCommand: ShellCommand {
 		.url(URL(filePath: "/usr/bin/xcrun"))
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 			case .list(let outputUrl):
 				return [
 					"devicectl",
 					"list",
 					"devices",
-					"--filter", "hardwareProperties.platform MATCHES 'iOS'".wrappedInQuotationMarks(),
-					"--json-output", outputUrl.formattedAsArgument()
+					"--filter", "hardwareProperties.platform MATCHES 'iOS'",
+					"--json-output", .safe(outputUrl.formattedAsArgument())
 				]
 
 			case .install(let device, let bundleUrl):
-				return ["devicectl", "device", "install", "app", "--device", device, bundleUrl.formattedAsArgument()]
+				return ["devicectl", "device", "install", "app", "--device", .safe(device), .safe(bundleUrl.formattedAsArgument())]
 
 			case .launch(let device, let bundleId, let outputUrl, let arguments):
-				return ["devicectl", "device", "process", "launch", "--device", device, bundleId, "--json-output", outputUrl.formattedAsArgument()] + arguments
+				return ["devicectl", "device", "process", "launch", "--device", .safe(device), .safe(bundleId), "--json-output", .safe(outputUrl.formattedAsArgument())] + arguments.map { .safe($0) }
 
 			case .lockState(let device, let outputURL):
-				return ["devicectl", "device", "info", "lockState", "--device", device, "--json-output", outputURL.formattedAsArgument()]
+				return ["devicectl", "device", "info", "lockState", "--device", .safe(device), "--json-output", .safe(outputURL.formattedAsArgument())]
 		}
 	}
 }
 
 private extension URL {
 	func formattedAsArgument() -> String {
-		path(percentEncoded: false).wrappedInQuotationMarks()
+		path(percentEncoded: false)
 	}
 }

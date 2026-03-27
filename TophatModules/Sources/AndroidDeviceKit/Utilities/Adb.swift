@@ -10,7 +10,11 @@ import Foundation
 import RegexBuilder
 import ShellKit
 
-final class AdbError: Error {}
+enum AdbError: Error {
+	case unexpectedOutput
+	case invalidLaunchArguments
+}
+
 actor AdbBootTimedOutError: Error {
 	private(set) var latestError: (any Error)?
 
@@ -53,7 +57,7 @@ struct Adb {
 			?? firstLine(of: .adb(.avdName(serial: serial)))
 
 		guard let output else {
-			throw AdbError()
+			throw AdbError.unexpectedOutput
 		}
 
 		return output
@@ -61,7 +65,7 @@ struct Adb {
 
 	static func getVersion(serial: String) throws -> String {
 		guard let value = try firstLine(of: .adb(.getProp(serial: serial, property: "ro.build.version.release"))) else {
-			throw AdbError()
+			throw AdbError.unexpectedOutput
 		}
 
 		return value
@@ -72,6 +76,10 @@ struct Adb {
 	}
 
 	static func launch(serial: String, componentName: String, arguments: [String]) throws {
+		guard arguments.allSatisfy(\.isSafeShellArgument) else {
+			throw AdbError.invalidLaunchArguments
+		}
+
 		try run(command: .adb(.launch(serial: serial, componentName: componentName, arguments: arguments)), log: log)
 	}
 
@@ -79,7 +87,7 @@ struct Adb {
 		let output = try run(command: .adb(.resolveActivity(serial: serial, packageName: packageName)), log: log)
 
 		guard let value = output.components(separatedBy: .newlines).last else {
-			throw AdbError()
+			throw AdbError.unexpectedOutput
 		}
 
 		return value

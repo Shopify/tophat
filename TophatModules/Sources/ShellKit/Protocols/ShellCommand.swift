@@ -13,6 +13,22 @@ public enum Executable {
 	case url(URL)
 }
 
+/// A shell command argument with explicit control over escaping.
+public enum ShellArgument: Sendable, ExpressibleByStringLiteral, ExpressibleByStringInterpolation {
+	/// An argument that is shell-escaped before execution.
+	case safe(String)
+	/// An argument passed verbatim to the shell, such as redirects or pipes.
+	case unsafe(String)
+
+	public init(stringLiteral value: String) {
+		self = .safe(value)
+	}
+
+	public init(_ value: String) {
+		self = .safe(value)
+	}
+}
+
 public protocol ShellCommand: Sendable {
 	/// Name of the command, finding it in the user's PATH if the URL is nil
 	var executable: Executable { get }
@@ -21,7 +37,7 @@ public protocol ShellCommand: Sendable {
 	var environment: [String: String] { get }
 
 	/// The arguments to pass to the command.
-	var arguments: [String] { get }
+	var arguments: [ShellArgument] { get }
 }
 
 public extension ShellCommand {
@@ -32,7 +48,7 @@ public extension ShellCommand {
 
 internal extension ShellCommand {
 	private var formattedEnvironmentVariables: [String] {
-		environment.map { key, value in "\(key)=\"\(value)\"" }
+		environment.map { key, value in "\(key)=\(value.shellEscaped())" }
 	}
 
 	var string: String {
@@ -45,8 +61,15 @@ internal extension ShellCommand {
 			}
 		}()
 
-		let executablePath = executableString.contains(" ") ? executableString.wrappedInQuotationMarks() : executableString
+		let formattedArguments = arguments.map { argument in
+			switch argument {
+			case .safe(let value):
+				return value.shellEscaped()
+			case .unsafe(let value):
+				return value
+			}
+		}
 
-		return [formattedEnvironmentVariables, [executablePath], arguments].flatMap { $0 }.joined(separator: " ")
+		return [formattedEnvironmentVariables, [executableString.shellEscaped()], formattedArguments].flatMap { $0 }.joined(separator: " ")
 	}
 }

@@ -24,21 +24,21 @@ extension EmulatorCommand: ShellCommand {
 		.url(PathResolver.sdkRoot.appending(paths: ["emulator", "emulator"]))
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 			case .startDevice(let name, let reportConsolePort):
 				return [
 					"-avd",
-					name,
+					.safe(name),
 					"-report-console",
-					"tcp:\(reportConsolePort)",
-					">/dev/null",
-					"2>&1",
-					"&",
+					.safe("tcp:\(reportConsolePort)"),
+					.unsafe(">/dev/null"),
+					.unsafe("2>&1"),
+					.unsafe("&"),
 					"nc",
 					"-l",
-					String(reportConsolePort),
-					"</dev/null"
+					.safe(String(reportConsolePort)),
+					.unsafe("</dev/null")
 				]
 		}
 	}
