@@ -75,8 +75,8 @@ extension ProxyVirtualDevice: Device {
 			try await Adb.wait(forSerial: serial)
 
 			await connectedDeviceStore.update(serial: serial)
-		} catch is AdbBootTimedOutError {
-			throw DeviceError.bootTimedOut
+		} catch let error as AdbBootTimedOutError {
+			throw DiagnosticError(DeviceError.bootTimedOut, technicalDetails: await error.latestError?.shellErrorDiagnosticMessage)
 		} catch {
 			throw DiagnosticError(DeviceError.failedToBoot, technicalDetails: error.shellErrorDiagnosticMessage)
 		}
