@@ -83,9 +83,9 @@ struct Adb {
 			throw AdbError.unexpectedOutput
 		}
 
-		try run(command: .adb(.push(serial: serial, localPath: jarURL, remotePath: remoteJar)), log: log)
+		try run(command: .adb(.push(serial: serial, localPath: jarURL, remotePath: remoteJar)), timeout: 60, log: log)
 
-		let pathOutput = try run(command: .adb(.packagePath(serial: serial, packageName: packageName)), log: log)
+		let pathOutput = try run(command: .adb(.packagePath(serial: serial, packageName: packageName)), timeout: 60, log: log)
 
 		guard
 			let line = pathOutput.split(separator: "\n").first(where: { $0.hasPrefix("package:") }),
@@ -95,10 +95,10 @@ struct Adb {
 		}
 
 		let command = "CLASSPATH=\(remoteJar) app_process / IconExtractor \(apkPath) \(packageName) \(remoteIcon)"
-		try run(command: .adb(.shell(serial: serial, command: command)), log: log)
+		try run(command: .adb(.shell(serial: serial, command: command)), timeout: 60, log: log)
 
 		let localIcon = FileManager.default.temporaryDirectory.appending(path: "\(UUID().uuidString).png")
-		try run(command: .adb(.pull(serial: serial, remotePath: remoteIcon, localPath: localIcon)), log: log)
+		try run(command: .adb(.pull(serial: serial, remotePath: remoteIcon, localPath: localIcon)), timeout: 60, log: log)
 
 		return localIcon
 	}
