@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>2.5.1</title>
+            <pubDate>Mon, 30 Mar 2026 23:01:14 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>53</sparkle:version>
+            <sparkle:shortVersionString>2.5.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Thanks for using Tophat! This update contains bug fixes and security improvements:</p><ul><li>Fixed an issue that caused installation to fail when starting a newly created Android emulator.</li><li>Fixed an issue where using <code>tophatctl</code> to install a build to a specific device could cause an error when no devices were selected in the Tophat menu.</li><li>Fixed an issue where Quick Launch didn't display icons for Android apps that use adaptive icons.</li><li>Fixed an issue where certain error alerts showed incomplete information.</li><li>Fixed an issue where launch arguments passed through Tophat URLs weren't properly sanitized.</li></ul>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.5.1/Tophat-2.5.1.zip" length="8021671" type="application/octet-stream" sparkle:edSignature="cDVaeiv6ygmAJCYt1BpW2zrsQjPSwN+L8+AH2ieW1U1M4BMuZhHvI+BiaKzJx9XFlyR5e6ixSGLLLm6917iqBg=="/>
+        </item>
+        <item>
             <title>2.5.0</title>
             <pubDate>Tue, 17 Mar 2026 16:51:02 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
@@ -21,16 +31,6 @@
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <description><![CDATA[<p>Thanks for using Tophat! This update contains a number of improvements and bug fixes:</p><ul><li>Tophat now supports installing applications from GitHub Actions workflow artifacts.</li><li>Tophat's command line helper, <code>tophatctl</code>, can now install applications directly to specific devices by name, platform, and runtime version, regardless of user selection. This allows Tophat to power app installation in complex automated workflows such as AI agents.</li><li>When using <code>tophatctl</code>, error messages are now printed directly to the command line rather than in an alert.</li><li>When a technical error causes app installation to fail, the underlying error message can now be displayed using a new "Show Details" option in error alerts.</li><li>Fixed an issue that occasionally caused a failure while starting Android devices.</li><li>Fixed an issue that caused tasks to run indefinitely when an Android device failed to start.</li><li>Fixed an issue that caused Android version numbers to be displayed incorrectly.</li></ul>]]></description>
             <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.4.0/Tophat-2.4.0.zip" length="7962146" type="application/octet-stream" sparkle:edSignature="bo2kRjboaVEbbGF3jEp1paM++TELGjLClyU85z4Ac3tjrVNHpHwuJ5P9AavqP7uQz3Bo2YunCb0fBj7oa6mhBg=="/>
-        </item>
-        <item>
-            <title>2.3.0</title>
-            <pubDate>Tue, 25 Nov 2025 22:09:57 +0000</pubDate>
-            <link>https://github.com/Shopify/tophat</link>
-            <sparkle:version>42</sparkle:version>
-            <sparkle:shortVersionString>2.3.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>Thanks for using Tophat!  This update adds support for macOS Tahoe and Liquid Glass.</p>]]></description>
-            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.3.0/Tophat-2.3.0.zip" length="7740352" type="application/octet-stream" sparkle:edSignature="bVJeKnyBsLCNF1XyQHXQtxBvWNBmhk1iH3CZ1ye6lGhOhJx6RdXrxXf5fRQ+8nk1R3RJ8tPy5GPK6Cq0NZ0VDg=="/>
         </item>
         <item>
             <title>2.1.2</title>
