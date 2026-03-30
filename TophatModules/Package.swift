@@ -26,6 +26,10 @@ let package = Package(
 				.product(name: "Logging", package: "swift-log"),
 				.target(name: "TophatFoundation"),
 				.target(name: "ShellKit")
+			],
+			exclude: ["Resources/IconExtractor.java"],
+			resources: [
+				.copy("Resources/icon_extractor.jar")
 			]
 		),
 		.target(

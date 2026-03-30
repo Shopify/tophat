@@ -118,6 +118,13 @@ extension ConnectedDevice: Device {
 	}
 }
 
+extension ConnectedDevice: AppIconExtracting {
+	func extractAppIcon(application: Application) async throws -> URL {
+		let packageName = try application.bundleIdentifier
+		return try Adb.getAppIcon(serial: id, packageName: packageName)
+	}
+}
+
 private extension DeviceState {
 	init(from connectedDeviceState: ConnectedDevice.State) {
 		switch connectedDeviceState {

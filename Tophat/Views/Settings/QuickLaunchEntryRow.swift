@@ -56,6 +56,7 @@ struct BadgedText: View {
 private extension Image {
 	func quickLaunchEntryImageStyle() -> some View {
 		self
+			.interpolation(.high)
 			.resizable()
 			.scaledToFit()
 			.frame(width: 32, height: 32)
