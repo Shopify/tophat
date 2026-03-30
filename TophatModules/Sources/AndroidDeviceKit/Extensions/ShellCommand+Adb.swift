@@ -23,6 +23,10 @@ enum AdbCommand {
 	case getProp(serial: String, property: String)
 	case waitForDevice(serial: String)
 	case resolveActivity(serial: String, packageName: String)
+	case push(serial: String, localPath: URL, remotePath: String)
+	case pull(serial: String, remotePath: String, localPath: URL)
+	case packagePath(serial: String, packageName: String)
+	case shell(serial: String, command: String)
 }
 
 extension AdbCommand: ShellCommand {
@@ -58,6 +62,18 @@ extension AdbCommand: ShellCommand {
 
 			case .resolveActivity(let serial, let packageName):
 				return ["-s", .safe(serial), "shell", "pm", "resolve-activity", "--brief", .safe(packageName)]
+
+			case .push(let serial, let localPath, let remotePath):
+				return ["-s", .safe(serial), "push", .safe(localPath.path(percentEncoded: false)), .safe(remotePath)]
+
+			case .pull(let serial, let remotePath, let localPath):
+				return ["-s", .safe(serial), "pull", .safe(remotePath), .safe(localPath.path(percentEncoded: false))]
+
+			case .packagePath(let serial, let packageName):
+				return ["-s", .safe(serial), "shell", "pm", "path", .safe(packageName)]
+
+			case .shell(let serial, let command):
+				return ["-s", .safe(serial), "shell", .unsafe(command)]
 		}
 	}
 }

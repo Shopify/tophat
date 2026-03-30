@@ -131,3 +131,12 @@ extension ProxyVirtualDevice: Device {
 		// Does not apply to Android devices.
 	}
 }
+
+extension ProxyVirtualDevice: AppIconExtracting {
+	func extractAppIcon(application: Application) async throws -> URL {
+		guard let connectedDevice = await connectedDeviceStore.connectedDevice else {
+			throw await DeviceError.deviceNotAvailable(state: state)
+		}
+		return try await connectedDevice.extractAppIcon(application: application)
+	}
+}

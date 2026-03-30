@@ -75,6 +75,34 @@ struct Adb {
 		try run(command: .adb(.install(serial: serial, apkUrl: apkUrl)), log: log)
 	}
 
+	static func getAppIcon(serial: String, packageName: String) throws -> URL {
+		let remoteJar = "/data/local/tmp/tophat_icon_extractor.jar"
+		let remoteIcon = "/data/local/tmp/tophat_icon.png"
+
+		guard let jarURL = Bundle.module.url(forResource: "icon_extractor", withExtension: "jar") else {
+			throw AdbError.unexpectedOutput
+		}
+
+		try run(command: .adb(.push(serial: serial, localPath: jarURL, remotePath: remoteJar)), log: log)
+
+		let pathOutput = try run(command: .adb(.packagePath(serial: serial, packageName: packageName)), log: log)
+
+		guard
+			let line = pathOutput.split(separator: "\n").first(where: { $0.hasPrefix("package:") }),
+			let apkPath = line.split(separator: ":", maxSplits: 1).last
+		else {
+			throw AdbError.unexpectedOutput
+		}
+
+		let command = "CLASSPATH=\(remoteJar) app_process / IconExtractor \(apkPath) \(packageName) \(remoteIcon)"
+		try run(command: .adb(.shell(serial: serial, command: command)), log: log)
+
+		let localIcon = FileManager.default.temporaryDirectory.appending(path: "\(UUID().uuidString).png")
+		try run(command: .adb(.pull(serial: serial, remotePath: remoteIcon, localPath: localIcon)), log: log)
+
+		return localIcon
+	}
+
 	static func launch(serial: String, componentName: String, arguments: [String]) throws {
 		guard arguments.allSatisfy(\.isSafeShellArgument) else {
 			throw AdbError.invalidLaunchArguments

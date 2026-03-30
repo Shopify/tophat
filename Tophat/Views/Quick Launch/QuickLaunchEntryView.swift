@@ -52,6 +52,7 @@ struct QuickLaunchEntryView: View {
 private extension Image {
 	func quickLaunchEntryImageStyle() -> some View {
 		self
+			.interpolation(.high)
 			.resizable()
 			.scaledToFit()
 			.frame(width: 44, height: 44)

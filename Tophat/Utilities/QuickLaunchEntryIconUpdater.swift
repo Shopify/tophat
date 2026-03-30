@@ -34,7 +34,9 @@ struct QuickLaunchEntryIconUpdater: Sendable, QuickLaunchEntryIconUpdating {
 
 		let persistedIcon = try ApplicationIcon.createAndPersist(fromOrigin: iconURL, for: quickLaunchEntryID)
 
-		quickLaunchEntry.iconURL = persistedIcon.url
+		quickLaunchEntry.iconURL = persistedIcon.url.appending(queryItems: [
+			URLQueryItem(name: "v", value: UUID().uuidString)
+		])
 		try modelContext.save()
 	}
 }

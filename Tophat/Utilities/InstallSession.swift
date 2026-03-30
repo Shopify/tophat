@@ -6,6 +6,7 @@
 //  Copyright © 2024 Shopify. All rights reserved.
 //
 
+import AndroidDeviceKit
 import Foundation
 import TophatFoundation
 
@@ -129,7 +130,12 @@ actor InstallSession {
 			launchArguments: ticket.launchArguments
 		)
 
-		if let iconURL = application.icon, let quickLaunchEntryID = context?.quickLaunchEntryID {
+		var iconURL = application.icon
+		if iconURL == nil {
+			iconURL = try? await (device as? AppIconExtracting)?.extractAppIcon(application: application)
+		}
+
+		if let iconURL, let quickLaunchEntryID = context?.quickLaunchEntryID {
 			do {
 				log.info("[InstallSession] Updating application icon for Quick Launch entry with identifier \(quickLaunchEntryID)")
 				try await quickLaunchEntryIconUpdater.updateIcon(
