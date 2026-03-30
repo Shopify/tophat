@@ -35,22 +35,22 @@ extension SimCtlCommand: ShellCommand {
 		.url(URL(filePath: "/usr/bin/xcrun"))
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 			case .list(let type, let available):
-				return ["simctl", "list", "--json", type.rawValue, available ? "available" : ""]
+				return ["simctl", "list", "--json", .safe(type.rawValue), .safe(available ? "available" : "")]
 
 			case .boot(let device):
-				return ["simctl", "boot", device]
+				return ["simctl", "boot", .safe(device)]
 
 			case .install(let device, let bundleUrl):
-				return ["simctl", "install", device, bundleUrl.path(percentEncoded: false).wrappedInQuotationMarks()]
+				return ["simctl", "install", .safe(device), .safe(bundleUrl.path(percentEncoded: false))]
 
 			case .launch(let device, let bundleIdentifier, let arguments):
-				return ["simctl", "launch", device, bundleIdentifier] + arguments
+				return ["simctl", "launch", .safe(device), .safe(bundleIdentifier)] + arguments.map { .safe($0) }
 
 			case .terminate(let device, let bundleIdentifier):
-				return ["simctl", "terminate", device, bundleIdentifier]
+				return ["simctl", "terminate", .safe(device), .safe(bundleIdentifier)]
 		}
 	}
 }

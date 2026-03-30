@@ -23,10 +23,10 @@ extension ScrcpyCommand: ShellCommand {
 		return ["ADB": PathResolver.adb.path(percentEncoded: false)]
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 		case .connect(let serial):
-			return ["-s", serial]
+			return ["-s", .safe(serial)]
 		}
 	}
 }

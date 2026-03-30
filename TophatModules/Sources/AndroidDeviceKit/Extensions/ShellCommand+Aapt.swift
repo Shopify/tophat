@@ -36,10 +36,10 @@ extension AaptCommand: ShellCommand {
 		return ["JAVA_HOME": javaHome]
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 			case .dumpBadging(let apkUrl):
-				return ["dump", "badging", apkUrl.path(percentEncoded: false).wrappedInQuotationMarks()]
+				return ["dump", "badging", .safe(apkUrl.path(percentEncoded: false))]
 		}
 	}
 }

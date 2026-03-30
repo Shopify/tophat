@@ -264,7 +264,7 @@ private final class AppDelegate: NSObject, NSApplicationDelegate {
 					case .malformedURL(let url):
 						log.error("Attempting to handle URL but it was malformed: \(url.absoluteString)")
 					case .unsupportedURL(let url):
-						log.error("Attempting to unsupported URL: \(url.absoluteString)")
+						log.error("Attempting to handle unsupported URL: \(url.absoluteString)")
 				}
 			} else {
 				log.error("Failed to handle URL. Error: \(error)")

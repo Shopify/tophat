@@ -25,7 +25,7 @@ extension XcodeBuildCommand: ShellCommand {
 		.url(URL(filePath: "/usr/bin/xcodebuild"))
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 		case .showSDKs:
 			["-showsdks", "-json"]

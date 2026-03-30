@@ -22,6 +22,8 @@ extension DeviceError: LocalizedError {
 				return "Failed to Install App"
 			case .failedToLaunchApp(_, .requiresManualProfileTrust, _):
 				return "The app was installed, but can’t be launched."
+			case .failedToLaunchApp(_, .invalidLaunchArguments, _):
+				return "The app was installed, but can’t be launched."
 			case .failedToLaunchApp:
 				return "Failed to Launch App"
 			default:
@@ -39,6 +41,8 @@ extension DeviceError: LocalizedError {
 				return "An error occurred while installing the app."
 			case .failedToLaunchApp(_, .requiresManualProfileTrust, _):
 				return "The developer must be trusted on the device before the app can launch."
+			case .failedToLaunchApp(_, .invalidLaunchArguments, _):
+				return "The launch arguments contain characters that aren’t supported."
 			case .failedToLaunchApp:
 				return "An error occurred while launching the app."
 			case .deviceUnlockTimedOut:
@@ -58,6 +62,8 @@ extension DeviceError: LocalizedError {
 				return "Make sure the device is connected and unlocked and try again."
 			case .failedToLaunchApp(_, .requiresManualProfileTrust, _):
 				return "On the device, go to Settings → General → VPN & Device Management to trust the developer."
+			case .failedToLaunchApp(_, .invalidLaunchArguments, _):
+				return "Check the launch arguments and try again."
 			case .failedToLaunchApp(_, _, deviceType: .device):
 				return "Make sure the device is connected and unlocked and try again."
 			case .deviceUnlockTimedOut:

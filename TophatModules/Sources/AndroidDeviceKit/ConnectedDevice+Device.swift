@@ -83,6 +83,8 @@ extension ConnectedDevice: Device {
 		do {
 			let componentName = try Adb.resolveActivity(serial: id, packageName: bundleIdentifier)
 			try Adb.launch(serial: id, componentName: componentName, arguments: arguments ?? [])
+		} catch AdbError.invalidLaunchArguments {
+			throw DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .invalidLaunchArguments, deviceType: type)
 		} catch {
 			throw DiagnosticError(DeviceError.failedToLaunchApp(bundleId: bundleIdentifier, reason: .unexpected, deviceType: type), technicalDetails: error.shellErrorDiagnosticMessage)
 		}

@@ -36,7 +36,7 @@ extension AvdManagerCommand: ShellCommand {
 		return ["JAVA_HOME": javaHome]
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 			case .listAvd:
 				return ["list", "avd"]

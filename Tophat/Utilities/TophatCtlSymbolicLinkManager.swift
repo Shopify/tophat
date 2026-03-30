@@ -30,7 +30,7 @@ import Foundation
 	}
 
 	private func runElevatedShellCommand(string: String) async {
-		let source = "do shell script \(string.wrappedInQuotationMarks()) with administrator privileges"
+		let source = "do shell script \"\(string)\" with administrator privileges"
 
 		await withCheckedContinuation { continuation in
 			Task.detached {

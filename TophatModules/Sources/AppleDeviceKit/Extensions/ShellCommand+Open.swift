@@ -24,7 +24,7 @@ extension OpenCommand: ShellCommand {
 		.url(URL(filePath: "/usr/bin/open"))
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 			case .simulator:
 				return ["-a", "Simulator.app"]

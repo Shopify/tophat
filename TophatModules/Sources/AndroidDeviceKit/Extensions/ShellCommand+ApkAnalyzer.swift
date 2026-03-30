@@ -36,10 +36,10 @@ extension ApkAnalyzerCommand: ShellCommand {
 		return ["JAVA_HOME": javaHome]
 	}
 
-	var arguments: [String] {
+	var arguments: [ShellArgument] {
 		switch self {
 			case .icon(let apkUrl):
-				return ["resources", "value", "--config", "xxhdpi", "--name", "ic_launcher", "--type", "mipmap", apkUrl.path(percentEncoded: false).wrappedInQuotationMarks()]
+				return ["resources", "value", "--config", "xxhdpi", "--name", "ic_launcher", "--type", "mipmap", .safe(apkUrl.path(percentEncoded: false))]
 		}
 	}
 }
