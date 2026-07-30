@@ -34,7 +34,7 @@ extension DeviceCtlCommand: ShellCommand {
 					"devicectl",
 					"list",
 					"devices",
-					"--filter", "hardwareProperties.platform MATCHES 'iOS'",
+					"--filter", "hardwareProperties.platform MATCHES 'iOS' AND hardwareProperties.reality MATCHES 'physical'",
 					"--json-output", .safe(outputUrl.formattedAsArgument())
 				]
 
