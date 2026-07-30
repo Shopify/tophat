@@ -16,7 +16,7 @@ struct LaunchAppAction {
 		self.installCoordinator = installCoordinator
 	}
 
-	func callAsFunction(quickLaunchEntry entry: QuickLaunchEntry) async {
+	@MainActor func callAsFunction(quickLaunchEntry entry: QuickLaunchEntry) async {
 		let context = OperationContext(quickLaunchEntryID: entry.id, applicationDisplayName: entry.name)
 		await callAsFunction(recipes: entry.installRecipes, context: context)
 	}
