@@ -48,7 +48,16 @@ extension Simulator: Device {
 
 	func focus() throws {
 		do {
-			try run(command: .open(.simulator), log: log)
+			if let deviceHubURL = XcodeHelper.deviceHubURL() {
+				let appLinkString = "devices://manage/select?id=\(id)"
+
+				try run(
+					command: .open(.application(url: deviceHubURL, arguments: [appLinkString])),
+					log: log
+				)
+			} else {
+				try run(command: .open(.applicationName("Simulator.app")), log: log)
+			}
 		} catch {
 			throw DeviceError.failedToFocus
 		}

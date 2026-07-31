@@ -16,7 +16,8 @@ extension ShellCommand where Self == OpenCommand {
 }
 
 enum OpenCommand {
-	case simulator
+	case application(url: URL, arguments: [String] = [])
+	case applicationName(_ name: String)
 }
 
 extension OpenCommand: ShellCommand {
@@ -26,8 +27,16 @@ extension OpenCommand: ShellCommand {
 
 	var arguments: [ShellArgument] {
 		switch self {
-			case .simulator:
-				return ["-a", "Simulator.app"]
+			case .application(let url, let arguments):
+				var shellArguments: [ShellArgument] = ["-a", .safe(url.path(percentEncoded: false))]
+
+				if !arguments.isEmpty {
+					shellArguments.append(contentsOf: arguments.map { .safe($0) })
+				}
+
+				return shellArguments
+			case .applicationName(let name):
+				return ["-a", .safe(name)]
 		}
 	}
 }
