@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>2.5.2</title>
+            <pubDate>Fri, 31 Jul 2026 01:00:54 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>61</sparkle:version>
+            <sparkle:shortVersionString>2.5.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Thanks for using Tophat! This update fixes an issue where duplicate simulators were displayed in the Tophat menu when using Xcode 27.</p>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.5.2/Tophat-2.5.2.zip" length="8021918" type="application/octet-stream" sparkle:edSignature="oe3nhLbzf28l3oq8LpjMWC/H863w2KGPKSDy/Xix90y1hfBtQtDhfaxQhkT7V/ZQkqVDITFos9CmKNZh+JeOCA=="/>
+        </item>
+        <item>
             <title>2.5.1</title>
             <pubDate>Mon, 30 Mar 2026 23:01:14 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
@@ -21,16 +31,6 @@
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <description><![CDATA[<p>Thanks for using Tophat! This update contains improvements and bug fixes:</p><ul><li>Tophat's command line helper, <code>tophatctl</code>, can now be used to list available devices.</li><li>All <code>tophatctl list</code> commands now support outputting results in JSON format using the <code>--json</code> flag.</li><li>Fixed an issue that caused app installation on Apple devices to fail while the device was locked.</li></ul>]]></description>
             <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.5.0/Tophat-2.5.0.zip" length="7996151" type="application/octet-stream" sparkle:edSignature="4lsN8leaZyv0YuvN5Xd8AuzOdCquWLPdfd813nDDy9wJhOR2PZteITaYP0dfe3WR46rEd6AjDJ69Q0UAC9TpCw=="/>
-        </item>
-        <item>
-            <title>2.4.0</title>
-            <pubDate>Thu, 12 Mar 2026 16:43:53 +0000</pubDate>
-            <link>https://github.com/Shopify/tophat</link>
-            <sparkle:version>45</sparkle:version>
-            <sparkle:shortVersionString>2.4.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>Thanks for using Tophat! This update contains a number of improvements and bug fixes:</p><ul><li>Tophat now supports installing applications from GitHub Actions workflow artifacts.</li><li>Tophat's command line helper, <code>tophatctl</code>, can now install applications directly to specific devices by name, platform, and runtime version, regardless of user selection. This allows Tophat to power app installation in complex automated workflows such as AI agents.</li><li>When using <code>tophatctl</code>, error messages are now printed directly to the command line rather than in an alert.</li><li>When a technical error causes app installation to fail, the underlying error message can now be displayed using a new "Show Details" option in error alerts.</li><li>Fixed an issue that occasionally caused a failure while starting Android devices.</li><li>Fixed an issue that caused tasks to run indefinitely when an Android device failed to start.</li><li>Fixed an issue that caused Android version numbers to be displayed incorrectly.</li></ul>]]></description>
-            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.4.0/Tophat-2.4.0.zip" length="7962146" type="application/octet-stream" sparkle:edSignature="bo2kRjboaVEbbGF3jEp1paM++TELGjLClyU85z4Ac3tjrVNHpHwuJ5P9AavqP7uQz3Bo2YunCb0fBj7oa6mhBg=="/>
         </item>
         <item>
             <title>2.1.2</title>
