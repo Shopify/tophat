@@ -3,6 +3,16 @@
     <channel>
         <title>Tophat</title>
         <item>
+            <title>2.6.0</title>
+            <pubDate>Mon, 31 Aug 2026 20:51:05 +0000</pubDate>
+            <link>https://github.com/Shopify/tophat</link>
+            <sparkle:version>63</sparkle:version>
+            <sparkle:shortVersionString>2.6.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <description><![CDATA[<p>Thanks for using Tophat! This update adds support for the new Device Hub app in Xcode 27, which replaces the Simulator app.</p>]]></description>
+            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.6.0/Tophat-2.6.0.zip" length="8025017" type="application/octet-stream" sparkle:edSignature="4Vvd2QPp91S+SAEEOb5z8sNeIvLSyyHs8n+8vG98SGBVNO3v8vegkRarnP1EAXtF0I2dF8o72j7bPxSo1bJ+AQ=="/>
+        </item>
+        <item>
             <title>2.5.2</title>
             <pubDate>Fri, 31 Jul 2026 01:00:54 +0000</pubDate>
             <link>https://github.com/Shopify/tophat</link>
@@ -21,16 +31,6 @@
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <description><![CDATA[<p>Thanks for using Tophat! This update contains bug fixes and security improvements:</p><ul><li>Fixed an issue that caused installation to fail when starting a newly created Android emulator.</li><li>Fixed an issue where using <code>tophatctl</code> to install a build to a specific device could cause an error when no devices were selected in the Tophat menu.</li><li>Fixed an issue where Quick Launch didn't display icons for Android apps that use adaptive icons.</li><li>Fixed an issue where certain error alerts showed incomplete information.</li><li>Fixed an issue where launch arguments passed through Tophat URLs weren't properly sanitized.</li></ul>]]></description>
             <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.5.1/Tophat-2.5.1.zip" length="8021671" type="application/octet-stream" sparkle:edSignature="cDVaeiv6ygmAJCYt1BpW2zrsQjPSwN+L8+AH2ieW1U1M4BMuZhHvI+BiaKzJx9XFlyR5e6ixSGLLLm6917iqBg=="/>
-        </item>
-        <item>
-            <title>2.5.0</title>
-            <pubDate>Tue, 17 Mar 2026 16:51:02 +0000</pubDate>
-            <link>https://github.com/Shopify/tophat</link>
-            <sparkle:version>47</sparkle:version>
-            <sparkle:shortVersionString>2.5.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
-            <description><![CDATA[<p>Thanks for using Tophat! This update contains improvements and bug fixes:</p><ul><li>Tophat's command line helper, <code>tophatctl</code>, can now be used to list available devices.</li><li>All <code>tophatctl list</code> commands now support outputting results in JSON format using the <code>--json</code> flag.</li><li>Fixed an issue that caused app installation on Apple devices to fail while the device was locked.</li></ul>]]></description>
-            <enclosure url="https://github.com/Shopify/tophat/releases/download/v2.5.0/Tophat-2.5.0.zip" length="7996151" type="application/octet-stream" sparkle:edSignature="4lsN8leaZyv0YuvN5Xd8AuzOdCquWLPdfd813nDDy9wJhOR2PZteITaYP0dfe3WR46rEd6AjDJ69Q0UAC9TpCw=="/>
         </item>
         <item>
             <title>2.1.2</title>
