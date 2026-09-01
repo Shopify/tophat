@@ -1,0 +1,42 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Artifact" : {
+
+    },
+    "Artifact Name" : {
+
+    },
+    "Authentication" : {
+
+    },
+    "Build Run ID" : {
+
+    },
+    "Contents of the .p8 file" : {
+
+    },
+    "Issuer ID" : {
+
+    },
+    "Key ID" : {
+
+    },
+    "Private Key" : {
+
+    },
+    "The identifier of the Xcode Cloud build, available as CI_BUILD_ID in a custom build script." : {
+
+    },
+    "To create a team API key, go to [appstoreconnect.apple.com/access/integrations/api](https://appstoreconnect.apple.com/access/integrations/api)." : {
+
+    },
+    "Use “build-products” to install on a simulator, or the name of an export such as “development” or “ad-hoc” to install on a device." : {
+
+    },
+    "Xcode Cloud" : {
+
+    }
+  },
+  "version" : "1.1"
+}
