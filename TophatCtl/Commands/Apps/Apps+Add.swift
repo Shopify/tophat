@@ -14,6 +14,7 @@ import AppKit
 
 private let discussion = """
 If an existing item with the same identifier already exists, the item will be updated with new information.
+Identifiers must be non-empty and contain only ASCII letters (A-Z, a-z), digits (0-9), and hyphens (-).
 
 Use the following JSON format when specifying a configuration file:
 
