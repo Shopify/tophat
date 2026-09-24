@@ -1,0 +1,30 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Artifact Path" : {
+
+    },
+    "Authentication" : {
+
+    },
+    "GitLab" : {
+
+    },
+    "Job ID" : {
+
+    },
+    "Personal Access Token" : {
+
+    },
+    "Project ID" : {
+
+    },
+    "To create a personal access token, go to [gitlab.com/-/user_settings/personal_access_tokens](https://gitlab.com/-/user_settings/personal_access_tokens)." : {
+
+    },
+    "Token" : {
+
+    }
+  },
+  "version" : "1.2"
+}
