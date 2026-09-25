@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import TophatFoundation
 
 public struct ApplicationIcon {
 	public let url: URL
@@ -16,13 +17,21 @@ public struct ApplicationIcon {
 	}
 
 	public static func createAndPersist(fromOrigin iconURL: URL, for appID: String) throws -> Self {
-		let destinationURL = try iconDestinationURL(id: appID)
+		try createAndPersist(fromOrigin: iconURL, for: appID, directoryURL: iconDirectoryURL())
+	}
+
+	static func createAndPersist(fromOrigin iconURL: URL, for appID: String, directoryURL: URL) throws -> Self {
+		guard appID.isValidQuickLaunchEntryID else {
+			throw ApplicationIconError.invalidIdentifier
+		}
+
+		let destinationURL = directoryURL.appending(component: appID, directoryHint: .notDirectory)
 		try FileManager.default.replaceItem(at: destinationURL, withCopyOfItemAt: iconURL)
 
 		return Self(url: destinationURL)
 	}
 
-	private static func iconDestinationURL(id: String) throws -> URL {
+	private static func iconDirectoryURL() throws -> URL {
 		let appSupportDirectoryURL = try FileManager.default.url(
 			for: .applicationSupportDirectory,
 			in: .userDomainMask,
@@ -34,8 +43,12 @@ public struct ApplicationIcon {
 		let url = appSupportDirectoryURL.appending(path: bundleIdentifier)
 		try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
 
-		return appSupportDirectoryURL.appending(path: bundleIdentifier).appending(path: id)
+		return url
 	}
+}
+
+enum ApplicationIconError: Error {
+	case invalidIdentifier
 }
 
 private extension FileManager {
