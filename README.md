@@ -129,6 +129,13 @@ The script is provided with two positional arguments:
 - `$1` is a full path to a **staging** directory where you may temporarily store files during download and unzip.
 - `$2` is a full path to the **output** directory where exactly one artifact must be located when the script finishes. Tophat will look in this directory to install the application.
 
+An optional `input` query parameter supplies `$3` as one literal string. URL-encode the value when creating the link. Tophat does not split it or evaluate it as a shell command. When `input` is omitted, scripts still receive only the original two arguments.
+
+```
+tophat://install/shell?script=filename&input=artifact-id
+```
+
+
 ### Command Line Helper
 
 Tophat can be integrated with various tools and projects using `tophatctl`, Tophatʼs companion command line app. You can use `tophatctl` to perform the following tasks:

@@ -22,6 +22,9 @@ struct ShellScriptArtifactProvider: ArtifactProvider {
 	)
 	var script: String
 
+	@Parameter(key: "input", title: "Input", description: "An optional literal argument passed to the script.")
+	var input: String?
+
 	func retrieve() async throws -> some ArtifactProviderResult {
 		let temporaryDirectoryURL: URL = .temporaryDirectory.appending(path: UUID().uuidString)
 		let stagingDirectoryURL = temporaryDirectoryURL.appending(path: "Staging")
@@ -38,7 +41,11 @@ struct ShellScriptArtifactProvider: ArtifactProvider {
 		)
 
 		let task = try NSUserUnixTask(url: applicationScriptsURL.appending(component: script))
-		try await task.execute(withArguments: [stagingDirectoryURL.path(), outputDirectoryURL.path()])
+		var arguments = [stagingDirectoryURL.path(), outputDirectoryURL.path()]
+		if let input {
+			arguments.append(input)
+		}
+		try await task.execute(withArguments: arguments)
 
 		let directoryContents = try FileManager.default.contentsOfDirectory(
 			at: outputDirectoryURL,

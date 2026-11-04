@@ -15,6 +15,7 @@ let package = Package(
         )
     ],
     targets: [
-        .target(name: "TophatKit")
+        .target(name: "TophatKit"),
+        .testTarget(name: "TophatKitTests", dependencies: ["TophatKit"])
     ]
 )

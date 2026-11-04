@@ -14,6 +14,10 @@ extension ArtifactProvider {
 			let key = parameter.key
 
 			guard let value = parameterDictionary[key] else {
+				if parameter.isOptional {
+					try parameter.storeNil()
+					continue
+				}
 				throw ArtifactProviderError.missingParameter
 			}
 
@@ -37,6 +41,15 @@ private extension AnyArtifactProviderParameter {
 		}
 
 		parameter.storage = Value(stringRepresentation: stringRepresentation)
+	}
+
+	func storeNil() throws {
+		guard let parameter = self as? ArtifactProviderParameter<Value>,
+			  let optionalType = Value.self as? ExpressibleByNilLiteral.Type,
+			  let value = optionalType.init(nilLiteral: ()) as? Value else {
+			throw ArtifactProviderError.invalidType
+		}
+		parameter.storage = value
 	}
 }
 
