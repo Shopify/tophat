@@ -57,3 +57,6 @@ only_rules:
   - void_return
   - weak_delegate
   - yoda_condition
+
+opening_brace:
+  ignore_multiline_statement_conditions: true

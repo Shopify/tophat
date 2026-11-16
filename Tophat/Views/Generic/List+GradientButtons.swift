@@ -9,8 +9,8 @@
 import SwiftUI
 
 private struct ListGradientButtons<PlusButtonView: View, MinusButtonView: View>: ViewModifier {
-	let plusButton: () -> PlusButtonView
-	let minusButton: () -> MinusButtonView
+	let plusButton: @MainActor () -> PlusButtonView
+	let minusButton: @MainActor () -> MinusButtonView
 
 	func body(content: Content) -> some View {
 		content
@@ -36,7 +36,7 @@ private struct ListGradientButtons<PlusButtonView: View, MinusButtonView: View>:
 }
 
 extension List {
-	func listGradientButtons(plusButton: @escaping () -> some View, minusButton: @escaping () -> some View) -> some View {
+	func listGradientButtons(plusButton: @escaping @MainActor () -> some View, minusButton: @escaping @MainActor () -> some View) -> some View {
 		self.modifier(ListGradientButtons(plusButton: plusButton, minusButton: minusButton))
 	}
 }

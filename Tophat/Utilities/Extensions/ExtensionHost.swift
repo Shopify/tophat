@@ -10,7 +10,7 @@ import Foundation
 import ExtensionFoundation
 @_spi(TophatKitInternal) import TophatKit
 
-@MainActor @Observable final class ExtensionHost {
+@MainActor @Observable final class ExtensionHost: Sendable {
 	private(set) var availableExtensions: [TophatExtension] = []
 
 	func discover() {

@@ -6,6 +6,7 @@
 //  Copyright © 2024 Shopify. All rights reserved.
 //
 
+import SwiftData
 import SwiftUI
 import TophatFoundation
 @_spi(TophatKitInternal) import TophatKit

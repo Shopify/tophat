@@ -41,7 +41,7 @@ final class FluidMenuBarExtraWindow<Content: View>: NSPanel {
 			}
 	}
 
-	private lazy var hostingView: NSHostingView<some View> = {
+	private lazy var hostingView: NSHostingView<some View> = { @MainActor in
 		let view = NSHostingView(rootView: rootView)
 		// Disable NSHostingView's default automatic sizing behavior.
 		if #available(macOS 13.0, *) {

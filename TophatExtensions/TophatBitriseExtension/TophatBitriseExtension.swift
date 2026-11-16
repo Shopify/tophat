@@ -6,6 +6,7 @@
 //  Copyright © 2024 Shopify. All rights reserved.
 //
 
+import ExtensionKit
 import Foundation
 import TophatKit
 import SwiftUI

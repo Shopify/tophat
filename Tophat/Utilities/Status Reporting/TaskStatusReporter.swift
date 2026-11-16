@@ -50,7 +50,7 @@ import AppKit
 	func remove(status: TaskStatus, withDelay: Bool = false) {
 		Task {
 			if withDelay {
-				try await Task.sleep(for: .seconds(2))
+				try? await Task.sleep(for: .seconds(2))
 			}
 
 			statuses.remove(status)

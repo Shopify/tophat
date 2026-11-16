@@ -45,7 +45,7 @@ Before opening a pull request, check if there are any open [issues](https://gith
 
 ## Developing
 
-To build Tophat, you will need at least Xcode 26.0 and macOS 15.6.
+To build Tophat, you will need at least Xcode 27.0 and macOS 26.6.
 
 1. Fork the repo and create a new branch for your changes.
 1. Ensure that you have [Mint](https://github.com/yonaskolb/Mint) installed, either directly or _via_ Homebrew:
