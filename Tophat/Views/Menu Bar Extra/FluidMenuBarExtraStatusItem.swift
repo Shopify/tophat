@@ -26,21 +26,26 @@ import SwiftUI
 
 		super.init()
 
-		localEventMonitor = LocalEventMonitor(mask: [.leftMouseDown]) { [weak self] event in
-			if let button = self?.statusItem.button, event.window == button.window, !event.modifierFlags.contains(.command) {
-				self?.didPressStatusBarButton(button)
+		if #available(macOS 27.0, *) {
+			statusItem.expandedInterfaceDelegate = self
+		} else {
+			localEventMonitor = LocalEventMonitor(mask: [.leftMouseDown]) { [weak self] event in
+				if let button = self?.statusItem.button, event.window == button.window, !event.modifierFlags.contains(.command) {
+					self?.didPressStatusBarButton(button)
 
-				// Stop propagating the event so that the button remains highlighted.
-				return nil
+					// Stop propagating the event so that the button remains highlighted.
+					return nil
+				}
+
+				return event
 			}
-
-			return event
 		}
 
 		globalEventMonitor = GlobalEventMonitor(mask: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
 			if let window = self?.window, window.isKeyWindow {
 				// Resign key window status if a external non-activating event is triggered,
-				// such as other system status bar menus.
+				// such as other system status bar menus. On macOS 27 and later, this includes
+				// clicks on the status item itself.
 				window.resignKey()
 			}
 		}
@@ -59,10 +64,15 @@ import SwiftUI
 			return
 		}
 
+		showWindow()
+	}
+
+	private func showWindow() {
 		setWindowPosition()
 
 		// Tells the system to persist the menu bar in full screen mode.
 		DistributedNotificationCenter.default().post(name: .beginMenuTracking, object: nil)
+		window.alphaValue = 1
 		window.makeKeyAndOrderFront(nil)
 	}
 
@@ -73,12 +83,22 @@ import SwiftUI
 
 	func windowDidResignKey(_ notification: Notification) {
 		globalEventMonitor?.stop()
-		dismissWindow()
+
+		if #available(macOS 27.0, *) {
+			statusItem.expandedInterfaceSession?.cancel()
+		} else {
+			dismissWindow()
+		}
 	}
 
-	private func dismissWindow() {
+	private func dismissWindow(animated: Bool = true) {
 		// Tells the system to cancel persisting the menu bar in full screen mode.
 		DistributedNotificationCenter.default().post(name: .endMenuTracking, object: nil)
+
+		guard animated else {
+			finishDismissingWindow()
+			return
+		}
 
 		NSAnimationContext.runAnimationGroup { context in
 			context.duration = 0.3
@@ -88,11 +108,19 @@ import SwiftUI
 
 		} completionHandler: { [weak self] in
 			Task { @MainActor [weak self] in
-				self?.window.orderOut(nil)
-				self?.window.alphaValue = 1
-				self?.setButtonHighlighted(to: false)
+				self?.finishDismissingWindow()
 			}
 		}
+	}
+
+	private func finishDismissingWindow() {
+		if #available(macOS 27.0, *), statusItem.expandedInterfaceSession != nil {
+			return
+		}
+
+		window.orderOut(nil)
+		window.alphaValue = 1
+		setButtonHighlighted(to: false)
 	}
 
 	private func setButtonHighlighted(to highlight: Bool) {
@@ -151,6 +179,17 @@ extension FluidMenuBarExtraStatusItem {
 
 		statusItem.button?.setAccessibilityTitle(title)
 		statusItem.button?.image = NSImage(systemSymbolName: systemImage, accessibilityDescription: title)
+	}
+}
+
+@available(macOS 27.0, *)
+extension FluidMenuBarExtraStatusItem: @MainActor NSStatusItemExpandedInterfaceDelegate {
+	func statusItem(_ statusItem: NSStatusItem, didBegin expandedInterfaceSession: NSStatusItemExpandedInterfaceSession) {
+		showWindow()
+	}
+
+	func statusItemDidEndExpandedInterfaceSession(_ statusItem: NSStatusItem, animated: Bool) {
+		dismissWindow(animated: animated)
 	}
 }
 
