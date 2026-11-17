@@ -27,7 +27,7 @@ let package = Package(
 				.target(name: "TophatFoundation"),
 				.target(name: "ShellKit")
 			],
-			exclude: ["Resources/IconExtractor.java"],
+			exclude: ["Resources/IconExtractor.java", "Resources/build_icon_extractor.sh"],
 			resources: [
 				.copy("Resources/icon_extractor.jar")
 			]
