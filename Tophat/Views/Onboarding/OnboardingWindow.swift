@@ -12,7 +12,7 @@ import SwiftUI
 @MainActor final class OnboardingWindow<Content: View>: NSPanel, CustomWindowPresentation {
 	private let rootView: () -> Content
 
-	private lazy var hostingView: NSHostingView<some View> = {
+	private lazy var hostingView: NSHostingView<some View> = { @MainActor in
 		let view = NSHostingView(
 			rootView: rootView()
 				.environment(\.customWindowPresentation, self)

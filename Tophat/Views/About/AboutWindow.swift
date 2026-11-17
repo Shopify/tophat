@@ -13,7 +13,7 @@ final class AboutWindow<Content: View>: NSPanel {
 	@Binding var isPresented: Bool
 	private let rootView: () -> Content
 
-	private lazy var hostingView: NSHostingView<some View> = {
+	private lazy var hostingView: NSHostingView<some View> = { @MainActor in
 		let view = NSHostingView(rootView: rootView())
 		view.translatesAutoresizingMaskIntoConstraints = false
 		return view

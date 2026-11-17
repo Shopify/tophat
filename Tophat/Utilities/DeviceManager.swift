@@ -12,7 +12,7 @@ import TophatFoundation
 /// The `DeviceManager` coordinates between different device providers. Device providers
 /// "plug-in" to the `DeviceManager` such that it is the sole entity responsible for retrieving
 /// and managing devices in a platform-agnostic manner.
-@MainActor @Observable final class DeviceManager {
+@MainActor @Observable final class DeviceManager: Sendable {
 	private let deviceProviders: [DeviceProvider.Type]
 
 	/// A collection of all devices from all sources.

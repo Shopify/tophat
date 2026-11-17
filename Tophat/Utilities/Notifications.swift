@@ -23,7 +23,7 @@ enum Notifications {
 			content.body = message
 
 			let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
-			try await UNUserNotificationCenter.current().add(request)
+			try? await UNUserNotificationCenter.current().add(request)
 		}
 	}
 
