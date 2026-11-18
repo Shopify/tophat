@@ -28,21 +28,11 @@ final class ArtifactUnpacker: Sendable {
 				throw ArtifactUnpackerError.unknownFileFormat
 			}
 
-			let enclosedFileURLs = try FileManager.default.contentsOfDirectory(
-				at: artifactURL,
-				includingPropertiesForKeys: nil
-			)
-
-			let supportedPathExtensions = ArtifactFileFormat.allCases.map(\.pathExtension)
-			let firstSupportedEnclosedFileURL = enclosedFileURLs.first { fileURL in
-				supportedPathExtensions.contains(fileURL.pathExtension)
-			}
-
-			guard let firstSupportedEnclosedFileURL else {
+			guard let enclosedArtifactURL = try findSupportedArtifact(in: artifactURL) else {
 				throw ArtifactUnpackerError.unknownFileFormat
 			}
 
-			return try unpack(artifactURL: firstSupportedEnclosedFileURL)
+			return try unpack(artifactURL: enclosedArtifactURL)
 		}
 
 		switch fileFormat {
@@ -75,6 +65,35 @@ final class ArtifactUnpacker: Sendable {
 		}
 
 		return fileURL
+	}
+
+	/// Recursively searches a directory tree for the first file or directory matching a supported
+	/// artifact format, such as when an application bundle is nested within intermediate build
+	/// output directories (e.g. an Xcode Cloud build products archive).
+	///
+	/// Directories that themselves match a supported format are treated as leaves and are not
+	/// searched any further.
+	private func findSupportedArtifact(in directoryURL: URL) throws -> URL? {
+		let supportedPathExtensions = ArtifactFileFormat.allCases.map(\.pathExtension)
+
+		let enclosedFileURLs = try FileManager.default.contentsOfDirectory(
+			at: directoryURL,
+			includingPropertiesForKeys: [.isDirectoryKey]
+		)
+
+		if let match = enclosedFileURLs.first(where: { supportedPathExtensions.contains($0.pathExtension) }) {
+			return match
+		}
+
+		// Descend in a stable order so that an archive containing more than one nested
+		// artifact resolves to the same one every time.
+		for fileURL in enclosedFileURLs.sorted(using: KeyPathComparator(\.path)) where fileURL.isDirectory {
+			if let match = try findSupportedArtifact(in: fileURL) {
+				return match
+			}
+		}
+
+		return nil
 	}
 
 	private func extractArtifact(at url: URL) throws -> URL {
