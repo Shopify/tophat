@@ -15,11 +15,11 @@ struct AndroidApplication: Application {
 	let url: URL
 
 	var name: String? {
-		try? Aapt.readAppName(apkUrl: url)
+		try? Aapt2.readAppName(apkUrl: url)
 	}
 
 	var icon: URL? {
-		guard let path = try? ApkAnalyzer.getIconPath(apkUrl: url),
+		guard let path = try? Aapt2.readIconPath(apkUrl: url),
 			  let archive = try? Archive(url: url, accessMode: .read, pathEncoding: nil),
 			  let entry = archive[path]
 		else {
@@ -27,7 +27,10 @@ struct AndroidApplication: Application {
 		}
 
 		let iconURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
-		_ = try? archive.extract(entry, to: iconURL)
+
+		guard (try? archive.extract(entry, to: iconURL)) != nil else {
+			return nil
+		}
 
 		return iconURL
 	}
@@ -43,7 +46,7 @@ struct AndroidApplication: Application {
 
 	var bundleIdentifier: String {
 		get throws {
-			guard let packageName = try? Aapt.readPackageName(apkUrl: url) else {
+			guard let packageName = try? Aapt2.readPackageName(apkUrl: url) else {
 				throw ApplicationError.failedToReadBundleIdentifier
 			}
 
